@@ -1,9 +1,8 @@
-/**
- * Optional helper to seed CEFR levels (A1–C2).
- * Run after migrate: npx tsx prisma/seed-levels.ts
- */
-import "dotenv/config";
+import { config } from "dotenv";
 import { getPrisma } from "../lib/server/prisma";
+
+config({ path: ".env.local" });
+config({ path: ".env" });
 
 const levels = [
   { code: "A1", name: "Beginner", sortOrder: 1 },
