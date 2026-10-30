@@ -1,7 +1,4 @@
-import {
-  handleRouteError,
-  jsonSuccess,
-} from "@/lib/server/apiResponse";
+import { handleRouteError, jsonSuccess } from "@/lib/server/apiResponse";
 import { setRefreshCookie } from "@/lib/server/auth/cookies";
 import { getRefreshTokenFromRequest } from "@/lib/server/auth/request";
 import { refreshSession } from "@/lib/server/auth/service";
