@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { navLinks } from "@/components/layout/navLinks";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useLogoutMutation } from "@/store/api";
@@ -37,16 +38,33 @@ export function Navbar() {
     <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
       <Container
         size={user ? "app" : "page"}
-        className="flex h-16 items-center justify-between"
+        className="grid h-16 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[1fr_auto_1fr]"
       >
-        <Link
-          href="/"
-          className="font-display text-xl font-semibold tracking-tight text-teal-800 dark:text-teal-300"
-        >
-          {t("brand")}
-        </Link>
+        <div className="justify-self-start">
+          <Link
+            href="/"
+            className="inline-block font-display text-3xl font-semibold tracking-tight text-teal-800 transition-transform duration-200 hover:scale-110 dark:text-teal-300"
+          >
+            {t("brand")}
+          </Link>
+        </div>
 
-        <nav className="hidden items-center gap-3 sm:flex">
+        <nav
+          className="hidden items-center justify-center gap-8 md:flex"
+          aria-label={t("brand")}
+        >
+          {navLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm font-medium text-zinc-600 transition-colors hover:text-teal-800 dark:text-zinc-300 dark:hover:text-teal-300"
+            >
+              {t(item.labelKey)}
+            </Link>
+          ))}
+        </nav>
+
+        <nav className="hidden items-center justify-self-end gap-3 md:flex">
           <ThemeToggle />
           {user ? (
             <>
@@ -75,7 +93,7 @@ export function Navbar() {
           )}
         </nav>
 
-        <div className="flex items-center gap-2 sm:hidden">
+        <div className="flex items-center justify-self-end gap-2 md:hidden">
           <ThemeToggle />
           <button
             type="button"
@@ -96,8 +114,18 @@ export function Navbar() {
       </Container>
 
       {open ? (
-        <div className="border-t border-zinc-200 px-4 py-3 sm:hidden dark:border-zinc-800">
+        <div className="border-t border-zinc-200 px-4 py-3 md:hidden dark:border-zinc-800">
           <div className="flex flex-col gap-2">
+            {navLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                onClick={() => setOpen(false)}
+              >
+                {t(item.labelKey)}
+              </Link>
+            ))}
             {user ? (
               <>
                 <p className="truncate px-1 text-sm text-zinc-600 dark:text-zinc-300">
