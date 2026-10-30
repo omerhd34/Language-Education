@@ -10,6 +10,20 @@ import { createLoginSchema } from "@/lib/authValidation";
 import { useLoginMutation } from "@/store/api";
 import { setCredentials } from "@/store/authSlice";
 
+function getErrorCode(error: unknown): string | null {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "data" in error &&
+    typeof (error as { data?: { error?: { code?: string } } }).data?.error
+      ?.code === "string"
+  ) {
+    return (error as { data: { error: { code: string } } }).data.error.code;
+  }
+
+  return null;
+}
+
 export function LoginForm() {
   const t = useTranslations("Auth");
   const router = useRouter();
@@ -59,7 +73,12 @@ export function LoginForm() {
         }),
       );
       router.push("/");
-    } catch {
+    } catch (error) {
+      if (getErrorCode(error) === "EMAIL_NOT_VERIFIED") {
+        setFormError(t("errors.emailNotVerified"));
+        return;
+      }
+
       setFormError(t("errors.generic"));
     }
   }

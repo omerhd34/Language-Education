@@ -4,16 +4,26 @@ import { useTranslations } from "next-intl";
 import { useMemo, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
-import { Link, useRouter } from "@/i18n/navigation";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { Link } from "@/i18n/navigation";
 import { createRegisterSchema } from "@/lib/authValidation";
 import { useRegisterMutation } from "@/store/api";
-import { setCredentials } from "@/store/authSlice";
+
+function getErrorCode(error: unknown): string | null {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "data" in error &&
+    typeof (error as { data?: { error?: { code?: string } } }).data?.error
+      ?.code === "string"
+  ) {
+    return (error as { data: { error: { code: string } } }).data.error.code;
+  }
+
+  return null;
+}
 
 export function RegisterForm() {
   const t = useTranslations("Auth");
-  const router = useRouter();
-  const dispatch = useAppDispatch();
   const [register, { isLoading }] = useRegisterMutation();
 
   const [name, setName] = useState("");
@@ -24,6 +34,7 @@ export function RegisterForm() {
     password?: string;
   }>({});
   const [formError, setFormError] = useState<string | null>(null);
+  const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
 
   const schema = useMemo(
     () =>
@@ -59,63 +70,102 @@ export function RegisterForm() {
         ...(parsed.data.name ? { name: parsed.data.name } : {}),
       };
       const result = await register(payload).unwrap();
-      dispatch(
-        setCredentials({
-          user: result.user,
-          accessToken: result.accessToken,
-        }),
-      );
-      router.push("/");
-    } catch {
+      setSubmittedEmail(result.email);
+    } catch (error) {
+      const code = getErrorCode(error);
+
+      if (code === "EMAIL_EXISTS") {
+        setFormError(t("errors.emailExists"));
+        return;
+      }
+
       setFormError(t("errors.generic"));
     }
   }
 
-  return (
-    <form onSubmit={onSubmit} className="flex w-full flex-col gap-4" noValidate>
-      <Input
-        name="name"
-        type="text"
-        autoComplete="name"
-        label={t("nameOptional")}
-        value={name}
-        onChange={(event) => setName(event.target.value)}
-      />
-      <Input
-        name="email"
-        type="email"
-        autoComplete="email"
-        label={t("email")}
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        error={fieldErrors.email}
-      />
-      <Input
-        name="password"
-        type="password"
-        autoComplete="new-password"
-        label={t("password")}
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        error={fieldErrors.password}
-      />
-      {formError ? (
-        <p className="text-sm text-red-600 dark:text-red-400" role="alert">
-          {formError}
+  if (submittedEmail) {
+    return (
+      <div className="space-y-4" role="status">
+        <div className="space-y-2">
+          <h1 className="font-display text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+            {t("checkEmailTitle")}
+          </h1>
+          <p className="text-sm text-zinc-700 dark:text-zinc-300">
+            {t("checkEmailBody", { email: submittedEmail })}
+          </p>
+        </div>
+        <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
+          {t("hasAccount")}{" "}
+          <Link
+            href="/login"
+            className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          >
+            {t("goLogin")}
+          </Link>
         </p>
-      ) : null}
-      <Button type="submit" disabled={isLoading} className="w-full">
-        {t("submitRegister")}
-      </Button>
-      <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
-        {t("hasAccount")}{" "}
-        <Link
-          href="/login"
-          className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
-        >
-          {t("goLogin")}
-        </Link>
-      </p>
-    </form>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="mb-6 space-y-2">
+        <h1 className="font-display text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+          {t("registerTitle")}
+        </h1>
+        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          {t("registerSubtitle")}
+        </p>
+      </div>
+      <form
+        onSubmit={onSubmit}
+        className="flex w-full flex-col gap-4"
+        noValidate
+      >
+        <Input
+          name="name"
+          type="text"
+          autoComplete="name"
+          label={t("nameOptional")}
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
+        <Input
+          name="email"
+          type="email"
+          autoComplete="email"
+          label={t("email")}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          error={fieldErrors.email}
+        />
+        <Input
+          name="password"
+          type="password"
+          autoComplete="new-password"
+          label={t("password")}
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          error={fieldErrors.password}
+        />
+        {formError ? (
+          <p className="text-sm text-red-600 dark:text-red-400" role="alert">
+            {formError}
+          </p>
+        ) : null}
+        <Button type="submit" disabled={isLoading} className="w-full">
+          {t("submitRegister")}
+        </Button>
+        <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
+          {t("hasAccount")}{" "}
+          <Link
+            href="/login"
+            className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          >
+            {t("goLogin")}
+          </Link>
+        </p>
+      </form>
+    </>
   );
 }
