@@ -5,6 +5,10 @@
   },
   "Nav": {
     "home": "Ana sayfa",
+    "about": "Hakkımızda",
+    "benefits": "Kazanımlar",
+    "packages": "Paketler",
+    "contact": "İletişim",
     "login": "Giriş yap",
     "register": "Kayıt ol",
     "logout": "Çıkış yap",
@@ -19,14 +23,40 @@
     "system": "Sistem"
   },
   "Footer": {
-    "tagline": "Dil öğrenmeyi sade ve sürdürülebilir hale getirir.",
-    "rights": "Tüm hakları saklıdır."
+    "tagline": "Dil öğrenmeyi sade ve sürdürülebilir hale getirir. Kendi hızında ilerle, düzenli pratikle kalıcı sonuçlar al.",
+    "rights": "Tüm hakları saklıdır.",
+    "explore": "Keşfet",
+    "support": "Destek",
+    "contactLink": "Bize yaz",
+    "email": "merhaba@pylmor.com",
+    "supportNote": "Soruların veya önerilerin için buradayız. Genelde bir iş günü içinde dönüş yaparız.",
+    "ctaPrimary": "Ücretsiz başla",
+    "ctaSecondary": "Giriş yap",
+    "madeFor": "Adım adım İngilizce öğrenmek için."
   },
   "Landing": {
     "headline": "İngilizceyi kendi hızında öğren",
     "subheadline": "Seviyene uygun dersler, kelime çalışması ve düzenli ilerleme takibi yakında burada.",
     "ctaPrimary": "Ücretsiz başla",
     "ctaSecondary": "Zaten hesabım var"
+  },
+  "Pages": {
+    "about": {
+      "title": "Hakkımızda",
+      "description": "Pylmor, dil öğrenmeyi sade ve sürdürülebilir hale getirmek için tasarlandı. Adım adım dersler, kelime çalışması ve ilerleme takibiyle kendi hızında ilerlersin."
+    },
+    "benefits": {
+      "title": "Kazanımlar",
+      "description": "Düzenli pratik, seviyene uygun içerik ve net hedeflerle kelime dağarcığını güçlendir, gramerini netleştir ve güvenle iletişim kur."
+    },
+    "packages": {
+      "title": "Paketler",
+      "description": "İhtiyacına uygun öğrenme paketleri yakında burada. Ücretsiz başlangıç ve gelişmiş plan seçenekleri üzerinde çalışıyoruz."
+    },
+    "contact": {
+      "title": "İletişim",
+      "description": "Soruların, önerilerin veya iş birliği taleplerin için bize ulaşabilirsin. Detaylı iletişim formu yakında eklenecek."
+    }
   },
   "Announcements": {
     "title": "Bilgilendirmeler",
