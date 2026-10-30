@@ -1,4 +1,4 @@
-# LinguaPath
+# Pylmor
 
 Dil öğrenme platformu iskeleti. İlk hedef dil İngilizce; arayüz dili Türkçe (`tr`).
 
@@ -37,6 +37,7 @@ API: `http://localhost:3000/api/v1`
 | Değişken | Açıklama |
 | --- | --- |
 | `NEXT_PUBLIC_API_URL` | API taban yolu (`/api/v1`) |
+| `APP_URL` | Doğrulama linki için uygulama kök URL’si |
 | `DATABASE_URL` | Prisma bağlantı dizesi (`mysql://...`) |
 | `DATABASE_HOST` / `PORT` / `USER` / `PASSWORD` / `NAME` | Prisma MariaDB adapter |
 | `JWT_ACCESS_SECRET` | Access token imzası (min. 32 karakter) |
@@ -44,6 +45,7 @@ API: `http://localhost:3000/api/v1`
 | `JWT_ACCESS_EXPIRES_IN` | örn. `15m` |
 | `JWT_REFRESH_EXPIRES_IN` | örn. `7d` |
 | `COOKIE_SECURE` | Prod HTTPS için `true` |
+| `SMTP_HOST` / `PORT` / `SECURE` / `USER` / `PASS` / `FROM` | Doğrulama e-postası (SMTP) |
 
 ## Auth uçları
 
@@ -51,8 +53,9 @@ Hepsi `/api/v1` altında:
 
 | Method | Path | Açıklama |
 | --- | --- | --- |
-| `POST` | `/auth/register` | Kayıt |
-| `POST` | `/auth/login` | Giriş |
+| `POST` | `/auth/register` | Kayıt (doğrulama e-postası gönderir) |
+| `POST` | `/auth/verify-email` | E-posta token ile hesabı etkinleştirir |
+| `POST` | `/auth/login` | Giriş (yalnızca doğrulanmış hesap) |
 | `POST` | `/auth/refresh` | Token yenileme |
 | `POST` | `/auth/logout` | Çıkış |
 | `GET` | `/auth/me` | Oturumdaki kullanıcı (Bearer) |

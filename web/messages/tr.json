@@ -1,13 +1,14 @@
 {
   "Meta": {
-    "title": "LinguaPath",
+    "title": "Pylmor",
     "description": "Adım adım dil öğrenme platformu"
   },
   "Nav": {
     "home": "Ana sayfa",
     "login": "Giriş yap",
     "register": "Kayıt ol",
-    "brand": "LinguaPath",
+    "logout": "Çıkış yap",
+    "brand": "Pylmor",
     "openMenu": "Menüyü aç",
     "closeMenu": "Menüyü kapat"
   },
@@ -27,6 +28,30 @@
     "ctaPrimary": "Ücretsiz başla",
     "ctaSecondary": "Zaten hesabım var"
   },
+  "Announcements": {
+    "title": "Bilgilendirmeler",
+    "subtitle": "Platform güncellemeleri ve yaklaşan özellikler.",
+    "items": {
+      "beta": {
+        "date": "2026-03-20",
+        "dateLabel": "20 Mart 2026",
+        "title": "Erken erişim açıldı",
+        "body": "Hesap oluşturarak platforma şimdiden katılabilirsin. Ders içerikleri adım adım yayınlanacak."
+      },
+      "lessons": {
+        "date": "2026-03-15",
+        "dateLabel": "15 Mart 2026",
+        "title": "İlk ders seti hazırlanıyor",
+        "body": "Başlangıç seviyesine uygun İngilizce dersleri ve kelime çalışmaları üzerinde çalışıyoruz."
+      },
+      "progress": {
+        "date": "2026-03-10",
+        "dateLabel": "10 Mart 2026",
+        "title": "İlerleme takibi yakında",
+        "body": "Öğrenme sürecini takip edebileceğin günlük hedefler ve seviye göstergeleri eklenecek."
+      }
+    }
+  },
   "Auth": {
     "loginTitle": "Hesabına giriş yap",
     "loginSubtitle": "Kaldığın yerden devam et.",
@@ -35,18 +60,27 @@
     "email": "E-posta",
     "password": "Şifre",
     "name": "Ad",
-    "nameOptional": "Ad (isteğe bağlı)",
+    "nameOptional": "İsim & Soyisim",
     "submitLogin": "Giriş yap",
     "submitRegister": "Kayıt ol",
     "noAccount": "Hesabın yok mu?",
     "hasAccount": "Zaten hesabın var mı?",
     "goRegister": "Kayıt ol",
     "goLogin": "Giriş yap",
+    "checkEmailTitle": "E-postanı kontrol et",
+    "checkEmailBody": "{email} adresine bir doğrulama e-postası gönderdik. Hesabını etkinleştirmek için e-postadaki butona tıkla.",
+    "verifyTitle": "E-posta doğrulanıyor",
+    "verifySubtitle": "Hesabın etkinleştiriliyor, biraz bekle.",
+    "verifyPending": "Hesabın doğrulanıyor…",
+    "verifySuccess": "Hesabın etkinleştirildi. Giriş yapılıyor…",
+    "verifyInvalid": "Doğrulama bağlantısı geçersiz veya süresi dolmuş. Yeniden kayıt olmayı dene.",
     "errors": {
       "emailRequired": "E-posta gerekli",
       "emailInvalid": "Geçerli bir e-posta gir",
       "passwordRequired": "Şifre gerekli",
       "passwordMin": "Şifre en az 8 karakter olmalı",
+      "emailExists": "Bu e-posta ile zaten bir hesap var.",
+      "emailNotVerified": "Önce e-posta adresini doğrula. Gelen kutunu kontrol et.",
       "generic": "Bir hata oluştu. Lütfen tekrar dene."
     }
   }
