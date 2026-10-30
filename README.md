@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LinguaPath
 
-## Getting Started
+Dil öğrenme platformu iskeleti. İlk hedef dil İngilizce; arayüz dili Türkçe (`tr`).
 
-First, run the development server:
+## Yapı
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+eng_web/
+└── web/   # Next.js (UI + Route Handlers API + Prisma)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Backend ayrı Express sunucusu değil; API `web/app/api/v1` altındaki Next.js Route Handlers.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Gereksinimler
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Node.js 20+
+- MySQL 8+
 
-## Learn More
+## Hızlı başlangıç
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+cd web
+cp .env.example .env.local
+# .env.local içindeki DATABASE_* ve JWT_* değerlerini doldur
+npm install
+npx prisma generate
+npx prisma migrate dev --name init
+npx tsx prisma/seed-levels.ts   # opsiyonel: A1–C2 seviyeleri
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Uygulama: `http://localhost:3000` → varsayılan locale `/tr`  
+API: `http://localhost:3000/api/v1`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Ortam değişkenleri (`web/.env.local`)
 
-## Deploy on Vercel
+| Değişken | Açıklama |
+| --- | --- |
+| `NEXT_PUBLIC_API_URL` | API taban yolu (`/api/v1`) |
+| `DATABASE_URL` | Prisma bağlantı dizesi (`mysql://...`) |
+| `DATABASE_HOST` / `PORT` / `USER` / `PASSWORD` / `NAME` | Prisma MariaDB adapter |
+| `JWT_ACCESS_SECRET` | Access token imzası (min. 32 karakter) |
+| `JWT_REFRESH_SECRET` | Refresh token imzası (min. 32 karakter) |
+| `JWT_ACCESS_EXPIRES_IN` | örn. `15m` |
+| `JWT_REFRESH_EXPIRES_IN` | örn. `7d` |
+| `COOKIE_SECURE` | Prod HTTPS için `true` |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Auth uçları
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Hepsi `/api/v1` altında:
+
+| Method | Path | Açıklama |
+| --- | --- | --- |
+| `POST` | `/auth/register` | Kayıt |
+| `POST` | `/auth/login` | Giriş |
+| `POST` | `/auth/refresh` | Token yenileme |
+| `POST` | `/auth/logout` | Çıkış |
+| `GET` | `/auth/me` | Oturumdaki kullanıcı (Bearer) |
+
+Yanıt şekli: `{ success, data, error }`
+
+## Notlar
+
+- Ders ve egzersiz UI’ı henüz yok; Prisma şemasında `Lesson`, `Exercise`, `Word`, `UserProgress`, `Streak` modelleri hazır.
+- Kurslar bir `Language` kaydına bağlıdır; seviye `Level` (A1–C2) üzerinden bağlanır.
