@@ -1,0 +1,53 @@
+{
+  "Meta": {
+    "title": "LinguaPath",
+    "description": "Adım adım dil öğrenme platformu"
+  },
+  "Nav": {
+    "home": "Ana sayfa",
+    "login": "Giriş yap",
+    "register": "Kayıt ol",
+    "brand": "LinguaPath",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat"
+  },
+  "Theme": {
+    "toggle": "Temayı değiştir",
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
+  },
+  "Footer": {
+    "tagline": "Dil öğrenmeyi sade ve sürdürülebilir hale getirir.",
+    "rights": "Tüm hakları saklıdır."
+  },
+  "Landing": {
+    "headline": "İngilizceyi kendi hızında öğren",
+    "subheadline": "Seviyene uygun dersler, kelime çalışması ve düzenli ilerleme takibi yakında burada.",
+    "ctaPrimary": "Ücretsiz başla",
+    "ctaSecondary": "Zaten hesabım var"
+  },
+  "Auth": {
+    "loginTitle": "Hesabına giriş yap",
+    "loginSubtitle": "Kaldığın yerden devam et.",
+    "registerTitle": "Hesap oluştur",
+    "registerSubtitle": "Birkaç dakikada öğrenmeye başla.",
+    "email": "E-posta",
+    "password": "Şifre",
+    "name": "Ad",
+    "nameOptional": "Ad (isteğe bağlı)",
+    "submitLogin": "Giriş yap",
+    "submitRegister": "Kayıt ol",
+    "noAccount": "Hesabın yok mu?",
+    "hasAccount": "Zaten hesabın var mı?",
+    "goRegister": "Kayıt ol",
+    "goLogin": "Giriş yap",
+    "errors": {
+      "emailRequired": "E-posta gerekli",
+      "emailInvalid": "Geçerli bir e-posta gir",
+      "passwordRequired": "Şifre gerekli",
+      "passwordMin": "Şifre en az 8 karakter olmalı",
+      "generic": "Bir hata oluştu. Lütfen tekrar dene."
+    }
+  }
+}
