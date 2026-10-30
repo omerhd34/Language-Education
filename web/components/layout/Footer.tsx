@@ -2,10 +2,13 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { Container } from "@/components/ui/Container";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export function Footer() {
   const t = useTranslations("Footer");
   const tNav = useTranslations("Nav");
+  const user = useAppSelector((state) => state.auth.user);
   const [year, setYear] = useState<number | null>(null);
 
   useEffect(() => {
@@ -15,7 +18,10 @@ export function Footer() {
 
   return (
     <footer className="mt-auto border-t border-zinc-200 bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-950">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-8 sm:px-6">
+      <Container
+        size={user ? "app" : "page"}
+        className="flex flex-col gap-2 py-8"
+      >
         <p className="font-display text-lg font-semibold text-teal-800 dark:text-teal-300">
           {tNav("brand")}
         </p>
@@ -25,7 +31,7 @@ export function Footer() {
         <p className="text-xs text-zinc-500 dark:text-zinc-500">
           {year ? `© ${year} ${tNav("brand")}. ${t("rights")}` : `\u00a0`}
         </p>
-      </div>
+      </Container>
     </footer>
   );
 }

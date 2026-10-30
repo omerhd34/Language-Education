@@ -2,17 +2,43 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, useRouter } from "@/i18n/navigation";
+import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { Container } from "@/components/ui/Container";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { useLogoutMutation } from "@/store/api";
+import { clearCredentials } from "@/store/authSlice";
 
 export function Navbar() {
   const t = useTranslations("Nav");
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
   const [open, setOpen] = useState(false);
+
+  async function handleLogout() {
+    try {
+      await logout().unwrap();
+    } catch {
+      // Cookie/sunucu temizliği başarısız olsa da yerel oturumu kapat.
+    }
+    dispatch(clearCredentials());
+    setOpen(false);
+    router.push("/");
+  }
+
+  const accountLabel = user?.name?.trim() || user?.email || "";
 
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6">
+      <Container
+        size={user ? "app" : "page"}
+        className="flex h-16 items-center justify-between"
+      >
         <Link
           href="/"
           className="font-display text-xl font-semibold tracking-tight text-teal-800 dark:text-teal-300"
@@ -22,12 +48,31 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-3 sm:flex">
           <ThemeToggle />
-          <ButtonLink href="/login" variant="ghost" size="sm">
-            {t("login")}
-          </ButtonLink>
-          <ButtonLink href="/register" size="sm">
-            {t("register")}
-          </ButtonLink>
+          {user ? (
+            <>
+              <span className="max-w-48 truncate text-sm text-zinc-600 dark:text-zinc-300">
+                {accountLabel}
+              </span>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                disabled={isLoggingOut}
+                onClick={() => void handleLogout()}
+              >
+                {t("logout")}
+              </Button>
+            </>
+          ) : (
+            <>
+              <ButtonLink href="/login" variant="ghost" size="sm">
+                {t("login")}
+              </ButtonLink>
+              <ButtonLink href="/register" size="sm">
+                {t("register")}
+              </ButtonLink>
+            </>
+          )}
         </nav>
 
         <div className="flex items-center gap-2 sm:hidden">
@@ -48,26 +93,45 @@ export function Navbar() {
             </span>
           </button>
         </div>
-      </div>
+      </Container>
 
       {open ? (
         <div className="border-t border-zinc-200 px-4 py-3 sm:hidden dark:border-zinc-800">
           <div className="flex flex-col gap-2">
-            <ButtonLink
-              href="/login"
-              variant="secondary"
-              className="w-full"
-              onClick={() => setOpen(false)}
-            >
-              {t("login")}
-            </ButtonLink>
-            <ButtonLink
-              href="/register"
-              className="w-full"
-              onClick={() => setOpen(false)}
-            >
-              {t("register")}
-            </ButtonLink>
+            {user ? (
+              <>
+                <p className="truncate px-1 text-sm text-zinc-600 dark:text-zinc-300">
+                  {accountLabel}
+                </p>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  className="w-full"
+                  disabled={isLoggingOut}
+                  onClick={() => void handleLogout()}
+                >
+                  {t("logout")}
+                </Button>
+              </>
+            ) : (
+              <>
+                <ButtonLink
+                  href="/login"
+                  variant="secondary"
+                  className="w-full"
+                  onClick={() => setOpen(false)}
+                >
+                  {t("login")}
+                </ButtonLink>
+                <ButtonLink
+                  href="/register"
+                  className="w-full"
+                  onClick={() => setOpen(false)}
+                >
+                  {t("register")}
+                </ButtonLink>
+              </>
+            )}
           </div>
         </div>
       ) : null}
