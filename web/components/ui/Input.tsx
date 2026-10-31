@@ -16,12 +16,12 @@ export function Input({
 
   return (
     <label className="flex w-full flex-col gap-1.5 text-sm" htmlFor={inputId}>
-      <span className="font-medium text-zinc-800 dark:text-zinc-100">
+      <span className="font-medium text-brand-900 dark:text-brand-100">
         {label}
       </span>
       <input
         id={inputId}
-        className={`h-11 rounded-lg border border-zinc-300 bg-white px-3 text-zinc-900 outline-none transition-colors placeholder:text-zinc-400 focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-50 dark:placeholder:text-zinc-500 dark:focus:border-teal-400 dark:focus:ring-teal-400/20 ${error ? "border-red-500 dark:border-red-400" : ""} ${className}`}
+        className={`h-11 rounded-lg border border-brand-400/70 bg-surface px-3 text-brand-950 outline-none transition-colors placeholder:text-brand-600/60 focus:border-brand-800 focus:ring-2 focus:ring-brand-800/20 dark:border-brand-600 dark:bg-brand-900 dark:text-brand-100 dark:placeholder:text-brand-400/70 dark:focus:border-brand-400 dark:focus:ring-brand-400/20 ${error ? "border-red-500 dark:border-red-400" : ""} ${className}`}
         aria-invalid={Boolean(error)}
         aria-describedby={error && inputId ? `${inputId}-error` : undefined}
         {...props}
