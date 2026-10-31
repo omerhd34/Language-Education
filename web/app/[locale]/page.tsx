@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { LandingAnnouncements } from "@/components/features/landing/LandingAnnouncements";
+import { LandingEducationSystem } from "@/components/features/landing/LandingEducationSystem";
 import { LandingHero } from "@/components/features/landing/LandingHero";
 
 export default async function HomePage({
@@ -13,6 +14,7 @@ export default async function HomePage({
   return (
     <>
       <LandingHero />
+      <LandingEducationSystem />
       <LandingAnnouncements />
     </>
   );
