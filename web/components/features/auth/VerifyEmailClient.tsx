@@ -67,17 +67,10 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
         </p>
         <p className="text-sm text-brand-600 dark:text-brand-400">
           <Link
-            href="/register"
+            href="/panel"
             className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
           >
-            {t("goRegister")}
-          </Link>
-          {" · "}
-          <Link
-            href="/login"
-            className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
-          >
-            {t("goLogin")}
+            {t("myPanel")}
           </Link>
         </p>
       </div>
@@ -85,7 +78,10 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
   }
 
   return (
-    <p className="text-sm text-brand-600 dark:text-brand-400" aria-live="polite">
+    <p
+      className="text-sm text-brand-600 dark:text-brand-400"
+      aria-live="polite"
+    >
       {done
         ? t("verifySuccess")
         : isLoading || token
