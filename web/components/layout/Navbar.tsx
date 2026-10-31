@@ -83,31 +83,12 @@ export function Navbar() {
             />
           ) : (
             <>
-              <ButtonLink
-                href="/login"
-                variant="outline"
-                size="lg"
-                style={{
-                  height: 40,
-                  minHeight: 40,
-                  maxHeight: 40,
-                  boxSizing: "border-box",
-                }}
-              >
-                <HiArrowRightOnRectangle className="size-4" aria-hidden />
+              <ButtonLink href="/login" variant="outline" size="lg">
+                <HiArrowRightOnRectangle aria-hidden />
                 {t("login")}
               </ButtonLink>
-              <ButtonLink
-                href="/register"
-                size="lg"
-                style={{
-                  height: 40,
-                  minHeight: 40,
-                  maxHeight: 40,
-                  boxSizing: "border-box",
-                }}
-              >
-                <HiUserPlus className="size-4" aria-hidden />
+              <ButtonLink href="/register" size="lg">
+                <HiUserPlus aria-hidden />
                 {t("register")}
               </ButtonLink>
             </>

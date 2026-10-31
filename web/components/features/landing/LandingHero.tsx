@@ -5,13 +5,6 @@ import { Badge } from "@/components/ui/Badge";
 import { buttonVariants } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
-const navButtonStyle = {
-  height: 40,
-  minHeight: 40,
-  maxHeight: 40,
-  boxSizing: "border-box",
-} as const;
-
 export function LandingHero() {
   const t = useTranslations("Landing");
   const tNav = useTranslations("Nav");
@@ -49,9 +42,8 @@ export function LandingHero() {
           <a
             href="#egitim-sistemi"
             className={buttonVariants({ variant: "outline", size: "lg" })}
-            style={navButtonStyle}
           >
-            <HiAcademicCap className="size-4 shrink-0" aria-hidden />
+            <HiAcademicCap aria-hidden />
             {t("ctaSystem")}
           </a>
         </div>
