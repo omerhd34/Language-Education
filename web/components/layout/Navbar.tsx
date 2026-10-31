@@ -2,10 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { HiArrowRightOnRectangle, HiUserPlus } from "react-icons/hi2";
+import { HiRectangleStack } from "react-icons/hi2";
 import { Link, useRouter } from "@/i18n/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
-import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
@@ -74,7 +73,6 @@ export function Navbar() {
         </nav>
 
         <nav className="hidden items-center justify-self-end gap-3 md:flex">
-          <ThemeToggle />
           {user ? (
             <UserMenu
               user={user}
@@ -83,27 +81,25 @@ export function Navbar() {
             />
           ) : (
             <>
-              <ButtonLink href="/login" variant="outline" size="lg">
-                <HiArrowRightOnRectangle aria-hidden />
-                {t("login")}
-              </ButtonLink>
-              <ButtonLink href="/register" size="lg">
-                <HiUserPlus aria-hidden />
-                {t("register")}
+              <ThemeToggle />
+              <ButtonLink href="/panel" size="lg">
+                <HiRectangleStack aria-hidden />
+                {t("myPanel")}
               </ButtonLink>
             </>
           )}
         </nav>
 
         <div className="flex items-center justify-self-end gap-2 md:hidden">
-          <ThemeToggle />
           {user ? (
-            <Avatar className="size-8">
-              <AvatarFallback className="text-[0.65rem]">
-                {initials}
-              </AvatarFallback>
-            </Avatar>
-          ) : null}
+            <UserMenu
+              user={user}
+              isLoggingOut={isLoggingOut}
+              onLogout={() => void handleLogout()}
+            />
+          ) : (
+            <ThemeToggle />
+          )}
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-brand-400/70 dark:border-brand-600"
@@ -136,54 +132,33 @@ export function Navbar() {
               </Link>
             ))}
             {user ? (
-              <>
-                <div className="flex items-center gap-3 px-1 py-2">
-                  <Avatar className="size-9">
-                    <AvatarFallback>{initials}</AvatarFallback>
-                  </Avatar>
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-medium text-brand-950 dark:text-brand-100">
-                      {accountLabel}
+              <div className="flex items-center gap-3 px-1 py-2">
+                <Avatar className="size-9 rounded-full">
+                  <AvatarFallback className="rounded-full">
+                    {initials}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-medium text-brand-950 dark:text-brand-100">
+                    {accountLabel}
+                  </p>
+                  {user.name?.trim() ? (
+                    <p className="truncate text-xs text-brand-600 dark:text-brand-400">
+                      {user.email}
                     </p>
-                    {user.name?.trim() ? (
-                      <p className="truncate text-xs text-brand-600 dark:text-brand-400">
-                        {user.email}
-                      </p>
-                    ) : null}
-                  </div>
+                  ) : null}
                 </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full"
-                  disabled={isLoggingOut}
-                  onClick={() => void handleLogout()}
-                >
-                  {t("logout")}
-                </Button>
-              </>
+              </div>
             ) : (
-              <>
-                <ButtonLink
-                  href="/login"
-                  variant="outline"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => setOpen(false)}
-                >
-                  <HiArrowRightOnRectangle aria-hidden />
-                  {t("login")}
-                </ButtonLink>
-                <ButtonLink
-                  href="/register"
-                  size="lg"
-                  className="w-full"
-                  onClick={() => setOpen(false)}
-                >
-                  <HiUserPlus aria-hidden />
-                  {t("register")}
-                </ButtonLink>
-              </>
+              <ButtonLink
+                href="/panel"
+                size="lg"
+                className="w-full"
+                onClick={() => setOpen(false)}
+              >
+                <HiRectangleStack aria-hidden />
+                {t("myPanel")}
+              </ButtonLink>
             )}
           </div>
         </div>

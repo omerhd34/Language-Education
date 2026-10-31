@@ -1,11 +1,45 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useId, useRef, useState } from "react";
+import { useTheme } from "next-themes";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type ReactNode,
+} from "react";
+import {
+  Bell,
+  CreditCard,
+  HelpCircle,
+  LogOut,
+  MessageSquareText,
+  Search,
+  Settings,
+  Sparkles,
+  Sun,
+  UserRound,
+} from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
-import { Button } from "@/components/ui/Button";
+import { Switch } from "@/components/ui/switch";
+import { Link } from "@/i18n/navigation";
 import { getUserInitials } from "@/lib/userInitials";
 import type { AuthUser } from "@/store/api";
+
+const ROW_SELECTOR = ".menu-item, .sign-out-row";
+const UNREAD_MESSAGES = 3;
+
+const subscribe = () => () => {};
+const useIsMounted = () =>
+  useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
 
 type UserMenuProps = {
   user: AuthUser;
@@ -13,16 +47,97 @@ type UserMenuProps = {
   onLogout: () => void;
 };
 
+type MenuLink = {
+  key: string;
+  href: string;
+  icon: typeof UserRound;
+  shortcut?: string[];
+  isNew?: boolean;
+};
+
 export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
   const t = useTranslations("Nav");
+  const tTheme = useTranslations("Theme");
+  const { resolvedTheme, setTheme } = useTheme();
+  const mounted = useIsMounted();
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
-  const accountLabel = user.name?.trim() || user.email;
+  const navRef = useRef<HTMLElement>(null);
+  const plateRef = useRef<HTMLDivElement>(null);
+  const activeIndexRef = useRef(-1);
+
+  const displayName = user.name?.trim() || user.email;
   const initials = getUserInitials(user.name, user.email);
+  const isDark = resolvedTheme === "dark";
+
+  const menuLinks: MenuLink[] = [
+    {
+      key: "myProfile",
+      href: "/panel",
+      icon: UserRound,
+      shortcut: ["⌘", "⇧", "P"],
+    },
+    {
+      key: "accountSettings",
+      href: "/panel",
+      icon: Settings,
+      shortcut: ["⌘", ","],
+    },
+    { key: "billing", href: "/packages", icon: CreditCard },
+    { key: "helpCenter", href: "/sss", icon: HelpCircle },
+    {
+      key: "whatsNew",
+      href: "/#announcements",
+      icon: Sparkles,
+      isNew: true,
+    },
+  ];
+
+  const clearPlate = useCallback(() => {
+    const plate = plateRef.current;
+    const nav = navRef.current;
+    if (plate) {
+      plate.classList.remove("on");
+    }
+    if (nav) {
+      nav.querySelectorAll(ROW_SELECTOR).forEach((row) => {
+        row.classList.remove("is-active");
+      });
+    }
+    activeIndexRef.current = -1;
+  }, []);
+
+  const movePlateTo = useCallback((row: HTMLElement) => {
+    const nav = navRef.current;
+    const plate = plateRef.current;
+    if (!nav || !plate) {
+      return;
+    }
+
+    const rows = Array.from(nav.querySelectorAll<HTMLElement>(ROW_SELECTOR));
+    const to = rows.indexOf(row);
+    if (to < 0) {
+      return;
+    }
+
+    const from = activeIndexRef.current;
+    const delay = from < 0 ? 0 : Math.min(Math.abs(to - from) * 40, 160);
+    plate.style.setProperty("--dm-ink-delay", `${delay}ms`);
+    plate.style.width = `${row.offsetWidth}px`;
+    plate.style.height = `${row.offsetHeight}px`;
+    plate.style.transform = `translate(${row.offsetLeft}px, ${row.offsetTop}px)`;
+    plate.classList.add("on");
+
+    rows.forEach((item, index) => {
+      item.classList.toggle("is-active", index === to);
+    });
+    activeIndexRef.current = to;
+  }, []);
 
   useEffect(() => {
     if (!open) {
+      clearPlate();
       return;
     }
 
@@ -44,56 +159,246 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
       document.removeEventListener("mousedown", handlePointerDown);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [open]);
+  }, [clearPlate, open]);
+
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!open || !nav) {
+      return;
+    }
+
+    function handlePointerOver(event: PointerEvent) {
+      const row = (event.target as HTMLElement | null)?.closest(ROW_SELECTOR);
+      if (row instanceof HTMLElement && nav?.contains(row)) {
+        movePlateTo(row);
+      }
+    }
+
+    function handleFocusIn(event: FocusEvent) {
+      const row = (event.target as HTMLElement | null)?.closest(ROW_SELECTOR);
+      if (
+        row instanceof HTMLElement &&
+        nav?.contains(row) &&
+        row.matches(":focus-visible")
+      ) {
+        movePlateTo(row);
+      }
+    }
+
+    function handlePointerLeave() {
+      clearPlate();
+    }
+
+    nav.addEventListener("pointerover", handlePointerOver);
+    nav.addEventListener("focusin", handleFocusIn);
+    nav.addEventListener("pointerleave", handlePointerLeave);
+    return () => {
+      nav.removeEventListener("pointerover", handlePointerOver);
+      nav.removeEventListener("focusin", handleFocusIn);
+      nav.removeEventListener("pointerleave", handlePointerLeave);
+    };
+  }, [clearPlate, movePlateTo, open]);
+
+  function handleTriggerKeyDown(event: ReactKeyboardEvent<HTMLButtonElement>) {
+    if (
+      event.key === "ArrowDown" ||
+      event.key === "Enter" ||
+      event.key === " "
+    ) {
+      event.preventDefault();
+      setOpen(true);
+    }
+  }
 
   return (
     <div ref={rootRef} className="relative">
-      <button
-        type="button"
-        className="cursor-pointer rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:focus-visible:ring-offset-brand-950"
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-controls={menuId}
-        aria-label={accountLabel}
-        onClick={() => setOpen((value) => !value)}
-      >
-        <Avatar>
-          <AvatarFallback>{initials}</AvatarFallback>
-        </Avatar>
-      </button>
+      <div className="account-trigger-group">
+        <IconButton label={t("search")}>
+          <Search className="size-4.5" strokeWidth={1.75} aria-hidden />
+        </IconButton>
+
+        <span className="bar-badged">
+          <IconButton label={t("messages")}>
+            <MessageSquareText
+              className="size-4.5"
+              strokeWidth={1.75}
+              aria-hidden
+            />
+          </IconButton>
+          {UNREAD_MESSAGES > 0 ? (
+            <>
+              <span className="bar-badge" aria-hidden="true">
+                {UNREAD_MESSAGES}
+              </span>
+              <span className="sr-only">
+                {t("unreadMessages", { count: UNREAD_MESSAGES })}
+              </span>
+            </>
+          ) : null}
+        </span>
+
+        <IconButton label={t("notifications")}>
+          <Bell className="size-4.5" strokeWidth={1.75} aria-hidden />
+        </IconButton>
+
+        <button
+          type="button"
+          className="profile-trigger"
+          id="profile-trigger"
+          aria-haspopup="menu"
+          aria-expanded={open}
+          aria-controls={menuId}
+          aria-label={displayName}
+          onClick={() => setOpen((value) => !value)}
+          onKeyDown={handleTriggerKeyDown}
+        >
+          <Avatar className="size-8 rounded-full">
+            <AvatarFallback className="rounded-full text-[0.65rem]">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </button>
+      </div>
 
       {open ? (
-        <div
-          id={menuId}
-          role="menu"
-          className="absolute top-full right-0 z-50 mt-2 w-56 rounded-lg border border-border bg-surface p-2 shadow-sm dark:bg-brand-900"
-        >
-          <div className="border-b border-border px-2 py-2">
-            <p className="truncate text-sm font-medium text-brand-950 dark:text-brand-100">
-              {accountLabel}
-            </p>
-            {user.name?.trim() ? (
-              <p className="truncate text-xs text-brand-600 dark:text-brand-400">
-                {user.email}
+        <div id={menuId} className="account-dropdown" role="presentation">
+          <div className="account-dropdown__user">
+            <div className="relative shrink-0">
+              <Avatar className="size-11 rounded-full">
+                <AvatarFallback className="rounded-full text-sm">
+                  {initials}
+                </AvatarFallback>
+              </Avatar>
+              <span
+                className="absolute right-0 bottom-0 size-2.5 rounded-full bg-emerald-500 ring-2 ring-(--account-surface)"
+                aria-hidden
+              />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold text-(--account-text)">
+                {displayName}
               </p>
-            ) : null}
+              {user.name?.trim() ? (
+                <p className="truncate text-xs text-(--account-text-dim)">
+                  {user.email}
+                </p>
+              ) : null}
+            </div>
           </div>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            role="menuitem"
-            className="mt-1 w-full cursor-pointer justify-start"
-            disabled={isLoggingOut}
-            onClick={() => {
-              setOpen(false);
-              onLogout();
-            }}
+
+          <nav
+            ref={navRef}
+            id="dropdown-nav"
+            className="account-dropdown__nav"
+            aria-label={t("profileMenu")}
           >
-            {t("logout")}
-          </Button>
+            <div className="dm-plate" ref={plateRef} aria-hidden />
+
+            {menuLinks.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  role="menuitem"
+                  className="menu-item"
+                  onClick={() => setOpen(false)}
+                >
+                  <Icon
+                    className="menu-item__icon"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
+                  <span className="menu-item__label">{t(item.key)}</span>
+                  {item.isNew ? (
+                    <span className="menu-item__new">
+                      <span className="menu-item__new-dot" aria-hidden />
+                      {t("newBadge")}
+                    </span>
+                  ) : null}
+                  {item.shortcut ? (
+                    <span className="menu-item__shortcut" aria-hidden>
+                      {item.shortcut.map((key) => (
+                        <kbd key={key} className="menu-item__key">
+                          {key}
+                        </kbd>
+                      ))}
+                    </span>
+                  ) : null}
+                </Link>
+              );
+            })}
+
+            <div className="account-dropdown__divider" />
+
+            <div
+              className="menu-item menu-item--theme"
+              role="menuitem"
+              tabIndex={0}
+              onClick={() => {
+                if (!mounted) {
+                  return;
+                }
+                setTheme(isDark ? "light" : "dark");
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  if (mounted) {
+                    setTheme(isDark ? "light" : "dark");
+                  }
+                }
+              }}
+            >
+              <Sun className="menu-item__icon" strokeWidth={1.75} aria-hidden />
+              <span className="menu-item__label">{tTheme("darkMode")}</span>
+              <Switch
+                checked={mounted ? isDark : false}
+                disabled={!mounted}
+                aria-label={tTheme("toggle")}
+                className="ml-auto data-checked:bg-(--account-accent)"
+                onClick={(event) => event.stopPropagation()}
+                onPointerDown={(event) => event.stopPropagation()}
+                onCheckedChange={(checked) => {
+                  setTheme(checked ? "dark" : "light");
+                }}
+              />
+            </div>
+
+            <button
+              type="button"
+              role="menuitem"
+              className="sign-out-row"
+              disabled={isLoggingOut}
+              onClick={() => {
+                setOpen(false);
+                onLogout();
+              }}
+            >
+              <LogOut
+                className="menu-item__icon"
+                strokeWidth={1.75}
+                aria-hidden
+              />
+              <span className="menu-item__label">{t("logout")}</span>
+            </button>
+          </nav>
         </div>
       ) : null}
     </div>
+  );
+}
+
+function IconButton({
+  label,
+  children,
+}: {
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <button type="button" className="account-icon-btn" aria-label={label}>
+      {children}
+    </button>
   );
 }
