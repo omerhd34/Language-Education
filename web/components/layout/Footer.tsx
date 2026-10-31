@@ -20,17 +20,17 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="mt-auto border-t border-teal-900/10 bg-linear-to-b from-teal-50/80 to-zinc-50 dark:border-teal-400/10 dark:from-zinc-950 dark:to-zinc-950">
+    <footer className="mt-auto border-t border-border bg-linear-to-b from-surface to-brand-100 dark:from-brand-950 dark:to-brand-950">
       <Container size={user ? "app" : "page"} className="py-14 sm:py-16">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="max-w-sm space-y-4">
             <Link
               href="/"
-              className="inline-block font-display text-2xl font-semibold tracking-tight text-teal-800 transition-transform duration-200 hover:scale-105 dark:text-teal-300"
+              className="inline-block font-display text-2xl font-semibold tracking-tight text-brand-800 transition-transform duration-200 hover:scale-105 dark:text-brand-400"
             >
               {tNav("brand")}
             </Link>
-            <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
+            <p className="text-sm leading-relaxed text-brand-600 dark:text-brand-400">
               {t("tagline")}
             </p>
             {!user ? (
@@ -40,7 +40,7 @@ export function Footer() {
                 </ButtonLink>
                 <Link
                   href="/login"
-                  className="text-sm font-medium text-teal-800 transition-colors hover:text-teal-950 dark:text-teal-300 dark:hover:text-teal-200"
+                  className="text-sm font-medium text-brand-800 transition-colors hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100"
                 >
                   {t("ctaSecondary")}
                 </Link>
@@ -49,7 +49,7 @@ export function Footer() {
           </div>
 
           <div className="space-y-4">
-            <p className="text-xs font-semibold tracking-[0.14em] text-teal-800/70 uppercase dark:text-teal-300/70">
+            <p className="text-xs font-semibold tracking-[0.14em] text-brand-800/70 uppercase dark:text-brand-400/70">
               {t("explore")}
             </p>
             <ul className="space-y-3">
@@ -57,7 +57,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-zinc-600 transition-colors hover:text-teal-800 dark:text-zinc-400 dark:hover:text-teal-300"
+                    className="text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
                   >
                     {tNav(item.labelKey)}
                   </Link>
@@ -67,14 +67,14 @@ export function Footer() {
           </div>
 
           <div className="space-y-4">
-            <p className="text-xs font-semibold tracking-[0.14em] text-teal-800/70 uppercase dark:text-teal-300/70">
+            <p className="text-xs font-semibold tracking-[0.14em] text-brand-800/70 uppercase dark:text-brand-400/70">
               {t("support")}
             </p>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/iletisim"
-                  className="text-sm text-zinc-600 transition-colors hover:text-teal-800 dark:text-zinc-400 dark:hover:text-teal-300"
+                  className="text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
                 >
                   {t("contactLink")}
                 </Link>
@@ -82,23 +82,23 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${t("email")}`}
-                  className="text-sm text-zinc-600 transition-colors hover:text-teal-800 dark:text-zinc-400 dark:hover:text-teal-300"
+                  className="text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
                 >
                   {t("email")}
                 </a>
               </li>
             </ul>
-            <p className="max-w-xs text-sm leading-relaxed text-zinc-500 dark:text-zinc-500">
+            <p className="max-w-xs text-sm leading-relaxed text-brand-600/80 dark:text-brand-400/80">
               {t("supportNote")}
             </p>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-teal-900/10 pt-6 sm:flex-row sm:items-center sm:justify-between dark:border-teal-400/10">
-          <p className="text-xs text-zinc-500 dark:text-zinc-500">
+        <div className="mt-12 flex flex-col gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-xs text-brand-600/80 dark:text-brand-400/80">
             {year ? `© ${year} ${tNav("brand")}. ${t("rights")}` : "\u00a0"}
           </p>
-          <p className="text-xs text-zinc-500 dark:text-zinc-500">
+          <p className="text-xs text-brand-600/80 dark:text-brand-400/80">
             {t("madeFor")}
           </p>
         </div>

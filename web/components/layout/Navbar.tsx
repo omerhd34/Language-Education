@@ -35,7 +35,7 @@ export function Navbar() {
   const accountLabel = user?.name?.trim() || user?.email || "";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200/80 bg-white/80 backdrop-blur-md dark:border-zinc-800/80 dark:bg-zinc-950/80">
+    <header className="sticky top-0 z-40 border-b border-border bg-brand-100/80 backdrop-blur-md dark:bg-brand-950/80">
       <Container
         size={user ? "app" : "page"}
         className="grid h-16 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[1fr_auto_1fr]"
@@ -43,7 +43,7 @@ export function Navbar() {
         <div className="justify-self-start">
           <Link
             href="/"
-            className="inline-block font-display text-3xl font-semibold tracking-tight text-teal-800 transition-transform duration-200 hover:scale-110 dark:text-teal-300"
+            className="inline-block font-display text-3xl font-semibold tracking-tight text-brand-800 transition-transform duration-200 hover:scale-110 dark:text-brand-400"
           >
             {t("brand")}
           </Link>
@@ -57,7 +57,7 @@ export function Navbar() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-zinc-600 transition-colors hover:text-teal-800 dark:text-zinc-300 dark:hover:text-teal-300"
+              className="text-sm font-medium text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
             >
               {t(item.labelKey)}
             </Link>
@@ -68,7 +68,7 @@ export function Navbar() {
           <ThemeToggle />
           {user ? (
             <>
-              <span className="max-w-48 truncate text-sm text-zinc-600 dark:text-zinc-300">
+              <span className="max-w-48 truncate text-sm text-brand-600 dark:text-brand-400">
                 {accountLabel}
               </span>
               <Button
@@ -97,7 +97,7 @@ export function Navbar() {
           <ThemeToggle />
           <button
             type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-600"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-brand-400/70 dark:border-brand-600"
             aria-expanded={open}
             aria-label={open ? t("closeMenu") : t("openMenu")}
             onClick={() => setOpen((value) => !value)}
@@ -114,13 +114,13 @@ export function Navbar() {
       </Container>
 
       {open ? (
-        <div className="border-t border-zinc-200 px-4 py-3 md:hidden dark:border-zinc-800">
+        <div className="border-t border-border px-4 py-3 md:hidden">
           <div className="flex flex-col gap-2">
             {navLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-zinc-700 hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-900"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-brand-800 hover:bg-surface-muted dark:text-brand-100 dark:hover:bg-brand-900"
                 onClick={() => setOpen(false)}
               >
                 {t(item.labelKey)}
@@ -128,7 +128,7 @@ export function Navbar() {
             ))}
             {user ? (
               <>
-                <p className="truncate px-1 text-sm text-zinc-600 dark:text-zinc-300">
+                <p className="truncate px-1 text-sm text-brand-600 dark:text-brand-400">
                   {accountLabel}
                 </p>
                 <Button

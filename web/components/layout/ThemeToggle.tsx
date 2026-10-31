@@ -19,7 +19,7 @@ export function ThemeToggle() {
     return (
       <button
         type="button"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 dark:border-zinc-600"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-brand-400/70 dark:border-brand-600"
         aria-label={t("toggle")}
         disabled
       />
@@ -31,7 +31,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 text-zinc-700 transition-colors hover:bg-zinc-100 dark:border-zinc-600 dark:text-zinc-200 dark:hover:bg-zinc-800 cursor-pointer"
+      className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-brand-400/70 text-brand-800 transition-colors hover:bg-surface-muted dark:border-brand-600 dark:text-brand-100 dark:hover:bg-brand-900"
       aria-label={t("toggle")}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
