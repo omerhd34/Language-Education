@@ -3,18 +3,54 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #f7faf9;
-  --foreground: #18181b;
+  --brand-950: #111522;
+  --brand-900: #1e263b;
+  --brand-800: #303d59;
+  --brand-600: #536684;
+  --brand-400: #98a9c4;
+  --brand-100: #dce3ef;
+
+  --background: var(--brand-100);
+  --foreground: var(--brand-950);
+  --surface: #eef2f8;
+  --surface-muted: #e4eaf3;
+  --border: color-mix(in srgb, var(--brand-400) 55%, transparent);
+  --muted: var(--brand-600);
+  --accent: var(--brand-800);
+  --accent-hover: var(--brand-900);
+  --ring: var(--brand-600);
 }
 
 .dark {
-  --background: #09090b;
-  --foreground: #f4f4f5;
+  --background: var(--brand-950);
+  --foreground: var(--brand-100);
+  --surface: var(--brand-900);
+  --surface-muted: color-mix(in srgb, var(--brand-900) 70%, var(--brand-950));
+  --border: color-mix(in srgb, var(--brand-800) 80%, transparent);
+  --muted: var(--brand-400);
+  --accent: var(--brand-400);
+  --accent-hover: #b6c3d8;
+  --ring: var(--brand-400);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-ring: var(--ring);
+
+  --color-brand-950: var(--brand-950);
+  --color-brand-900: var(--brand-900);
+  --color-brand-800: var(--brand-800);
+  --color-brand-600: var(--brand-600);
+  --color-brand-400: var(--brand-400);
+  --color-brand-100: var(--brand-100);
+
   --font-sans: var(--font-body);
   --font-display: var(--font-display);
 }
