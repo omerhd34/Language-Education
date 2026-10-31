@@ -25,7 +25,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
 
   useEffect(() => {
     if (existingUser) {
-      router.replace("/");
+      router.replace("/panelim");
     }
   }, [existingUser, router]);
 
@@ -51,7 +51,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
           }),
         );
         setDone(true);
-        router.replace("/");
+        router.replace("/panelim");
       } catch {
         startedTokens.delete(token);
         setError(t("verifyInvalid"));

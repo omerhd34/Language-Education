@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { useRefreshMutation } from "@/store/api";
-import { setCredentials } from "@/store/authSlice";
+import { setAuthAnonymous, setCredentials } from "@/store/authSlice";
 
 type AuthSessionBootstrapProps = {
   children: React.ReactNode;
@@ -31,7 +31,9 @@ export function AuthSessionBootstrap({ children }: AuthSessionBootstrapProps) {
             accessToken: result.accessToken,
           }),
         );
-      } catch {}
+      } catch {
+        dispatch(setAuthAnonymous());
+      }
     })();
   }, [accessToken, dispatch, refresh]);
 

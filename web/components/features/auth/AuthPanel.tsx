@@ -184,7 +184,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
           accessToken: result.accessToken,
         }),
       );
-      router.push("/");
+      router.push("/panelim");
     } catch (error) {
       if (getErrorCode(error) === "EMAIL_NOT_VERIFIED") {
         setFormError(t("errors.emailNotVerified"));
