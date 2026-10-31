@@ -9,6 +9,7 @@ export function LandingAnnouncements() {
 
   return (
     <section
+      id="announcements"
       aria-labelledby="announcements-heading"
       className="border-t border-border bg-surface-muted/80 dark:bg-brand-950/50"
     >
