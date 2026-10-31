@@ -74,13 +74,13 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
   const menuLinks: MenuLink[] = [
     {
       key: "myProfile",
-      href: "/panel",
+      href: "/panelim",
       icon: UserRound,
       shortcut: ["⌘", "⇧", "P"],
     },
     {
       key: "accountSettings",
-      href: "/panel",
+      href: "/panelim",
       icon: Settings,
       shortcut: ["⌘", ","],
     },
