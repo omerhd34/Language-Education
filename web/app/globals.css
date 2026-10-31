@@ -171,3 +171,305 @@ body {
     @apply font-sans;
   }
 }
+
+:root {
+  --account-accent: #d83752;
+  --account-surface: #ffffff;
+  --account-text: var(--brand-950);
+  --account-text-dim: var(--brand-600);
+  --account-hairline: color-mix(in srgb, var(--brand-950) 10%, transparent);
+  --account-icon: var(--brand-800);
+}
+
+.dark {
+  --account-accent: #ff5c8d;
+  --account-surface: #161618;
+  --account-text: #ededef;
+  --account-text-dim: color-mix(in srgb, #ededef 62%, transparent);
+  --account-hairline: rgba(255, 255, 255, 0.07);
+  --account-icon: color-mix(in srgb, #ededef 78%, transparent);
+}
+
+.account-trigger-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: 16px;
+  background: var(--account-surface);
+  overflow: hidden;
+  box-shadow:
+    inset 0 0 0 1px var(--account-hairline),
+    inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent);
+}
+
+.dark .account-trigger-group {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.account-icon-btn {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--account-icon);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+  cursor: pointer;
+}
+
+.account-icon-btn:hover {
+  background: color-mix(in srgb, var(--account-icon) 8%, transparent);
+  color: var(--account-text);
+}
+
+.account-icon-btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.profile-trigger {
+  display: inline-flex;
+  margin-left: 2px;
+  border-radius: 999px;
+  cursor: pointer;
+  outline: none;
+}
+
+.profile-trigger:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.bar-badged {
+  position: relative;
+  display: inline-flex;
+}
+
+.bar-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 1;
+  min-width: 15px;
+  height: 15px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--account-accent);
+  color: #fff;
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0;
+  box-shadow: 0 0 0 1.5px var(--account-surface);
+  animation: badge-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 300ms both;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+@keyframes badge-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.account-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 50;
+  width: min(300px, calc(100vw - 1.5rem));
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--account-surface);
+  color: var(--account-text);
+  box-shadow:
+    0 18px 40px color-mix(in srgb, #000 18%, transparent),
+    inset 0 0 0 1px var(--account-hairline),
+    inset 0 1px 0 color-mix(in srgb, #fff 35%, transparent);
+}
+
+.dark .account-dropdown {
+  box-shadow:
+    0 18px 40px rgb(0 0 0 / 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.07),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.account-dropdown__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 6px 12px;
+}
+
+.account-dropdown__nav {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.account-dropdown__divider {
+  margin: 8px 4px;
+  border-top: 1px solid var(--account-hairline);
+}
+
+.dm-plate {
+  position: absolute;
+  inset: 0 auto auto 0;
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 240ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 240ms ease-out;
+  z-index: 0;
+}
+
+.dark .dm-plate {
+  background: color-mix(in srgb, var(--account-accent) 14%, transparent);
+}
+
+.dm-plate.on {
+  opacity: 1;
+}
+
+.menu-item,
+.sign-out-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--account-text);
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  text-decoration: none;
+  outline: none;
+}
+
+.menu-item:focus-visible,
+.sign-out-row:focus-visible {
+  box-shadow: inset 0 0 0 2px
+    color-mix(in srgb, var(--account-accent) 45%, transparent);
+}
+
+.menu-item__icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  color: var(--account-text-dim);
+  transition:
+    color 300ms ease-out var(--dm-ink-delay, 0ms),
+    stroke 300ms ease-out var(--dm-ink-delay, 0ms);
+}
+
+.menu-item__label {
+  flex: 1;
+  min-width: 0;
+  transition: color 300ms ease-out var(--dm-ink-delay, 0ms);
+}
+
+.menu-item.is-active .menu-item__icon,
+.sign-out-row.is-active .menu-item__icon {
+  color: var(--account-accent);
+  stroke: var(--account-accent);
+}
+
+.menu-item__shortcut {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: auto;
+}
+
+.menu-item__key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--account-text-dim);
+  background: color-mix(in srgb, var(--account-text) 6%, transparent);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--account-text) 12%, transparent);
+  transition: color 300ms ease-out var(--dm-ink-delay, 0ms);
+}
+
+.menu-item.is-active .menu-item__key {
+  color: var(--account-text);
+}
+
+.dark .menu-item__key {
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.menu-item__new {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--account-text-dim);
+}
+
+.menu-item__new-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #22c55e;
+}
+
+.sign-out-row {
+  color: var(--account-text-dim);
+}
+
+.sign-out-row:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-plate {
+    transition: opacity 120ms linear;
+  }
+
+  .bar-badge {
+    animation: none;
+  }
+}
