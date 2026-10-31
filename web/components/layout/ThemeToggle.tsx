@@ -5,6 +5,17 @@ import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { HiMoon, HiSun } from "react-icons/hi2";
+import { Button } from "@/components/ui/Button";
+
+const toggleStyle = {
+  width: 40,
+  height: 40,
+  minWidth: 40,
+  minHeight: 40,
+  maxWidth: 40,
+  maxHeight: 40,
+  boxSizing: "border-box",
+} as const;
 
 export function ThemeToggle() {
   const t = useTranslations("Theme");
@@ -17,11 +28,14 @@ export function ThemeToggle() {
 
   if (!mounted) {
     return (
-      <button
+      <Button
         type="button"
-        className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-brand-400/70 dark:border-brand-600"
+        variant="outline"
+        size="icon"
+        className="size-10!"
         aria-label={t("toggle")}
         disabled
+        style={toggleStyle}
       />
     );
   }
@@ -29,17 +43,20 @@ export function ThemeToggle() {
   const isDark = (theme === "system" ? resolvedTheme : theme) === "dark";
 
   return (
-    <button
+    <Button
       type="button"
-      className="inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-lg border border-brand-400/70 text-brand-800 transition-colors hover:bg-surface-muted dark:border-brand-600 dark:text-brand-100 dark:hover:bg-brand-900"
+      variant="outline"
+      size="icon"
+      className="size-10!"
       aria-label={t("toggle")}
       onClick={() => setTheme(isDark ? "light" : "dark")}
+      style={toggleStyle}
     >
       {isDark ? (
-        <HiSun className="h-4 w-4" aria-hidden />
+        <HiSun className="size-4" aria-hidden />
       ) : (
-        <HiMoon className="h-4 w-4" aria-hidden />
+        <HiMoon className="size-4" aria-hidden />
       )}
-    </button>
+    </Button>
   );
 }

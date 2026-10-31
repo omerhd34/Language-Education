@@ -2,14 +2,18 @@
 
 import { useTranslations } from "next-intl";
 import { useState } from "react";
+import { HiArrowRightOnRectangle, HiUserPlus } from "react-icons/hi2";
 import { Link, useRouter } from "@/i18n/navigation";
+import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { UserMenu } from "@/components/layout/UserMenu";
 import { navLinks } from "@/components/layout/navLinks";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { getUserInitials } from "@/lib/userInitials";
 import { useLogoutMutation } from "@/store/api";
 import { clearCredentials } from "@/store/authSlice";
 
@@ -33,6 +37,7 @@ export function Navbar() {
   }
 
   const accountLabel = user?.name?.trim() || user?.email || "";
+  const initials = user ? getUserInitials(user.name, user.email) : "";
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-brand-100/80 backdrop-blur-md dark:bg-brand-950/80">
@@ -53,40 +58,56 @@ export function Navbar() {
           className="hidden items-center justify-center gap-8 md:flex"
           aria-label={t("brand")}
         >
-          {navLinks.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
-            >
-              {t(item.labelKey)}
-            </Link>
-          ))}
+          {navLinks.map((item) => {
+            const Icon = item.Icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
+              >
+                <Icon className="size-4 shrink-0" aria-hidden />
+                {t(item.labelKey)}
+              </Link>
+            );
+          })}
         </nav>
 
         <nav className="hidden items-center justify-self-end gap-3 md:flex">
           <ThemeToggle />
           {user ? (
-            <>
-              <span className="max-w-48 truncate text-sm text-brand-600 dark:text-brand-400">
-                {accountLabel}
-              </span>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                disabled={isLoggingOut}
-                onClick={() => void handleLogout()}
-              >
-                {t("logout")}
-              </Button>
-            </>
+            <UserMenu
+              user={user}
+              isLoggingOut={isLoggingOut}
+              onLogout={() => void handleLogout()}
+            />
           ) : (
             <>
-              <ButtonLink href="/login" variant="ghost" size="sm">
+              <ButtonLink
+                href="/login"
+                variant="outline"
+                size="lg"
+                style={{
+                  height: 40,
+                  minHeight: 40,
+                  maxHeight: 40,
+                  boxSizing: "border-box",
+                }}
+              >
+                <HiArrowRightOnRectangle className="size-4" aria-hidden />
                 {t("login")}
               </ButtonLink>
-              <ButtonLink href="/register" size="sm">
+              <ButtonLink
+                href="/register"
+                size="lg"
+                style={{
+                  height: 40,
+                  minHeight: 40,
+                  maxHeight: 40,
+                  boxSizing: "border-box",
+                }}
+              >
+                <HiUserPlus className="size-4" aria-hidden />
                 {t("register")}
               </ButtonLink>
             </>
@@ -95,6 +116,13 @@ export function Navbar() {
 
         <div className="flex items-center justify-self-end gap-2 md:hidden">
           <ThemeToggle />
+          {user ? (
+            <Avatar className="size-8">
+              <AvatarFallback className="text-[0.65rem]">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+          ) : null}
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-brand-400/70 dark:border-brand-600"
@@ -128,12 +156,24 @@ export function Navbar() {
             ))}
             {user ? (
               <>
-                <p className="truncate px-1 text-sm text-brand-600 dark:text-brand-400">
-                  {accountLabel}
-                </p>
+                <div className="flex items-center gap-3 px-1 py-2">
+                  <Avatar className="size-9">
+                    <AvatarFallback>{initials}</AvatarFallback>
+                  </Avatar>
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-medium text-brand-950 dark:text-brand-100">
+                      {accountLabel}
+                    </p>
+                    {user.name?.trim() ? (
+                      <p className="truncate text-xs text-brand-600 dark:text-brand-400">
+                        {user.email}
+                      </p>
+                    ) : null}
+                  </div>
+                </div>
                 <Button
                   type="button"
-                  variant="secondary"
+                  variant="outline"
                   className="w-full"
                   disabled={isLoggingOut}
                   onClick={() => void handleLogout()}
@@ -145,17 +185,21 @@ export function Navbar() {
               <>
                 <ButtonLink
                   href="/login"
-                  variant="secondary"
+                  variant="outline"
+                  size="lg"
                   className="w-full"
                   onClick={() => setOpen(false)}
                 >
+                  <HiArrowRightOnRectangle aria-hidden />
                   {t("login")}
                 </ButtonLink>
                 <ButtonLink
                   href="/register"
+                  size="lg"
                   className="w-full"
                   onClick={() => setOpen(false)}
                 >
+                  <HiUserPlus aria-hidden />
                   {t("register")}
                 </ButtonLink>
               </>

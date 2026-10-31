@@ -2,8 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { HiChatBubbleLeftRight, HiEnvelope } from "react-icons/hi2";
 import { Link } from "@/i18n/navigation";
-import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { navLinks } from "@/components/layout/navLinks";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -33,19 +33,6 @@ export function Footer() {
             <p className="text-sm leading-relaxed text-brand-600 dark:text-brand-400">
               {t("tagline")}
             </p>
-            {!user ? (
-              <div className="flex flex-wrap items-center gap-3 pt-1">
-                <ButtonLink href="/register" size="sm">
-                  {t("ctaPrimary")}
-                </ButtonLink>
-                <Link
-                  href="/login"
-                  className="text-sm font-medium text-brand-800 transition-colors hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100"
-                >
-                  {t("ctaSecondary")}
-                </Link>
-              </div>
-            ) : null}
           </div>
 
           <div className="space-y-4">
@@ -53,16 +40,20 @@ export function Footer() {
               {t("explore")}
             </p>
             <ul className="space-y-3">
-              {navLinks.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
-                  >
-                    {tNav(item.labelKey)}
-                  </Link>
-                </li>
-              ))}
+              {navLinks.map((item) => {
+                const Icon = item.Icon;
+                return (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="inline-flex items-center gap-2 text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
+                    >
+                      <Icon className="size-4 shrink-0" aria-hidden />
+                      {tNav(item.labelKey)}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -74,16 +65,21 @@ export function Footer() {
               <li>
                 <Link
                   href="/iletisim"
-                  className="text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
+                  className="inline-flex items-center gap-2 text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
                 >
+                  <HiChatBubbleLeftRight
+                    className="size-4 shrink-0"
+                    aria-hidden
+                  />
                   {t("contactLink")}
                 </Link>
               </li>
               <li>
                 <a
                   href={`mailto:${t("email")}`}
-                  className="text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
+                  className="inline-flex items-center gap-2 text-sm text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
                 >
+                  <HiEnvelope className="size-4 shrink-0" aria-hidden />
                   {t("email")}
                 </a>
               </li>
