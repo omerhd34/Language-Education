@@ -15,7 +15,7 @@ export function HeroLevelPath({ label, caption }: HeroLevelPathProps) {
       <ol className="mt-4 flex w-full flex-wrap items-center gap-y-3 sm:flex-nowrap">
         {LEVELS.map((level, index) => (
           <li key={level} className="contents">
-            <span className="shrink-0 font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-4xl lg:text-5xl dark:text-brand-100">
+            <span className="shrink-0 font-display text-xl font-semibold tracking-tight text-brand-950 sm:text-3xl lg:text-4xl dark:text-brand-100">
               {level}
             </span>
             {index < LEVELS.length - 1 ? (
