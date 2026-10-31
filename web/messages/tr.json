@@ -1,13 +1,14 @@
 {
   "Meta": {
     "title": "Pylmor",
-    "description": "Adım adım dil öğrenme platformu"
+    "description": "Yapay zeka destekli alıştırmalarla adım adım İngilizce öğren"
   },
   "Nav": {
     "home": "Ana sayfa",
     "about": "Hakkımızda",
     "benefits": "Kazanımlar",
     "packages": "Paketler",
+    "sss": "SSS",
     "contact": "İletişim",
     "login": "Giriş yap",
     "register": "Kayıt ol",
@@ -23,7 +24,7 @@
     "system": "Sistem"
   },
   "Footer": {
-    "tagline": "Dil öğrenmeyi sade ve sürdürülebilir hale getirir. Kendi hızında ilerle, düzenli pratikle kalıcı sonuçlar al.",
+    "tagline": "Dil öğrenmeyi sade ve sürdürülebilir hale getirir. Yapay zeka destekli alıştırmalar, kendi hızında ilerleme ve düzenli pratikle kalıcı sonuçlar al.",
     "rights": "Tüm hakları saklıdır.",
     "explore": "Keşfet",
     "support": "Destek",
@@ -32,26 +33,103 @@
     "supportNote": "Soruların veya önerilerin için buradayız. Genelde bir iş günü içinde dönüş yaparız.",
     "ctaPrimary": "Ücretsiz başla",
     "ctaSecondary": "Giriş yap",
-    "madeFor": "Adım adım İngilizce öğrenmek için."
+    "madeFor": "Yapay zeka destekli alıştırmalarla adım adım İngilizce öğrenmek için."
   },
   "Landing": {
+    "aiBadge": "AI",
+    "aiBadgeLabel": "Yapay zeka destekli",
     "headline": "İngilizceyi kendi hızında öğren",
-    "subheadline": "Seviyene uygun dersler, kelime çalışması ve düzenli ilerleme takibi yakında burada.",
+    "subheadline": "Üye olduktan sonra seviye sınavıyla 0’dan C2’ye yerleştirilirsin; istersen daha alt bir seviyeden veya 0’dan da başlayabilirsin. Dersler, kelime çalışması, yapay zeka destekli alıştırmalar ve ilerleme takibi senin temposuna göre açılır.",
     "ctaPrimary": "Ücretsiz başla",
-    "ctaSecondary": "Zaten hesabım var"
+    "ctaSecondary": "Zaten hesabım var",
+    "ctaSystem": "Eğitim Sistemi",
+    "levelsLabel": "Seviye yolu",
+    "levelsCaption": "Sınav sonrası seviyeni görürsün; başlangıç noktanı sen seçersin. Her seviyeden 0’a kadar geriye dönmek mümkün.",
+    "highlights": {
+      "placement": {
+        "title": "Seviye sınavı",
+        "body": "Kayıttan sonra kısa sınavla yerleştirilirsin."
+      },
+      "flexibility": {
+        "title": "Esnek başlangıç",
+        "body": "A2 olsan bile 0’dan başlayabilirsin."
+      },
+      "ai": {
+        "title": "Yapay zeka alıştırmaları",
+        "body": "Seviyene uygun, kişiselleştirilmiş pratik sorular."
+      },
+      "pace": {
+        "title": "Kendi temposun",
+        "body": "Günlük kısa derslerle sürdürülebilir ilerleme."
+      }
+    }
+  },
+  "EducationSystem": {
+    "title": "Eğitim Sistemi",
+    "subtitle": "Üyelikten sonra seviye sınavıyla başlayan; dersler, yapay zeka destekli alıştırmalar ve ilerleme takibiyle senin hızına göre şekillenen bir öğrenme yolu.",
+    "steps": {
+      "level": {
+        "title": "Seviyeni belirle",
+        "body": "Üye olduktan sonra kısa bir seviye sınavına girersin. Sonuçlarına göre seni 0, A1, A2, B1, B2, C1 veya C2 seviyesine yerleştiririz. İstersen sınav sonucundan daha alt bir seviyeden, hatta 0’dan da başlayabilirsin; örneğin A2 çıksan bile temeli yeniden kurmak için sıfırdan ilerleyebilirsin. Aynı esneklik her seviye için geçerlidir."
+      },
+      "lessons": {
+        "title": "Günlük derslerle ilerle",
+        "body": "Seçtiğin başlangıç seviyesine uygun dersler sırayla açılır. Her ders tek bir konuya odaklanır: dinleme, okuma, gramer veya konuşma kalıpları. Kısa oturumlarla düzenli pratik yapar, birikimini gün gün büyütürsün; istediğin gün daha fazla ilerleyebilir, yoğun günlerde temposunu düşürebilirsin."
+      },
+      "practice": {
+        "title": "Yapay zeka ile pekiştir",
+        "body": "Derslerden sonra yapay zeka destekli alıştırmalarla kelime, gramer ve kalıpları bağlam içinde uygularsın. Alıştırmalar seviyene ve zayıf kaldığın noktalara göre şekillenir; böylece ezberden öte, gerçek kullanıma yakın bir pratik yaparsın. Aralıklı tekrarlarla öğrendiklerin kalıcı hale gelir."
+      },
+      "progress": {
+        "title": "İlerlemeni gör",
+        "body": "Tamamlanan dersler, yapay zeka alıştırmaları, güçlenen kelimeler ve seviye hedeflerin tek bakışta görünür. Nerede olduğun, bir sonraki adımın ve hangi konuda daha fazla pratik gerektiği net kalır. İlerledikçe bir üst CEFR seviyesine geçişin de ölçülebilir hale gelir."
+      }
+    }
+  },
+  "Faq": {
+    "items": {
+      "what": {
+        "question": "Pylmor nedir?",
+        "answer": "Pylmor, İngilizceyi kendi hızında öğrenmen için adım adım dersler, kelime çalışması, yapay zeka destekli alıştırmalar ve ilerleme takibi sunan bir dil öğrenme platformudur."
+      },
+      "level": {
+        "question": "Hangi seviyeye uygun?",
+        "answer": "Üye olduktan sonra girdiğin seviye sınavıyla 0, A1, A2, B1, B2, C1 veya C2’ye yerleştirilirsin. İstersen daha alt bir seviyeden, hatta 0’dan da başlayabilirsin; A2 veya üzeri çıksan bile temelini güçlendirmek için sıfırdan ilerlemek senin tercihin. Aynı esneklik tüm seviyeler için geçerlidir."
+      },
+      "ai": {
+        "question": "Yapay zeka destekli alıştırmalar nasıl çalışır?",
+        "answer": "Derslerden sonra seviyene ve ihtiyacına göre kişiselleştirilmiş alıştırmalar sunulur. Kelime, gramer ve kullanım pratiklerini bağlama oturtmana yardım eder; zayıf kaldığın konulara daha fazla odaklanmanı sağlar."
+      },
+      "free": {
+        "question": "Ücretsiz kullanabilir miyim?",
+        "answer": "Evet. Hesap oluşturarak ücretsiz başlayabilirsin. Gelişmiş paket seçenekleri yakında eklenecek."
+      },
+      "pace": {
+        "question": "Ne kadar süre ayırmam gerekir?",
+        "answer": "Kendi hızında ilerlersin. Günde kısa, düzenli pratikler kalıcı öğrenme için yeterlidir."
+      },
+      "contact": {
+        "question": "Yardım için kime yazabilirim?",
+        "answer": "İletişim sayfasından veya merhaba@pylmor.com adresinden bize ulaşabilirsin. Genelde bir iş günü içinde dönüş yaparız."
+      }
+    }
   },
   "Pages": {
     "about": {
       "title": "Hakkımızda",
-      "description": "Pylmor, dil öğrenmeyi sade ve sürdürülebilir hale getirmek için tasarlandı. Adım adım dersler, kelime çalışması ve ilerleme takibiyle kendi hızında ilerlersin."
+      "description": "Pylmor, dil öğrenmeyi sade ve sürdürülebilir hale getirmek için tasarlandı. Adım adım dersler, yapay zeka destekli alıştırmalar, kelime çalışması ve ilerleme takibiyle kendi hızında ilerlersin."
     },
     "benefits": {
       "title": "Kazanımlar",
-      "description": "Düzenli pratik, seviyene uygun içerik ve net hedeflerle kelime dağarcığını güçlendir, gramerini netleştir ve güvenle iletişim kur."
+      "description": "Düzenli pratik, yapay zeka destekli alıştırmalar, seviyene uygun içerik ve net hedeflerle kelime dağarcığını güçlendir, gramerini netleştir ve güvenle iletişim kur."
     },
     "packages": {
       "title": "Paketler",
       "description": "İhtiyacına uygun öğrenme paketleri yakında burada. Ücretsiz başlangıç ve gelişmiş plan seçenekleri üzerinde çalışıyoruz."
+    },
+    "sss": {
+      "title": "Sıkça Sorulan Sorular",
+      "description": "Hesap, seviye, ücretsiz kullanım ve destek hakkında sık sorulan sorular."
     },
     "contact": {
       "title": "İletişim",
