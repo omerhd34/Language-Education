@@ -10,8 +10,8 @@
     "packages": "Paketler",
     "sss": "SSS",
     "contact": "İletişim",
-    "login": "Giriş yap",
-    "register": "Kayıt ol",
+    "login": "Giriş",
+    "register": "Kayıt",
     "logout": "Çıkış yap",
     "brand": "Pylmor",
     "openMenu": "Menüyü aç",
@@ -31,8 +31,6 @@
     "contactLink": "Bize yaz",
     "email": "merhaba@pylmor.com",
     "supportNote": "Soruların veya önerilerin için buradayız. Genelde bir iş günü içinde dönüş yaparız.",
-    "ctaPrimary": "Ücretsiz başla",
-    "ctaSecondary": "Giriş yap",
     "madeFor": "Yapay zeka destekli alıştırmalarla adım adım İngilizce öğrenmek için."
   },
   "Landing": {
@@ -40,29 +38,9 @@
     "aiBadgeLabel": "Yapay zeka destekli",
     "headline": "İngilizceyi kendi hızında öğren",
     "subheadline": "Üye olduktan sonra seviye sınavıyla 0’dan C2’ye yerleştirilirsin; istersen daha alt bir seviyeden veya 0’dan da başlayabilirsin. Dersler, kelime çalışması, yapay zeka destekli alıştırmalar ve ilerleme takibi senin temposuna göre açılır.",
-    "ctaPrimary": "Ücretsiz başla",
-    "ctaSecondary": "Zaten hesabım var",
     "ctaSystem": "Eğitim Sistemi",
     "levelsLabel": "Seviye yolu",
-    "levelsCaption": "Sınav sonrası seviyeni görürsün; başlangıç noktanı sen seçersin. Her seviyeden 0’a kadar geriye dönmek mümkün.",
-    "highlights": {
-      "placement": {
-        "title": "Seviye sınavı",
-        "body": "Kayıttan sonra kısa sınavla yerleştirilirsin."
-      },
-      "flexibility": {
-        "title": "Esnek başlangıç",
-        "body": "A2 olsan bile 0’dan başlayabilirsin."
-      },
-      "ai": {
-        "title": "Yapay zeka alıştırmaları",
-        "body": "Seviyene uygun, kişiselleştirilmiş pratik sorular."
-      },
-      "pace": {
-        "title": "Kendi temposun",
-        "body": "Günlük kısa derslerle sürdürülebilir ilerleme."
-      }
-    }
+    "levelsCaption": "Sınav sonrası seviyeni görürsün; başlangıç noktanı sen seçersin. Her seviyeden 0’a kadar geriye dönmek mümkün."
   },
   "EducationSystem": {
     "title": "Eğitim Sistemi",
