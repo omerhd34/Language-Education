@@ -65,17 +65,17 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
         <p className="text-sm text-red-600 dark:text-red-400" role="alert">
           {error}
         </p>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-sm text-brand-600 dark:text-brand-400">
           <Link
             href="/register"
-            className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+            className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
           >
             {t("goRegister")}
           </Link>
           {" · "}
           <Link
             href="/login"
-            className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+            className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
           >
             {t("goLogin")}
           </Link>
@@ -85,7 +85,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
   }
 
   return (
-    <p className="text-sm text-zinc-600 dark:text-zinc-400" aria-live="polite">
+    <p className="text-sm text-brand-600 dark:text-brand-400" aria-live="polite">
       {done
         ? t("verifySuccess")
         : isLoading || token

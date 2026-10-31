@@ -47,29 +47,29 @@ export function buildVerificationEmail(params: {
 
   const html = `<!DOCTYPE html>
 <html lang="tr">
-  <body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;color:#18181b;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:32px 16px;">
+  <body style="margin:0;padding:0;background:#dce3ef;font-family:Arial,Helvetica,sans-serif;color:#111522;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#dce3ef;padding:32px 16px;">
       <tr>
         <td align="center">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;background:#ffffff;border-radius:16px;padding:32px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;background:#eef2f8;border-radius:16px;padding:32px;">
             <tr>
               <td>
-                <p style="margin:0 0 8px;font-size:20px;font-weight:700;color:#0f766e;">Pylmor</p>
+                <p style="margin:0 0 8px;font-size:20px;font-weight:700;color:#303d59;">Pylmor</p>
                 <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;">Hesabını doğrula</h1>
                 <p style="margin:0 0 12px;font-size:15px;line-height:1.5;">${greeting}</p>
                 <p style="margin:0 0 24px;font-size:15px;line-height:1.5;">
                   Kayıt işlemini tamamlamak için aşağıdaki butona tıkla. Hesabın etkinleşecek ve otomatik olarak giriş yapacaksın.
                 </p>
                 <p style="margin:0 0 24px;text-align:center;">
-                  <a href="${params.verifyUrl}" style="display:inline-block;background:#0f766e;color:#ffffff;text-decoration:none;font-weight:600;font-size:15px;padding:12px 24px;border-radius:10px;">
+                  <a href="${params.verifyUrl}" style="display:inline-block;background:#303d59;color:#dce3ef;text-decoration:none;font-weight:600;font-size:15px;padding:12px 24px;border-radius:10px;">
                     Hesabı etkinleştir
                   </a>
                 </p>
-                <p style="margin:0;font-size:13px;line-height:1.5;color:#71717a;">
+                <p style="margin:0;font-size:13px;line-height:1.5;color:#536684;">
                   Buton çalışmazsa bu bağlantıyı tarayıcına yapıştır:<br />
-                  <a href="${params.verifyUrl}" style="color:#0f766e;word-break:break-all;">${params.verifyUrl}</a>
+                  <a href="${params.verifyUrl}" style="color:#303d59;word-break:break-all;">${params.verifyUrl}</a>
                 </p>
-                <p style="margin:24px 0 0;font-size:12px;line-height:1.5;color:#a1a1aa;">
+                <p style="margin:24px 0 0;font-size:12px;line-height:1.5;color:#98a9c4;">
                   Bu bağlantı 24 saat geçerlidir. Sen kayıt olmadıysan bu e-postayı yok sayabilirsin.
                 </p>
               </td>

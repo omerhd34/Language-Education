@@ -111,11 +111,11 @@ export function LoginForm() {
       <Button type="submit" disabled={isLoading} className="w-full">
         {t("submitLogin")}
       </Button>
-      <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="text-center text-sm text-brand-600 dark:text-brand-400">
         {t("noAccount")}{" "}
         <Link
           href="/register"
-          className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+          className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
         >
           {t("goRegister")}
         </Link>

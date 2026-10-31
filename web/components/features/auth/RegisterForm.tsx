@@ -87,18 +87,18 @@ export function RegisterForm() {
     return (
       <div className="space-y-4" role="status">
         <div className="space-y-2">
-          <h1 className="font-display text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+          <h1 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
             {t("checkEmailTitle")}
           </h1>
-          <p className="text-sm text-zinc-700 dark:text-zinc-300">
+          <p className="text-sm text-brand-800 dark:text-brand-400">
             {t("checkEmailBody", { email: submittedEmail })}
           </p>
         </div>
-        <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-center text-sm text-brand-600 dark:text-brand-400">
           {t("hasAccount")}{" "}
           <Link
             href="/login"
-            className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+            className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
           >
             {t("goLogin")}
           </Link>
@@ -110,10 +110,10 @@ export function RegisterForm() {
   return (
     <>
       <div className="mb-6 space-y-2">
-        <h1 className="font-display text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+        <h1 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
           {t("registerTitle")}
         </h1>
-        <p className="text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-sm text-brand-600 dark:text-brand-400">
           {t("registerSubtitle")}
         </p>
       </div>
@@ -156,11 +156,11 @@ export function RegisterForm() {
         <Button type="submit" disabled={isLoading} className="w-full">
           {t("submitRegister")}
         </Button>
-        <p className="text-center text-sm text-zinc-600 dark:text-zinc-400">
+        <p className="text-center text-sm text-brand-600 dark:text-brand-400">
           {t("hasAccount")}{" "}
           <Link
             href="/login"
-            className="font-medium text-teal-700 underline-offset-2 hover:underline dark:text-teal-300"
+            className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
           >
             {t("goLogin")}
           </Link>

@@ -15,10 +15,10 @@ export default async function LoginPage({
     <div className="mx-auto flex w-full max-w-md flex-col px-4 py-12 sm:px-6">
       <Card>
         <div className="mb-6 space-y-2">
-          <h1 className="font-display text-2xl font-semibold text-zinc-900 dark:text-zinc-50">
+          <h1 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
             {t("loginTitle")}
           </h1>
-          <p className="text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="text-sm text-brand-600 dark:text-brand-400">
             {t("loginSubtitle")}
           </p>
         </div>
