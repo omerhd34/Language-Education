@@ -5,6 +5,7 @@ import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
 import { HiMoon, HiSun } from "react-icons/hi2";
 import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/utils";
 
 const subscribe = () => () => {};
 const useIsMounted = () =>
@@ -14,7 +15,11 @@ const useIsMounted = () =>
     () => false,
   );
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  className?: string;
+};
+
+export function ThemeToggle({ className }: ThemeToggleProps) {
   const t = useTranslations("Theme");
   const { resolvedTheme, setTheme } = useTheme();
   const mounted = useIsMounted();
@@ -28,6 +33,7 @@ export function ThemeToggle() {
       size="icon"
       disabled={!mounted}
       aria-label={t("toggle")}
+      className={cn(className)}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
       {mounted ? <Icon aria-hidden /> : null}

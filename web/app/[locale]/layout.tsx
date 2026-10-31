@@ -1,10 +1,13 @@
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
 import { Manrope, Source_Serif_4 } from "next/font/google";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { Footer } from "@/components/layout/Footer";
-import { Navbar } from "@/components/layout/Navbar";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { routing } from "@/i18n/routing";
 import "../globals.css";
@@ -63,9 +66,7 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Suspense fallback={null}>
             <AppProviders>
-              <Navbar />
-              <main className="flex-1">{children}</main>
-              <Footer />
+              <SiteChrome>{children}</SiteChrome>
             </AppProviders>
           </Suspense>
         </NextIntlClientProvider>
