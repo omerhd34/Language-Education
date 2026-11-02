@@ -59,6 +59,47 @@ export const topicContent51: TopicContent = {
       ],
       "correctIndex": 0,
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+    },
+    {
+      "id": "51-fb-51-1-1",
+      "subtopicId": "51-1",
+      "type": "fill_blank",
+      "prompt": "\"A2 Yeterlilik Sınavı\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
+      "id": "51-cw-1",
+      "subtopicId": "51-1",
+      "type": "crossword",
+      "rows": 3,
+      "cols": 5,
+      "clues": [
+        {
+          "number": 1,
+          "direction": "across",
+          "text": "3 sayısı İngilizcede",
+          "answer": "THREE",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 2,
+          "direction": "down",
+          "text": "10 sayısı İngilizcede",
+          "answer": "TEN",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 3,
+          "direction": "across",
+          "text": "9 sayısı İngilizcede",
+          "answer": "NINE",
+          "row": 2,
+          "col": 0
+        }
+      ]
     }
   ]
 };

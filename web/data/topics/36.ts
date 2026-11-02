@@ -109,6 +109,14 @@ export const topicContent36: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "36-fb-36-1-1",
+      "subtopicId": "36-1",
+      "type": "fill_blank",
+      "prompt": "\"Zarf Yapımı (-ly)\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
       "id": "36-ex-36-2-1",
       "subtopicId": "36-2",
       "type": "multiple_choice",
@@ -137,6 +145,14 @@ export const topicContent36: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "36-fb-36-2-1",
+      "subtopicId": "36-2",
+      "type": "fill_blank",
+      "prompt": "\"Düzensiz Zarflar (fast, hard, well)\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
       "id": "36-ex-36-3-1",
       "subtopicId": "36-3",
       "type": "multiple_choice",
@@ -163,6 +179,47 @@ export const topicContent36: TopicContent = {
       ],
       "correctIndex": 0,
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+    },
+    {
+      "id": "36-fb-36-3-1",
+      "subtopicId": "36-3",
+      "type": "fill_blank",
+      "prompt": "\"Sıfat ve Zarf Farkı\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
+      "id": "36-cw-1",
+      "subtopicId": "36-1",
+      "type": "crossword",
+      "rows": 3,
+      "cols": 5,
+      "clues": [
+        {
+          "number": 1,
+          "direction": "across",
+          "text": "3 sayısı İngilizcede",
+          "answer": "THREE",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 2,
+          "direction": "down",
+          "text": "10 sayısı İngilizcede",
+          "answer": "TEN",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 3,
+          "direction": "across",
+          "text": "9 sayısı İngilizcede",
+          "answer": "NINE",
+          "row": 2,
+          "col": 0
+        }
+      ]
     }
   ]
 };

@@ -109,6 +109,14 @@ export const topicContent58: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "58-fb-58-1-1",
+      "subtopicId": "58-1",
+      "type": "fill_blank",
+      "prompt": "\"Who / Which / That\" konusu _____ seviyesine uygundur.",
+      "answer": "B1",
+      "explanation": "Bu konu B1 seviyesindedir."
+    },
+    {
       "id": "58-ex-58-2-1",
       "subtopicId": "58-2",
       "type": "multiple_choice",
@@ -137,6 +145,14 @@ export const topicContent58: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "58-fb-58-2-1",
+      "subtopicId": "58-2",
+      "type": "fill_blank",
+      "prompt": "\"Whose / Where / When\" konusu _____ seviyesine uygundur.",
+      "answer": "B1",
+      "explanation": "Bu konu B1 seviyesindedir."
+    },
+    {
       "id": "58-ex-58-3-1",
       "subtopicId": "58-3",
       "type": "multiple_choice",
@@ -163,6 +179,47 @@ export const topicContent58: TopicContent = {
       ],
       "correctIndex": 0,
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+    },
+    {
+      "id": "58-fb-58-3-1",
+      "subtopicId": "58-3",
+      "type": "fill_blank",
+      "prompt": "\"Relative Pronoun'un Düşmesi\" konusu _____ seviyesine uygundur.",
+      "answer": "B1",
+      "explanation": "Bu konu B1 seviyesindedir."
+    },
+    {
+      "id": "58-cw-1",
+      "subtopicId": "58-1",
+      "type": "crossword",
+      "rows": 3,
+      "cols": 5,
+      "clues": [
+        {
+          "number": 1,
+          "direction": "across",
+          "text": "3 sayısı İngilizcede",
+          "answer": "THREE",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 2,
+          "direction": "down",
+          "text": "10 sayısı İngilizcede",
+          "answer": "TEN",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 3,
+          "direction": "across",
+          "text": "9 sayısı İngilizcede",
+          "answer": "NINE",
+          "row": 2,
+          "col": 0
+        }
+      ]
     }
   ]
 };

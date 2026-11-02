@@ -109,6 +109,14 @@ export const topicContent17: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "17-fb-17-1-1",
+      "subtopicId": "17-1",
+      "type": "fill_blank",
+      "prompt": "\"Nesne Zamirleri (me, you, him...)\" konusu _____ seviyesine uygundur.",
+      "answer": "A1",
+      "explanation": "Bu konu A1 seviyesindedir."
+    },
+    {
       "id": "17-ex-17-2-1",
       "subtopicId": "17-2",
       "type": "multiple_choice",
@@ -137,6 +145,14 @@ export const topicContent17: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "17-fb-17-2-1",
+      "subtopicId": "17-2",
+      "type": "fill_blank",
+      "prompt": "\"Özne ve Nesne Zamirleri Farkı\" konusu _____ seviyesine uygundur.",
+      "answer": "A1",
+      "explanation": "Bu konu A1 seviyesindedir."
+    },
+    {
       "id": "17-ex-17-3-1",
       "subtopicId": "17-3",
       "type": "multiple_choice",
@@ -163,6 +179,47 @@ export const topicContent17: TopicContent = {
       ],
       "correctIndex": 0,
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+    },
+    {
+      "id": "17-fb-17-3-1",
+      "subtopicId": "17-3",
+      "type": "fill_blank",
+      "prompt": "\"Fiil ve Edat Sonrası Nesne Zamirleri\" konusu _____ seviyesine uygundur.",
+      "answer": "A1",
+      "explanation": "Bu konu A1 seviyesindedir."
+    },
+    {
+      "id": "17-cw-1",
+      "subtopicId": "17-1",
+      "type": "crossword",
+      "rows": 3,
+      "cols": 5,
+      "clues": [
+        {
+          "number": 1,
+          "direction": "across",
+          "text": "3 sayısı İngilizcede",
+          "answer": "THREE",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 2,
+          "direction": "down",
+          "text": "10 sayısı İngilizcede",
+          "answer": "TEN",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 3,
+          "direction": "across",
+          "text": "9 sayısı İngilizcede",
+          "answer": "NINE",
+          "row": 2,
+          "col": 0
+        }
+      ]
     }
   ]
 };

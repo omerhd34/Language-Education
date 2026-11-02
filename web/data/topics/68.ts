@@ -109,6 +109,14 @@ export const topicContent68: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "68-fb-68-1-1",
+      "subtopicId": "68-1",
+      "type": "fill_blank",
+      "prompt": "\"Reported Statements\" konusu _____ seviyesine uygundur.",
+      "answer": "B1",
+      "explanation": "Bu konu B1 seviyesindedir."
+    },
+    {
       "id": "68-ex-68-2-1",
       "subtopicId": "68-2",
       "type": "multiple_choice",
@@ -137,6 +145,14 @@ export const topicContent68: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "68-fb-68-2-1",
+      "subtopicId": "68-2",
+      "type": "fill_blank",
+      "prompt": "\"Zaman ve Zamir Değişimleri\" konusu _____ seviyesine uygundur.",
+      "answer": "B1",
+      "explanation": "Bu konu B1 seviyesindedir."
+    },
+    {
       "id": "68-ex-68-3-1",
       "subtopicId": "68-3",
       "type": "multiple_choice",
@@ -163,6 +179,47 @@ export const topicContent68: TopicContent = {
       ],
       "correctIndex": 0,
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+    },
+    {
+      "id": "68-fb-68-3-1",
+      "subtopicId": "68-3",
+      "type": "fill_blank",
+      "prompt": "\"Say ve Tell Farkı\" konusu _____ seviyesine uygundur.",
+      "answer": "B1",
+      "explanation": "Bu konu B1 seviyesindedir."
+    },
+    {
+      "id": "68-cw-1",
+      "subtopicId": "68-1",
+      "type": "crossword",
+      "rows": 3,
+      "cols": 5,
+      "clues": [
+        {
+          "number": 1,
+          "direction": "across",
+          "text": "3 sayısı İngilizcede",
+          "answer": "THREE",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 2,
+          "direction": "down",
+          "text": "10 sayısı İngilizcede",
+          "answer": "TEN",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 3,
+          "direction": "across",
+          "text": "9 sayısı İngilizcede",
+          "answer": "NINE",
+          "row": 2,
+          "col": 0
+        }
+      ]
     }
   ]
 };

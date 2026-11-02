@@ -109,6 +109,14 @@ export const topicContent31: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "31-fb-31-1-1",
+      "subtopicId": "31-1",
+      "type": "fill_blank",
+      "prompt": "\"Past Continuous - Olumlu\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
       "id": "31-ex-31-2-1",
       "subtopicId": "31-2",
       "type": "multiple_choice",
@@ -137,6 +145,14 @@ export const topicContent31: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "31-fb-31-2-1",
+      "subtopicId": "31-2",
+      "type": "fill_blank",
+      "prompt": "\"Past Continuous - Olumsuz\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
       "id": "31-ex-31-3-1",
       "subtopicId": "31-3",
       "type": "multiple_choice",
@@ -163,6 +179,47 @@ export const topicContent31: TopicContent = {
       ],
       "correctIndex": 0,
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+    },
+    {
+      "id": "31-fb-31-3-1",
+      "subtopicId": "31-3",
+      "type": "fill_blank",
+      "prompt": "\"Past Continuous - Soru ve Cevap\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
+      "id": "31-cw-1",
+      "subtopicId": "31-1",
+      "type": "crossword",
+      "rows": 3,
+      "cols": 5,
+      "clues": [
+        {
+          "number": 1,
+          "direction": "across",
+          "text": "3 sayısı İngilizcede",
+          "answer": "THREE",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 2,
+          "direction": "down",
+          "text": "10 sayısı İngilizcede",
+          "answer": "TEN",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 3,
+          "direction": "across",
+          "text": "9 sayısı İngilizcede",
+          "answer": "NINE",
+          "row": 2,
+          "col": 0
+        }
+      ]
     }
   ]
 };

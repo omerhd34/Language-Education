@@ -109,6 +109,14 @@ export const topicContent35: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "35-fb-35-1-1",
+      "subtopicId": "35-1",
+      "type": "fill_blank",
+      "prompt": "\"Too ve Very Farkı\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
       "id": "35-ex-35-2-1",
       "subtopicId": "35-2",
       "type": "multiple_choice",
@@ -137,6 +145,14 @@ export const topicContent35: TopicContent = {
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
     },
     {
+      "id": "35-fb-35-2-1",
+      "subtopicId": "35-2",
+      "type": "fill_blank",
+      "prompt": "\"Enough Kullanımı\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
       "id": "35-ex-35-3-1",
       "subtopicId": "35-3",
       "type": "multiple_choice",
@@ -163,6 +179,47 @@ export const topicContent35: TopicContent = {
       ],
       "correctIndex": 0,
       "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+    },
+    {
+      "id": "35-fb-35-3-1",
+      "subtopicId": "35-3",
+      "type": "fill_blank",
+      "prompt": "\"Too / Enough + To Yapısı\" konusu _____ seviyesine uygundur.",
+      "answer": "A2",
+      "explanation": "Bu konu A2 seviyesindedir."
+    },
+    {
+      "id": "35-cw-1",
+      "subtopicId": "35-1",
+      "type": "crossword",
+      "rows": 3,
+      "cols": 5,
+      "clues": [
+        {
+          "number": 1,
+          "direction": "across",
+          "text": "3 sayısı İngilizcede",
+          "answer": "THREE",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 2,
+          "direction": "down",
+          "text": "10 sayısı İngilizcede",
+          "answer": "TEN",
+          "row": 0,
+          "col": 0
+        },
+        {
+          "number": 3,
+          "direction": "across",
+          "text": "9 sayısı İngilizcede",
+          "answer": "NINE",
+          "row": 2,
+          "col": 0
+        }
+      ]
     }
   ]
 };
