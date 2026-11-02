@@ -1,0 +1,31 @@
+import type { VocabularyCategory } from "@/data/vocabulary/types";
+
+export const vocabularyCategory14: VocabularyCategory = {
+  id: "14",
+  title: "Meslekler",
+  words: [
+    { id: "14-1", en: "Job", tr: "Masat" },
+    { id: "14-2", en: "Work", tr: "İş" },
+    { id: "14-3", en: "Doctor", tr: "Doktor" },
+    { id: "14-4", en: "Dentist", tr: "Diş Hekimi" },
+    { id: "14-5", en: "Engineer", tr: "Mühendis" },
+    { id: "14-6", en: "Teacher", tr: "Öğretmen" },
+    { id: "14-7", en: "Student", tr: "Öğrenci" },
+    { id: "14-8", en: "Police", tr: "Polis" },
+    { id: "14-9", en: "Fireman", tr: "İtfaiye" },
+    { id: "14-10", en: "Nurse", tr: "Hemşire" },
+    { id: "14-11", en: "Painter", tr: "Boyacı" },
+    { id: "14-12", en: "Cook", tr: "Şef" },
+    { id: "14-13", en: "Pilot", tr: "Pilot" },
+    { id: "14-14", en: "Artist", tr: "Sanatçı" },
+    { id: "14-15", en: "Writer", tr: "Yazar" },
+    { id: "14-16", en: "Musician", tr: "Müzisyen" },
+    { id: "14-17", en: "Actor", tr: "Erkek Oyuncu" },
+    { id: "14-18", en: "Actress", tr: "Kadın Oyuncu" },
+    { id: "14-19", en: "Director", tr: "Yönetmen" },
+    { id: "14-20", en: "Police Officer", tr: "Polis Memuru" },
+    { id: "14-21", en: "Driver", tr: "Sürücü" },
+    { id: "14-22", en: "Waiter", tr: "Erkek Garson" },
+    { id: "14-23", en: "Waitress", tr: "Kadın Garson" },
+  ],
+};

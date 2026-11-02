@@ -1,0 +1,30 @@
+import type { VocabularyCategory } from "@/data/vocabulary/types";
+
+export const vocabularyCategory1: VocabularyCategory = {
+  id: "1",
+  title: "Selamlaşma ve Vedalaşma",
+  words: [
+    { id: "1-1", en: "Hello", tr: "Merhaba" },
+    { id: "1-2", en: "Hi", tr: "Selam" },
+    { id: "1-3", en: "Good morning", tr: "Günaydın" },
+    { id: "1-4", en: "Good afternoon", tr: "İyi günler" },
+    { id: "1-5", en: "Good evening", tr: "İyi akşamlar" },
+    { id: "1-6", en: "Good night", tr: "İyi geceler" },
+    { id: "1-7", en: "How are you?", tr: "Nasılsın?" },
+    { id: "1-8", en: "I'm fine", tr: "İyiyim" },
+    { id: "1-9", en: "Nice to meet you", tr: "Tanıştığımıza memnun oldum" },
+    { id: "1-10", en: "See you", tr: "Görüşürüz" },
+    { id: "1-11", en: "See you later", tr: "Sonra görüşürüz" },
+    { id: "1-12", en: "Goodbye", tr: "Hoşça kal" },
+    { id: "1-13", en: "Bye", tr: "Hoşça kal / Güle güle" },
+    { id: "1-14", en: "Take care", tr: "Kendine iyi bak" },
+    { id: "1-15", en: "Welcome", tr: "Hoş geldin" },
+    { id: "1-16", en: "Thank you", tr: "Teşekkür ederim" },
+    { id: "1-17", en: "Thanks", tr: "Teşekkürler" },
+    { id: "1-18", en: "Please", tr: "Lütfen" },
+    { id: "1-19", en: "OK", tr: "Tamam" },
+    { id: "1-20", en: "Yes", tr: "Evet" },
+    { id: "1-21", en: "No", tr: "Hayır" },
+    { id: "1-22", en: "Sorry", tr: "Özür dilerim" },
+  ],
+};

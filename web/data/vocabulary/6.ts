@@ -1,0 +1,31 @@
+import type { VocabularyCategory } from "@/data/vocabulary/types";
+
+export const vocabularyCategory6: VocabularyCategory = {
+  id: "6",
+  title: "Aylar ve Mevsimler",
+  words: [
+    { id: "6-1", en: "January", tr: "Ocak" },
+    { id: "6-2", en: "February", tr: "Şubat" },
+    { id: "6-3", en: "March", tr: "Mart" },
+    { id: "6-4", en: "April", tr: "Nisan" },
+    { id: "6-5", en: "May", tr: "Mayıs" },
+    { id: "6-6", en: "June", tr: "Haziran" },
+    { id: "6-7", en: "July", tr: "Temmuz" },
+    { id: "6-8", en: "August", tr: "Ağustos" },
+    { id: "6-9", en: "September", tr: "Eylül" },
+    { id: "6-10", en: "October", tr: "Ekim" },
+    { id: "6-11", en: "November", tr: "Kasım" },
+    { id: "6-12", en: "December", tr: "Aralık" },
+    { id: "6-13", en: "Spring", tr: "İlkbahar" },
+    { id: "6-14", en: "Summer", tr: "Yaz" },
+    { id: "6-15", en: "Autumn / Fall", tr: "Sonbahar" },
+    { id: "6-16", en: "Winter", tr: "Kış" },
+    { id: "6-17", en: "Month", tr: "Ay" },
+    { id: "6-18", en: "Season", tr: "Mevsim" },
+    { id: "6-19", en: "Spring", tr: "İlkbahar" },
+    { id: "6-20", en: "Summer", tr: "Yaz" },
+    { id: "6-21", en: "Autumn", tr: "Sonbahar" },
+    { id: "6-22", en: "Fall", tr: "Sonbahar" },
+    { id: "6-23", en: "Winter", tr: "Kış" },
+  ],
+};

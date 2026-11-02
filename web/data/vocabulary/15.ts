@@ -1,0 +1,31 @@
+import type { VocabularyCategory } from "@/data/vocabulary/types";
+
+export const vocabularyCategory15: VocabularyCategory = {
+  id: "15",
+  title: "Kıyafetler ve Ayakkabılar",
+  words: [
+    { id: "15-1", en: "Clothes", tr: "Kıyafetler" },
+    { id: "15-2", en: "Shoe", tr: "Ayakkabı" },
+    { id: "15-3", en: "Shirt", tr: "Gömlek" },
+    { id: "15-4", en: "T-Shirt", tr: "Tişört" },
+    { id: "15-5", en: "Pants", tr: "Pantolon" },
+    { id: "15-6", en: "Jeans", tr: "Kot Pantolon" },
+    { id: "15-7", en: "Dress", tr: "Elbise" },
+    { id: "15-8", en: "Jacket", tr: "Ceket" },
+    { id: "15-9", en: "Coat", tr: "Palto" },
+    { id: "15-10", en: "Hat", tr: "Şapka" },
+    { id: "15-11", en: "Gloves", tr: "Elbiseler" },
+    { id: "15-12", en: "Scarf", tr: "Şal" },
+    { id: "15-13", en: "Skirt", tr: "Etek" },
+    { id: "15-14", en: "Sweater", tr: "Süveter" },
+    { id: "15-15", en: "Suit", tr: "Takım Elbise" },
+    { id: "15-16", en: "Tie", tr: "Kravat" },
+    { id: "15-17", en: "Hat", tr: "Şapka" },
+    { id: "15-18", en: "Purse", tr: "Elbise Çantası" },
+    { id: "15-19", en: "Boot", tr: "Bot" },
+    { id: "15-20", en: "Sock", tr: "Çorap" },
+    { id: "15-21", en: "Pajamas", tr: "Pijama" },
+    { id: "15-22", en: "Underwear", tr: "İç Çamaşırı" },
+    { id: "15-23", en: "Swimsuit", tr: "Mayo" },
+  ],
+};
