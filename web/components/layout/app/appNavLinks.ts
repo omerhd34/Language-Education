@@ -1,6 +1,5 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  BookOpen,
   Brain,
   ChartColumnIncreasing,
   ClipboardList,
@@ -27,7 +26,6 @@ export const appNavLinks: AppNavLink[] = [
   { href: "/panelim#genel", labelKey: "overview", Icon: ClipboardList },
   { href: "/panelim#konular", labelKey: "topics", Icon: Layers },
   { href: "/panelim#kelime", labelKey: "vocabulary", Icon: Brain },
-  { href: "/panelim#alistirmalar", labelKey: "exercises", Icon: BookOpen },
   {
     href: "/panelim#ilerleme",
     labelKey: "progress",

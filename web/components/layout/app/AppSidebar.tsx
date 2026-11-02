@@ -8,9 +8,20 @@ import { Button } from "@/components/ui/Button";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { appNavLinks } from "@/components/layout/app/appNavLinks";
 import { Link, usePathname } from "@/i18n/navigation";
+import { navigatePanelSection, usePanelHash } from "@/hooks/usePanelHash";
 import { cn } from "@/lib/utils";
 import { getUserInitials } from "@/lib/userInitials";
 import type { AuthUser } from "@/store/api";
+
+function hrefHash(href: string): string {
+  const index = href.indexOf("#");
+  return index >= 0 ? href.slice(index) : "";
+}
+
+function hrefPath(href: string): string {
+  const index = href.indexOf("#");
+  return index >= 0 ? href.slice(0, index) : href;
+}
 
 const COLLAPSE_KEY = "pylmor-sidebar-collapsed";
 
@@ -24,6 +35,7 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
   const t = useTranslations("AppNav");
   const tNav = useTranslations("Nav");
   const pathname = usePathname();
+  const panelHash = usePanelHash();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const initials = getUserInitials(user.name, user.email);
@@ -55,17 +67,27 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
       <nav className="mt-6 flex flex-col gap-1" aria-label={t("menu")}>
         {appNavLinks.map((item) => {
           const Icon = item.Icon;
-          const active =
-            item.href === "/panelim"
-              ? pathname === "/panelim" || pathname === "/"
-              : pathname === item.href;
+          const path = hrefPath(item.href);
+          const hash = hrefHash(item.href);
+          const onPanelim = pathname === "/panelim" || pathname === "/";
+          const active = hash
+            ? onPanelim && panelHash === hash
+            : path === "/panelim"
+              ? onPanelim && panelHash === ""
+              : pathname === path || pathname.startsWith(`${path}/`);
 
           return (
             <Link
               key={item.labelKey}
               href={item.href}
               title={t(item.labelKey)}
-              onClick={() => setMobileOpen(false)}
+              onClick={(event) => {
+                setMobileOpen(false);
+                if (path === "/panelim" && onPanelim) {
+                  event.preventDefault();
+                  navigatePanelSection(hash.replace(/^#/, ""));
+                }
+              }}
               className={cn(
                 "inline-flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
                 compact && "justify-center px-2",
@@ -204,7 +226,7 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
           ) : null}
           <button
             type="button"
-            className="inline-flex size-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-brand-100 transition-colors hover:bg-brand-900"
+            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-white/10 text-brand-100 transition-colors hover:bg-brand-900"
             aria-expanded={!collapsed}
             aria-label={collapsed ? t("expandSidebar") : t("collapseSidebar")}
             title={collapsed ? t("expandSidebar") : t("collapseSidebar")}
