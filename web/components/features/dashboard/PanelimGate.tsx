@@ -15,6 +15,7 @@ export function PanelimGate({ children }: PanelimGateProps) {
   const user = useAppSelector((state) => state.auth.user);
   const status = useAppSelector((state) => state.auth.status);
   const router = useRouter();
+  const ready = status === "authenticated" && Boolean(user);
 
   useEffect(() => {
     if (status === "anonymous") {
@@ -22,26 +23,29 @@ export function PanelimGate({ children }: PanelimGateProps) {
     }
   }, [router, status]);
 
-  if (status === "unknown") {
-    return (
-      <div className="flex min-h-[40vh] items-center justify-center p-6">
-        <p className="text-sm text-brand-600 dark:text-brand-400">
-          {t("loading")}
-        </p>
-      </div>
-    );
-  }
+  return (
+    <>
+      {status === "unknown" ? (
+        <div className="flex min-h-[40vh] items-center justify-center p-6">
+          <p className="text-sm text-brand-600 dark:text-brand-400">
+            {t("loading")}
+          </p>
+        </div>
+      ) : null}
 
-  if (!user) {
-    return (
-      <div className="mx-auto flex min-h-[50vh] max-w-md flex-col items-center justify-center gap-4 p-6 text-center">
-        <p className="text-sm text-brand-600 dark:text-brand-400">
-          {t("loginRequired")}
-        </p>
-        <ButtonLink href="/panel">{t("goLogin")}</ButtonLink>
-      </div>
-    );
-  }
+      {!ready && status !== "unknown" ? (
+        <div className="mx-auto flex min-h-[50vh] max-w-md flex-col items-center justify-center gap-4 p-6 text-center">
+          <p className="text-sm text-brand-600 dark:text-brand-400">
+            {t("loginRequired")}
+          </p>
+          <ButtonLink href="/panel">{t("goLogin")}</ButtonLink>
+        </div>
+      ) : null}
 
-  return children;
+      {/* children her zaman ağaçta kalır — Next instant nav doğrulaması için */}
+      <div className={ready ? undefined : "hidden"} aria-hidden={!ready}>
+        {children}
+      </div>
+    </>
+  );
 }

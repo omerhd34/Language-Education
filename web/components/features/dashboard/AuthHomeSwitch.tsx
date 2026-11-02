@@ -8,7 +8,6 @@ type AuthHomeSwitchProps = {
   children: React.ReactNode;
 };
 
-/** Girişli kullanıcıyı marketing anasayfadan panelime yönlendirir. */
 export function AuthHomeSwitch({ children }: AuthHomeSwitchProps) {
   const status = useAppSelector((state) => state.auth.status);
   const router = useRouter();

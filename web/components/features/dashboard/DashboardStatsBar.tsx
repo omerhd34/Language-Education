@@ -83,7 +83,7 @@ export function DashboardStatsBar() {
           <span className="bar-badged mt-3">
             <button
               type="button"
-              className="relative inline-flex size-12 items-center justify-center rounded-xl border border-border bg-surface-muted text-brand-800 transition-colors hover:bg-muted dark:bg-brand-900 dark:text-brand-100 dark:hover:bg-brand-800"
+              className="relative inline-flex size-12 cursor-pointer items-center justify-center rounded-xl border border-border bg-surface-muted text-brand-800 transition-colors hover:bg-muted dark:bg-brand-900 dark:text-brand-100 dark:hover:bg-brand-800"
               aria-label={t("notifications")}
             >
               <Bell className="size-5" strokeWidth={1.75} aria-hidden />
