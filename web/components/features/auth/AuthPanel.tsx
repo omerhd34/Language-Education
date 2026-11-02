@@ -279,7 +279,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               endIcon={
                 <button
                   type="button"
-                  className="rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
+                  className="cursor-pointer rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
                   aria-label={
                     showPassword ? t("hidePassword") : t("showPassword")
                   }
@@ -306,7 +306,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               endIcon={
                 <button
                   type="button"
-                  className="rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
+                  className="cursor-pointer rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
                   aria-label={
                     showConfirmPassword ? t("hidePassword") : t("showPassword")
                   }
@@ -335,7 +335,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
             endIcon={
               <button
                 type="button"
-                className="rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
+                className="cursor-pointer rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
                 aria-label={
                   showPassword ? t("hidePassword") : t("showPassword")
                 }
@@ -380,11 +380,11 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               id="remember-me"
               checked={rememberMe}
               onCheckedChange={(checked) => setRememberMe(checked)}
-              className="border-sky-400/50 data-checked:border-sky-400 data-checked:bg-sky-400 data-checked:text-slate-950"
+              className="cursor-pointer border-sky-400/50 data-checked:border-sky-400 data-checked:bg-sky-400 data-checked:text-slate-950"
             />
             <Label
               htmlFor="remember-me"
-              className="text-sm font-normal text-slate-400"
+              className="cursor-pointer text-sm font-normal text-slate-400"
             >
               {t("rememberMe")}
             </Label>
