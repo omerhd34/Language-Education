@@ -119,11 +119,8 @@ import { topicContent117 } from "@/data/topics/117";
 import { topicContent118 } from "@/data/topics/118";
 import { topicContent119 } from "@/data/topics/119";
 import { topicContent120 } from "@/data/topics/120";
+import { topicContent121 } from "@/data/topics/121";
 
-/**
- * Her konu kendi dosyasında: data/topics/<id>.ts
- * Örnek: 2.ts dosyasını açıp metinleri düzenleyebilirsin.
- */
 const topicContentById: Record<string, TopicContent> = {
   "1": topicContent1,
   "2": topicContent2,
@@ -245,6 +242,7 @@ const topicContentById: Record<string, TopicContent> = {
   "118": topicContent118,
   "119": topicContent119,
   "120": topicContent120,
+  "121": topicContent121,
 };
 
 export function getTopicContent(topicId: string): TopicContent | null {

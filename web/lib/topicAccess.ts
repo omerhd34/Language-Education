@@ -5,7 +5,7 @@ import {
 } from "@/data/dashboardTopics";
 
 export const CEFR_LEVEL_ORDER: CefrLevel[] = [
-  "A0",
+  "Başlangıç",
   "A1",
   "A2",
   "B1",
@@ -15,7 +15,8 @@ export const CEFR_LEVEL_ORDER: CefrLevel[] = [
 ];
 
 export const CEFR_LEVEL_BADGE_CLASS: Record<CefrLevel, string> = {
-  A0: "bg-lime-500/20 text-lime-800 dark:bg-lime-400/30 dark:text-lime-200",
+  Başlangıç:
+    "bg-lime-500/20 text-lime-800 dark:bg-lime-400/30 dark:text-lime-200",
   A1: "bg-sky-500/15 text-sky-700 dark:bg-sky-400/30 dark:text-sky-200",
   A2: "bg-teal-500/15 text-teal-700 dark:bg-teal-400/30 dark:text-teal-200",
   B1: "bg-yellow-500/20 text-yellow-800 dark:bg-yellow-400/30 dark:text-yellow-200",
@@ -25,7 +26,8 @@ export const CEFR_LEVEL_BADGE_CLASS: Record<CefrLevel, string> = {
 };
 
 export const CEFR_LEVEL_FILTER_IDLE_CLASS: Record<CefrLevel, string> = {
-  A0: "border-lime-500/50 bg-lime-500/20 text-lime-800 hover:bg-lime-500/30 dark:border-lime-300/50 dark:bg-lime-400/20 dark:text-lime-100 dark:hover:bg-lime-400/30",
+  Başlangıç:
+    "border-lime-500/50 bg-lime-500/20 text-lime-800 hover:bg-lime-500/30 dark:border-lime-300/50 dark:bg-lime-400/20 dark:text-lime-100 dark:hover:bg-lime-400/30",
   A1: "border-sky-500/40 bg-sky-500/15 text-sky-700 hover:bg-sky-500/25 dark:border-sky-300/50 dark:bg-sky-400/20 dark:text-sky-100 dark:hover:bg-sky-400/30",
   A2: "border-teal-500/40 bg-teal-500/15 text-teal-700 hover:bg-teal-500/25 dark:border-teal-300/50 dark:bg-teal-400/20 dark:text-teal-100 dark:hover:bg-teal-400/30",
   B1: "border-yellow-500/50 bg-yellow-500/20 text-yellow-800 hover:bg-yellow-500/30 dark:border-yellow-300/50 dark:bg-yellow-400/20 dark:text-yellow-100 dark:hover:bg-yellow-400/30",
@@ -35,7 +37,8 @@ export const CEFR_LEVEL_FILTER_IDLE_CLASS: Record<CefrLevel, string> = {
 };
 
 export const CEFR_LEVEL_FILTER_ACTIVE_CLASS: Record<CefrLevel, string> = {
-  A0: "border-lime-500 bg-lime-600 text-white hover:bg-lime-500 dark:border-lime-300 dark:bg-lime-400 dark:text-lime-950 dark:hover:bg-lime-300",
+  Başlangıç:
+    "border-lime-500 bg-lime-600 text-white hover:bg-lime-500 dark:border-lime-300 dark:bg-lime-400 dark:text-lime-950 dark:hover:bg-lime-300",
   A1: "border-sky-500 bg-sky-600 text-white hover:bg-sky-500 dark:border-sky-300 dark:bg-sky-400 dark:text-sky-950 dark:hover:bg-sky-300",
   A2: "border-teal-500 bg-teal-600 text-white hover:bg-teal-500 dark:border-teal-300 dark:bg-teal-400 dark:text-teal-950 dark:hover:bg-teal-300",
   B1: "border-yellow-500 bg-yellow-500 text-yellow-950 hover:bg-yellow-400 dark:border-yellow-300 dark:bg-yellow-400 dark:text-yellow-950 dark:hover:bg-yellow-300",

@@ -28,6 +28,8 @@ export type TopicLesson = {
   sections: TopicLessonSection[];
 };
 
+export type ExerciseType = "multiple_choice" | "fill_blank" | "crossword";
+
 export type MultipleChoiceExercise = {
   id: string;
   subtopicId: string;
@@ -38,7 +40,40 @@ export type MultipleChoiceExercise = {
   explanation?: string;
 };
 
-export type TopicExercise = MultipleChoiceExercise;
+export type FillBlankExercise = {
+  id: string;
+  subtopicId: string;
+  type: "fill_blank";
+  prompt: string;
+  answer: string;
+  acceptedAnswers?: string[];
+  explanation?: string;
+};
+
+export type CrosswordDirection = "across" | "down";
+
+export type CrosswordClue = {
+  number: number;
+  direction: CrosswordDirection;
+  text: string;
+  answer: string;
+  row: number;
+  col: number;
+};
+
+export type CrosswordExercise = {
+  id: string;
+  subtopicId: string;
+  type: "crossword";
+  rows: number;
+  cols: number;
+  clues: CrosswordClue[];
+};
+
+export type TopicExercise =
+  | MultipleChoiceExercise
+  | FillBlankExercise
+  | CrosswordExercise;
 
 export type TopicContent = {
   topicId: string;

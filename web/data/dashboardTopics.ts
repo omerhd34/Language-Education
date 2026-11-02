@@ -1,4 +1,4 @@
-export type CefrLevel = "A0" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+export type CefrLevel = "Başlangıç" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
 export type DashboardSubtopic = {
   id: string;
@@ -18,7 +18,7 @@ export const dashboardTopics: DashboardTopic[] = [
   {
     id: "1",
     title: "Alfabe ve Sayılar",
-    level: "A0",
+    level: "Başlangıç",
     subtopics: [
       { id: "1-1", title: "Alfabe ve Harflerin Okunuşu", progress: 0 },
       { id: "1-2", title: "Sayılar", progress: 0 },
@@ -28,12 +28,17 @@ export const dashboardTopics: DashboardTopic[] = [
   },
   {
     id: "2",
-    title: "Selamlaşma, Günler ve Saat",
-    level: "A0",
+    title: "Selamlaşma",
+    level: "Başlangıç",
+    subtopics: [{ id: "2-1", title: "Selamlaşma ve Tanışma", progress: 0 }],
+  },
+  {
+    id: "121",
+    title: "Günler ve Saat",
+    level: "Başlangıç",
     subtopics: [
-      { id: "2-1", title: "Selamlaşma ve Tanışma", progress: 0 },
-      { id: "2-2", title: "Günler ve Aylar", progress: 0 },
-      { id: "2-3", title: "Saat Söyleme", progress: 0 },
+      { id: "121-1", title: "Günler ve Aylar", progress: 0 },
+      { id: "121-2", title: "Saat Söyleme", progress: 0 },
     ],
   },
   {

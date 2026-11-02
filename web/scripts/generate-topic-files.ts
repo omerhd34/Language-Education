@@ -40,10 +40,6 @@ const entries = ids.map((id) => `  "${id}": topicContent${id},`).join("\n");
 const index = `import type { TopicContent } from "@/data/topics/types";
 ${imports}
 
-/**
- * Her konu kendi dosyasında: data/topics/<id>.ts
- * Örnek: 2.ts dosyasını açıp metinleri düzenleyebilirsin.
- */
 const topicContentById: Record<string, TopicContent> = {
 ${entries}
 };
