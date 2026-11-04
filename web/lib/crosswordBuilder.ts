@@ -22,6 +22,16 @@ function normalizeAnswer(value: string): string {
   return value.replace(/[^a-zA-Z]/g, "").toUpperCase();
 }
 
+function cellInBounds(
+  grid: Array<Array<string | null>>,
+  row: number,
+  col: number,
+): boolean {
+  return (
+    row >= 0 && col >= 0 && row < grid.length && col < (grid[0]?.length ?? 0)
+  );
+}
+
 function canPlace(
   grid: Array<Array<string | null>>,
   answer: string,
@@ -33,6 +43,21 @@ function canPlace(
   const rows = grid.length;
   const cols = grid[0]?.length ?? 0;
   let overlaps = 0;
+
+  const beforeRow = direction === "across" ? row : row - 1;
+  const beforeCol = direction === "across" ? col - 1 : col;
+  if (
+    cellInBounds(grid, beforeRow, beforeCol) &&
+    grid[beforeRow]?.[beforeCol]
+  ) {
+    return false;
+  }
+
+  const afterRow = direction === "across" ? row : row + answer.length;
+  const afterCol = direction === "across" ? col + answer.length : col;
+  if (cellInBounds(grid, afterRow, afterCol) && grid[afterRow]?.[afterCol]) {
+    return false;
+  }
 
   for (let i = 0; i < answer.length; i += 1) {
     const r = direction === "across" ? row : row + i;
@@ -48,6 +73,20 @@ function canPlace(
     }
     if (existing === letter) {
       overlaps += 1;
+    } else {
+      if (direction === "down") {
+        if (
+          (cellInBounds(grid, r, c - 1) && grid[r]?.[c - 1]) ||
+          (cellInBounds(grid, r, c + 1) && grid[r]?.[c + 1])
+        ) {
+          return false;
+        }
+      } else if (
+        (cellInBounds(grid, r - 1, c) && grid[r - 1]?.[c]) ||
+        (cellInBounds(grid, r + 1, c) && grid[r + 1]?.[c])
+      ) {
+        return false;
+      }
     }
   }
 
@@ -68,10 +107,6 @@ function placeWord(
   }
 }
 
-/**
- * Builds one crossword from candidates. Returns null if fewer than
- * `minClues` words can be placed.
- */
 export function buildCrosswordFromCandidates(
   candidates: CrosswordCandidate[],
   options: {
@@ -104,7 +139,10 @@ export function buildCrosswordFromCandidates(
   }
 
   const longest = Math.max(...sorted.map((item) => item.answer.length));
-  const size = Math.min(28, Math.max(16, longest + 8));
+  const size = Math.min(
+    22,
+    Math.max(longest + 3, 14 + Math.ceil(options.targetClues / 4)),
+  );
   const grid: Array<Array<string | null>> = Array.from({ length: size }, () =>
     Array.from({ length: size }, () => null),
   );
@@ -202,7 +240,7 @@ export function buildCrosswordFromCandidates(
     }
   }
 
-  // Overlap yetmezse boş alana yerleştirerek 20 ipucuna yaklaş.
+  // Seçilen havuzdan kalanları (gerekirse kesişmesiz) yerleştir — hedef sayıya yaklaş.
   for (const candidate of unused) {
     if (placed.length >= target) {
       break;
@@ -233,6 +271,16 @@ export function buildCrosswordFromCandidates(
       }
     }
   }
+
+  placed.sort((a, b) => {
+    if (a.row !== b.row) return a.row - b.row;
+    if (a.col !== b.col) return a.col - b.col;
+    if (a.direction === b.direction) return 0;
+    return a.direction === "across" ? -1 : 1;
+  });
+  placed.forEach((item, index) => {
+    item.number = index + 1;
+  });
 
   const clues: CrosswordClue[] = placed.map((item) => ({
     number: item.number,
