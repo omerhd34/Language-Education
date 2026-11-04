@@ -3,12 +3,18 @@ export type VocabularyExample = {
   tr: string;
 };
 
+export type VocabularySimilarWord = {
+  en: string;
+  tr: string;
+  example: VocabularyExample;
+};
+
 export type VocabularyWord = {
   id: string;
   en: string;
   tr: string;
   image?: string;
-  similar?: string[];
+  similar?: VocabularySimilarWord[];
   examples: [VocabularyExample, VocabularyExample, VocabularyExample];
 };
 
