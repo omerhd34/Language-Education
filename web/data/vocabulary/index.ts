@@ -16,6 +16,7 @@ import { vocabularyCategory16 } from "./16";
 import { vocabularyCategory17 } from "./17";
 import { vocabularyCategory19 } from "./19";
 import { vocabularyCategory20 } from "./20";
+import { vocabularyCategory21 } from "./21";
 import { vocabularyCategory22 } from "./22";
 import { vocabularyCategory23 } from "./23";
 import { vocabularyCategory24 } from "./24";
@@ -49,6 +50,7 @@ export const vocabularyCategories: VocabularyCategory[] = [
   vocabularyCategory17,
   vocabularyCategory19,
   vocabularyCategory20,
+  vocabularyCategory21,
   vocabularyCategory22,
   vocabularyCategory23,
   vocabularyCategory24,
