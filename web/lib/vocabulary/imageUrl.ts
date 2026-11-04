@@ -27,7 +27,6 @@ function getGeneratedImageUrl(word: Pick<VocabularyWord, "id" | "en">): string {
   return `https://image.pollinations.ai/prompt/${encodeURIComponent(prompt)}?${params.toString()}`;
 }
 
-/** Özel görsel varsa onu, yoksa otomatik üretimi döner. */
 export function getVocabularyWordImageUrl(
   word: Pick<VocabularyWord, "id" | "en" | "image">,
 ): string {

@@ -1,6 +1,5 @@
 import type { VocabularyLevel } from "@/data/vocabulary/types";
 
-/** Keys: `${level}:${originalCategoryId}` before id prefixing. */
 export const vocabularyTitleEnByKey: Record<string, string> = {
   "A1:1": "Greetings and Farewells",
   "A1:2": "People",
