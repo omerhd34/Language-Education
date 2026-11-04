@@ -59,12 +59,34 @@ export function getTopicProgress(topic: DashboardTopic): number {
   return Math.round(total / topic.subtopics.length);
 }
 
-export function isLevelComplete(level: CefrLevel): boolean {
-  const levelTopics = dashboardTopics.filter((topic) => topic.level === level);
-  if (levelTopics.length === 0) {
+export function getLevelExamTopic(level: CefrLevel): DashboardTopic | undefined {
+  return dashboardTopics.find((topic) => topic.level === level && topic.isExam);
+}
+
+export function getNextLevel(level: CefrLevel): CefrLevel | null {
+  const index = CEFR_LEVEL_ORDER.indexOf(level);
+  if (index < 0 || index >= CEFR_LEVEL_ORDER.length - 1) {
+    return null;
+  }
+  return CEFR_LEVEL_ORDER[index + 1] ?? null;
+}
+
+export function isLevelExamPassed(
+  level: CefrLevel,
+  passedExams: readonly CefrLevel[] = [],
+): boolean {
+  return passedExams.includes(level);
+}
+
+/** A level is complete only after its end-of-level exam is passed. */
+export function isLevelComplete(
+  level: CefrLevel,
+  passedExams: readonly CefrLevel[] = [],
+): boolean {
+  if (!getLevelExamTopic(level)) {
     return true;
   }
-  return levelTopics.every((topic) => getTopicProgress(topic) >= 100);
+  return isLevelExamPassed(level, passedExams);
 }
 
 export function getPreviousLevel(level: CefrLevel): CefrLevel | null {
@@ -75,12 +97,15 @@ export function getPreviousLevel(level: CefrLevel): CefrLevel | null {
   return CEFR_LEVEL_ORDER[index - 1] ?? null;
 }
 
-export function canAccessLevel(level: CefrLevel): boolean {
+export function canAccessLevel(
+  level: CefrLevel,
+  passedExams: readonly CefrLevel[] = [],
+): boolean {
   const previous = getPreviousLevel(level);
   if (!previous) {
     return true;
   }
-  return isLevelComplete(previous);
+  return isLevelComplete(previous, passedExams);
 }
 
 export function getRequiredLevelToUnlock(level: CefrLevel): CefrLevel | null {
