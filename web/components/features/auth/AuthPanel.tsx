@@ -3,12 +3,18 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import { ArrowRight, Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  KeyRound,
+  Lock,
+  LogIn,
+  Mail,
+  User,
+  UserPlus,
+} from "lucide-react";
 import { AuthEmailField } from "@/components/features/auth/AuthEmailField";
-import { AuthGlassField } from "@/components/features/auth/AuthGlassField";
-import { Button } from "@/components/ui/Button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { AuthFloatingField } from "@/components/features/auth/AuthFloatingField";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { useRouter } from "@/i18n/navigation";
 import { createLoginSchema, createRegisterSchema } from "@/lib/authValidation";
@@ -16,7 +22,7 @@ import { cn } from "@/lib/utils";
 import { useLoginMutation, useRegisterMutation } from "@/store/api";
 import { setCredentials } from "@/store/authSlice";
 
-export type AuthMode = "giris" | "kayit";
+export type AuthMode = "giris" | "kayit" | "sifre";
 
 type AuthPanelProps = {
   initialMode?: AuthMode;
@@ -38,6 +44,7 @@ function getErrorCode(error: unknown): string | null {
 
 export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   const t = useTranslations("Auth");
+  const tNav = useTranslations("Nav");
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [login, { isLoading: isLoggingIn }] = useLoginMutation();
@@ -61,9 +68,9 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   }>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+  const [forgotNotice, setForgotNotice] = useState<string | null>(null);
 
   const isLoading = isLoggingIn || isRegistering;
-  const isRegister = mode === "kayit";
 
   useEffect(() => {
     const remembered = window.localStorage.getItem("pylmor-remember-email");
@@ -107,56 +114,16 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
     setFormError(null);
     setFieldErrors({});
     setSubmittedEmail(null);
+    setForgotNotice(null);
     setConfirmPassword("");
     setAcceptedTerms(false);
+    setShowPassword(false);
+    setShowConfirmPassword(false);
   }
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+  async function onLoginSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setFormError(null);
-
-    if (isRegister) {
-      if (!acceptedTerms) {
-        setFieldErrors({ terms: t("errors.termsRequired") });
-        return;
-      }
-
-      const parsed = registerSchema.safeParse({ name, email, password });
-      if (!parsed.success) {
-        const flat = parsed.error.flatten().fieldErrors;
-        setFieldErrors({
-          email: flat.email?.[0],
-          password: flat.password?.[0],
-        });
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        setFieldErrors({
-          confirmPassword: t("errors.passwordMismatch"),
-        });
-        return;
-      }
-
-      setFieldErrors({});
-
-      try {
-        const payload = {
-          email: parsed.data.email,
-          password: parsed.data.password,
-          ...(parsed.data.name ? { name: parsed.data.name } : {}),
-        };
-        const result = await register(payload).unwrap();
-        setSubmittedEmail(result.email);
-      } catch (error) {
-        if (getErrorCode(error) === "EMAIL_EXISTS") {
-          setFormError(t("errors.emailExists"));
-          return;
-        }
-        setFormError(t("errors.generic"));
-      }
-      return;
-    }
 
     const parsed = loginSchema.safeParse({ email, password });
     if (!parsed.success) {
@@ -194,231 +161,414 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
     }
   }
 
-  if (submittedEmail) {
+  async function onRegisterSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setFormError(null);
+
+    if (!acceptedTerms) {
+      setFieldErrors({ terms: t("errors.termsRequired") });
+      return;
+    }
+
+    const parsed = registerSchema.safeParse({ name, email, password });
+    if (!parsed.success) {
+      const flat = parsed.error.flatten().fieldErrors;
+      setFieldErrors({
+        email: flat.email?.[0],
+        password: flat.password?.[0],
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setFieldErrors({ confirmPassword: t("errors.passwordMismatch") });
+      return;
+    }
+
+    setFieldErrors({});
+
+    try {
+      const payload = {
+        email: parsed.data.email,
+        password: parsed.data.password,
+        ...(parsed.data.name ? { name: parsed.data.name } : {}),
+      };
+      const result = await register(payload).unwrap();
+      setSubmittedEmail(result.email);
+    } catch (error) {
+      if (getErrorCode(error) === "EMAIL_EXISTS") {
+        setFormError(t("errors.emailExists"));
+        return;
+      }
+      setFormError(t("errors.generic"));
+    }
+  }
+
+  function onForgotSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setForgotNotice(null);
+    const parsed = registerSchema.pick({ email: true }).safeParse({ email });
+    if (!parsed.success) {
+      const flat = parsed.error.flatten().fieldErrors;
+      setFieldErrors({ email: flat.email?.[0] });
+      return;
+    }
+    setFieldErrors({});
+    setForgotNotice(t("forgotSoon"));
+  }
+
+  function passwordToggle(show: boolean, onToggle: () => void) {
     return (
-      <div className="space-y-5" role="status">
-        <div className="space-y-2 text-center sm:text-left">
-          <h1 className="text-3xl font-semibold tracking-tight text-white">
-            {t("checkEmailTitle")}
-          </h1>
-          <p className="text-sm text-slate-400">
-            {t("checkEmailBody", { email: submittedEmail })}
-          </p>
-        </div>
-        <p className="text-center text-sm text-slate-400">
-          {t("hasAccount")}{" "}
-          <button
-            type="button"
-            className="font-medium text-sky-400 underline-offset-2 hover:underline"
-            onClick={() => switchMode("giris")}
-          >
-            {t("goLogin")}
-          </button>
-        </p>
-      </div>
+      <button
+        type="button"
+        className="ixir-toggle-password"
+        tabIndex={-1}
+        aria-label={show ? t("hidePassword") : t("showPassword")}
+        onClick={onToggle}
+      >
+        {show ? (
+          <EyeOff className="size-4" aria-hidden />
+        ) : (
+          <Eye className="size-4" aria-hidden />
+        )}
+      </button>
     );
   }
 
+  const brand = tNav("brand");
+
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
-        {isRegister ? (
-          <>
-            <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              {t("registerTitle")}
-            </h1>
-            <p className="text-sm text-slate-400">{t("registerSubtitle")}</p>
-          </>
-        ) : (
-          <>
-            <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              <span className="text-white">{t("loginTitleLead")} </span>
-              <span className="text-sky-400">{t("loginTitleAccent")}</span>
-            </h1>
-            <p className="text-sm text-slate-400">{t("loginSubtitle")}</p>
-          </>
-        )}
-      </div>
+    <div
+      className={cn(
+        "ixir-auth-split",
+        mode === "kayit" && "is-register",
+        mode === "sifre" && "is-reset",
+      )}
+      id="ixirAuthSplit"
+    >
+      <div className="ixir-auth-split-card">
+        <nav className="ixir-auth-tabs" aria-label={t("loginTitle")}>
+          <button
+            type="button"
+            className={cn("ixir-auth-tab", mode === "giris" && "is-active")}
+            onClick={() => switchMode("giris")}
+          >
+            <LogIn className="size-4" aria-hidden />
+            {t("submitLogin")}
+          </button>
+          <button
+            type="button"
+            className={cn("ixir-auth-tab", mode === "kayit" && "is-active")}
+            onClick={() => switchMode("kayit")}
+          >
+            <UserPlus className="size-4" aria-hidden />
+            {t("submitRegister")}
+          </button>
+        </nav>
 
-      <form onSubmit={onSubmit} className="flex flex-col gap-4" noValidate>
-        {isRegister ? (
-          <AuthGlassField
-            name="name"
-            type="text"
-            autoComplete="name"
-            label={t("nameOptional")}
-            placeholder={t("namePlaceholder")}
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-            startIcon={<User className="size-4" aria-hidden />}
-          />
-        ) : null}
+        <div className="ixir-auth-forms">
+          <div className="ixir-auth-panel ixir-auth-panel-login">
+            <form
+              className="ixir-split-form ixir-login-form"
+              onSubmit={onLoginSubmit}
+              noValidate
+            >
+              <div className="ixir-split-form-head">
+                <h1>{t("loginTitle")}</h1>
+              </div>
 
-        <AuthEmailField
-          name="email"
-          label={t("email")}
-          placeholder={t("emailPlaceholder")}
-          value={email}
-          onChange={setEmail}
-          error={fieldErrors.email}
-          startIcon={<Mail className="size-4" aria-hidden />}
-        />
+              <AuthEmailField
+                name="email"
+                label={t("email")}
+                value={email}
+                onChange={setEmail}
+                error={fieldErrors.email}
+                autoFocus
+                startIcon={<Mail className="size-4" aria-hidden />}
+              />
 
-        {isRegister ? (
-          <div className="grid gap-4 sm:grid-cols-2">
-            <AuthGlassField
-              name="password"
-              type={showPassword ? "text" : "password"}
-              autoComplete="new-password"
-              label={t("password")}
-              placeholder={t("passwordPlaceholder")}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              error={fieldErrors.password}
-              startIcon={<Lock className="size-4" aria-hidden />}
-              endIcon={
+              <AuthFloatingField
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                label={t("password")}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                error={fieldErrors.password}
+                startIcon={<Lock className="size-4" aria-hidden />}
+                endIcon={passwordToggle(showPassword, () =>
+                  setShowPassword((value) => !value),
+                )}
+              />
+
+              <div className="ixir-split-meta">
+                <label className="ixir-remember" htmlFor="rememberme">
+                  <input
+                    type="checkbox"
+                    name="rememberme"
+                    id="rememberme"
+                    checked={rememberMe}
+                    onChange={(event) => setRememberMe(event.target.checked)}
+                  />
+                  <span className="ixir-remember-box" aria-hidden />
+                  <span className="ixir-remember-text">{t("rememberMe")}</span>
+                </label>
+              </div>
+
+              {formError && mode === "giris" ? (
+                <p className="ixir-field-error" role="alert">
+                  {formError}
+                </p>
+              ) : null}
+
+              <button
+                type="submit"
+                className="btn ixir-split-btn"
+                disabled={isLoading}
+              >
+                <LogIn className="size-4" aria-hidden />
+                {t("submitLogin")}
+              </button>
+
+              <div className="ixir-auth-mobile-links">
                 <button
                   type="button"
-                  className="cursor-pointer rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
-                  aria-label={
-                    showPassword ? t("hidePassword") : t("showPassword")
-                  }
-                  onClick={() => setShowPassword((value) => !value)}
+                  className="ixir-split-switch-link"
+                  onClick={() => switchMode("sifre")}
                 >
-                  {showPassword ? (
-                    <EyeOff className="size-4" aria-hidden />
-                  ) : (
-                    <Eye className="size-4" aria-hidden />
-                  )}
+                  {t("promoForgotTitle")}
                 </button>
-              }
-            />
-            <AuthGlassField
-              name="confirmPassword"
-              type={showConfirmPassword ? "text" : "password"}
-              autoComplete="new-password"
-              label={t("confirmPassword")}
-              placeholder={t("passwordPlaceholder")}
-              value={confirmPassword}
-              onChange={(event) => setConfirmPassword(event.target.value)}
-              error={fieldErrors.confirmPassword}
-              startIcon={<Lock className="size-4" aria-hidden />}
-              endIcon={
-                <button
-                  type="button"
-                  className="cursor-pointer rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
-                  aria-label={
-                    showConfirmPassword ? t("hidePassword") : t("showPassword")
-                  }
-                  onClick={() => setShowConfirmPassword((value) => !value)}
-                >
-                  {showConfirmPassword ? (
-                    <EyeOff className="size-4" aria-hidden />
-                  ) : (
-                    <Eye className="size-4" aria-hidden />
-                  )}
-                </button>
-              }
-            />
+              </div>
+            </form>
           </div>
-        ) : (
-          <AuthGlassField
-            name="password"
-            type={showPassword ? "text" : "password"}
-            autoComplete="current-password"
-            label={t("password")}
-            placeholder={t("passwordPlaceholder")}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            error={fieldErrors.password}
-            startIcon={<Lock className="size-4" aria-hidden />}
-            endIcon={
+
+          <div className="ixir-auth-panel ixir-auth-panel-register">
+            {submittedEmail ? (
+              <div className="ixir-split-form" role="status">
+                <div className="ixir-split-form-head">
+                  <h1>{t("checkEmailTitle")}</h1>
+                  <p>{t("checkEmailBody", { email: submittedEmail })}</p>
+                </div>
+                <button
+                  type="button"
+                  className="btn ixir-split-btn"
+                  onClick={() => switchMode("giris")}
+                >
+                  <LogIn className="size-4" aria-hidden />
+                  {t("goLogin")}
+                </button>
+              </div>
+            ) : (
+              <form
+                className="ixir-split-form ixir-register-form"
+                onSubmit={onRegisterSubmit}
+                noValidate
+              >
+                <div className="ixir-split-form-head">
+                  <h1>{t("registerTitle")}</h1>
+                </div>
+
+                <AuthFloatingField
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  label={t("nameOptional")}
+                  value={name}
+                  onChange={(event) => setName(event.target.value)}
+                  startIcon={<User className="size-4" aria-hidden />}
+                />
+
+                <AuthEmailField
+                  name="email"
+                  label={t("email")}
+                  value={email}
+                  onChange={setEmail}
+                  error={fieldErrors.email}
+                  startIcon={<Mail className="size-4" aria-hidden />}
+                />
+
+                <div className="ixir-field-row">
+                  <AuthFloatingField
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    label={t("password")}
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    error={fieldErrors.password}
+                    startIcon={<Lock className="size-4" aria-hidden />}
+                    endIcon={passwordToggle(showPassword, () =>
+                      setShowPassword((value) => !value),
+                    )}
+                  />
+                  <AuthFloatingField
+                    name="confirmPassword"
+                    type={showConfirmPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    label={t("confirmPassword")}
+                    value={confirmPassword}
+                    onChange={(event) => setConfirmPassword(event.target.value)}
+                    error={fieldErrors.confirmPassword}
+                    startIcon={<Lock className="size-4" aria-hidden />}
+                    endIcon={passwordToggle(showConfirmPassword, () =>
+                      setShowConfirmPassword((value) => !value),
+                    )}
+                  />
+                </div>
+
+                <div className="ixir-agreements">
+                  <label className="ixir-check">
+                    <input
+                      type="checkbox"
+                      checked={acceptedTerms}
+                      onChange={(event) =>
+                        setAcceptedTerms(event.target.checked)
+                      }
+                    />
+                    <span>{t("agreeTerms")}</span>
+                  </label>
+                  {fieldErrors.terms ? (
+                    <p className="ixir-field-error" role="alert">
+                      {fieldErrors.terms}
+                    </p>
+                  ) : null}
+                </div>
+
+                {formError && mode === "kayit" ? (
+                  <p className="ixir-field-error" role="alert">
+                    {formError}
+                  </p>
+                ) : null}
+
+                <button
+                  type="submit"
+                  className="btn ixir-split-btn"
+                  disabled={isLoading}
+                >
+                  <UserPlus className="size-4" aria-hidden />
+                  {t("submitRegister")}
+                </button>
+              </form>
+            )}
+          </div>
+
+          <div className="ixir-auth-panel ixir-auth-panel-reset">
+            <form
+              className="ixir-split-form ixir-reset-form"
+              onSubmit={onForgotSubmit}
+              noValidate
+            >
+              <div className="ixir-split-form-head">
+                <h1>{t("forgotTitle")}</h1>
+                <p>{t("forgotSubtitle")}</p>
+              </div>
+
+              <AuthEmailField
+                name="resetEmail"
+                label={t("email")}
+                value={email}
+                onChange={setEmail}
+                error={fieldErrors.email}
+                startIcon={<Mail className="size-4" aria-hidden />}
+              />
+
+              {forgotNotice ? (
+                <p
+                  className="ixir-field-error"
+                  role="status"
+                  style={{ color: "#536684" }}
+                >
+                  {forgotNotice}
+                </p>
+              ) : null}
+
+              <button type="submit" className="btn ixir-split-btn">
+                {t("submitForgot")}
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div className="ixir-auth-overlay">
+          <div className="ixir-auth-overlay-bg" />
+
+          <div className="ixir-auth-overlay-panel ixir-auth-overlay-left">
+            <span className="ixir-overlay-logo-text">{brand}</span>
+            <h2>{t("promoHasAccountTitle")}</h2>
+            <p>{t("promoHasAccountBody")}</p>
+            <button
+              type="button"
+              className="ixir-overlay-btn"
+              onClick={() => switchMode("giris")}
+            >
+              <LogIn className="size-4" aria-hidden />
+              {t("promoLogin")}
+            </button>
+            <div className="ixir-overlay-forgot">
+              <h2>{t("promoForgotTitle")}</h2>
+              <p>{t("promoForgotBody")}</p>
               <button
                 type="button"
-                className="cursor-pointer rounded-md p-1.5 text-slate-500 transition-colors hover:text-slate-300"
-                aria-label={
-                  showPassword ? t("hidePassword") : t("showPassword")
-                }
-                onClick={() => setShowPassword((value) => !value)}
+                className="ixir-overlay-btn"
+                onClick={() => switchMode("sifre")}
               >
-                {showPassword ? (
-                  <EyeOff className="size-4" aria-hidden />
-                ) : (
-                  <Eye className="size-4" aria-hidden />
-                )}
+                <KeyRound className="size-4" aria-hidden />
+                {t("promoForgot")}
               </button>
-            }
-          />
-        )}
-
-        {isRegister ? (
-          <div className="space-y-1.5">
-            <div className="flex items-start gap-2.5">
-              <Checkbox
-                id="accepted-terms"
-                checked={acceptedTerms}
-                onCheckedChange={(checked) => setAcceptedTerms(checked)}
-                className="mt-0.5 border-sky-400/50 data-checked:border-sky-400 data-checked:bg-sky-400 data-checked:text-slate-950"
-                aria-invalid={Boolean(fieldErrors.terms)}
-              />
-              <Label
-                htmlFor="accepted-terms"
-                className="text-sm font-normal leading-snug text-slate-400"
-              >
-                {t("agreeTerms")}
-              </Label>
             </div>
-            {fieldErrors.terms ? (
-              <p className="text-xs text-red-400" role="alert">
-                {fieldErrors.terms}
-              </p>
-            ) : null}
           </div>
-        ) : (
-          <div className="flex items-center gap-2.5">
-            <Checkbox
-              id="remember-me"
-              checked={rememberMe}
-              onCheckedChange={(checked) => setRememberMe(checked)}
-              className="cursor-pointer border-sky-400/50 data-checked:border-sky-400 data-checked:bg-sky-400 data-checked:text-slate-950"
-            />
-            <Label
-              htmlFor="remember-me"
-              className="cursor-pointer text-sm font-normal text-slate-400"
+
+          <div className="ixir-auth-overlay-panel ixir-auth-overlay-right">
+            <span className="ixir-overlay-logo-text">{brand}</span>
+            <h2>{t("promoNoAccountTitle")}</h2>
+            <p>{t("promoNoAccountBody")}</p>
+            <button
+              type="button"
+              className="ixir-overlay-btn"
+              onClick={() => switchMode("kayit")}
             >
-              {t("rememberMe")}
-            </Label>
+              <UserPlus className="size-4" aria-hidden />
+              {t("promoRegister")}
+            </button>
+            <div className="ixir-overlay-forgot">
+              <h2>{t("promoForgotTitle")}</h2>
+              <p>{t("promoForgotBody")}</p>
+              <button
+                type="button"
+                className="ixir-overlay-btn"
+                onClick={() => switchMode("sifre")}
+              >
+                <KeyRound className="size-4" aria-hidden />
+                {t("promoForgot")}
+              </button>
+            </div>
           </div>
-        )}
 
-        {formError ? (
-          <p className="text-sm text-red-400" role="alert">
-            {formError}
-          </p>
-        ) : null}
-
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className={cn(
-            "h-12 w-full rounded-full border-transparent bg-sky-400 text-base font-semibold text-slate-950 hover:bg-sky-300",
-          )}
-        >
-          {t("myPanel")}
-          <ArrowRight className="size-4" aria-hidden />
-        </Button>
-      </form>
-
-      <p className="text-center text-sm text-slate-400">
-        {isRegister ? t("hasAccount") : t("noAccount")}{" "}
-        <button
-          type="button"
-          className="font-medium text-sky-400 underline-offset-2 hover:underline"
-          onClick={() => switchMode(isRegister ? "giris" : "kayit")}
-        >
-          {isRegister ? t("goLogin") : t("goRegister")}
-        </button>
-      </p>
+          <div className="ixir-auth-overlay-panel ixir-auth-overlay-reset">
+            <span className="ixir-overlay-logo-text">{brand}</span>
+            <h2>{t("promoHaveAccountTitle")}</h2>
+            <p>{t("promoHaveAccountBody")}</p>
+            <div className="ixir-overlay-actions">
+              <button
+                type="button"
+                className="ixir-overlay-btn"
+                onClick={() => switchMode("giris")}
+              >
+                <LogIn className="size-4" aria-hidden />
+                {t("promoLogin")}
+              </button>
+              <button
+                type="button"
+                className="ixir-overlay-btn"
+                onClick={() => switchMode("kayit")}
+              >
+                <UserPlus className="size-4" aria-hidden />
+                {t("promoRegister")}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
