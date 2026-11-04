@@ -16,6 +16,8 @@ type ExerciseTypePickerProps = {
   counts: Record<ExerciseType, number>;
   completedTypes?: readonly ExerciseType[];
   onSelect: (type: ExerciseType) => void;
+  title?: string;
+  subtitle?: string;
 };
 
 const TYPE_ITEMS: {
@@ -62,6 +64,8 @@ export function ExerciseTypePicker({
   counts,
   completedTypes = [],
   onSelect,
+  title,
+  subtitle,
 }: ExerciseTypePickerProps) {
   const t = useTranslations("Topic");
   const visibleItems = TYPE_ITEMS.filter((item) => counts[item.type] > 0);
@@ -71,10 +75,10 @@ export function ExerciseTypePicker({
     <div className="w-full space-y-4">
       <div className="space-y-1">
         <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
-          {t("chooseTypeTitle")}
+          {title ?? t("chooseTypeTitle")}
         </h2>
         <p className="text-sm text-brand-600 dark:text-brand-400">
-          {t("chooseTypeSubtitle")}
+          {subtitle ?? t("chooseTypeSubtitle")}
         </p>
       </div>
 

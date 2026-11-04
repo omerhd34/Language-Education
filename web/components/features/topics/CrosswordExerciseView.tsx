@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Check, RotateCcw } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
@@ -86,6 +87,22 @@ function stepCell(
   };
 }
 
+function getClueCellKeys(clue: CrosswordExercise["clues"][number]): string[] {
+  const answer = clue.answer.toUpperCase();
+  return Array.from({ length: answer.length }, (_, index) => {
+    const row = clue.direction === "across" ? clue.row : clue.row + index;
+    const col = clue.direction === "across" ? clue.col + index : clue.col;
+    return cellKey(row, col);
+  });
+}
+
+function isClueFullyTyped(
+  clue: CrosswordExercise["clues"][number],
+  values: Record<string, string>,
+): boolean {
+  return getClueCellKeys(clue).every((key) => (values[key] ?? "").length > 0);
+}
+
 export function CrosswordExerciseView({
   exercises,
   onComplete,
@@ -105,6 +122,19 @@ export function CrosswordExerciseView({
   const [isCorrect, setIsCorrect] = useState(false);
   const [finished, setFinished] = useState(false);
   const [resultOpen, setResultOpen] = useState(false);
+
+  const cluesByCell = useMemo(() => {
+    const map = new Map<string, CrosswordExercise["clues"]>();
+    if (!exercise) return map;
+    for (const clue of exercise.clues) {
+      for (const key of getClueCellKeys(clue)) {
+        const list = map.get(key) ?? [];
+        list.push(clue);
+        map.set(key, list);
+      }
+    }
+    return map;
+  }, [exercise]);
 
   if (!exercise || !solution) {
     return (
@@ -237,7 +267,7 @@ export function CrosswordExerciseView({
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-4">
+    <div className="mx-auto max-w-4xl space-y-4">
       {exercises.length > 1 ? (
         <p className="text-sm text-brand-500 dark:text-brand-400">
           {t("crosswordProgress", {
@@ -247,143 +277,155 @@ export function CrosswordExerciseView({
         </p>
       ) : null}
       <article className="dashboard-panel space-y-5">
-        <div
-          className="mx-auto grid w-fit gap-1"
-          style={{
-            gridTemplateColumns: `repeat(${exercise.cols}, minmax(2rem, 2.5rem))`,
-          }}
-          role="group"
-          aria-label={t("typeCrossword")}
-        >
-          {solution.map((rowCells, row) =>
-            rowCells.map((cell, col) => {
-              if (!cell) {
-                return (
-                  <div
-                    key={cellKey(row, col)}
-                    className="aspect-square rounded-md bg-brand-900/80 dark:bg-brand-950"
-                    aria-hidden
-                  />
+        <div className="overflow-x-auto">
+          <div
+            className="mx-auto grid w-fit gap-0.5 sm:gap-1"
+            style={{
+              gridTemplateColumns: `repeat(${exercise.cols}, minmax(0, 1fr))`,
+              width: `min(100%, ${Math.min(exercise.cols * 2.75, 52)}rem)`,
+            }}
+            role="group"
+            aria-label={t("typeCrossword")}
+          >
+            {solution.map((rowCells, row) =>
+              rowCells.map((cell, col) => {
+                if (!cell) {
+                  return (
+                    <div
+                      key={cellKey(row, col)}
+                      className="aspect-square rounded-md bg-brand-900/80 dark:bg-brand-950"
+                      aria-hidden
+                    />
+                  );
+                }
+
+                const key = cellKey(row, col);
+                const typed = (values[key] ?? "").toUpperCase();
+                const relatedClues = cluesByCell.get(key) ?? [];
+                const wordComplete = relatedClues.some((clue) =>
+                  isClueFullyTyped(clue, values),
                 );
-              }
+                const showCorrect =
+                  wordComplete && typed.length > 0 && typed === cell.letter;
+                const showWrong =
+                  wordComplete && typed.length > 0 && typed !== cell.letter;
+                const showEmpty = checked && typed.length === 0;
 
-              const key = cellKey(row, col);
-              const typed = (values[key] ?? "").toUpperCase();
-              const showCorrect = checked && typed === cell.letter;
-              const showWrong =
-                checked && typed.length > 0 && typed !== cell.letter;
-              const showEmpty = checked && typed.length === 0;
+                return (
+                  <label
+                    key={key}
+                    className={cn(
+                      "relative aspect-square rounded-md border bg-background",
+                      showCorrect &&
+                        "border-emerald-600 bg-emerald-500/35 text-emerald-950 dark:border-emerald-400 dark:bg-emerald-500/30 dark:text-emerald-100",
+                      (showWrong || showEmpty) &&
+                        "border-red-600 bg-red-500/35 text-red-950 dark:border-red-400 dark:bg-red-500/30 dark:text-red-100",
+                      !showCorrect &&
+                        !showWrong &&
+                        !showEmpty &&
+                        "border-border",
+                    )}
+                  >
+                    {cell.starts.length > 0 ? (
+                      <span className="absolute top-0.5 left-0.5 flex flex-col text-[9px] leading-tight text-brand-500">
+                        {cell.starts.map((start) => (
+                          <span key={`${start.number}-${start.direction}`}>
+                            {start.number}
+                            {start.direction === "across"
+                              ? t("crosswordArrowAcross")
+                              : t("crosswordArrowDown")}
+                          </span>
+                        ))}
+                      </span>
+                    ) : null}
+                    <input
+                      ref={(element) => {
+                        inputRefs.current[key] = element;
+                      }}
+                      type="text"
+                      inputMode="text"
+                      maxLength={1}
+                      value={typed}
+                      spellCheck={false}
+                      autoComplete="off"
+                      aria-label={`${row + 1},${col + 1}`}
+                      onFocus={() => {
+                        setDirection(
+                          resolveDirection(cell, directionRef.current),
+                        );
+                      }}
+                      onChange={(event) => {
+                        const next = event.target.value
+                          .replace(/[^a-zA-Z]/g, "")
+                          .slice(-1)
+                          .toUpperCase();
+                        setChecked(false);
+                        setValues((prev) => ({ ...prev, [key]: next }));
+                        if (next) {
+                          moveFocus(row, col, directionRef.current, 1);
+                        }
+                      }}
+                      onKeyDown={(event) => {
+                        if (event.key === "Backspace" && typed.length === 0) {
+                          event.preventDefault();
+                          moveFocus(row, col, directionRef.current, -1);
+                          return;
+                        }
 
-              return (
-                <label
-                  key={key}
-                  className={cn(
-                    "relative aspect-square rounded-md border bg-background",
-                    showCorrect && "border-emerald-500/70 bg-emerald-500/10",
-                    (showWrong || showEmpty) &&
-                      "border-red-500/70 bg-red-500/10",
-                    !checked && "border-border",
-                  )}
-                >
-                  {cell.starts.length > 0 ? (
-                    <span className="absolute top-0.5 left-0.5 flex flex-col text-[9px] leading-tight text-brand-500">
-                      {cell.starts.map((start) => (
-                        <span key={`${start.number}-${start.direction}`}>
-                          {start.number}
-                          {start.direction === "across"
-                            ? t("crosswordArrowAcross")
-                            : t("crosswordArrowDown")}
-                        </span>
-                      ))}
-                    </span>
-                  ) : null}
-                  <input
-                    ref={(element) => {
-                      inputRefs.current[key] = element;
-                    }}
-                    type="text"
-                    inputMode="text"
-                    maxLength={1}
-                    value={typed}
-                    spellCheck={false}
-                    autoComplete="off"
-                    aria-label={`${row + 1},${col + 1}`}
-                    onFocus={() => {
-                      setDirection(
-                        resolveDirection(cell, directionRef.current),
-                      );
-                    }}
-                    onChange={(event) => {
-                      const next = event.target.value
-                        .replace(/[^a-zA-Z]/g, "")
-                        .slice(-1)
-                        .toUpperCase();
-                      setChecked(false);
-                      setValues((prev) => ({ ...prev, [key]: next }));
-                      if (next) {
-                        moveFocus(row, col, directionRef.current, 1);
-                      }
-                    }}
-                    onKeyDown={(event) => {
-                      if (event.key === "Backspace" && typed.length === 0) {
-                        event.preventDefault();
-                        moveFocus(row, col, directionRef.current, -1);
-                        return;
-                      }
+                        if (event.key === "ArrowRight") {
+                          event.preventDefault();
+                          setDirection("across");
+                          moveFocus(row, col, "across", 1);
+                          return;
+                        }
 
-                      if (event.key === "ArrowRight") {
-                        event.preventDefault();
-                        setDirection("across");
-                        moveFocus(row, col, "across", 1);
-                        return;
-                      }
+                        if (event.key === "ArrowLeft") {
+                          event.preventDefault();
+                          setDirection("across");
+                          moveFocus(row, col, "across", -1);
+                          return;
+                        }
 
-                      if (event.key === "ArrowLeft") {
-                        event.preventDefault();
-                        setDirection("across");
-                        moveFocus(row, col, "across", -1);
-                        return;
-                      }
+                        if (event.key === "ArrowDown") {
+                          event.preventDefault();
+                          setDirection("down");
+                          moveFocus(row, col, "down", 1);
+                          return;
+                        }
 
-                      if (event.key === "ArrowDown") {
-                        event.preventDefault();
-                        setDirection("down");
-                        moveFocus(row, col, "down", 1);
-                        return;
-                      }
-
-                      if (event.key === "ArrowUp") {
-                        event.preventDefault();
-                        setDirection("down");
-                        moveFocus(row, col, "down", -1);
-                      }
-                    }}
-                    className="size-full bg-transparent text-center font-display text-base font-semibold uppercase text-brand-950 outline-none dark:text-brand-100"
-                  />
-                </label>
-              );
-            }),
-          )}
+                        if (event.key === "ArrowUp") {
+                          event.preventDefault();
+                          setDirection("down");
+                          moveFocus(row, col, "down", -1);
+                        }
+                      }}
+                      className="size-full bg-transparent text-center font-display text-sm font-semibold uppercase text-brand-950 outline-none sm:text-base dark:text-brand-100"
+                    />
+                  </label>
+                );
+              }),
+            )}
+          </div>
         </div>
 
-        <ul className="space-y-1.5 text-sm text-brand-700 dark:text-brand-300">
+        <ul className="grid grid-cols-3 gap-x-3 gap-y-1.5 text-xs text-brand-700 sm:gap-x-4 sm:text-sm dark:text-brand-300">
           {clues.map((clue) => (
             <li key={`${clue.direction}-${clue.number}`}>
-              {t("crosswordClue", {
-                number: clue.number,
-                text: clue.text,
-              })}
+              <span className="font-semibold tabular-nums text-brand-950 dark:text-brand-100">
+                {clue.number}-
+              </span>{" "}
+              {clue.text}{" "}
+              <span className="text-brand-500 dark:text-brand-400">
+                ({clue.answer.length})
+              </span>
             </li>
           ))}
         </ul>
 
         <div className="flex flex-wrap gap-2">
           {!checked || !isCorrect ? (
-            <Button
-              type="button"
-              disabled={resultOpen}
-              onClick={handleCheck}
-            >
+            <Button type="button" disabled={resultOpen} onClick={handleCheck}>
+              <Check aria-hidden />
               {t("check")}
             </Button>
           ) : !resultOpen ? (
@@ -392,6 +434,7 @@ export function CrosswordExerciseView({
             </Button>
           ) : null}
           <Button type="button" variant="outline" onClick={resetAll}>
+            <RotateCcw aria-hidden />
             {t("restart")}
           </Button>
         </div>

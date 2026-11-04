@@ -3,7 +3,7 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, CheckCircle2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -22,7 +22,10 @@ import type {
   TopicExercise,
 } from "@/data/topics/types";
 import { didPassExamScore, markLevelExamPassed } from "@/lib/levelExamStorage";
-import { resolveLevelExamCrosswords } from "@/lib/topicExam";
+import {
+  resolveLevelExamCrosswords,
+  resolveLevelExamFillBlanks,
+} from "@/lib/topicExam";
 import {
   TOPIC_PROGRESS_CHANGED_EVENT,
   getCompletedTopicExerciseTypes,
@@ -37,7 +40,9 @@ type TopicExercisesViewProps = {
   level?: CefrLevel;
 };
 
-type ExamOutcome = "passed" | "failed";
+type ExamPartScore = { correct: number; total: number };
+type LevelExamPart = "crossword" | "fill_blank";
+type LevelExamPartOutcome = "passed" | "failed";
 
 export function TopicExercisesView({
   topicId,
@@ -47,15 +52,40 @@ export function TopicExercisesView({
 }: TopicExercisesViewProps) {
   const t = useTranslations("Topic");
   const [selectedType, setSelectedType] = useState<ExerciseType | null>(null);
-  const [examOutcome, setExamOutcome] = useState<ExamOutcome | null>(null);
   const [completedTypes, setCompletedTypes] = useState<ExerciseType[]>([]);
   const nextLevel = level ? getNextLevel(level) : null;
 
-  const levelExamCrosswords = useMemo(() => {
+  const [levelExamSelected, setLevelExamSelected] =
+    useState<LevelExamPart | null>(null);
+  const [passedLevelParts, setPassedLevelParts] = useState<LevelExamPart[]>([]);
+  const [levelPartOutcome, setLevelPartOutcome] =
+    useState<LevelExamPartOutcome | null>(null);
+  const [levelExamPassed, setLevelExamPassed] = useState(false);
+  const [levelExamCrosswords, setLevelExamCrosswords] = useState<
+    CrosswordExercise[] | null
+  >(null);
+  const [levelExamFillBlanks, setLevelExamFillBlanks] = useState<
+    FillBlankExercise[] | null
+  >(null);
+  const [crosswordSessionKey, setCrosswordSessionKey] = useState(0);
+  const [fillBlankSessionKey, setFillBlankSessionKey] = useState(0);
+
+  useEffect(() => {
     if (!isExam || !level) {
-      return [] as CrosswordExercise[];
+      setLevelExamCrosswords([]);
+      setLevelExamFillBlanks([]);
+      setLevelExamSelected(null);
+      setPassedLevelParts([]);
+      setLevelPartOutcome(null);
+      setLevelExamPassed(false);
+      return;
     }
-    return resolveLevelExamCrosswords(level);
+    setLevelExamCrosswords(resolveLevelExamCrosswords(level));
+    setLevelExamFillBlanks(resolveLevelExamFillBlanks(level));
+    setLevelExamSelected(null);
+    setPassedLevelParts([]);
+    setLevelPartOutcome(null);
+    setLevelExamPassed(false);
   }, [isExam, level]);
 
   useEffect(() => {
@@ -90,37 +120,81 @@ export function TopicExercisesView({
     [exercises],
   );
 
-  function handleLevelExamComplete(result: {
-    correct: number;
-    total: number;
-  }) {
+  const levelExamCounts = useMemo(
+    () =>
+      ({
+        multiple_choice: 0,
+        fill_blank: levelExamFillBlanks?.length ?? 0,
+        crossword: levelExamCrosswords?.length ?? 0,
+        listening: 0,
+      }) satisfies Record<ExerciseType, number>,
+    [levelExamCrosswords, levelExamFillBlanks],
+  );
+
+  function tryFinalizeLevelExam(nextPassed: LevelExamPart[]) {
     if (!level) {
       return;
     }
-
-    if (didPassExamScore(result.correct, result.total)) {
+    if (nextPassed.includes("crossword") && nextPassed.includes("fill_blank")) {
       markLevelExamPassed(level);
-      setExamOutcome("passed");
+      setLevelExamPassed(true);
+      setLevelExamSelected(null);
+      setLevelPartOutcome(null);
+    }
+  }
+
+  function handleLevelExamPartComplete(
+    part: LevelExamPart,
+    result: ExamPartScore,
+  ) {
+    if (didPassExamScore(result.correct, result.total)) {
+      const nextPassed = passedLevelParts.includes(part)
+        ? passedLevelParts
+        : [...passedLevelParts, part];
+      setPassedLevelParts(nextPassed);
+      setLevelPartOutcome("passed");
+      tryFinalizeLevelExam(nextPassed);
       return;
     }
 
-    setExamOutcome("failed");
+    setLevelPartOutcome("failed");
   }
 
-  function handleSessionComplete(result: { correct: number; total: number }) {
+  function retryCurrentLevelPart() {
+    if (!level || !levelExamSelected) {
+      return;
+    }
+    setLevelPartOutcome(null);
+    if (levelExamSelected === "crossword") {
+      setLevelExamCrosswords(resolveLevelExamCrosswords(level));
+      setCrosswordSessionKey((value) => value + 1);
+      return;
+    }
+    setLevelExamFillBlanks(resolveLevelExamFillBlanks(level));
+    setFillBlankSessionKey((value) => value + 1);
+  }
+
+  function backToLevelExamPicker() {
+    setLevelExamSelected(null);
+    setLevelPartOutcome(null);
+  }
+
+  function handleSessionComplete() {
     if (topicId && selectedType) {
       markTopicExerciseTypeCompleted(topicId, selectedType);
     }
-
-    if (!isExam || !level) {
-      return;
-    }
-
-    handleLevelExamComplete(result);
   }
 
   if (isExam && level) {
-    if (levelExamCrosswords.length === 0) {
+    if (levelExamCrosswords === null || levelExamFillBlanks === null) {
+      return (
+        <p className="text-sm text-brand-600 dark:text-brand-400">
+          {t("levelExamIntro")}
+        </p>
+      );
+    }
+
+    if (levelExamCrosswords.length === 0 || levelExamFillBlanks.length === 0) {
       return (
         <p className="text-sm text-brand-600 dark:text-brand-400">
           {t("noExamQuestions")}
@@ -128,7 +202,7 @@ export function TopicExercisesView({
       );
     }
 
-    if (examOutcome === "passed") {
+    if (levelExamPassed) {
       return (
         <div
           className="dashboard-panel mx-auto max-w-lg space-y-3 border-emerald-500/40 bg-emerald-500/10 text-center"
@@ -149,29 +223,105 @@ export function TopicExercisesView({
       );
     }
 
+    if (!levelExamSelected) {
+      return (
+        <div className="space-y-4">
+          <p className="text-sm text-brand-600 dark:text-brand-400">
+            {t("levelExamIntro")}
+          </p>
+          <ExerciseTypePicker
+            counts={levelExamCounts}
+            completedTypes={passedLevelParts}
+            title={t("levelExamChooseTitle")}
+            subtitle={t("levelExamChooseSubtitle")}
+            onSelect={(type) => {
+              if (type !== "crossword" && type !== "fill_blank") {
+                return;
+              }
+              setLevelPartOutcome(null);
+              setLevelExamSelected(type);
+            }}
+          />
+        </div>
+      );
+    }
+
     return (
       <div className="space-y-4">
-        {examOutcome === "failed" ? (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={backToLevelExamPicker}
+        >
+          <ArrowLeft className="size-4" aria-hidden />
+          {t("backToTypes")}
+        </Button>
+
+        {levelPartOutcome === "failed" ? (
           <div
             className="dashboard-panel space-y-3 border-amber-500/40 bg-amber-500/10 text-center"
             role="status"
           >
             <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
-              {t("examFailedTitle")}
+              {t("levelExamPartFailedTitle")}
             </h2>
             <p className="text-sm text-brand-600 dark:text-brand-400">
-              {t("examFailedBody")}
+              {t("levelExamPartFailedBody")}
             </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              <Button type="button" size="sm" onClick={retryCurrentLevelPart}>
+                <RotateCcw className="size-4" aria-hidden />
+                {t("retry")}
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={backToLevelExamPicker}
+              >
+                {t("backToTypes")}
+              </Button>
+            </div>
           </div>
-        ) : (
-          <p className="text-sm text-brand-600 dark:text-brand-400">
-            {t("levelExamIntro")}
-          </p>
-        )}
-        <CrosswordExerciseView
-          exercises={levelExamCrosswords}
-          onComplete={handleLevelExamComplete}
-        />
+        ) : null}
+
+        {levelPartOutcome === "passed" ? (
+          <div
+            className="dashboard-panel space-y-3 border-emerald-500/40 bg-emerald-500/10 text-center"
+            role="status"
+          >
+            <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
+              {t("levelExamPartPassedTitle")}
+            </h2>
+            <p className="text-sm text-brand-600 dark:text-brand-400">
+              {t("levelExamPartPassedBody")}
+            </p>
+            <Button type="button" size="sm" onClick={backToLevelExamPicker}>
+              {t("backToTypes")}
+            </Button>
+          </div>
+        ) : null}
+
+        {levelPartOutcome === null ? (
+          levelExamSelected === "crossword" ? (
+            <CrosswordExerciseView
+              key={`cw-${crosswordSessionKey}-${levelExamCrosswords[0]?.id ?? "cw"}`}
+              exercises={levelExamCrosswords}
+              onComplete={(result) =>
+                handleLevelExamPartComplete("crossword", result)
+              }
+            />
+          ) : (
+            <FillBlankExercises
+              key={`fb-${fillBlankSessionKey}-${levelExamFillBlanks[0]?.id ?? "fb"}`}
+              exercises={levelExamFillBlanks}
+              onComplete={(result) =>
+                handleLevelExamPartComplete("fill_blank", result)
+              }
+            />
+          )
+        ) : null}
       </div>
     );
   }
@@ -203,10 +353,7 @@ export function TopicExercisesView({
         type="button"
         variant="outline"
         size="sm"
-        onClick={() => {
-          setSelectedType(null);
-          setExamOutcome(null);
-        }}
+        onClick={() => setSelectedType(null)}
       >
         <ArrowLeft className="size-4" aria-hidden />
         {t("backToTypes")}
