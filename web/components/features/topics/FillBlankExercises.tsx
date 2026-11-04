@@ -3,11 +3,18 @@
 import { useTranslations } from "next-intl";
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
+import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import type { FillBlankExercise } from "@/data/topics/types";
 import { cn } from "@/lib/utils";
 
+type ExerciseSessionResult = {
+  correct: number;
+  total: number;
+};
+
 type FillBlankExercisesProps = {
   exercises: FillBlankExercise[];
+  onComplete?: (result: ExerciseSessionResult) => void;
 };
 
 function normalizeAnswer(value: string) {
@@ -23,13 +30,17 @@ function isAnswerCorrect(exercise: FillBlankExercise, value: string) {
   return accepted.includes(normalized);
 }
 
-export function FillBlankExercises({ exercises }: FillBlankExercisesProps) {
+export function FillBlankExercises({
+  exercises,
+  onComplete,
+}: FillBlankExercisesProps) {
   const t = useTranslations("Topic");
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState("");
   const [checked, setChecked] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [resultOpen, setResultOpen] = useState(false);
 
   function resetAll() {
     setIndex(0);
@@ -37,6 +48,7 @@ export function FillBlankExercises({ exercises }: FillBlankExercisesProps) {
     setChecked(false);
     setCorrectCount(0);
     setFinished(false);
+    setResultOpen(false);
   }
 
   if (exercises.length === 0) {
@@ -69,6 +81,8 @@ export function FillBlankExercises({ exercises }: FillBlankExercisesProps) {
   const exercise = exercises[index];
   const isCorrect = isAnswerCorrect(exercise, answer);
   const canRestart = index > 0 || answer.length > 0 || checked;
+  const continueLabel =
+    index >= exercises.length - 1 ? t("seeResult") : t("next");
 
   function handleCheck(event?: FormEvent) {
     event?.preventDefault();
@@ -79,11 +93,14 @@ export function FillBlankExercises({ exercises }: FillBlankExercisesProps) {
     if (isAnswerCorrect(exercise, answer)) {
       setCorrectCount((value) => value + 1);
     }
+    setResultOpen(true);
   }
 
   function handleNext() {
+    setResultOpen(false);
     if (index >= exercises.length - 1) {
       setFinished(true);
+      onComplete?.({ correct: correctCount, total: exercises.length });
       return;
     }
     setIndex((value) => value + 1);
@@ -131,30 +148,16 @@ export function FillBlankExercises({ exercises }: FillBlankExercisesProps) {
             />
           </label>
 
-          {checked ? (
-            <p
-              className={cn(
-                "text-sm",
-                isCorrect
-                  ? "text-emerald-700 dark:text-emerald-300"
-                  : "text-red-700 dark:text-red-300",
-              )}
-            >
-              {isCorrect ? t("correct") : t("incorrect")}
-              {exercise.explanation ? ` ${exercise.explanation}` : null}
-            </p>
-          ) : null}
-
           <div className="flex flex-wrap gap-2">
             {!checked ? (
               <Button type="submit" disabled={!answer.trim()}>
                 {t("check")}
               </Button>
-            ) : (
+            ) : !resultOpen ? (
               <Button type="button" onClick={handleNext}>
-                {index >= exercises.length - 1 ? t("seeResult") : t("next")}
+                {continueLabel}
               </Button>
-            )}
+            ) : null}
             {canRestart ? (
               <Button type="button" variant="outline" onClick={resetAll}>
                 {t("restart")}
@@ -163,6 +166,15 @@ export function FillBlankExercises({ exercises }: FillBlankExercisesProps) {
           </div>
         </form>
       </article>
+
+      <ExerciseResultDialog
+        open={resultOpen && checked}
+        variant={isCorrect ? "correct" : "incorrect"}
+        explanation={exercise.explanation}
+        onOpenChange={setResultOpen}
+        onContinue={handleNext}
+        continueLabel={continueLabel}
+      />
     </div>
   );
 }

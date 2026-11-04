@@ -15,7 +15,6 @@ export function CombinedExerciseHeader({
   combined,
 }: CombinedExerciseHeaderProps) {
   const t = useTranslations("Topic");
-  const topicTitles = combined.topics.map((topic) => topic.title).join(" · ");
 
   return (
     <header className="space-y-4">
@@ -46,7 +45,6 @@ export function CombinedExerciseHeader({
         <p className="max-w-3xl text-sm text-brand-600 dark:text-brand-400">
           {t("combinedExerciseSubtitle", {
             count: combined.topics.length,
-            topics: topicTitles,
           })}
         </p>
       </div>

@@ -1,12 +1,20 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { CircleHelp, Grid3x3, Headphones, TextCursorInput } from "lucide-react";
+import {
+  CheckCircle2,
+  CircleHelp,
+  Grid3x3,
+  Headphones,
+  TextCursorInput,
+} from "lucide-react";
+import { Badge } from "@/components/ui/Badge";
 import type { ExerciseType } from "@/data/topics/types";
 import { cn } from "@/lib/utils";
 
 type ExerciseTypePickerProps = {
   counts: Record<ExerciseType, number>;
+  completedTypes?: readonly ExerciseType[];
   onSelect: (type: ExerciseType) => void;
 };
 
@@ -52,10 +60,12 @@ const TYPE_ITEMS: {
 
 export function ExerciseTypePicker({
   counts,
+  completedTypes = [],
   onSelect,
 }: ExerciseTypePickerProps) {
   const t = useTranslations("Topic");
   const visibleItems = TYPE_ITEMS.filter((item) => counts[item.type] > 0);
+  const completedSet = new Set(completedTypes);
 
   return (
     <div className="w-full space-y-4">
@@ -79,6 +89,7 @@ export function ExerciseTypePicker({
             type === "crossword"
               ? t("puzzleCount", { count })
               : t("questionCount", { count });
+          const completed = completedSet.has(type);
 
           return (
             <li key={type}>
@@ -86,21 +97,43 @@ export function ExerciseTypePicker({
                 type="button"
                 onClick={() => onSelect(type)}
                 className={cn(
-                  "flex h-full w-full cursor-pointer flex-col gap-3 rounded-xl border border-border bg-background/50 p-4 text-left transition-colors",
-                  "hover:border-sky-500/70 hover:bg-sky-500/5",
+                  "flex h-full w-full cursor-pointer flex-col gap-3 rounded-xl border p-4 text-left transition-colors",
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40",
-                  "dark:bg-brand-950/40",
+                  completed
+                    ? "border-emerald-500/50 bg-emerald-500/10 hover:border-emerald-500/70 hover:bg-emerald-500/15 dark:bg-emerald-950/30"
+                    : "border-border bg-background/50 hover:border-sky-500/70 hover:bg-sky-500/5 dark:bg-brand-950/40",
                 )}
               >
-                <span className="inline-flex size-10 items-center justify-center rounded-lg bg-sky-500/10 text-sky-700 dark:text-sky-300">
-                  <Icon className="size-5" aria-hidden />
+                <span className="flex items-start justify-between gap-2">
+                  <span
+                    className={cn(
+                      "inline-flex size-10 items-center justify-center rounded-lg",
+                      completed
+                        ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-300"
+                        : "bg-sky-500/10 text-sky-700 dark:text-sky-300",
+                    )}
+                  >
+                    {completed ? (
+                      <CheckCircle2 className="size-5" aria-hidden />
+                    ) : (
+                      <Icon className="size-5" aria-hidden />
+                    )}
+                  </span>
+                  {completed ? (
+                    <Badge
+                      variant="outline"
+                      className="border-emerald-500/40 text-emerald-700 dark:text-emerald-300"
+                    >
+                      {t("typeCompletedBadge")}
+                    </Badge>
+                  ) : null}
                 </span>
                 <span className="space-y-1">
                   <span className="block font-display text-base font-semibold text-brand-950 dark:text-brand-100">
                     {t(titleKey)}
                   </span>
                   <span className="block text-sm text-brand-600 dark:text-brand-400">
-                    {t(descKey)}
+                    {completed ? t("typeCompletedDesc") : t(descKey)}
                   </span>
                   <span className="block text-xs text-brand-500 dark:text-brand-500">
                     {countLabel}

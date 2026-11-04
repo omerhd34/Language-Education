@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import type { CefrLevel } from "@/data/dashboardTopics";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Link } from "@/i18n/navigation";
+import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";
 
@@ -16,25 +17,32 @@ export type TopicSectionNavItem = {
 type TopicPageHeaderProps = {
   topicId: string;
   title: string;
+  titleEn?: string;
   level: CefrLevel;
   index: number;
-  activeTab: "lesson" | "exercises";
+  activeTab: "lesson" | "exercises" | "exam";
   sections?: TopicSectionNavItem[];
+  isExam?: boolean;
 };
 
 export function TopicPageHeader({
   topicId,
   title,
+  titleEn,
   level,
   index,
   activeTab,
   sections = [],
+  isExam = false,
 }: TopicPageHeaderProps) {
   const t = useTranslations("Topic");
+  const secondaryTitle = getDistinctSecondaryTitle(title, titleEn);
 
   const lessonHref = `/panelim/konular/${topicId}/anlatim`;
   const exercisesHref = `/panelim/konular/${topicId}/alistirmalar`;
+  const examHref = `/panelim/konular/${topicId}/sinav`;
   const showSectionNav = activeTab === "lesson" && sections.length > 0;
+  const showTopicExamTab = !isExam;
 
   return (
     <header className="space-y-4">
@@ -45,7 +53,7 @@ export function TopicPageHeader({
 
       <div className="flex flex-wrap items-center gap-2">
         <p className="inline-flex w-fit rounded-md bg-zinc-500/15 px-2 py-1 text-[11px] font-semibold tracking-wide text-zinc-700 uppercase dark:bg-zinc-400/15 dark:text-zinc-300">
-          {t("topicLabel", { index })}
+          {isExam ? t("examLabel") : t("topicLabel", { index })}
         </p>
         <p
           className={cn(
@@ -57,9 +65,16 @@ export function TopicPageHeader({
         </p>
       </div>
 
-      <h1 className="font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-3xl dark:text-brand-100">
-        {title}
-      </h1>
+      <div className="space-y-1">
+        <h1 className="font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-3xl dark:text-brand-100">
+          {title}
+        </h1>
+        {secondaryTitle ? (
+          <p className="text-base font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
+            {secondaryTitle}
+          </p>
+        ) : null}
+      </div>
 
       <div className="space-y-3 border-b border-border">
         <nav aria-label={t("tabsAria")} className="flex gap-1">
@@ -87,6 +102,20 @@ export function TopicPageHeader({
           >
             {t("exercises")}
           </Link>
+          {showTopicExamTab ? (
+            <Link
+              href={examHref}
+              className={cn(
+                "border-b-2 px-3 py-2 text-sm font-medium transition-colors",
+                activeTab === "exam"
+                  ? "border-sky-500 text-brand-950 dark:text-brand-100"
+                  : "border-transparent text-brand-500 hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100",
+              )}
+              aria-current={activeTab === "exam" ? "page" : undefined}
+            >
+              {t("topicExamTab")}
+            </Link>
+          ) : null}
         </nav>
 
         {showSectionNav ? (

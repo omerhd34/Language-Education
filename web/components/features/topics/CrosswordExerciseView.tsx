@@ -3,14 +3,21 @@
 import { useTranslations } from "next-intl";
 import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import type {
   CrosswordDirection,
   CrosswordExercise,
 } from "@/data/topics/types";
 import { cn } from "@/lib/utils";
 
+type ExerciseSessionResult = {
+  correct: number;
+  total: number;
+};
+
 type CrosswordExerciseViewProps = {
   exercises: CrosswordExercise[];
+  onComplete?: (result: ExerciseSessionResult) => void;
 };
 
 type CellStart = {
@@ -81,9 +88,12 @@ function stepCell(
 
 export function CrosswordExerciseView({
   exercises,
+  onComplete,
 }: CrosswordExerciseViewProps) {
   const t = useTranslations("Topic");
-  const exercise = exercises[0];
+  const [puzzleIndex, setPuzzleIndex] = useState(0);
+  const [solvedCount, setSolvedCount] = useState(0);
+  const exercise = exercises[puzzleIndex];
   const solution = useMemo(
     () => (exercise ? buildSolutionGrid(exercise) : null),
     [exercise],
@@ -92,7 +102,9 @@ export function CrosswordExerciseView({
   const directionRef = useRef<CrosswordDirection>("across");
   const [values, setValues] = useState<Record<string, string>>({});
   const [checked, setChecked] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
   const [finished, setFinished] = useState(false);
+  const [resultOpen, setResultOpen] = useState(false);
 
   if (!exercise || !solution) {
     return (
@@ -103,6 +115,8 @@ export function CrosswordExerciseView({
   }
 
   const clues = [...exercise.clues].sort((a, b) => a.number - b.number);
+  const isLastPuzzle = puzzleIndex >= exercises.length - 1;
+  const continueLabel = isLastPuzzle ? t("seeResult") : t("next");
 
   function setDirection(next: CrosswordDirection) {
     directionRef.current = next;
@@ -144,15 +158,23 @@ export function CrosswordExerciseView({
     return current;
   }
 
-  function resetAll() {
+  function resetPuzzleState() {
     setValues({});
     setChecked(false);
-    setFinished(false);
+    setIsCorrect(false);
+    setResultOpen(false);
     setDirection("across");
   }
 
+  function resetAll() {
+    setPuzzleIndex(0);
+    setSolvedCount(0);
+    setFinished(false);
+    resetPuzzleState();
+  }
+
   function handleCheck() {
-    if (!solution) {
+    if (!solution || resultOpen) {
       return;
     }
 
@@ -172,9 +194,27 @@ export function CrosswordExerciseView({
     }
 
     setChecked(true);
-    if (allCorrect) {
-      setFinished(true);
+    setIsCorrect(allCorrect);
+    setResultOpen(true);
+  }
+
+  function handleContinue() {
+    setResultOpen(false);
+    if (!isCorrect) {
+      return;
     }
+
+    const nextSolved = solvedCount + 1;
+    setSolvedCount(nextSolved);
+
+    if (!isLastPuzzle) {
+      setPuzzleIndex((value) => value + 1);
+      resetPuzzleState();
+      return;
+    }
+
+    setFinished(true);
+    onComplete?.({ correct: nextSolved, total: exercises.length });
   }
 
   if (finished) {
@@ -183,6 +223,12 @@ export function CrosswordExerciseView({
         <h2 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
           {t("crosswordComplete")}
         </h2>
+        <p className="text-sm text-brand-600 dark:text-brand-400">
+          {t("finishedScore", {
+            correct: solvedCount,
+            total: exercises.length,
+          })}
+        </p>
         <Button type="button" onClick={resetAll}>
           {t("retry")}
         </Button>
@@ -192,6 +238,14 @@ export function CrosswordExerciseView({
 
   return (
     <div className="mx-auto max-w-3xl space-y-4">
+      {exercises.length > 1 ? (
+        <p className="text-sm text-brand-500 dark:text-brand-400">
+          {t("crosswordProgress", {
+            current: puzzleIndex + 1,
+            total: exercises.length,
+          })}
+        </p>
+      ) : null}
       <article className="dashboard-panel space-y-5">
         <div
           className="mx-auto grid w-fit gap-1"
@@ -323,21 +377,35 @@ export function CrosswordExerciseView({
           ))}
         </ul>
 
-        {checked && !finished ? (
-          <p className="text-sm text-red-700 dark:text-red-300">
-            {t("crosswordIncomplete")}
-          </p>
-        ) : null}
-
         <div className="flex flex-wrap gap-2">
-          <Button type="button" onClick={handleCheck}>
-            {t("check")}
-          </Button>
+          {!checked || !isCorrect ? (
+            <Button
+              type="button"
+              disabled={resultOpen}
+              onClick={handleCheck}
+            >
+              {t("check")}
+            </Button>
+          ) : !resultOpen ? (
+            <Button type="button" onClick={handleContinue}>
+              {continueLabel}
+            </Button>
+          ) : null}
           <Button type="button" variant="outline" onClick={resetAll}>
             {t("restart")}
           </Button>
         </div>
       </article>
+
+      <ExerciseResultDialog
+        open={resultOpen && checked}
+        variant={isCorrect ? "correct" : "incorrect"}
+        title={isCorrect ? t("crosswordComplete") : undefined}
+        explanation={isCorrect ? undefined : t("crosswordIncomplete")}
+        onOpenChange={setResultOpen}
+        onContinue={handleContinue}
+        continueLabel={isCorrect ? continueLabel : t("dialogOk")}
+      />
     </div>
   );
 }

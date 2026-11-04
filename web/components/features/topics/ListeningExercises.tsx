@@ -3,14 +3,21 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Volume2 } from "lucide-react";
+import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { SpeechRateControl } from "@/components/features/vocabulary/SpeechRateControl";
 import { Button } from "@/components/ui/Button";
 import type { ListeningExercise } from "@/data/topics/types";
 import { speakText, stopSpeaking } from "@/lib/speakText";
 import { cn } from "@/lib/utils";
 
+type ExerciseSessionResult = {
+  correct: number;
+  total: number;
+};
+
 type ListeningExercisesProps = {
   exercises: ListeningExercise[];
+  onComplete?: (result: ExerciseSessionResult) => void;
 };
 
 type OptionGroupProps = {
@@ -79,7 +86,10 @@ function OptionGroup({
   );
 }
 
-export function ListeningExercises({ exercises }: ListeningExercisesProps) {
+export function ListeningExercises({
+  exercises,
+  onComplete,
+}: ListeningExercisesProps) {
   const t = useTranslations("Topic");
   const [index, setIndex] = useState(0);
   const [englishSelected, setEnglishSelected] = useState<number | null>(null);
@@ -87,6 +97,7 @@ export function ListeningExercises({ exercises }: ListeningExercisesProps) {
   const [checked, setChecked] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [resultOpen, setResultOpen] = useState(false);
 
   const exercise = exercises[index];
 
@@ -108,6 +119,7 @@ export function ListeningExercises({ exercises }: ListeningExercisesProps) {
     setChecked(false);
     setCorrectCount(0);
     setFinished(false);
+    setResultOpen(false);
   }
 
   if (exercises.length === 0) {
@@ -148,6 +160,9 @@ export function ListeningExercises({ exercises }: ListeningExercisesProps) {
     turkishSelected !== null ||
     checked;
 
+  const continueLabel =
+    index >= exercises.length - 1 ? t("seeResult") : t("next");
+
   function handleCheck() {
     if (!canCheck) {
       return;
@@ -159,11 +174,14 @@ export function ListeningExercises({ exercises }: ListeningExercisesProps) {
     ) {
       setCorrectCount((value) => value + 1);
     }
+    setResultOpen(true);
   }
 
   function handleNext() {
+    setResultOpen(false);
     if (index >= exercises.length - 1) {
       setFinished(true);
+      onComplete?.({ correct: correctCount, total: exercises.length });
       return;
     }
     setIndex((value) => value + 1);
@@ -218,30 +236,16 @@ export function ListeningExercises({ exercises }: ListeningExercisesProps) {
           />
         </div>
 
-        {checked ? (
-          <p
-            className={cn(
-              "text-sm",
-              isCorrect
-                ? "text-emerald-700 dark:text-emerald-300"
-                : "text-red-700 dark:text-red-300",
-            )}
-          >
-            {isCorrect ? t("correct") : t("incorrect")}
-            {exercise.explanation ? ` ${exercise.explanation}` : null}
-          </p>
-        ) : null}
-
         <div className="flex flex-wrap gap-2">
           {!checked ? (
             <Button type="button" disabled={!canCheck} onClick={handleCheck}>
               {t("check")}
             </Button>
-          ) : (
+          ) : !resultOpen ? (
             <Button type="button" onClick={handleNext}>
-              {index >= exercises.length - 1 ? t("seeResult") : t("next")}
+              {continueLabel}
             </Button>
-          )}
+          ) : null}
           {canRestart ? (
             <Button type="button" variant="outline" onClick={resetAll}>
               {t("restart")}
@@ -249,6 +253,15 @@ export function ListeningExercises({ exercises }: ListeningExercisesProps) {
           ) : null}
         </div>
       </article>
+
+      <ExerciseResultDialog
+        open={resultOpen && checked}
+        variant={isCorrect ? "correct" : "incorrect"}
+        explanation={exercise.explanation}
+        onOpenChange={setResultOpen}
+        onContinue={handleNext}
+        continueLabel={continueLabel}
+      />
     </div>
   );
 }

@@ -3,15 +3,23 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import type { MultipleChoiceExercise } from "@/data/topics/types";
 import { cn } from "@/lib/utils";
 
+export type ExerciseSessionResult = {
+  correct: number;
+  total: number;
+};
+
 type MultipleChoiceExercisesProps = {
   exercises: MultipleChoiceExercise[];
+  onComplete?: (result: ExerciseSessionResult) => void;
 };
 
 export function MultipleChoiceExercises({
   exercises,
+  onComplete,
 }: MultipleChoiceExercisesProps) {
   const t = useTranslations("Topic");
   const [index, setIndex] = useState(0);
@@ -19,6 +27,7 @@ export function MultipleChoiceExercises({
   const [checked, setChecked] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [resultOpen, setResultOpen] = useState(false);
 
   function resetAll() {
     setIndex(0);
@@ -26,6 +35,7 @@ export function MultipleChoiceExercises({
     setChecked(false);
     setCorrectCount(0);
     setFinished(false);
+    setResultOpen(false);
   }
 
   if (exercises.length === 0) {
@@ -58,6 +68,8 @@ export function MultipleChoiceExercises({
   const exercise = exercises[index];
   const isCorrect = selected === exercise.correctIndex;
   const canRestart = index > 0 || selected !== null || checked;
+  const continueLabel =
+    index >= exercises.length - 1 ? t("seeResult") : t("next");
 
   function handleCheck() {
     if (selected === null || checked) {
@@ -67,11 +79,14 @@ export function MultipleChoiceExercises({
     if (selected === exercise.correctIndex) {
       setCorrectCount((value) => value + 1);
     }
+    setResultOpen(true);
   }
 
   function handleNext() {
+    setResultOpen(false);
     if (index >= exercises.length - 1) {
       setFinished(true);
+      onComplete?.({ correct: correctCount, total: exercises.length });
       return;
     }
     setIndex((value) => value + 1);
@@ -80,7 +95,14 @@ export function MultipleChoiceExercises({
   }
 
   return (
-    <div className="mx-auto max-w-2xl space-y-4">
+    <div
+      className={cn(
+        "mx-auto space-y-4",
+        exercises.some((item) => item.options.length >= 6)
+          ? "max-w-3xl"
+          : "max-w-2xl",
+      )}
+    >
       <p className="text-sm text-brand-500 dark:text-brand-400">
         {t("progress", { current: index + 1, total: exercises.length })}
       </p>
@@ -90,7 +112,14 @@ export function MultipleChoiceExercises({
           {exercise.prompt}
         </h2>
 
-        <ul className="space-y-2" role="listbox" aria-label={t("optionsAria")}>
+        <ul
+          className={cn(
+            "grid gap-2",
+            exercise.options.length >= 6 ? "sm:grid-cols-2" : "grid-cols-1",
+          )}
+          role="listbox"
+          aria-label={t("optionsAria")}
+        >
           {exercise.options.map((option, optionIndex) => {
             const isSelected = selected === optionIndex;
             const showCorrect =
@@ -99,7 +128,7 @@ export function MultipleChoiceExercises({
               checked && isSelected && optionIndex !== exercise.correctIndex;
 
             return (
-              <li key={option}>
+              <li key={`${optionIndex}-${option}`}>
                 <button
                   type="button"
                   role="option"
@@ -130,20 +159,6 @@ export function MultipleChoiceExercises({
           })}
         </ul>
 
-        {checked ? (
-          <p
-            className={cn(
-              "text-sm",
-              isCorrect
-                ? "text-emerald-700 dark:text-emerald-300"
-                : "text-red-700 dark:text-red-300",
-            )}
-          >
-            {isCorrect ? t("correct") : t("incorrect")}
-            {exercise.explanation ? ` ${exercise.explanation}` : null}
-          </p>
-        ) : null}
-
         <div className="flex flex-wrap gap-2">
           {!checked ? (
             <Button
@@ -153,11 +168,11 @@ export function MultipleChoiceExercises({
             >
               {t("check")}
             </Button>
-          ) : (
+          ) : !resultOpen ? (
             <Button type="button" onClick={handleNext}>
-              {index >= exercises.length - 1 ? t("seeResult") : t("next")}
+              {continueLabel}
             </Button>
-          )}
+          ) : null}
           {canRestart ? (
             <Button type="button" variant="outline" onClick={resetAll}>
               {t("restart")}
@@ -165,6 +180,15 @@ export function MultipleChoiceExercises({
           ) : null}
         </div>
       </article>
+
+      <ExerciseResultDialog
+        open={resultOpen && checked}
+        variant={isCorrect ? "correct" : "incorrect"}
+        explanation={exercise.explanation}
+        onOpenChange={setResultOpen}
+        onContinue={handleNext}
+        continueLabel={continueLabel}
+      />
     </div>
   );
 }
