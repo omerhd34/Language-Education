@@ -97,4 +97,5 @@ export type TopicContent = {
   topicId: string;
   lesson: TopicLesson;
   exercises: TopicExercise[];
+  examExercises?: MultipleChoiceExercise[];
 };

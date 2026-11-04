@@ -9,6 +9,7 @@ export type DashboardSubtopic = {
 export type DashboardTopic = {
   id: string;
   title: string;
+  titleEn?: string;
   level: CefrLevel;
   isExam?: boolean;
   subtopics: DashboardSubtopic[];
@@ -39,6 +40,15 @@ export const dashboardTopics: DashboardTopic[] = [
     subtopics: [
       { id: "121-1", title: "Günler ve Aylar", progress: 0 },
       { id: "121-2", title: "Saat Söyleme", progress: 0 },
+    ],
+  },
+  {
+    id: "122",
+    title: "Başlangıç Yeterlilik Sınavı",
+    level: "Başlangıç",
+    isExam: true,
+    subtopics: [
+      { id: "122-1", title: "Başlangıç Yeterlilik Sınavı", progress: 0 },
     ],
   },
   {
@@ -1358,3 +1368,5 @@ export function getDashboardTopicById(
 ): DashboardTopic | undefined {
   return dashboardTopics.find((topic) => topic.id === topicId);
 }
+
+export { getTopicTitleEn } from "@/data/topicTitlesEn";

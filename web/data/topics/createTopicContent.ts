@@ -1,5 +1,13 @@
 import type { DashboardTopic } from "@/data/dashboardTopics";
-import type { TopicContent, TopicExercise } from "@/data/topics/types";
+import type {
+  MultipleChoiceExercise,
+  TopicContent,
+  TopicExercise,
+} from "@/data/topics/types";
+import {
+  TOPIC_EXAM_QUESTION_COUNT,
+  ensureExamOptionCount,
+} from "@/lib/topicExam";
 
 const SAMPLE_PHRASES = [
   { en: "I understand this topic.", tr: "Bu konuyu anlıyorum." },
@@ -101,8 +109,89 @@ function buildExercises(topic: DashboardTopic): TopicExercise[] {
   return exercises;
 }
 
+function buildExamExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
+  const pool = [
+    topic.title,
+    "Tamamen farklı bir konu",
+    "Sadece kelime listesi",
+    "Hiçbiri",
+    "Yalnızca dinleme",
+    "Sadece yazım",
+    "Konu dışı örnek",
+    "Belirsiz başlık",
+    "Örnekleri okuyup kısa pratik yapmak",
+    "Konuyu tamamen atlamak",
+    "Sadece çeviri yapmadan ezberlemek",
+    "Hiç alıştırma çözmemek",
+  ];
+
+  const built = topic.subtopics.flatMap((subtopic, index) => {
+    const base: MultipleChoiceExercise[] = [
+      {
+        id: `exam-${topic.id}-${subtopic.id}-1`,
+        subtopicId: subtopic.id,
+        type: "multiple_choice",
+        prompt: `"${subtopic.title}" alt konusu hangi ana konuya aittir?`,
+        options: [
+          topic.title,
+          "Tamamen farklı bir konu",
+          "Sadece kelime listesi",
+          "Hiçbiri",
+        ],
+        correctIndex: 0,
+        explanation: `Bu alt konu "${topic.title}" başlığı altındadır.`,
+      },
+      {
+        id: `exam-${topic.id}-${subtopic.id}-2`,
+        subtopicId: subtopic.id,
+        type: "multiple_choice",
+        prompt: `${topic.level} seviyesindeki "${subtopic.title}" için doğru yaklaşım hangisidir?`,
+        options: [
+          "Örnekleri okuyup kısa pratik yapmak",
+          "Konuyu tamamen atlamak",
+          "Sadece çeviri yapmadan ezberlemek",
+          "Hiç alıştırma çözmemek",
+        ],
+        correctIndex: 0,
+        explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+      },
+      {
+        id: `exam-${topic.id}-${subtopic.id}-3`,
+        subtopicId: subtopic.id,
+        type: "multiple_choice",
+        prompt: `"${subtopic.title}" çalışırken hangisi doğrudur?`,
+        options: [
+          "Anlamadığın örneği işaretleyip tekrar etmek",
+          "Hiç örnek okumamak",
+          "Konuyu tamamen atlamak",
+          "Sadece dinleyip bırakmak",
+        ],
+        correctIndex: 0,
+        explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+      },
+    ];
+
+    if (index === 0) {
+      base.push({
+        id: `exam-${topic.id}-level`,
+        subtopicId: subtopic.id,
+        type: "multiple_choice",
+        prompt: `"${topic.title}" konusu hangi seviyeye aittir?`,
+        options: [topic.level, "Yanlış seviye", "Belirsiz", "Seviye yok"],
+        correctIndex: 0,
+        explanation: `Bu konu ${topic.level} seviyesindedir.`,
+      });
+    }
+
+    return base.map((item) => ensureExamOptionCount(item, pool));
+  });
+
+  return built.slice(0, TOPIC_EXAM_QUESTION_COUNT);
+}
+
 export function createTopicContent(topic: DashboardTopic): TopicContent {
   const samples = pickSamples(topic.id, 3);
+  const exercises = buildExercises(topic);
 
   return {
     topicId: topic.id,
@@ -139,6 +228,7 @@ export function createTopicContent(topic: DashboardTopic): TopicContent {
         };
       }),
     },
-    exercises: buildExercises(topic),
+    exercises,
+    examExercises: topic.isExam ? undefined : buildExamExercises(topic),
   };
 }
