@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { CircleHelp, Grid3x3, TextCursorInput } from "lucide-react";
+import { CircleHelp, Grid3x3, Headphones, TextCursorInput } from "lucide-react";
 import type { ExerciseType } from "@/data/topics/types";
 import { cn } from "@/lib/utils";
 
@@ -12,8 +12,16 @@ type ExerciseTypePickerProps = {
 
 const TYPE_ITEMS: {
   type: ExerciseType;
-  titleKey: "typeMultipleChoice" | "typeFillBlank" | "typeCrossword";
-  descKey: "typeMultipleChoiceDesc" | "typeFillBlankDesc" | "typeCrosswordDesc";
+  titleKey:
+    | "typeMultipleChoice"
+    | "typeFillBlank"
+    | "typeCrossword"
+    | "typeListening";
+  descKey:
+    | "typeMultipleChoiceDesc"
+    | "typeFillBlankDesc"
+    | "typeCrosswordDesc"
+    | "typeListeningDesc";
   Icon: typeof CircleHelp;
 }[] = [
   {
@@ -34,6 +42,12 @@ const TYPE_ITEMS: {
     descKey: "typeCrosswordDesc",
     Icon: Grid3x3,
   },
+  {
+    type: "listening",
+    titleKey: "typeListening",
+    descKey: "typeListeningDesc",
+    Icon: Headphones,
+  },
 ];
 
 export function ExerciseTypePicker({
@@ -41,6 +55,7 @@ export function ExerciseTypePicker({
   onSelect,
 }: ExerciseTypePickerProps) {
   const t = useTranslations("Topic");
+  const visibleItems = TYPE_ITEMS.filter((item) => counts[item.type] > 0);
 
   return (
     <div className="w-full space-y-4">
@@ -54,11 +69,11 @@ export function ExerciseTypePicker({
       </div>
 
       <ul
-        className="grid gap-3 sm:grid-cols-3"
+        className="grid gap-3 sm:grid-cols-2"
         role="list"
         aria-label={t("typesAria")}
       >
-        {TYPE_ITEMS.map(({ type, titleKey, descKey, Icon }) => {
+        {visibleItems.map(({ type, titleKey, descKey, Icon }) => {
           const count = counts[type];
           const countLabel =
             type === "crossword"

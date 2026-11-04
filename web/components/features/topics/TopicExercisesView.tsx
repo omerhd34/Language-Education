@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/Button";
 import { CrosswordExerciseView } from "@/components/features/topics/CrosswordExerciseView";
 import { ExerciseTypePicker } from "@/components/features/topics/ExerciseTypePicker";
 import { FillBlankExercises } from "@/components/features/topics/FillBlankExercises";
+import { ListeningExercises } from "@/components/features/topics/ListeningExercises";
 import { MultipleChoiceExercises } from "@/components/features/topics/MultipleChoiceExercises";
 import type {
   CrosswordExercise,
   ExerciseType,
   FillBlankExercise,
+  ListeningExercise,
   MultipleChoiceExercise,
   TopicExercise,
 } from "@/data/topics/types";
@@ -31,6 +33,7 @@ export function TopicExercisesView({ exercises }: TopicExercisesViewProps) {
       ).length,
       fill_blank: exercises.filter((item) => item.type === "fill_blank").length,
       crossword: exercises.filter((item) => item.type === "crossword").length,
+      listening: exercises.filter((item) => item.type === "listening").length,
     }),
     [exercises],
   );
@@ -73,6 +76,10 @@ export function TopicExercisesView({ exercises }: TopicExercisesViewProps) {
 
       {selectedType === "crossword" ? (
         <CrosswordExerciseView exercises={filtered as CrosswordExercise[]} />
+      ) : null}
+
+      {selectedType === "listening" ? (
+        <ListeningExercises exercises={filtered as ListeningExercise[]} />
       ) : null}
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import type {
   CrosswordDirection,
@@ -67,6 +67,18 @@ function cellKey(row: number, col: number) {
   return `${row}-${col}`;
 }
 
+function stepCell(
+  row: number,
+  col: number,
+  direction: CrosswordDirection,
+  delta: 1 | -1,
+) {
+  return {
+    row: direction === "down" ? row + delta : row,
+    col: direction === "across" ? col + delta : col,
+  };
+}
+
 export function CrosswordExerciseView({
   exercises,
 }: CrosswordExerciseViewProps) {
@@ -76,6 +88,8 @@ export function CrosswordExerciseView({
     () => (exercise ? buildSolutionGrid(exercise) : null),
     [exercise],
   );
+  const inputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const directionRef = useRef<CrosswordDirection>("across");
   const [values, setValues] = useState<Record<string, string>>({});
   const [checked, setChecked] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -90,10 +104,51 @@ export function CrosswordExerciseView({
 
   const clues = [...exercise.clues].sort((a, b) => a.number - b.number);
 
+  function setDirection(next: CrosswordDirection) {
+    directionRef.current = next;
+  }
+
+  function focusCell(row: number, col: number) {
+    const input = inputRefs.current[cellKey(row, col)];
+    if (!input) {
+      return;
+    }
+    input.focus();
+    input.select();
+  }
+
+  function moveFocus(
+    row: number,
+    col: number,
+    activeDirection: CrosswordDirection,
+    delta: 1 | -1,
+  ) {
+    if (!solution) {
+      return;
+    }
+
+    const next = stepCell(row, col, activeDirection, delta);
+    if (solution[next.row]?.[next.col]) {
+      focusCell(next.row, next.col);
+    }
+  }
+
+  function resolveDirection(cell: GridCell, current: CrosswordDirection) {
+    const startDirections = cell.starts.map((start) => start.direction);
+    if (startDirections.includes(current)) {
+      return current;
+    }
+    if (startDirections.length === 1) {
+      return startDirections[0];
+    }
+    return current;
+  }
+
   function resetAll() {
     setValues({});
     setChecked(false);
     setFinished(false);
+    setDirection("across");
   }
 
   function handleCheck() {
@@ -189,6 +244,9 @@ export function CrosswordExerciseView({
                     </span>
                   ) : null}
                   <input
+                    ref={(element) => {
+                      inputRefs.current[key] = element;
+                    }}
                     type="text"
                     inputMode="text"
                     maxLength={1}
@@ -196,6 +254,11 @@ export function CrosswordExerciseView({
                     spellCheck={false}
                     autoComplete="off"
                     aria-label={`${row + 1},${col + 1}`}
+                    onFocus={() => {
+                      setDirection(
+                        resolveDirection(cell, directionRef.current),
+                      );
+                    }}
                     onChange={(event) => {
                       const next = event.target.value
                         .replace(/[^a-zA-Z]/g, "")
@@ -203,6 +266,43 @@ export function CrosswordExerciseView({
                         .toUpperCase();
                       setChecked(false);
                       setValues((prev) => ({ ...prev, [key]: next }));
+                      if (next) {
+                        moveFocus(row, col, directionRef.current, 1);
+                      }
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === "Backspace" && typed.length === 0) {
+                        event.preventDefault();
+                        moveFocus(row, col, directionRef.current, -1);
+                        return;
+                      }
+
+                      if (event.key === "ArrowRight") {
+                        event.preventDefault();
+                        setDirection("across");
+                        moveFocus(row, col, "across", 1);
+                        return;
+                      }
+
+                      if (event.key === "ArrowLeft") {
+                        event.preventDefault();
+                        setDirection("across");
+                        moveFocus(row, col, "across", -1);
+                        return;
+                      }
+
+                      if (event.key === "ArrowDown") {
+                        event.preventDefault();
+                        setDirection("down");
+                        moveFocus(row, col, "down", 1);
+                        return;
+                      }
+
+                      if (event.key === "ArrowUp") {
+                        event.preventDefault();
+                        setDirection("down");
+                        moveFocus(row, col, "down", -1);
+                      }
                     }}
                     className="size-full bg-transparent text-center font-display text-base font-semibold uppercase text-brand-950 outline-none dark:text-brand-100"
                   />
@@ -217,10 +317,6 @@ export function CrosswordExerciseView({
             <li key={`${clue.direction}-${clue.number}`}>
               {t("crosswordClue", {
                 number: clue.number,
-                arrow:
-                  clue.direction === "across"
-                    ? t("crosswordArrowAcross")
-                    : t("crosswordArrowDown"),
                 text: clue.text,
               })}
             </li>
