@@ -1,33 +1,34 @@
-import { vocabularyCategory1 } from "./1";
-import { vocabularyCategory2 } from "./2";
-import { vocabularyCategory3 } from "./3";
-import { vocabularyCategory4 } from "./4";
-import { vocabularyCategory5 } from "./5";
-import { vocabularyCategory6 } from "./6";
-import { vocabularyCategory7 } from "./7";
-import { vocabularyCategory8 } from "./8";
-import { vocabularyCategory9 } from "./9";
-import { vocabularyCategory11 } from "./11";
-import { vocabularyCategory12 } from "./12";
-import { vocabularyCategory13 } from "./13";
-import { vocabularyCategory14 } from "./14";
-import { vocabularyCategory15 } from "./15";
-import { vocabularyCategory16 } from "./16";
-import { vocabularyCategory17 } from "./17";
-import { vocabularyCategory19 } from "./19";
-import { vocabularyCategory20 } from "./20";
-import { vocabularyCategory21 } from "./21";
-import { vocabularyCategory22 } from "./22";
-import { vocabularyCategory23 } from "./23";
-import { vocabularyCategory24 } from "./24";
-import { vocabularyCategory25 } from "./25";
-import { vocabularyCategory26 } from "./26";
-import { vocabularyCategory27 } from "./27";
+import { vocabularyCategory1 } from "./a1/1";
+import { vocabularyCategory2 } from "./a1/2";
+import { vocabularyCategory3 } from "./a1/3";
+import { vocabularyCategory4 } from "./a1/4";
+import { vocabularyCategory5 } from "./a1/5";
+import { vocabularyCategory6 } from "./a1/6";
+import { vocabularyCategory7 } from "./a1/7";
+import { vocabularyCategory8 } from "./a1/8";
+import { vocabularyCategory9 } from "./a1/9";
+import { vocabularyCategory11 } from "./a1/11";
+import { vocabularyCategory12 } from "./a1/12";
+import { vocabularyCategory13 } from "./a1/13";
+import { vocabularyCategory14 } from "./a1/14";
+import { vocabularyCategory15 } from "./a1/15";
+import { vocabularyCategory16 } from "./a1/16";
+import { vocabularyCategory17 } from "./a1/17";
+import { vocabularyCategory19 } from "./a1/19";
+import { vocabularyCategory20 } from "./a1/20";
+import { vocabularyCategory21 } from "./a1/21";
+import { vocabularyCategory22 } from "./a1/22";
+import { vocabularyCategory23 } from "./a1/23";
+import { vocabularyCategory24 } from "./a1/24";
+import { vocabularyCategory25 } from "./a1/25";
+import { vocabularyCategory26 } from "./a1/26";
+import { vocabularyCategory27 } from "./a1/27";
 import type { VocabularyCategory } from "@/data/vocabulary/types";
 
 export type {
   VocabularyCategory,
   VocabularyExample,
+  VocabularySimilarWord,
   VocabularyWord,
 } from "@/data/vocabulary/types";
 
