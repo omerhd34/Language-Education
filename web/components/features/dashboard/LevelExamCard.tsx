@@ -85,15 +85,6 @@ export function LevelExamCard({
         </div>
       </CardHeader>
 
-      <div className="flex flex-1 items-center justify-center py-2">
-        <div className="flex size-20 items-center justify-center rounded-full border border-red-500/35 bg-red-500/15 dark:border-red-400/35 dark:bg-red-400/15">
-          <GraduationCap
-            className="size-8 text-red-700 dark:text-red-300"
-            aria-hidden
-          />
-        </div>
-      </div>
-
       <CardFooter>
         {locked ? (
           <Button type="button" size="sm" disabled className="w-full">

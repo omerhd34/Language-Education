@@ -73,15 +73,6 @@ export function CombinedExerciseCard({
         </div>
       </CardHeader>
 
-      <div className="flex flex-1 items-center justify-center py-2">
-        <div className="flex size-20 items-center justify-center rounded-full border border-amber-500/35 bg-amber-500/15 dark:border-amber-400/35 dark:bg-amber-400/15">
-          <Layers
-            className="size-8 text-amber-700 dark:text-amber-300"
-            aria-hidden
-          />
-        </div>
-      </div>
-
       <CardFooter>
         {locked ? (
           <Button type="button" size="sm" disabled className="w-full">
