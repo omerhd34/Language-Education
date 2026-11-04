@@ -28,7 +28,11 @@ export type TopicLesson = {
   sections: TopicLessonSection[];
 };
 
-export type ExerciseType = "multiple_choice" | "fill_blank" | "crossword";
+export type ExerciseType =
+  | "multiple_choice"
+  | "fill_blank"
+  | "crossword"
+  | "listening";
 
 export type MultipleChoiceExercise = {
   id: string;
@@ -47,6 +51,19 @@ export type FillBlankExercise = {
   prompt: string;
   answer: string;
   acceptedAnswers?: string[];
+  explanation?: string;
+};
+
+export type ListeningExercise = {
+  id: string;
+  subtopicId: string;
+  type: "listening";
+  prompt: string;
+  speakText: string;
+  englishOptions: string[];
+  englishCorrectIndex: number;
+  turkishOptions: string[];
+  turkishCorrectIndex: number;
   explanation?: string;
 };
 
@@ -73,7 +90,8 @@ export type CrosswordExercise = {
 export type TopicExercise =
   | MultipleChoiceExercise
   | FillBlankExercise
-  | CrosswordExercise;
+  | CrosswordExercise
+  | ListeningExercise;
 
 export type TopicContent = {
   topicId: string;
