@@ -1,7 +1,8 @@
+export const instant = false;
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { VocabularyCategoryHeader } from "@/components/features/vocabulary/VocabularyCategoryHeader";
-import { VocabularyWordList } from "@/components/features/vocabulary/VocabularyWordList";
+import { VocabularyCategoryView } from "@/components/features/vocabulary/VocabularyCategoryView";
 import {
   getVocabularyCategoryById,
   vocabularyCategories,
@@ -9,6 +10,7 @@ import {
 
 type PageProps = {
   params: Promise<{ locale: string; categoryId: string }>;
+  searchParams: Promise<{ tab?: string }>;
 };
 
 export function generateStaticParams() {
@@ -29,8 +31,12 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default async function VocabularyCategoryPage({ params }: PageProps) {
+export default async function VocabularyCategoryPage({
+  params,
+  searchParams,
+}: PageProps) {
   const { locale, categoryId } = await params;
+  const { tab } = await searchParams;
   setRequestLocale(locale);
 
   const category = getVocabularyCategoryById(categoryId);
@@ -48,7 +54,11 @@ export default async function VocabularyCategoryPage({ params }: PageProps) {
         index={index}
         wordCount={category.words.length}
       />
-      <VocabularyWordList words={category.words} />
+      <VocabularyCategoryView
+        categoryId={category.id}
+        words={category.words}
+        initialTab={tab === "exercises" ? "exercises" : "words"}
+      />
     </div>
   );
 }
