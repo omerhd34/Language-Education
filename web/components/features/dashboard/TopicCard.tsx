@@ -1,11 +1,21 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Lock } from "lucide-react";
+import { BookOpen, ClipboardCheck, Lock, PencilLine } from "lucide-react";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import type { DashboardTopic } from "@/data/dashboardTopics";
-import { getCefrLevelBadgeClass, getTopicProgress } from "@/lib/topicAccess";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import { getTopicTitleEn, type DashboardTopic } from "@/data/dashboardTopics";
+import { useTopicProgress } from "@/hooks/useTopicProgress";
+import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
+import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";
 
 type TopicCardProps = {
@@ -16,110 +26,122 @@ type TopicCardProps = {
 
 export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
   const t = useTranslations("Dashboard");
-  const progress = getTopicProgress(topic);
-  const radius = 36;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - progress / 100);
+  const progress = Math.min(100, Math.max(0, useTopicProgress(topic.id)));
+  const titleEn = getDistinctSecondaryTitle(
+    topic.title,
+    topic.titleEn ?? getTopicTitleEn(topic.id, topic.title),
+  );
 
   return (
-    <article
+    <div
       className={cn(
-        "dashboard-panel flex h-full flex-col",
-        locked && "opacity-75",
+        "relative h-full rounded-2xl",
+        "[--progress-track:#dce3ef] dark:[--progress-track:#303d59]",
+        locked && "opacity-70",
       )}
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={progress}
+      aria-label={t("topicProgressAria", { progress })}
     >
-      <div className="flex flex-wrap items-center gap-2">
-        <p className="inline-flex w-fit rounded-md bg-zinc-500/15 px-2 py-1 text-[11px] font-semibold tracking-wide text-zinc-700 uppercase dark:bg-zinc-400/15 dark:text-zinc-300">
-          {t("topicLabel", { index })}
-        </p>
-        <p
-          className={cn(
-            "inline-flex w-fit rounded-md px-2 py-1 text-[11px] font-semibold tracking-wide uppercase",
-            getCefrLevelBadgeClass(topic.level),
-          )}
-        >
-          {topic.level}
-        </p>
-        {locked ? (
-          <p className="inline-flex w-fit items-center gap-1 rounded-md bg-brand-600/10 px-2 py-1 text-[11px] font-semibold tracking-wide text-brand-600 uppercase dark:text-brand-300">
-            <Lock className="size-3" aria-hidden />
-            {t("locked")}
-          </p>
-        ) : null}
-      </div>
-      <h3 className="mt-3 font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
-        {topic.title}
-      </h3>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-2xl ring-[3px] ring-(--progress-track) ring-inset"
+      />
 
-      <div className="my-6 flex flex-1 items-center justify-center">
-        <div className="relative size-28">
-          <svg viewBox="0 0 96 96" className="size-full -rotate-90" aria-hidden>
-            <circle
-              cx="48"
-              cy="48"
-              r={radius}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="8"
-              className="text-brand-100 dark:text-brand-800"
-            />
-            <circle
-              cx="48"
-              cy="48"
-              r={radius}
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="8"
-              strokeLinecap="round"
-              strokeDasharray={circumference}
-              strokeDashoffset={offset}
-              className="text-sky-500"
-            />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span className="text-lg font-semibold text-brand-950 dark:text-brand-100">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-2xl transition-[background] duration-500 ease-out"
+        style={{
+          padding: 3,
+          background: `conic-gradient(from -90deg, #0ea5e9 ${progress}%, transparent 0)`,
+          WebkitMask:
+            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMaskComposite: "xor",
+          maskComposite: "exclude",
+        }}
+      />
+
+      <Card className="relative h-full border-0 bg-surface shadow-sm dark:bg-brand-900">
+        <CardHeader>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">{t("topicLabel", { index })}</Badge>
+            <Badge
+              variant="outline"
+              className={cn(
+                "border-transparent uppercase",
+                getCefrLevelBadgeClass(topic.level),
+              )}
+            >
+              {topic.level}
+            </Badge>
+            {locked ? (
+              <Badge
+                variant="outline"
+                className="gap-1 border-amber-500/40 text-amber-700 dark:text-amber-300"
+              >
+                <Lock className="size-3" aria-hidden />
+                {t("locked")}
+              </Badge>
+            ) : null}
+            <Badge variant="outline" className="ml-auto tabular-nums">
               %{progress}
-            </span>
+            </Badge>
           </div>
-        </div>
-      </div>
 
-      <div className="mt-auto grid grid-cols-2 gap-2">
-        {locked ? (
-          <>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              disabled
-              className="w-full"
-            >
-              {t("lesson")}
-            </Button>
-            <Button type="button" size="sm" disabled className="w-full">
-              {t("exercises")}
-            </Button>
-          </>
-        ) : (
-          <>
-            <ButtonLink
-              href={`/panelim/konular/${topic.id}/anlatim`}
-              variant="outline"
-              size="sm"
-              className="w-full"
-            >
-              {t("lesson")}
-            </ButtonLink>
-            <ButtonLink
-              href={`/panelim/konular/${topic.id}/alistirmalar`}
-              size="sm"
-              className="w-full"
-            >
-              {t("exercises")}
-            </ButtonLink>
-          </>
-        )}
-      </div>
-    </article>
+          <div className="space-y-1">
+            <CardTitle>{topic.title}</CardTitle>
+            {titleEn ? (
+              <CardDescription className="font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
+                {titleEn}
+              </CardDescription>
+            ) : null}
+          </div>
+        </CardHeader>
+
+        <CardFooter className="mt-auto grid grid-cols-1 gap-2 sm:grid-cols-3">
+          {locked ? (
+            <>
+              <Button type="button" variant="outline" size="sm" disabled>
+                <BookOpen aria-hidden />
+                {t("lesson")}
+              </Button>
+              <Button type="button" variant="outline" size="sm" disabled>
+                <PencilLine aria-hidden />
+                {t("exercises")}
+              </Button>
+              <Button type="button" size="sm" disabled>
+                <ClipboardCheck aria-hidden />
+                {t("topicExam")}
+              </Button>
+            </>
+          ) : (
+            <>
+              <ButtonLink
+                href={`/panelim/konular/${topic.id}/anlatim`}
+                variant="outline"
+                size="sm"
+              >
+                <BookOpen aria-hidden />
+                {t("lesson")}
+              </ButtonLink>
+              <ButtonLink
+                href={`/panelim/konular/${topic.id}/alistirmalar`}
+                variant="outline"
+                size="sm"
+              >
+                <PencilLine aria-hidden />
+                {t("exercises")}
+              </ButtonLink>
+              <ButtonLink href={`/panelim/konular/${topic.id}/sinav`} size="sm">
+                <ClipboardCheck aria-hidden />
+                {t("topicExam")}
+              </ButtonLink>
+            </>
+          )}
+        </CardFooter>
+      </Card>
+    </div>
   );
 }

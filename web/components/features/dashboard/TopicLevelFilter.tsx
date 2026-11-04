@@ -14,9 +14,16 @@ import { cn } from "@/lib/utils";
 type TopicLevelFilterProps = {
   value: CefrLevel;
   onChange: (level: CefrLevel) => void;
+  levels?: readonly CefrLevel[];
+  isUnlocked?: (level: CefrLevel) => boolean;
 };
 
-export function TopicLevelFilter({ value, onChange }: TopicLevelFilterProps) {
+export function TopicLevelFilter({
+  value,
+  onChange,
+  levels = CEFR_LEVEL_ORDER,
+  isUnlocked = canAccessLevel,
+}: TopicLevelFilterProps) {
   const t = useTranslations("Dashboard");
 
   return (
@@ -25,8 +32,8 @@ export function TopicLevelFilter({ value, onChange }: TopicLevelFilterProps) {
       aria-label={t("levelFilterAria")}
       className="flex flex-wrap gap-2"
     >
-      {CEFR_LEVEL_ORDER.map((level) => {
-        const unlocked = canAccessLevel(level);
+      {levels.map((level) => {
+        const unlocked = isUnlocked(level);
         const selected = value === level;
 
         return (
