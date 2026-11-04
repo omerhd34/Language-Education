@@ -1,10 +1,12 @@
-import type { VocabularyWord } from "@/data/vocabulary";
+import type { VocabularyExample, VocabularyWord } from "@/data/vocabulary";
 
 const MAX_SIMILAR = 3;
 
 export type SimilarWordItem = {
   label: string;
+  labelTr: string;
   targetWordId: string | null;
+  example: VocabularyExample;
 };
 
 export function getVocabularyWordElementId(wordId: string): string {
@@ -29,23 +31,19 @@ export function getSimilarWords(
   categoryWords: VocabularyWord[],
   limit = MAX_SIMILAR,
 ): SimilarWordItem[] {
-  if (word.similar && word.similar.length > 0) {
-    return word.similar.slice(0, limit).map((label) => {
-      const match = findCategoryWordByEnglish(categoryWords, label, word.id);
-      return {
-        label,
-        targetWordId: match?.id ?? null,
-      };
-    });
+  if (!word.similar || word.similar.length === 0) {
+    return [];
   }
 
-  return categoryWords
-    .filter((item) => item.id !== word.id)
-    .slice(0, limit)
-    .map((item) => ({
+  return word.similar.slice(0, limit).map((item) => {
+    const match = findCategoryWordByEnglish(categoryWords, item.en, word.id);
+    return {
       label: item.en,
-      targetWordId: item.id,
-    }));
+      labelTr: item.tr,
+      targetWordId: match?.id ?? null,
+      example: item.example,
+    };
+  });
 }
 
 export function scrollToVocabularyWord(wordId: string): void {
