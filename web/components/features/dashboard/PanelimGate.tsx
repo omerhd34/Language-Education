@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { QuizReadyNotificationWatcher } from "@/components/features/dashboard/QuizReadyNotificationWatcher";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useRouter } from "@/i18n/navigation";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -42,8 +43,8 @@ export function PanelimGate({ children }: PanelimGateProps) {
         </div>
       ) : null}
 
-      {/* children her zaman ağaçta kalır — Next instant nav doğrulaması için */}
       <div className={ready ? undefined : "hidden"} aria-hidden={!ready}>
+        {ready ? <QuizReadyNotificationWatcher /> : null}
         {children}
       </div>
     </>
