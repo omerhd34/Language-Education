@@ -16,22 +16,22 @@ import { cn } from "@/lib/utils";
 type AuthEmailFieldProps = {
   name?: string;
   label: string;
-  placeholder?: string;
   value: string;
   error?: string;
   startIcon?: ReactNode;
   autoComplete?: string;
+  autoFocus?: boolean;
   onChange: (value: string) => void;
 };
 
 export function AuthEmailField({
   name = "email",
   label,
-  placeholder,
   value,
   error,
   startIcon,
   autoComplete = "email",
+  autoFocus,
   onChange,
 }: AuthEmailFieldProps) {
   const t = useTranslations("Auth");
@@ -44,6 +44,7 @@ export function AuthEmailField({
 
   const suggestions = getEmailDomainSuggestions(value);
   const showSuggestions = open && suggestions.length > 0;
+  const filled = value.trim().length > 0;
 
   useEffect(() => {
     setActiveIndex(0);
@@ -107,20 +108,17 @@ export function AuthEmailField({
   }
 
   return (
-    <div ref={containerRef} className="relative flex w-full flex-col gap-1.5">
-      <label className="flex w-full flex-col gap-1.5" htmlFor={inputId}>
-        <span className="text-xs font-medium tracking-wide text-slate-400">
-          {label}
-        </span>
-        <span
-          className={cn(
-            "relative flex h-11 items-center rounded-xl border border-white/10 bg-black/35 transition-colors focus-within:border-sky-400/50 focus-within:ring-2 focus-within:ring-sky-400/20",
-            error &&
-              "border-red-400/60 focus-within:border-red-400/70 focus-within:ring-red-400/20",
-          )}
-        >
+    <div
+      ref={containerRef}
+      className={cn("ixir-field", error && "has-error")}
+      style={{ position: "relative" }}
+    >
+      <div
+        className={cn("ixir-domain-checker", error && "is-invalid has-error")}
+      >
+        <div className="ixir-dc-input ixir-dc-float">
           {startIcon ? (
-            <span className="pointer-events-none absolute left-3 text-slate-500">
+            <span className="ixir-dc-icon" aria-hidden>
               {startIcon}
             </span>
           ) : null}
@@ -133,7 +131,13 @@ export function AuthEmailField({
             autoCapitalize="none"
             autoCorrect="off"
             spellCheck={false}
-            placeholder={placeholder}
+            autoFocus={autoFocus}
+            className={cn(
+              "form-control",
+              filled && "is-filled",
+              error && "is-invalid",
+            )}
+            placeholder=" "
             value={value}
             role="combobox"
             aria-expanded={showSuggestions}
@@ -144,11 +148,6 @@ export function AuthEmailField({
             }
             aria-invalid={Boolean(error)}
             aria-describedby={error ? `${inputId}-error` : undefined}
-            className={cn(
-              "h-full w-full bg-transparent text-sm text-slate-100 outline-none placeholder:text-slate-500",
-              startIcon ? "pl-10" : "pl-3",
-              "pr-3",
-            )}
             onChange={(event) => {
               onChange(event.target.value);
               setOpen(true);
@@ -156,15 +155,19 @@ export function AuthEmailField({
             onFocus={() => setOpen(true)}
             onKeyDown={handleKeyDown}
           />
-        </span>
-      </label>
+          <label htmlFor={inputId} className="ixir-dc-label">
+            {label}
+          </label>
+        </div>
+      </div>
 
       {showSuggestions ? (
         <ul
           id={listboxId}
           role="listbox"
           aria-label={t("emailDomainSuggestions")}
-          className="absolute top-[calc(100%+0.35rem)] z-20 max-h-56 w-full overflow-auto rounded-xl border border-white/10 bg-[#0b1220]/95 py-1 shadow-[0_16px_40px_rgba(2,8,23,0.55)] backdrop-blur-xl"
+          className="absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-2xl border border-[#e2e8f0] bg-white py-1 shadow-lg"
+          style={{ position: "absolute", left: 0, right: 0 }}
         >
           {suggestions.map((suggestion, index) => {
             const isActive = index === activeIndex;
@@ -178,8 +181,8 @@ export function AuthEmailField({
                   className={cn(
                     "flex w-full items-center gap-1 px-3 py-2.5 text-left text-sm transition-colors",
                     isActive
-                      ? "bg-sky-400/15 text-sky-200"
-                      : "text-slate-300 hover:bg-white/5",
+                      ? "bg-[#386ce0]/10 text-[#1a1f2e]"
+                      : "text-[#334155] hover:bg-[#f1f5fb]",
                   )}
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseDown={(event) => {
@@ -187,8 +190,8 @@ export function AuthEmailField({
                     selectSuggestion(suggestion.email);
                   }}
                 >
-                  <span className="text-slate-400">{suggestion.localPart}</span>
-                  <span className="font-medium text-sky-300">
+                  <span className="text-[#8b93a3]">{suggestion.localPart}</span>
+                  <span className="font-medium text-[#386ce0]">
                     @{suggestion.domain}
                   </span>
                 </button>
@@ -199,9 +202,9 @@ export function AuthEmailField({
       ) : null}
 
       {error ? (
-        <span id={`${inputId}-error`} className="text-xs text-red-400">
+        <p id={`${inputId}-error`} className="ixir-field-error" role="alert">
           {error}
-        </span>
+        </p>
       ) : null}
     </div>
   );
