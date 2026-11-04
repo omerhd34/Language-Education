@@ -21,6 +21,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-2",
       en: "College",
       tr: "Kolej",
+      similar: [
+        {
+          en: "university",
+          tr: "üniversite",
+          example: {
+            en: "She studies at a big university.",
+            tr: "Büyük bir üniversitede okuyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "He will start college next year.",
@@ -37,6 +47,21 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-3",
       en: "University",
       tr: "Üniversite",
+      similar: [
+        {
+          en: "uni",
+          tr: "üniversite",
+          example: {
+            en: "He starts uni next autumn.",
+            tr: "Gelecek sonbahar üniversiteye başlayacak.",
+          },
+        },
+        {
+          en: "college",
+          tr: "kolej",
+          example: { en: "They met at college.", tr: "Kolejde tanıştılar." },
+        },
+      ],
       examples: [
         { en: "She studies at the university.", tr: "Üniversitede okuyor." },
         {
@@ -53,6 +78,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-4",
       en: "Preschool",
       tr: "Anaokulu",
+      similar: [
+        {
+          en: "kindergarten",
+          tr: "anaokulu",
+          example: {
+            en: "My son loves kindergarten.",
+            tr: "Oğlum anaokulunu seviyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "My little brother goes to preschool.",
@@ -91,6 +126,24 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-6",
       en: "Class",
       tr: "Sınıf",
+      similar: [
+        {
+          en: "lesson",
+          tr: "ders",
+          example: {
+            en: "Today's lesson is about verbs.",
+            tr: "Bugünkü ders fiiller hakkında.",
+          },
+        },
+        {
+          en: "course",
+          tr: "kurs",
+          example: {
+            en: "She joined an English course.",
+            tr: "Bir İngilizce kursuna katıldı.",
+          },
+        },
+      ],
       examples: [
         {
           en: "We have English class on Monday.",
@@ -110,6 +163,24 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-7",
       en: "Book",
       tr: "Kitap",
+      similar: [
+        {
+          en: "volume",
+          tr: "cilt",
+          example: {
+            en: "This volume has three hundred pages.",
+            tr: "Bu cilt üç yüz sayfa.",
+          },
+        },
+        {
+          en: "text",
+          tr: "metin",
+          example: {
+            en: "Read the text on page five.",
+            tr: "Beşinci sayfadaki metni oku.",
+          },
+        },
+      ],
       examples: [
         {
           en: "I read a book every evening.",
@@ -126,6 +197,24 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-8",
       en: "Notebook",
       tr: "Defter",
+      similar: [
+        {
+          en: "notepad",
+          tr: "not defteri",
+          example: {
+            en: "I jot ideas in a notepad.",
+            tr: "Fikirleri not defterine yazarım.",
+          },
+        },
+        {
+          en: "journal",
+          tr: "günlük",
+          example: {
+            en: "She keeps a journal every night.",
+            tr: "Her gece günlük tutar.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Write the homework in your notebook.",
@@ -142,6 +231,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-9",
       en: "Pen",
       tr: "Tükenmez Kalem",
+      similar: [
+        {
+          en: "ballpoint",
+          tr: "tükenmez kalem",
+          example: {
+            en: "This ballpoint writes smoothly.",
+            tr: "Bu tükenmez kalem akıcı yazar.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Can I borrow your pen?",
@@ -161,6 +260,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-10",
       en: "Pencil",
       tr: "Kalem",
+      similar: [
+        {
+          en: "lead pencil",
+          tr: "kurşun kalem",
+          example: {
+            en: "Draw the map with a lead pencil.",
+            tr: "Haritayı kurşun kalemle çiz.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Draw the picture with a pencil.",
@@ -180,6 +289,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-11",
       en: "Eraser",
       tr: "Silgi",
+      similar: [
+        {
+          en: "rubber",
+          tr: "silgi",
+          example: {
+            en: "Use a rubber to fix the mistake.",
+            tr: "Hatayı düzeltmek için silgi kullan.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Use an eraser to fix the mistake.",
@@ -193,6 +312,24 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-12",
       en: "Bag",
       tr: "Çanta",
+      similar: [
+        {
+          en: "backpack",
+          tr: "sırt çantası",
+          example: {
+            en: "His backpack is full of books.",
+            tr: "Sırt çantası kitaplarla dolu.",
+          },
+        },
+        {
+          en: "sack",
+          tr: "çuval",
+          example: {
+            en: "She carried a sack of potatoes.",
+            tr: "Bir çuval patates taşıdı.",
+          },
+        },
+      ],
       examples: [
         { en: "Put your books in your bag.", tr: "Kitaplarını çantana koy." },
         { en: "His school bag is very heavy.", tr: "Okul çantası çok ağır." },
@@ -206,6 +343,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-13",
       en: "Homework",
       tr: "Ödev",
+      similar: [
+        {
+          en: "assignment",
+          tr: "ödev",
+          example: {
+            en: "The assignment is due on Friday.",
+            tr: "Ödev cuma günü teslim edilecek.",
+          },
+        },
+      ],
       examples: [
         {
           en: "I do my homework after dinner.",
@@ -222,6 +369,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-14",
       en: "Exam",
       tr: "Sınav",
+      similar: [
+        {
+          en: "test",
+          tr: "sınav",
+          example: {
+            en: "We have a math test tomorrow.",
+            tr: "Yarın matematik sınavımız var.",
+          },
+        },
+      ],
       examples: [
         {
           en: "We have a math exam tomorrow.",
@@ -292,6 +449,16 @@ export const vocabularyCategory21: VocabularyCategory = {
       id: "21-18",
       en: "Math",
       tr: "Matematik",
+      similar: [
+        {
+          en: "maths",
+          tr: "matematik",
+          example: {
+            en: "Maths homework takes an hour.",
+            tr: "Matematik ödevi bir saat sürüyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Math homework takes me an hour.",

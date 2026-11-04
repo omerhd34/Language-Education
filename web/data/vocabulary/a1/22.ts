@@ -8,6 +8,13 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-1",
       en: "City",
       tr: "Şehir",
+      similar: [
+        {
+          en: "metropolis",
+          tr: "metropol",
+          example: { en: "London is a busy metropolis.", tr: "Londra kalabalık bir metropoldür." },
+        },
+      ],
       examples: [
         { en: "I live in a big city.", tr: "Büyük bir şehirde yaşıyorum." },
         { en: "The city has many parks.", tr: "Şehirde birçok park var." },
@@ -34,6 +41,18 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-3",
       en: "Street",
       tr: "Sokak",
+      similar: [
+        {
+          en: "road",
+          tr: "yol",
+          example: { en: "Cross the road carefully.", tr: "Yolu dikkatlice geç." },
+        },
+        {
+          en: "avenue",
+          tr: "cadde",
+          example: { en: "Trees line the wide avenue.", tr: "Geniş cadde boyunca ağaçlar var." },
+        },
+      ],
       examples: [
         { en: "Our house is on this street.", tr: "Evimiz bu sokakta." },
         { en: "Cross the street carefully.", tr: "Sokağı dikkatlice geç." },
@@ -60,6 +79,13 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-5",
       en: "Hospital",
       tr: "Hastane",
+      similar: [
+        {
+          en: "clinic",
+          tr: "klinik",
+          example: { en: "She visited a clinic near home.", tr: "Ev yakınındaki bir kliniğe gitti." },
+        },
+      ],
       examples: [
         { en: "The hospital is near the park.", tr: "Hastane parka yakın." },
         {
@@ -76,6 +102,18 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-6",
       en: "Restaurant",
       tr: "Restoran",
+      similar: [
+        {
+          en: "café",
+          tr: "kafe",
+          example: { en: "We met at a small café.", tr: "Küçük bir kafede buluştuk." },
+        },
+        {
+          en: "diner",
+          tr: "lokanta",
+          example: { en: "The diner serves breakfast all day.", tr: "Lokanta bütün gün kahvaltı servis eder." },
+        },
+      ],
       examples: [
         {
           en: "Let's eat at that restaurant.",
@@ -95,6 +133,13 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-7",
       en: "Movie Theater",
       tr: "Sinema",
+      similar: [
+        {
+          en: "cinema",
+          tr: "sinema",
+          example: { en: "We watched a film at the cinema.", tr: "Sinemada bir film izledik." },
+        },
+      ],
       examples: [
         {
           en: "We watched a film at the movie theater.",
@@ -114,6 +159,18 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-8",
       en: "Supermarket",
       tr: "Süpermarket",
+      similar: [
+        {
+          en: "grocery store",
+          tr: "market",
+          example: { en: "I buy milk at the grocery store.", tr: "Marketten süt alırım." },
+        },
+        {
+          en: "market",
+          tr: "pazar",
+          example: { en: "The market opens early on Sundays.", tr: "Pazar pazar günleri erken açılır." },
+        },
+      ],
       examples: [
         {
           en: "I buy food at the supermarket.",
@@ -133,6 +190,13 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-9",
       en: "Post Office",
       tr: "Posta",
+      similar: [
+        {
+          en: "post",
+          tr: "posta",
+          example: { en: "I sent the letter by post.", tr: "Mektubu postayla gönderdim." },
+        },
+      ],
       examples: [
         {
           en: "I sent a letter at the post office.",
@@ -152,6 +216,13 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-10",
       en: "Bench",
       tr: "Sandalye",
+      similar: [
+        {
+          en: "seat",
+          tr: "oturak",
+          example: { en: "Is this seat free?", tr: "Bu oturak boş mu?" },
+        },
+      ],
       examples: [
         {
           en: "We sat on a bench in the park.",
@@ -171,6 +242,13 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-11",
       en: "Museum",
       tr: "Müze",
+      similar: [
+        {
+          en: "gallery",
+          tr: "galeri",
+          example: { en: "The gallery shows modern art.", tr: "Galeri modern sanat sergiliyor." },
+        },
+      ],
       examples: [
         {
           en: "We visited the museum on Sunday.",
@@ -206,6 +284,18 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-13",
       en: "Hotel",
       tr: "Otel",
+      similar: [
+        {
+          en: "inn",
+          tr: "han",
+          example: { en: "We stayed at a cozy inn.", tr: "Samimi bir handa kaldık." },
+        },
+        {
+          en: "motel",
+          tr: "motel",
+          example: { en: "The motel is near the highway.", tr: "Motel otoyola yakın." },
+        },
+      ],
       examples: [
         { en: "We stayed at a small hotel.", tr: "Küçük bir otelde kaldık." },
         {
@@ -222,6 +312,13 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-14",
       en: "Police Station",
       tr: "Polis İstasyonu",
+      similar: [
+        {
+          en: "precinct",
+          tr: "karakol",
+          example: { en: "Report it at the local precinct.", tr: "Bunu yerel karakolda bildir." },
+        },
+      ],
       examples: [
         {
           en: "Report the theft at the police station.",
@@ -260,6 +357,18 @@ export const vocabularyCategory22: VocabularyCategory = {
       id: "22-16",
       en: "Map",
       tr: "Harita",
+      similar: [
+        {
+          en: "chart",
+          tr: "harita",
+          example: { en: "Use a chart to find the harbor.", tr: "Limanı bulmak için harita kullan." },
+        },
+        {
+          en: "atlas",
+          tr: "atlas",
+          example: { en: "The atlas shows every country.", tr: "Atlas her ülkeyi gösterir." },
+        },
+      ],
       examples: [
         {
           en: "Use a map to find the museum.",

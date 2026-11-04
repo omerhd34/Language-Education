@@ -8,6 +8,16 @@ export const vocabularyCategory9: VocabularyCategory = {
       id: "9-1",
       en: "Body",
       tr: "Vücut",
+      similar: [
+        {
+          en: "figure",
+          tr: "figür / vücut",
+          example: {
+            en: "She has a slim figure.",
+            tr: "İnce bir figüre sahip.",
+          },
+        },
+      ],
       examples: [
         { en: "Exercise is good for your body.", tr: "Egzersiz vücudun için iyidir." },
         { en: "Wash your body with soap.", tr: "Vücudunu sabunla yıka." },
@@ -88,6 +98,16 @@ export const vocabularyCategory9: VocabularyCategory = {
       id: "9-9",
       en: "Tooth",
       tr: "Diş",
+      similar: [
+        {
+          en: "teeth",
+          tr: "dişler",
+          example: {
+            en: "Brush your teeth every day.",
+            tr: "Her gün dişlerini fırçala.",
+          },
+        },
+      ],
       examples: [
         { en: "I brush my teeth twice a day.", tr: "Günde iki kez dişlerimi fırçalarım." },
         { en: "This tooth hurts a lot.", tr: "Bu diş çok ağrıyor." },
@@ -158,6 +178,16 @@ export const vocabularyCategory9: VocabularyCategory = {
       id: "9-16",
       en: "Foot",
       tr: "Ayak",
+      similar: [
+        {
+          en: "feet",
+          tr: "ayaklar",
+          example: {
+            en: "My feet hurt after the walk.",
+            tr: "Yürüyüşten sonra ayaklarım ağrıyor.",
+          },
+        },
+      ],
       examples: [
         { en: "My foot slipped on the ice.", tr: "Ayağım buzda kaydı." },
         { en: "She has small feet.", tr: "Küçük ayakları var." },
@@ -188,6 +218,24 @@ export const vocabularyCategory9: VocabularyCategory = {
       id: "9-19",
       en: "Stomach",
       tr: "Mide",
+      similar: [
+        {
+          en: "tummy",
+          tr: "karın (çocukça)",
+          example: {
+            en: "The baby patted his tummy.",
+            tr: "Bebek karnını okşadı.",
+          },
+        },
+        {
+          en: "belly",
+          tr: "karın",
+          example: {
+            en: "He has a full belly after dinner.",
+            tr: "Akşam yemeğinden sonra karnı tok.",
+          },
+        },
+      ],
       examples: [
         { en: "My stomach is empty.", tr: "Midem boş." },
         { en: "Spicy food upsets my stomach.", tr: "Baharatlı yemek midemi bozar." },

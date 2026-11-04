@@ -21,6 +21,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-2",
       en: "to do",
       tr: "yapmak, etmek",
+      similar: [
+        {
+          en: "make",
+          tr: "yapmak",
+          example: { en: "Can you make tea?", tr: "Çay yapabilir misin?" },
+        },
+      ],
       examples: [
         {
           en: "What do you want to do this weekend?",
@@ -40,6 +47,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-3",
       en: "to have",
       tr: "sahip olmak",
+      similar: [
+        {
+          en: "own",
+          tr: "sahip olmak",
+          example: { en: "I own a small car.", tr: "Küçük bir arabam var." },
+        },
+        {
+          en: "possess",
+          tr: "sahip olmak",
+          example: { en: "She possesses great patience.", tr: "Büyük sabrı var." },
+        },
+      ],
       examples: [
         {
           en: "I have a small dog at home.",
@@ -53,6 +72,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-4",
       en: "to get",
       tr: "almak / elde etmek",
+      similar: [
+        {
+          en: "obtain",
+          tr: "elde etmek",
+          example: { en: "You can obtain a ticket online.", tr: "Bileti internetten alabilirsin." },
+        },
+        {
+          en: "receive",
+          tr: "almak",
+          example: { en: "I received your message.", tr: "Mesajını aldım." },
+        },
+      ],
       examples: [
         {
           en: "I need to get milk from the store.",
@@ -72,6 +103,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-5",
       en: "to make",
       tr: "yapmak",
+      similar: [
+        {
+          en: "do",
+          tr: "yapmak",
+          example: { en: "What will you do today?", tr: "Bugün ne yapacaksın?" },
+        },
+        {
+          en: "create",
+          tr: "yaratmak",
+          example: { en: "Artists create beautiful work.", tr: "Sanatçılar güzel eserler yaratır." },
+        },
+      ],
       examples: [
         {
           en: "Can you make tea for us?",
@@ -107,6 +150,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-7",
       en: "to wake up",
       tr: "uyanmak",
+      similar: [
+        {
+          en: "awaken",
+          tr: "uyanmak",
+          example: { en: "Loud noise can awaken the baby.", tr: "Yüksek ses bebeği uyandırabilir." },
+        },
+      ],
       examples: [
         {
           en: "I wake up at six on weekdays.",
@@ -123,6 +173,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-8",
       en: "to sleep",
       tr: "uyumak",
+      similar: [
+        {
+          en: "rest",
+          tr: "dinlenmek",
+          example: { en: "Rest for a few minutes.", tr: "Birkaç dakika dinlen." },
+        },
+        {
+          en: "nap",
+          tr: "şekerleme yapmak",
+          example: { en: "The baby naps after lunch.", tr: "Bebek öğle yemeğinden sonra şekerleme yapar." },
+        },
+      ],
       examples: [
         {
           en: "Babies sleep a lot during the day.",
@@ -142,6 +204,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-9",
       en: "to eat",
       tr: "yemek",
+      similar: [
+        {
+          en: "dine",
+          tr: "yemek yemek",
+          example: { en: "We dine together on Sundays.", tr: "Pazar günleri birlikte yemek yeriz." },
+        },
+        {
+          en: "consume",
+          tr: "tüketmek",
+          example: { en: "Do not consume food near the pool.", tr: "Havuz kenarında yiyecek tüketme." },
+        },
+      ],
       examples: [
         {
           en: "We eat dinner together at seven.",
@@ -158,6 +232,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-10",
       en: "to drink",
       tr: "içmek",
+      similar: [
+        {
+          en: "consume",
+          tr: "içmek",
+          example: { en: "He consumes too much coffee.", tr: "Çok fazla kahve içiyor." },
+        },
+      ],
       examples: [
         { en: "Drink water when you are thirsty.", tr: "Susayınca su iç." },
         { en: "He drinks coffee every morning.", tr: "Her sabah kahve içer." },
@@ -171,6 +252,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-11",
       en: "to cook",
       tr: "pişirmek",
+      similar: [
+        {
+          en: "prepare",
+          tr: "hazırlamak",
+          example: { en: "She prepares lunch every day.", tr: "Her gün öğle yemeği hazırlar." },
+        },
+      ],
       examples: [
         {
           en: "My mother loves to cook soup.",
@@ -190,6 +278,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-12",
       en: "to wash",
       tr: "yıkamak",
+      similar: [
+        {
+          en: "clean",
+          tr: "temizlemek",
+          example: { en: "Please clean the table.", tr: "Lütfen masayı temizle." },
+        },
+      ],
       examples: [
         {
           en: "Wash your hands before dinner.",
@@ -209,6 +304,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-13",
       en: "to clean",
       tr: "temizlemek",
+      similar: [
+        {
+          en: "wash",
+          tr: "yıkamak",
+          example: { en: "Wash the fruit before you eat it.", tr: "Meyveyi yemeden önce yıka." },
+        },
+      ],
       examples: [
         {
           en: "We clean the house on Saturdays.",
@@ -228,6 +330,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-14",
       en: "to wear",
       tr: "giymek",
+      similar: [
+        {
+          en: "put on",
+          tr: "giymek",
+          example: { en: "Put on your coat.", tr: "Paltonu giy." },
+        },
+      ],
       examples: [
         {
           en: "Wear a coat; it is cold outside.",
@@ -247,6 +356,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-15",
       en: "to rest",
       tr: "dinlenmek",
+      similar: [
+        {
+          en: "relax",
+          tr: "rahatlamak",
+          example: { en: "Relax on the sofa after work.", tr: "İşten sonra kanepede rahatla." },
+        },
+      ],
       examples: [
         {
           en: "Rest for a while after work.",
@@ -266,6 +382,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-16",
       en: "to work",
       tr: "çalışmak",
+      similar: [
+        {
+          en: "labor",
+          tr: "çalışmak",
+          example: { en: "They labor in the fields all day.", tr: "Bütün gün tarlada çalışırlar." },
+        },
+        {
+          en: "toil",
+          tr: "çabalamak",
+          example: { en: "She toils until late at night.", tr: "Gece geç saatlere kadar çabalıyor." },
+        },
+      ],
       examples: [
         {
           en: "I work from nine to five.",
@@ -282,6 +410,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-17",
       en: "to drive",
       tr: "sürmek",
+      similar: [
+        {
+          en: "operate",
+          tr: "kullanmak",
+          example: { en: "He operates the machine safely.", tr: "Makineyi güvenle kullanıyor." },
+        },
+        {
+          en: "steer",
+          tr: "yönlendirmek",
+          example: { en: "Steer the car into the parking spot.", tr: "Arabayı park yerine yönlendir." },
+        },
+      ],
       examples: [
         {
           en: "He drives to work every day.",
@@ -298,6 +438,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-18",
       en: "to live",
       tr: "yaşamak",
+      similar: [
+        {
+          en: "reside",
+          tr: "ikamet etmek",
+          example: { en: "They reside in a quiet town.", tr: "Sakin bir kasabada ikamet ediyorlar." },
+        },
+      ],
       examples: [
         { en: "They live near the sea.", tr: "Denizin yakınında yaşıyorlar." },
         {
@@ -311,6 +458,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-19",
       en: "to buy",
       tr: "satın almak",
+      similar: [
+        {
+          en: "purchase",
+          tr: "satın almak",
+          example: { en: "I want to purchase a new phone.", tr: "Yeni bir telefon satın almak istiyorum." },
+        },
+      ],
       examples: [
         {
           en: "I need to buy bread and milk.",
@@ -330,6 +484,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-20",
       en: "to sell",
       tr: "satmak",
+      similar: [
+        {
+          en: "vend",
+          tr: "satmak",
+          example: { en: "They vend fresh bread at the market.", tr: "Pazarda taze ekmek satıyorlar." },
+        },
+      ],
       examples: [
         {
           en: "They sell fresh fruit at the market.",
@@ -349,6 +510,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-21",
       en: "to pay",
       tr: "ödemek",
+      similar: [
+        {
+          en: "settle",
+          tr: "ödemek",
+          example: { en: "I will settle the bill tonight.", tr: "Hesabı bu gece ödeyeceğim." },
+        },
+      ],
       examples: [
         { en: "I will pay for the coffee.", tr: "Kahveyi ben ödeyeceğim." },
         {
@@ -362,6 +530,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-22",
       en: "to need",
       tr: "ihtiyacı olmak",
+      similar: [
+        {
+          en: "require",
+          tr: "gerektirmek",
+          example: { en: "This job requires patience.", tr: "Bu iş sabır gerektirir." },
+        },
+      ],
       examples: [
         {
           en: "We need more time to finish.",
@@ -381,6 +556,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-23",
       en: "to want",
       tr: "istemek",
+      similar: [
+        {
+          en: "wish",
+          tr: "istemek",
+          example: { en: "I wish to travel abroad.", tr: "Yurt dışına seyahat etmek istiyorum." },
+        },
+        {
+          en: "desire",
+          tr: "arzu etmek",
+          example: { en: "She desires a quiet life.", tr: "Sakin bir hayat arzuluyor." },
+        },
+      ],
       examples: [
         { en: "I want to learn English.", tr: "İngilizce öğrenmek istiyorum." },
         {
@@ -397,6 +584,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-24",
       en: "to go",
       tr: "gitmek",
+      similar: [
+        {
+          en: "move",
+          tr: "gitmek",
+          example: { en: "We move to a new house next month.", tr: "Gelecek ay yeni bir eve taşınıyoruz." },
+        },
+        {
+          en: "travel",
+          tr: "seyahat etmek",
+          example: { en: "They travel by train in Europe.", tr: "Avrupa'da trenle seyahat ediyorlar." },
+        },
+      ],
       examples: [
         {
           en: "Let's go to the park this afternoon.",
@@ -410,6 +609,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-25",
       en: "to come",
       tr: "gelmek",
+      similar: [
+        {
+          en: "arrive",
+          tr: "varmak",
+          example: { en: "We arrive at noon.", tr: "Öğlen varıyoruz." },
+        },
+      ],
       examples: [
         {
           en: "Please come to my birthday party.",
@@ -426,6 +632,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-26",
       en: "to leave",
       tr: "ayrılmak",
+      similar: [
+        {
+          en: "depart",
+          tr: "ayrılmak",
+          example: { en: "The bus departs at eight.", tr: "Otobüs sekizde kalkıyor." },
+        },
+      ],
       examples: [
         {
           en: "The train leaves at eight fifteen.",
@@ -445,6 +658,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-27",
       en: "to return",
       tr: "geri dönmek",
+      similar: [
+        {
+          en: "come back",
+          tr: "geri dönmek",
+          example: { en: "Come back soon, please.", tr: "Lütfen yakında geri dön." },
+        },
+      ],
       examples: [
         {
           en: "I will return the book tomorrow.",
@@ -464,6 +684,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-28",
       en: "to travel",
       tr: "seyahat etmek",
+      similar: [
+        {
+          en: "journey",
+          tr: "yolculuk",
+          example: { en: "The journey took three hours.", tr: "Yolculuk üç saat sürdü." },
+        },
+        {
+          en: "tour",
+          tr: "tur",
+          example: { en: "We took a tour of the city.", tr: "Şehir turuna çıktık." },
+        },
+      ],
       examples: [
         {
           en: "We love to travel in summer.",
@@ -483,6 +715,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-29",
       en: "to walk",
       tr: "yürümek",
+      similar: [
+        {
+          en: "stroll",
+          tr: "yürüyüş yapmak",
+          example: { en: "They stroll in the park every evening.", tr: "Her akşam parkta yürüyüş yaparlar." },
+        },
+        {
+          en: "hike",
+          tr: "yürüyüş yapmak",
+          example: { en: "We hike up the hill on weekends.", tr: "Hafta sonları tepeye yürüyüş yaparız." },
+        },
+      ],
       examples: [
         {
           en: "I walk to work when the weather is nice.",
@@ -499,6 +743,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-30",
       en: "to run",
       tr: "koşmak",
+      similar: [
+        {
+          en: "sprint",
+          tr: "hız koşmak",
+          example: { en: "He sprinted to catch the bus.", tr: "Otobüsü yakalamak için hız koştu." },
+        },
+        {
+          en: "race",
+          tr: "yarışmak",
+          example: { en: "Kids race to the door.", tr: "Çocuklar kapıya doğru yarışır." },
+        },
+      ],
       examples: [
         {
           en: "He runs in the park every morning.",
@@ -515,6 +771,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-31",
       en: "to jump",
       tr: "atlamak",
+      similar: [
+        {
+          en: "leap",
+          tr: "atlamak",
+          example: { en: "The cat leaped onto the fence.", tr: "Kedi çitin üstüne atladı." },
+        },
+        {
+          en: "hop",
+          tr: "zıplamak",
+          example: { en: "Birds hop on the grass.", tr: "Kuşlar çimen üzerinde zıplar." },
+        },
+      ],
       examples: [
         {
           en: "Kids jump in puddles after rain.",
@@ -531,6 +799,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-32",
       en: "to fall",
       tr: "düşmek",
+      similar: [
+        {
+          en: "drop",
+          tr: "düşmek",
+          example: { en: "Be careful not to drop the glass.", tr: "Bardağı düşürmemeye dikkat et." },
+        },
+        {
+          en: "tumble",
+          tr: "yuvarlanmak",
+          example: { en: "Leaves tumble in the wind.", tr: "Yapraklar rüzgârda yuvarlanır." },
+        },
+      ],
       examples: [
         {
           en: "Be careful not to fall on the ice.",
@@ -547,6 +827,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-33",
       en: "to climb",
       tr: "tırmanmak",
+      similar: [
+        {
+          en: "ascend",
+          tr: "tırmanmak",
+          example: { en: "We ascend the stairs slowly.", tr: "Merdivenleri yavaşça tırmanırız." },
+        },
+        {
+          en: "scale",
+          tr: "tırmanmak",
+          example: { en: "Climbers scale the rock wall.", tr: "Dağcılar kaya duvarına tırmanır." },
+        },
+      ],
       examples: [
         { en: "We climbed the hill slowly.", tr: "Tepeye yavaşça tırmandık." },
         {
@@ -563,6 +855,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-34",
       en: "to fly",
       tr: "uçmak",
+      similar: [
+        {
+          en: "soar",
+          tr: "süzülmek",
+          example: { en: "Eagles soar above the mountains.", tr: "Kartallar dağların üzerinde süzülür." },
+        },
+      ],
       examples: [
         { en: "Birds fly south in winter.", tr: "Kuşlar kışın güneye uçar." },
         {
@@ -579,6 +878,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-35",
       en: "to turn",
       tr: "dönmek",
+      similar: [
+        {
+          en: "rotate",
+          tr: "dönmek",
+          example: { en: "The Earth rotates once a day.", tr: "Dünya günde bir kez döner." },
+        },
+        {
+          en: "spin",
+          tr: "dönmek",
+          example: { en: "The wheel spins quickly.", tr: "Tekerlek hızlı döner." },
+        },
+      ],
       examples: [
         {
           en: "Turn left at the traffic light.",
@@ -598,6 +909,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-36",
       en: "to sit",
       tr: "oturmak",
+      similar: [
+        {
+          en: "settle",
+          tr: "oturmak",
+          example: { en: "Settle into a comfortable chair.", tr: "Rahat bir sandalyeye otur." },
+        },
+      ],
       examples: [
         { en: "Please sit down and relax.", tr: "Lütfen otur ve dinlen." },
         { en: "We sat near the window.", tr: "Pencerenin yanına oturduk." },
@@ -627,6 +945,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-38",
       en: "to speak",
       tr: "konuşmak",
+      similar: [
+        {
+          en: "talk",
+          tr: "konuşmak",
+          example: { en: "Let's talk after class.", tr: "Dersten sonra konuşalım." },
+        },
+      ],
       examples: [
         { en: "She speaks three languages.", tr: "Üç dil konuşuyor." },
         { en: "Speak slowly, please.", tr: "Lütfen yavaş konuş." },
@@ -640,6 +965,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-39",
       en: "to say",
       tr: "söylemek",
+      similar: [
+        {
+          en: "state",
+          tr: "belirtmek",
+          example: { en: "Please state your name clearly.", tr: "Lütfen adını net söyle." },
+        },
+        {
+          en: "utter",
+          tr: "söylemek",
+          example: { en: "She did not utter a word.", tr: "Tek kelime etmedi." },
+        },
+      ],
       examples: [
         { en: "What did he say to you?", tr: "Sana ne dedi?" },
         {
@@ -656,6 +993,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-40",
       en: "to tell",
       tr: "anlatmak / söylemek",
+      similar: [
+        {
+          en: "inform",
+          tr: "haber vermek",
+          example: { en: "Inform me when you arrive.", tr: "Vardığında bana haber ver." },
+        },
+        {
+          en: "relate",
+          tr: "anlatmak",
+          example: { en: "He related the whole story.", tr: "Bütün hikâyeyi anlattı." },
+        },
+      ],
       examples: [
         {
           en: "Tell me a story before bed.",
@@ -672,6 +1021,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-41",
       en: "to call",
       tr: "aramak",
+      similar: [
+        {
+          en: "phone",
+          tr: "telefon etmek",
+          example: { en: "Phone me tonight.", tr: "Bu gece beni ara." },
+        },
+        {
+          en: "ring",
+          tr: "telefon etmek",
+          example: { en: "Ring me if you need help.", tr: "Yardıma ihtiyacın olursa ara." },
+        },
+      ],
       examples: [
         { en: "Call me when you arrive.", tr: "Vardığında beni ara." },
         {
@@ -688,6 +1049,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-42",
       en: "to ask",
       tr: "sormak",
+      similar: [
+        {
+          en: "request",
+          tr: "istemek",
+          example: { en: "May I request a glass of water?", tr: "Bir bardak su isteyebilir miyim?" },
+        },
+        {
+          en: "inquire",
+          tr: "sormak",
+          example: { en: "She inquired about the price.", tr: "Fiyat hakkında sordu." },
+        },
+      ],
       examples: [
         {
           en: "Ask the teacher if you do not understand.",
@@ -704,6 +1077,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-43",
       en: "to explain",
       tr: "açıklamak",
+      similar: [
+        {
+          en: "clarify",
+          tr: "açıklamak",
+          example: { en: "Can you clarify this rule?", tr: "Bu kuralı açıklayabilir misin?" },
+        },
+        {
+          en: "describe",
+          tr: "tanımlamak",
+          example: { en: "Describe the place you visited.", tr: "Ziyaret ettiğin yeri tanımla." },
+        },
+      ],
       examples: [
         {
           en: "Can you explain this word to me?",
@@ -742,6 +1127,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-45",
       en: "to introduce",
       tr: "tanıtmak",
+      similar: [
+        {
+          en: "present",
+          tr: "sunmak",
+          example: { en: "She will present her project tomorrow.", tr: "Yarın projesini sunacak." },
+        },
+      ],
       examples: [
         {
           en: "Let me introduce my friend Ali.",
@@ -761,6 +1153,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-46",
       en: "to share",
       tr: "paylaşmak",
+      similar: [
+        {
+          en: "divide",
+          tr: "bölmek",
+          example: { en: "Divide the cake into six pieces.", tr: "Keki altı parçaya böl." },
+        },
+        {
+          en: "split",
+          tr: "paylaşmak",
+          example: { en: "Let's split the bill.", tr: "Hesabı paylaşalım." },
+        },
+      ],
       examples: [
         {
           en: "Share your ideas with the group.",
@@ -780,6 +1184,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-47",
       en: "to think",
       tr: "düşünmek",
+      similar: [
+        {
+          en: "consider",
+          tr: "düşünmek",
+          example: { en: "Consider all the options first.", tr: "Önce tüm seçenekleri düşün." },
+        },
+        {
+          en: "believe",
+          tr: "inanmak",
+          example: { en: "I believe you can do it.", tr: "Bunu yapabileceğine inanıyorum." },
+        },
+      ],
       examples: [
         {
           en: "I think this plan will work.",
@@ -796,6 +1212,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-48",
       en: "to know",
       tr: "bilmek",
+      similar: [
+        {
+          en: "recognize",
+          tr: "tanımak",
+          example: { en: "I recognize that voice.", tr: "O sesi tanıyorum." },
+        },
+        {
+          en: "realize",
+          tr: "fark etmek",
+          example: { en: "I realize my mistake now.", tr: "Hatamı şimdi fark ediyorum." },
+        },
+      ],
       examples: [
         {
           en: "I know the answer to this question.",
@@ -815,6 +1243,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-49",
       en: "to understand",
       tr: "anlamak",
+      similar: [
+        {
+          en: "comprehend",
+          tr: "anlamak",
+          example: { en: "I cannot comprehend this text.", tr: "Bu metni anlayamıyorum." },
+        },
+        {
+          en: "grasp",
+          tr: "kavramak",
+          example: { en: "She grasped the idea quickly.", tr: "Fikri hızla kavradı." },
+        },
+      ],
       examples: [
         { en: "I understand the lesson now.", tr: "Dersi artık anlıyorum." },
         {
@@ -831,6 +1271,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-50",
       en: "to learn",
       tr: "öğrenmek",
+      similar: [
+        {
+          en: "study",
+          tr: "çalışmak",
+          example: { en: "I study English every night.", tr: "Her gece İngilizce çalışırım." },
+        },
+      ],
       examples: [
         {
           en: "Children learn fast at this age.",
@@ -847,6 +1294,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-51",
       en: "to study",
       tr: "ders çalışmak",
+      similar: [
+        {
+          en: "learn",
+          tr: "öğrenmek",
+          example: { en: "Children learn new words fast.", tr: "Çocuklar yeni kelimeleri hızlı öğrenir." },
+        },
+      ],
       examples: [
         {
           en: "I study English every evening.",
@@ -863,6 +1317,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-52",
       en: "to teach",
       tr: "öğretmek",
+      similar: [
+        {
+          en: "instruct",
+          tr: "öğretmek",
+          example: { en: "The coach instructs the team daily.", tr: "Antrenör takıma her gün talimat verir." },
+        },
+        {
+          en: "train",
+          tr: "eğitmek",
+          example: { en: "She trains new employees.", tr: "Yeni çalışanları eğitiyor." },
+        },
+      ],
       examples: [
         {
           en: "My aunt teaches math at school.",
@@ -882,6 +1348,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-53",
       en: "to read",
       tr: "okumak",
+      similar: [
+        {
+          en: "browse",
+          tr: "göz atmak",
+          example: { en: "I browse books at the library.", tr: "Kütüphanede kitaplara göz atarım." },
+        },
+        {
+          en: "skim",
+          tr: "göz gezdirmek",
+          example: { en: "Skim the article before class.", tr: "Dersten önce yazıya göz gezdir." },
+        },
+      ],
       examples: [
         {
           en: "I read a book before I sleep.",
@@ -901,6 +1379,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-54",
       en: "to write",
       tr: "yazmak",
+      similar: [
+        {
+          en: "compose",
+          tr: "yazmak",
+          example: { en: "She composes emails for work.", tr: "İş için e-posta yazar." },
+        },
+        {
+          en: "note",
+          tr: "not almak",
+          example: { en: "Note the main ideas in class.", tr: "Derste ana fikirleri not al." },
+        },
+      ],
       examples: [
         { en: "Write your name at the top.", tr: "Adını en üste yaz." },
         { en: "He writes emails for work.", tr: "İş için e-posta yazar." },
@@ -914,6 +1404,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-55",
       en: "to plan",
       tr: "planlamak",
+      similar: [
+        {
+          en: "arrange",
+          tr: "planlamak",
+          example: { en: "We arrange meetings on Mondays.", tr: "Pazartesi günleri toplantı planlarız." },
+        },
+        {
+          en: "organize",
+          tr: "düzenlemek",
+          example: { en: "She organizes her desk every week.", tr: "Her hafta masasını düzenler." },
+        },
+      ],
       examples: [
         {
           en: "We plan a trip for next month.",
@@ -933,6 +1435,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-56",
       en: "to remember",
       tr: "hatırlamak",
+      similar: [
+        {
+          en: "recall",
+          tr: "hatırlamak",
+          example: { en: "I recall our first trip.", tr: "İlk gezimizi hatırlıyorum." },
+        },
+        {
+          en: "recollect",
+          tr: "hatırlamak",
+          example: { en: "Can you recollect his name?", tr: "Adını hatırlayabilir misin?" },
+        },
+      ],
       examples: [
         {
           en: "I remember our first meeting.",
@@ -978,6 +1492,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-59",
       en: "to look",
       tr: "bakmak",
+      similar: [
+        {
+          en: "glance",
+          tr: "göz atmak",
+          example: { en: "She glanced at her watch.", tr: "Saatine göz attı." },
+        },
+        {
+          en: "peek",
+          tr: "göz atmak",
+          example: { en: "Do not peek at the answers.", tr: "Cevaplara göz atma." },
+        },
+      ],
       examples: [
         { en: "Look at the board, please.", tr: "Lütfen tahtaya bak." },
         { en: "She looked out of the window.", tr: "Pencereden dışarı baktı." },
@@ -991,6 +1517,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-60",
       en: "to watch",
       tr: "izlemek",
+      similar: [
+        {
+          en: "view",
+          tr: "izlemek",
+          example: { en: "We view the match on TV.", tr: "Maçı televizyonda izleriz." },
+        },
+        {
+          en: "observe",
+          tr: "gözlemlemek",
+          example: { en: "Scientists observe bird behavior.", tr: "Bilim insanları kuş davranışını gözlemler." },
+        },
+      ],
       examples: [
         {
           en: "We watch a film every Friday.",
@@ -1023,6 +1561,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-62",
       en: "to listen",
       tr: "dinlemek",
+      similar: [
+        {
+          en: "heed",
+          tr: "dikkat etmek",
+          example: { en: "Heed the warning signs.", tr: "Uyarı işaretlerine dikkat et." },
+        },
+        {
+          en: "attend",
+          tr: "dinlemek",
+          example: { en: "Attend to the instructions.", tr: "Talimatlara kulak ver." },
+        },
+      ],
       examples: [
         {
           en: "Listen to the teacher carefully.",
@@ -1042,6 +1592,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-63",
       en: "to feel",
       tr: "hissetmek",
+      similar: [
+        {
+          en: "sense",
+          tr: "hissetmek",
+          example: { en: "I sense that something is wrong.", tr: "Bir şeylerin yanlış olduğunu hissediyorum." },
+        },
+      ],
       examples: [
         { en: "I feel happy today.", tr: "Bugün mutlu hissediyorum." },
         { en: "Do you feel cold in this room?", tr: "Bu odada üşüyor musun?" },
@@ -1055,6 +1612,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-64",
       en: "to touch",
       tr: "dokunmak",
+      similar: [
+        {
+          en: "feel",
+          tr: "hissetmek",
+          example: { en: "Feel how soft this fabric is.", tr: "Bu kumaşın ne kadar yumuşak olduğunu hisset." },
+        },
+        {
+          en: "handle",
+          tr: "dokunmak",
+          example: { en: "Handle the package with care.", tr: "Pakete dikkatle dokun." },
+        },
+      ],
       examples: [
         { en: "Do not touch the hot pan.", tr: "Sıcak tavaya dokunma." },
         {
@@ -1071,6 +1640,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-65",
       en: "to like",
       tr: "hoşlanmak",
+      similar: [
+        {
+          en: "enjoy",
+          tr: "keyif almak",
+          example: { en: "I enjoy reading in the park.", tr: "Parkta okumaktan keyif alırım." },
+        },
+        {
+          en: "love",
+          tr: "sevmek",
+          example: { en: "They love swimming in summer.", tr: "Yazın yüzmeyi severler." },
+        },
+      ],
       examples: [
         {
           en: "I like chocolate ice cream.",
@@ -1087,6 +1668,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-66",
       en: "to dislike",
       tr: "hoşlanmamak",
+      similar: [
+        {
+          en: "hate",
+          tr: "nefret etmek",
+          example: { en: "I hate waiting in long lines.", tr: "Uzun kuyruklarda beklemekten nefret ederim." },
+        },
+      ],
       examples: [
         { en: "He dislikes loud music.", tr: "Yüksek müziği sevmez." },
         { en: "I dislike getting up early.", tr: "Erken kalkmayı sevmem." },
@@ -1100,6 +1688,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-67",
       en: "to love",
       tr: "sevmek",
+      similar: [
+        {
+          en: "like",
+          tr: "sevmek",
+          example: { en: "I like your new haircut.", tr: "Yeni saç modelini seviyorum." },
+        },
+      ],
       examples: [
         { en: "I love my family very much.", tr: "Ailemi çok seviyorum." },
         {
@@ -1116,6 +1711,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-68",
       en: "to hate",
       tr: "nefret etmek",
+      similar: [
+        {
+          en: "dislike",
+          tr: "sevmemek",
+          example: { en: "She dislikes cold mornings.", tr: "Soğuk sabahları sevmez." },
+        },
+      ],
       examples: [
         { en: "I hate being late.", tr: "Geç kalmaktan nefret ederim." },
         { en: "He hates cold weather.", tr: "Soğuk havadan nefret eder." },
@@ -1126,6 +1728,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-69",
       en: "to take",
       tr: "almak",
+      similar: [
+        {
+          en: "grab",
+          tr: "kapmak",
+          example: { en: "Grab your coat and let's go.", tr: "Paltonu kap ve gidelim." },
+        },
+        {
+          en: "fetch",
+          tr: "getirmek",
+          example: { en: "Fetch some water from the kitchen.", tr: "Mutfaktan biraz su getir." },
+        },
+      ],
       examples: [
         { en: "Take an umbrella with you.", tr: "Yanına bir şemsiye al." },
         {
@@ -1142,6 +1756,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-70",
       en: "to bring",
       tr: "getirmek",
+      similar: [
+        {
+          en: "carry",
+          tr: "taşımak",
+          example: { en: "Can you carry this box?", tr: "Bu kutuyu taşıyabilir misin?" },
+        },
+        {
+          en: "deliver",
+          tr: "teslim etmek",
+          example: { en: "They deliver packages on time.", tr: "Paketleri zamanında teslim ederler." },
+        },
+      ],
       examples: [
         { en: "Bring your notebook to class.", tr: "Defterini derse getir." },
         {
@@ -1158,6 +1784,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-71",
       en: "to give",
       tr: "vermek",
+      similar: [
+        {
+          en: "offer",
+          tr: "sunmak",
+          example: { en: "May I offer you some tea?", tr: "Size biraz çay ikram edebilir miyim?" },
+        },
+        {
+          en: "hand",
+          tr: "uzatmak",
+          example: { en: "Hand me the salt, please.", tr: "Lütfen tuzu uzat." },
+        },
+      ],
       examples: [
         { en: "Give me a minute, please.", tr: "Lütfen bana bir dakika ver." },
         {
@@ -1174,6 +1812,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-72",
       en: "to put",
       tr: "koymak",
+      similar: [
+        {
+          en: "place",
+          tr: "koymak",
+          example: { en: "Place the book on the shelf.", tr: "Kitabı rafa koy." },
+        },
+        {
+          en: "set",
+          tr: "yerleştirmek",
+          example: { en: "Set the cups on the table.", tr: "Fincanları masaya yerleştir." },
+        },
+      ],
       examples: [
         { en: "Put the keys on the table.", tr: "Anahtarları masaya koy." },
         { en: "She put sugar in her tea.", tr: "Çayına şeker koydu." },
@@ -1187,6 +1837,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-73",
       en: "to find",
       tr: "bulmak",
+      similar: [
+        {
+          en: "discover",
+          tr: "keşfetmek",
+          example: { en: "We discovered a small café.", tr: "Küçük bir kafe keşfettik." },
+        },
+        {
+          en: "locate",
+          tr: "bulmak",
+          example: { en: "Can you locate the station on the map?", tr: "İstasyonu haritada bulabilir misin?" },
+        },
+      ],
       examples: [
         { en: "I cannot find my glasses.", tr: "Gözlüğümü bulamıyorum." },
         {
@@ -1203,6 +1865,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-74",
       en: "to keep",
       tr: "tutmak / saklamak",
+      similar: [
+        {
+          en: "store",
+          tr: "saklamak",
+          example: { en: "Store the files in this folder.", tr: "Dosyaları bu klasörde sakla." },
+        },
+        {
+          en: "hold",
+          tr: "tutmak",
+          example: { en: "Hold the door open, please.", tr: "Lütfen kapıyı açık tut." },
+        },
+      ],
       examples: [
         {
           en: "Keep the door closed, please.",
@@ -1222,6 +1896,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-75",
       en: "to use",
       tr: "kullanmak",
+      similar: [
+        {
+          en: "employ",
+          tr: "kullanmak",
+          example: { en: "We employ simple tools here.", tr: "Burada basit araçlar kullanıyoruz." },
+        },
+        {
+          en: "utilize",
+          tr: "kullanmak",
+          example: { en: "Utilize this app to learn words.", tr: "Kelime öğrenmek için bu uygulamayı kullan." },
+        },
+      ],
       examples: [
         { en: "Use a map if you get lost.", tr: "Kaybolursan harita kullan." },
         {
@@ -1238,6 +1924,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-76",
       en: "to try",
       tr: "denemek",
+      similar: [
+        {
+          en: "attempt",
+          tr: "denemek",
+          example: { en: "I will attempt the exam again.", tr: "Sınava tekrar girmeyi deneyeceğim." },
+        },
+        {
+          en: "test",
+          tr: "denemek",
+          example: { en: "Test the recipe before the party.", tr: "Partiden önce tarifi dene." },
+        },
+      ],
       examples: [
         {
           en: "Try this soup; it is delicious.",
@@ -1254,6 +1952,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-77",
       en: "to show",
       tr: "göstermek",
+      similar: [
+        {
+          en: "display",
+          tr: "göstermek",
+          example: { en: "The museum displays old coins.", tr: "Müze eski paraları sergiliyor." },
+        },
+        {
+          en: "demonstrate",
+          tr: "göstermek",
+          example: { en: "She will demonstrate the dance steps.", tr: "Dans adımlarını gösterecek." },
+        },
+      ],
       examples: [
         { en: "Show me your homework, please.", tr: "Lütfen ödevini göster." },
         {
@@ -1270,6 +1980,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-78",
       en: "to create",
       tr: "yaratmak",
+      similar: [
+        {
+          en: "make",
+          tr: "yapmak",
+          example: { en: "They make toys for children.", tr: "Çocuklar için oyuncak yaparlar." },
+        },
+        {
+          en: "build",
+          tr: "inşa etmek",
+          example: { en: "Workers build new houses here.", tr: "İşçiler burada yeni evler inşa ediyor." },
+        },
+      ],
       examples: [
         {
           en: "Artists create beautiful pictures.",
@@ -1289,6 +2011,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-79",
       en: "to build",
       tr: "inşa etmek",
+      similar: [
+        {
+          en: "construct",
+          tr: "inşa etmek",
+          example: { en: "They construct bridges across the river.", tr: "Nehir üzerine köprüler inşa ediyorlar." },
+        },
+        {
+          en: "make",
+          tr: "yapmak",
+          example: { en: "We make lunch together.", tr: "Öğle yemeğini birlikte yaparız." },
+        },
+      ],
       examples: [
         {
           en: "They build houses in this area.",
@@ -1308,6 +2042,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-80",
       en: "to prepare",
       tr: "hazırlamak",
+      similar: [
+        {
+          en: "cook",
+          tr: "pişirmek",
+          example: { en: "He cooks pasta on Sundays.", tr: "Pazar günleri makarna pişirir." },
+        },
+        {
+          en: "make",
+          tr: "yapmak",
+          example: { en: "She makes a fresh salad.", tr: "Taze bir salata yapıyor." },
+        },
+      ],
       examples: [
         {
           en: "Prepare your bag the night before.",
@@ -1324,6 +2070,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-81",
       en: "to cut",
       tr: "kesmek",
+      similar: [
+        {
+          en: "slice",
+          tr: "dilimlemek",
+          example: { en: "Slice the bread thinly.", tr: "Ekmeği ince dilimle." },
+        },
+        {
+          en: "chop",
+          tr: "doğramak",
+          example: { en: "Chop the onions for the soup.", tr: "Çorba için soğanları doğra." },
+        },
+      ],
       examples: [
         { en: "Cut the bread into slices.", tr: "Ekmeği dilimlere kes." },
         {
@@ -1340,6 +2098,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-82",
       en: "to add",
       tr: "eklemek",
+      similar: [
+        {
+          en: "include",
+          tr: "eklemek",
+          example: { en: "Include your phone number on the form.", tr: "Forma telefon numaranı ekle." },
+        },
+        {
+          en: "insert",
+          tr: "yerleştirmek",
+          example: { en: "Insert the key into the lock.", tr: "Anahtarı kilide yerleştir." },
+        },
+      ],
       examples: [
         {
           en: "Add salt and pepper to taste.",
@@ -1356,6 +2126,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-83",
       en: "to fill",
       tr: "doldurmak",
+      similar: [
+        {
+          en: "load",
+          tr: "doldurmak",
+          example: { en: "Load the bags into the car.", tr: "Çantaları arabaya yükle." },
+        },
+        {
+          en: "pack",
+          tr: "doldurmak",
+          example: { en: "Pack the suitcase tonight.", tr: "Bavulu bu gece doldur." },
+        },
+      ],
       examples: [
         { en: "Fill the glass with water.", tr: "Bardağı suyla doldur." },
         {
@@ -1385,6 +2167,13 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-85",
       en: "to close",
       tr: "kapatmak",
+      similar: [
+        {
+          en: "shut",
+          tr: "kapatmak",
+          example: { en: "Shut the window, please.", tr: "Lütfen pencereyi kapat." },
+        },
+      ],
       examples: [
         {
           en: "Close the door quietly, please.",
@@ -1401,6 +2190,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-86",
       en: "to start",
       tr: "başlamak",
+      similar: [
+        {
+          en: "begin",
+          tr: "başlamak",
+          example: { en: "The show will begin soon.", tr: "Gösteri yakında başlayacak." },
+        },
+        {
+          en: "commence",
+          tr: "başlamak",
+          example: { en: "Classes commence in September.", tr: "Dersler eylülde başlar." },
+        },
+      ],
       examples: [
         {
           en: "Class starts at eight thirty.",
@@ -1417,6 +2218,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-87",
       en: "to stop",
       tr: "durmak / durdurmak",
+      similar: [
+        {
+          en: "halt",
+          tr: "durmak",
+          example: { en: "The train halted at the station.", tr: "Tren istasyonda durdu." },
+        },
+        {
+          en: "cease",
+          tr: "durmak",
+          example: { en: "Rain ceased in the afternoon.", tr: "Yağmur öğleden sonra durdu." },
+        },
+      ],
       examples: [
         { en: "Stop at the red light.", tr: "Kırmızı ışıkta dur." },
         {
@@ -1433,6 +2246,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-88",
       en: "to finish",
       tr: "bitirmek",
+      similar: [
+        {
+          en: "end",
+          tr: "bitirmek",
+          example: { en: "Let's end the meeting on time.", tr: "Toplantıyı zamanında bitirelim." },
+        },
+        {
+          en: "complete",
+          tr: "tamamlamak",
+          example: { en: "Complete the form before you leave.", tr: "Ayrılmadan önce formu tamamla." },
+        },
+      ],
       examples: [
         {
           en: "I need to finish this report today.",
@@ -1449,6 +2274,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-89",
       en: "to help",
       tr: "yardım etmek",
+      similar: [
+        {
+          en: "assist",
+          tr: "yardım etmek",
+          example: { en: "Can you assist me with this task?", tr: "Bu görevde bana yardım edebilir misin?" },
+        },
+        {
+          en: "aid",
+          tr: "yardım etmek",
+          example: { en: "Neighbors aid each other in winter.", tr: "Komşular kışın birbirine yardım eder." },
+        },
+      ],
       examples: [
         {
           en: "Can you help me carry this box?",
@@ -1468,6 +2305,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-90",
       en: "to choose",
       tr: "seçmek",
+      similar: [
+        {
+          en: "pick",
+          tr: "seçmek",
+          example: { en: "Pick the answer you trust.", tr: "Güvendiğin cevabı seç." },
+        },
+        {
+          en: "select",
+          tr: "seçmek",
+          example: { en: "Select one item from the list.", tr: "Listeden bir öğe seç." },
+        },
+      ],
       examples: [
         { en: "Choose one answer on the test.", tr: "Testte bir cevap seç." },
         {
@@ -1484,6 +2333,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-91",
       en: "to let",
       tr: "izin vermek",
+      similar: [
+        {
+          en: "allow",
+          tr: "izin vermek",
+          example: { en: "My parents allow me to go out.", tr: "Ailem dışarı çıkmama izin veriyor." },
+        },
+        {
+          en: "permit",
+          tr: "izin vermek",
+          example: { en: "Smoking is not permitted here.", tr: "Burada sigara içmeye izin verilmez." },
+        },
+      ],
       examples: [
         {
           en: "My parents let me stay out late on Fridays.",
@@ -1503,6 +2364,18 @@ export const vocabularyCategory17: VocabularyCategory = {
       id: "17-92",
       en: "to play",
       tr: "oynamak",
+      similar: [
+        {
+          en: "perform",
+          tr: "oynamak",
+          example: { en: "The band will perform tonight.", tr: "Grup bu gece sahne alacak." },
+        },
+        {
+          en: "compete",
+          tr: "yarışmak",
+          example: { en: "Athletes compete in the stadium.", tr: "Sporcular stadyumda yarışır." },
+        },
+      ],
       examples: [
         {
           en: "Children play in the yard after school.",

@@ -8,6 +8,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-1",
       en: "Outside",
       tr: "Dışarı",
+      similar: [
+        {
+          en: "outdoors",
+          tr: "açık hava",
+          example: { en: "We ate lunch outdoors in the garden.", tr: "Bahçede açık havada öğle yemeği yedik." },
+        },
+      ],
       examples: [
         { en: "The children are playing outside.", tr: "Çocuklar dışarıda oynuyor." },
         { en: "It is cold outside today.", tr: "Bugün dışarısı soğuk." },
@@ -18,6 +25,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-2",
       en: "Always",
       tr: "Her zaman",
+      similar: [
+        {
+          en: "constantly",
+          tr: "sürekli",
+          example: { en: "He constantly checks his phone.", tr: "Sürekli telefonunu kontrol eder." },
+        },
+      ],
       examples: [
         { en: "She always drinks tea in the morning.", tr: "Sabahları her zaman çay içer." },
         { en: "I always forget my umbrella.", tr: "Her zaman şemsiyemi unuturum." },
@@ -28,6 +42,18 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-3",
       en: "Usually",
       tr: "Genellikle",
+      similar: [
+        {
+          en: "normally",
+          tr: "normalde",
+          example: { en: "I normally wake up at seven.", tr: "Normalde saat yedide uyanırım." },
+        },
+        {
+          en: "generally",
+          tr: "genelde",
+          example: { en: "The shop is generally open until nine.", tr: "Dükkan genelde dokuza kadar açıktır." },
+        },
+      ],
       examples: [
         { en: "We usually eat dinner at seven.", tr: "Genellikle saat yedide akşam yemeği yeriz." },
         { en: "She usually walks to work.", tr: "Genellikle işe yürür." },
@@ -38,6 +64,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-4",
       en: "Often",
       tr: "Çoğu kez",
+      similar: [
+        {
+          en: "frequently",
+          tr: "sık sık",
+          example: { en: "Buses run frequently on this route.", tr: "Bu güzergahta otobüsler sık sık sefer yapar." },
+        },
+      ],
       examples: [
         { en: "I often listen to podcasts on the bus.", tr: "Otobüste çoğu kez podcast dinlerim." },
         { en: "They often visit their grandparents.", tr: "Büyükanne ve büyükbabalarını çoğu kez ziyaret ederler." },
@@ -48,6 +81,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-5",
       en: "Sometimes",
       tr: "Bazen",
+      similar: [
+        {
+          en: "occasionally",
+          tr: "ara sıra",
+          example: { en: "We occasionally eat out on weekends.", tr: "Hafta sonları ara sıra dışarıda yeriz." },
+        },
+      ],
       examples: [
         { en: "Sometimes I work from home.", tr: "Bazen evden çalışırım." },
         { en: "We sometimes go to the cinema on Fridays.", tr: "Cuma günleri bazen sinemaya gideriz." },
@@ -68,6 +108,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-7",
       en: "Now",
       tr: "Şimdi",
+      similar: [
+        {
+          en: "currently",
+          tr: "şu anda",
+          example: { en: "She is currently studying abroad.", tr: "Şu anda yurt dışında okuyor." },
+        },
+      ],
       examples: [
         { en: "We need to leave now.", tr: "Şimdi gitmemiz gerekiyor." },
         { en: "What are you doing now?", tr: "Şimdi ne yapıyorsun?" },
@@ -78,6 +125,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-8",
       en: "Soon",
       tr: "çok yakında",
+      similar: [
+        {
+          en: "shortly",
+          tr: "kısa süre içinde",
+          example: { en: "The doctor will see you shortly.", tr: "Doktor sizi kısa süre içinde görecek." },
+        },
+      ],
       examples: [
         { en: "The bus will arrive soon.", tr: "Otobüs çok yakında gelecek." },
         { en: "See you soon!", tr: "Çok yakında görüşürüz!" },
@@ -118,6 +172,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-12",
       en: "Again",
       tr: "Tekrar",
+      similar: [
+        {
+          en: "once more",
+          tr: "bir kez daha",
+          example: { en: "Please read the sentence once more.", tr: "Lütfen cümleyi bir kez daha oku." },
+        },
+      ],
       examples: [
         { en: "Please say that again.", tr: "Lütfen bunu tekrar söyle." },
         { en: "We met again at the same cafe.", tr: "Aynı kafede tekrar buluştuk." },
@@ -128,6 +189,13 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-13",
       en: "Of course",
       tr: "elbette, tabii ki",
+      similar: [
+        {
+          en: "certainly",
+          tr: "kesinlikle",
+          example: { en: "I will certainly help you tomorrow.", tr: "Yarın kesinlikle sana yardım edeceğim." },
+        },
+      ],
       examples: [
         { en: "Of course you can borrow my pen.", tr: "Elbette kalemi ödünç alabilirsin." },
         { en: "Can you help me? Of course!", tr: "Bana yardım edebilir misin? Tabii ki!" },
@@ -138,6 +206,18 @@ export const vocabularyCategory26: VocabularyCategory = {
       id: "26-14",
       en: "Really",
       tr: "gerçekten",
+      similar: [
+        {
+          en: "truly",
+          tr: "gerçekten",
+          example: { en: "I am truly sorry for the mistake.", tr: "Hata için gerçekten üzgünüm." },
+        },
+        {
+          en: "actually",
+          tr: "aslında",
+          example: { en: "Actually, I prefer tea to coffee.", tr: "Aslında kahveye göre çayı tercih ederim." },
+        },
+      ],
       examples: [
         { en: "I am really tired today.", tr: "Bugün gerçekten yorgunum." },
         { en: "Did you really finish all the homework?", tr: "Gerçekten tüm ödevi bitirdin mi?" },

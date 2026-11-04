@@ -91,6 +91,16 @@ export const vocabularyCategory7: VocabularyCategory = {
       id: "7-6",
       en: "Half past",
       tr: "Buçuk",
+      similar: [
+        {
+          en: "half",
+          tr: "yarım / buçuk",
+          example: {
+            en: "I ate half of the apple.",
+            tr: "Elmanın yarısını yedim.",
+          },
+        },
+      ],
       examples: [
         { en: "It is half past two.", tr: "Saat iki buçuk." },
         {
@@ -227,6 +237,16 @@ export const vocabularyCategory7: VocabularyCategory = {
       id: "7-16",
       en: "Birthday",
       tr: "Doğum günü",
+      similar: [
+        {
+          en: "birthdate",
+          tr: "doğum tarihi",
+          example: {
+            en: "Please enter your birthdate.",
+            tr: "Lütfen doğum tarihinizi girin.",
+          },
+        },
+      ],
       examples: [
         { en: "When is your birthday?", tr: "Doğum günün ne zaman?" },
         {
@@ -240,6 +260,16 @@ export const vocabularyCategory7: VocabularyCategory = {
       id: "7-17",
       en: "Clock",
       tr: "Saat",
+      similar: [
+        {
+          en: "watch",
+          tr: "kol saati",
+          example: {
+            en: "He looked at his watch.",
+            tr: "Kol saatine baktı.",
+          },
+        },
+      ],
       examples: [
         {
           en: "There is a clock on the wall.",
@@ -272,6 +302,16 @@ export const vocabularyCategory7: VocabularyCategory = {
       id: "7-19",
       en: "Weekday",
       tr: "Hafta içi",
+      similar: [
+        {
+          en: "workday",
+          tr: "iş günü",
+          example: {
+            en: "Monday is a workday for me.",
+            tr: "Pazartesi benim için bir iş günü.",
+          },
+        },
+      ],
       examples: [
         { en: "I go to school on weekdays.", tr: "Hafta içi okula giderim." },
         { en: "Weekdays are busy for me.", tr: "Hafta içi benim için yoğun." },
@@ -474,6 +514,16 @@ export const vocabularyCategory7: VocabularyCategory = {
       id: "7-32",
       en: "Half",
       tr: "Yarım(Buçuk)",
+      similar: [
+        {
+          en: "half past",
+          tr: "buçuk",
+          example: {
+            en: "It is half past two.",
+            tr: "Saat iki buçuk.",
+          },
+        },
+      ],
       examples: [
         { en: "I ate half of the apple.", tr: "Elmanın yarısını yedim." },
         { en: "It is half past seven.", tr: "Saat yedi buçuk." },
@@ -487,6 +537,16 @@ export const vocabularyCategory7: VocabularyCategory = {
       id: "7-33",
       en: "Next",
       tr: "Sonraki",
+      similar: [
+        {
+          en: "following",
+          tr: "sonraki / izleyen",
+          example: {
+            en: "Read the following page.",
+            tr: "Sonraki sayfayı oku.",
+          },
+        },
+      ],
       examples: [
         { en: "See you next week.", tr: "Gelecek hafta görüşürüz." },
         { en: "Who is next in line?", tr: "Sırada sıradaki kim?" },

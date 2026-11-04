@@ -8,6 +8,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-1",
       en: "Job",
       tr: "Masat",
+      similar: [
+        {
+          en: "work",
+          tr: "iş / çalışma",
+          example: {
+            en: "I have too much work today.",
+            tr: "Bugün çok işim var.",
+          },
+        },
+      ],
       examples: [
         { en: "She is looking for a new job.", tr: "Yeni bir masat arıyor." },
         {
@@ -24,6 +34,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-2",
       en: "Work",
       tr: "İş",
+      similar: [
+        {
+          en: "job",
+          tr: "iş / meslek",
+          example: {
+            en: "She found a new job in the city.",
+            tr: "Şehirde yeni bir iş buldu.",
+          },
+        },
+      ],
       examples: [
         { en: "I have a lot of work today.", tr: "Bugün çok işim var." },
         { en: "She goes to work by bus.", tr: "İşe otobüsle gidiyor." },
@@ -37,6 +57,24 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-3",
       en: "Doctor",
       tr: "Doktor",
+      similar: [
+        {
+          en: "physician",
+          tr: "hekim",
+          example: {
+            en: "The physician examined the patient.",
+            tr: "Hekim hastayı muayene etti.",
+          },
+        },
+        {
+          en: "medic",
+          tr: "sağlık görevlisi",
+          example: {
+            en: "A medic arrived at the scene quickly.",
+            tr: "Olay yerine hızla bir sağlık görevlisi geldi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The doctor checked my throat.",
@@ -91,6 +129,24 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-6",
       en: "Teacher",
       tr: "Öğretmen",
+      similar: [
+        {
+          en: "instructor",
+          tr: "eğitmen",
+          example: {
+            en: "The instructor explained the rules.",
+            tr: "Eğitmen kuralları açıkladı.",
+          },
+        },
+        {
+          en: "educator",
+          tr: "eğitimci",
+          example: {
+            en: "She is a respected educator.",
+            tr: "Saygın bir eğitimcidir.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Our teacher explains the lesson clearly.",
@@ -110,6 +166,24 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-7",
       en: "Student",
       tr: "Öğrenci",
+      similar: [
+        {
+          en: "pupil",
+          tr: "öğrenci",
+          example: {
+            en: "Every pupil raised a hand.",
+            tr: "Her öğrenci el kaldırdı.",
+          },
+        },
+        {
+          en: "learner",
+          tr: "öğrenen",
+          example: {
+            en: "A good learner asks questions.",
+            tr: "İyi bir öğrenen soru sorar.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Every student has a notebook.",
@@ -126,6 +200,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-8",
       en: "Police",
       tr: "Polis",
+      similar: [
+        {
+          en: "police officer",
+          tr: "polis memuru",
+          example: {
+            en: "The police officer helped us.",
+            tr: "Polis memuru bize yardım etti.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The police helped us find the way.",
@@ -145,6 +229,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-9",
       en: "Fireman",
       tr: "İtfaiye",
+      similar: [
+        {
+          en: "firefighter",
+          tr: "itfaiyeci",
+          example: {
+            en: "The firefighter saved the cat.",
+            tr: "İtfaiyeci kediyi kurtardı.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The fireman put out the fire quickly.",
@@ -199,6 +293,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-12",
       en: "Cook",
       tr: "Şef",
+      similar: [
+        {
+          en: "chef",
+          tr: "aşçı / şef",
+          example: {
+            en: "The chef cooked a great meal.",
+            tr: "Şef harika bir yemek pişirdi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The cook made a delicious soup.",
@@ -256,6 +360,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-15",
       en: "Writer",
       tr: "Yazar",
+      similar: [
+        {
+          en: "author",
+          tr: "yazar",
+          example: {
+            en: "The author signed my book.",
+            tr: "Yazar kitabımı imzaladı.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The writer published a new book.",
@@ -291,6 +405,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-17",
       en: "Actor",
       tr: "Erkek Oyuncu",
+      similar: [
+        {
+          en: "performer",
+          tr: "sanatçı / oyuncu",
+          example: {
+            en: "The performer bowed to the crowd.",
+            tr: "Sanatçı kalabalığa selam verdi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The actor starred in a popular film.",
@@ -310,6 +434,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-18",
       en: "Actress",
       tr: "Kadın Oyuncu",
+      similar: [
+        {
+          en: "performer",
+          tr: "sanatçı / oyuncu",
+          example: {
+            en: "The performer bowed to the crowd.",
+            tr: "Sanatçı kalabalığa selam verdi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The actress won an award last year.",
@@ -329,6 +463,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-19",
       en: "Director",
       tr: "Yönetmen",
+      similar: [
+        {
+          en: "filmmaker",
+          tr: "film yapımcısı",
+          example: {
+            en: "The filmmaker won an award.",
+            tr: "Film yapımcısı bir ödül kazandı.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The director finished filming the movie.",
@@ -348,6 +492,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-20",
       en: "Police Officer",
       tr: "Polis Memuru",
+      similar: [
+        {
+          en: "police",
+          tr: "polis",
+          example: {
+            en: "Call the police if you need help.",
+            tr: "Yardıma ihtiyacın olursa polisi ara.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The police officer asked for my ID.",
@@ -367,6 +521,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-21",
       en: "Driver",
       tr: "Sürücü",
+      similar: [
+        {
+          en: "motorist",
+          tr: "sürücü",
+          example: {
+            en: "The motorist stopped at the red light.",
+            tr: "Sürücü kırmızı ışıkta durdu.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The bus driver stopped at every station.",
@@ -383,6 +547,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-22",
       en: "Waiter",
       tr: "Erkek Garson",
+      similar: [
+        {
+          en: "server",
+          tr: "garson",
+          example: {
+            en: "The server brought our food.",
+            tr: "Garson yemeğimizi getirdi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The waiter brought our drinks.",
@@ -402,6 +576,16 @@ export const vocabularyCategory14: VocabularyCategory = {
       id: "14-23",
       en: "Waitress",
       tr: "Kadın Garson",
+      similar: [
+        {
+          en: "server",
+          tr: "garson",
+          example: {
+            en: "The server brought our food.",
+            tr: "Garson yemeğimizi getirdi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The waitress wrote down our order.",

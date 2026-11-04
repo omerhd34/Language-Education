@@ -8,6 +8,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-1",
       en: "Person",
       tr: "Kişi",
+      similar: [
+        {
+          en: "people",
+          tr: "insanlar",
+          example: {
+            en: "Many people live here.",
+            tr: "Burada çok insan yaşıyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Every person in the room smiled.",
@@ -24,6 +34,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-2",
       en: "People",
       tr: "İnsanlar",
+      similar: [
+        {
+          en: "person",
+          tr: "kişi",
+          example: {
+            en: "She is a kind person.",
+            tr: "O nazik bir kişi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Many people live in this city.",
@@ -43,6 +63,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-3",
       en: "Man",
       tr: "Erkek",
+      similar: [
+        {
+          en: "male",
+          tr: "erkek",
+          example: {
+            en: "The male student answered first.",
+            tr: "Erkek öğrenci ilk cevap verdi.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The man is reading a newspaper.",
@@ -62,6 +92,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-4",
       en: "Woman",
       tr: "Kadın",
+      similar: [
+        {
+          en: "female",
+          tr: "kadın",
+          example: {
+            en: "The female doctor helped us.",
+            tr: "Kadın doktor bize yardım etti.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The woman has a red bag.",
@@ -78,6 +118,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-5",
       en: "Boy",
       tr: "Erkek çocuk",
+      similar: [
+        {
+          en: "child",
+          tr: "çocuk",
+          example: {
+            en: "The child is playing outside.",
+            tr: "Çocuk dışarıda oynuyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "The boy plays football every day.",
@@ -91,6 +141,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-6",
       en: "Girl",
       tr: "Kız çocuk",
+      similar: [
+        {
+          en: "child",
+          tr: "çocuk",
+          example: {
+            en: "Every child needs love.",
+            tr: "Her çocuğun sevgiye ihtiyacı vardır.",
+          },
+        },
+      ],
       examples: [
         { en: "The girl loves her dog.", tr: "Kız çocuk köpeğini seviyor." },
         {
@@ -107,6 +167,24 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-7",
       en: "Child",
       tr: "Çocuk",
+      similar: [
+        {
+          en: "boy",
+          tr: "erkek çocuk",
+          example: {
+            en: "The boy plays football every day.",
+            tr: "Erkek çocuk her gün futbol oynuyor.",
+          },
+        },
+        {
+          en: "girl",
+          tr: "kız çocuk",
+          example: {
+            en: "The girl loves her dog.",
+            tr: "Kız çocuk köpeğini seviyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Every child needs love.",
@@ -123,6 +201,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-8",
       en: "Baby",
       tr: "Bebek",
+      similar: [
+        {
+          en: "infant",
+          tr: "bebek",
+          example: {
+            en: "The infant is sleeping peacefully.",
+            tr: "Bebek huzur içinde uyuyor.",
+          },
+        },
+      ],
       examples: [
         { en: "The baby is sleeping now.", tr: "Bebek şimdi uyuyor." },
         {
@@ -136,6 +224,24 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-9",
       en: "Friend",
       tr: "Arkadaş",
+      similar: [
+        {
+          en: "pal",
+          tr: "kanka / arkadaş",
+          example: {
+            en: "He is my pal from school.",
+            tr: "O okuldaki kankam.",
+          },
+        },
+        {
+          en: "buddy",
+          tr: "dost",
+          example: {
+            en: "Thanks for your help, buddy.",
+            tr: "Yardımın için teşekkürler, dostum.",
+          },
+        },
+      ],
       examples: [
         {
           en: "My friend lives near the park.",
@@ -152,6 +258,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-10",
       en: "Boyfriend",
       tr: "Erkek arkadaş",
+      similar: [
+        {
+          en: "partner",
+          tr: "eş / partner",
+          example: {
+            en: "She lives with her partner.",
+            tr: "Partneriyle birlikte yaşıyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Her boyfriend cooks dinner for her.",
@@ -171,6 +287,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-11",
       en: "Girlfriend",
       tr: "Kız arkadaş",
+      similar: [
+        {
+          en: "partner",
+          tr: "eş / partner",
+          example: {
+            en: "His partner speaks three languages.",
+            tr: "Partneri üç dil konuşuyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "His girlfriend speaks three languages.",
@@ -190,6 +316,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-12",
       en: "Neighbor",
       tr: "Komşu",
+      similar: [
+        {
+          en: "neighbour",
+          tr: "komşu",
+          example: {
+            en: "Our neighbour has a friendly dog.",
+            tr: "Komşumuzun sevimli bir köpeği var.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Our neighbor has a friendly dog.",
@@ -209,6 +345,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-16",
       en: "Adult",
       tr: "Yetişkin",
+      similar: [
+        {
+          en: "grown-up",
+          tr: "yetişkin",
+          example: {
+            en: "Only grown-ups can enter here.",
+            tr: "Buraya sadece yetişkinler girebilir.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Children must be with an adult here.",
@@ -228,6 +374,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-17",
       en: "Mr",
       tr: "Bay",
+      similar: [
+        {
+          en: "mister",
+          tr: "bay",
+          example: {
+            en: "Mister Smith is our teacher.",
+            tr: "Bay Smith öğretmenimiz.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Mr Smith is our English teacher.",
@@ -244,6 +400,16 @@ export const vocabularyCategory2: VocabularyCategory = {
       id: "2-18",
       en: "Mrs",
       tr: "Bayan",
+      similar: [
+        {
+          en: "missus",
+          tr: "bayan (evli kadın)",
+          example: {
+            en: "The missus is cooking dinner.",
+            tr: "Bayan akşam yemeği pişiriyor.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Mrs Davis lives on the second floor.",

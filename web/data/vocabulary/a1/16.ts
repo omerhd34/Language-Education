@@ -8,6 +8,24 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-1",
       en: "Animal",
       tr: "Hayvan",
+      similar: [
+        {
+          en: "creature",
+          tr: "canlı / yaratık",
+          example: {
+            en: "Every creature needs water.",
+            tr: "Her canlının suya ihtiyacı vardır.",
+          },
+        },
+        {
+          en: "beast",
+          tr: "hayvan / canavar",
+          example: {
+            en: "The beast roared in the forest.",
+            tr: "Canavar ormanda kükredi.",
+          },
+        },
+      ],
       examples: [
         { en: "The zoo has many animals.", tr: "Hayvanat bahçesinde birçok hayvan var." },
         { en: "Every animal needs food and water.", tr: "Her hayvanın yiyeceğe ve suya ihtiyacı vardır." },
@@ -18,6 +36,24 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-2",
       en: "Dog",
       tr: "Köpek",
+      similar: [
+        {
+          en: "hound",
+          tr: "av köpeği",
+          example: {
+            en: "The hound followed the scent.",
+            tr: "Av köpeği kokuyu takip etti.",
+          },
+        },
+        {
+          en: "puppy",
+          tr: "yavru köpek",
+          example: {
+            en: "The puppy is very playful.",
+            tr: "Yavru köpek çok oyuncu.",
+          },
+        },
+      ],
       examples: [
         { en: "Our dog waits by the door every evening.", tr: "Köpeğimiz her akşam kapının yanında bekler." },
         { en: "She walks her dog in the park.", tr: "Köpeğini parkta gezdiriyor." },
@@ -28,6 +64,24 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-3",
       en: "Cat",
       tr: "Kedi",
+      similar: [
+        {
+          en: "feline",
+          tr: "kedigil",
+          example: {
+            en: "A feline moved quietly in the dark.",
+            tr: "Karanlıkta bir kedigil sessizce hareket etti.",
+          },
+        },
+        {
+          en: "kitty",
+          tr: "kedi yavrusu",
+          example: {
+            en: "The kitty slept on the sofa.",
+            tr: "Kedi yavrusu kanepede uyudu.",
+          },
+        },
+      ],
       examples: [
         { en: "The cat sleeps on the sofa all day.", tr: "Kedi bütün gün kanepede uyur." },
         { en: "My cat likes fresh fish.", tr: "Kedim taze balığı sever." },
@@ -88,6 +142,24 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-9",
       en: "Pig",
       tr: "Domuz",
+      similar: [
+        {
+          en: "hog",
+          tr: "domuz",
+          example: {
+            en: "The hog rolled in the mud.",
+            tr: "Domuz çamurda yuvarlandı.",
+          },
+        },
+        {
+          en: "swine",
+          tr: "domuz",
+          example: {
+            en: "Swine eat grain and vegetables.",
+            tr: "Domuzlar tahıl ve sebze yer.",
+          },
+        },
+      ],
       examples: [
         { en: "The pig rolled in the mud happily.", tr: "Domuz mutlu bir şekilde çamurda yuvarlandı." },
         { en: "Farm pigs eat corn and vegetables.", tr: "Çiftlik domuzları mısır ve sebze yer." },
@@ -98,6 +170,16 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-10",
       en: "Rabbit",
       tr: "Tavuk",
+      similar: [
+        {
+          en: "bunny",
+          tr: "tavşan yavrusu",
+          example: {
+            en: "The bunny hopped across the grass.",
+            tr: "Tavşan yavrusu çimenin üzerinden zıpladı.",
+          },
+        },
+      ],
       examples: [
         { en: "The rabbit hopped across the garden.", tr: "Tavuk bahçenin karşısına zıpladı." },
         { en: "She feeds her rabbit carrots.", tr: "Tavuğuna havuç veriyor." },
@@ -108,6 +190,16 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-11",
       en: "Mouse",
       tr: "Fare",
+      similar: [
+        {
+          en: "rodent",
+          tr: "kemirgen",
+          example: {
+            en: "A rodent hid under the floor.",
+            tr: "Bir kemirgen zeminin altına saklandı.",
+          },
+        },
+      ],
       examples: [
         { en: "A tiny mouse ran behind the cupboard.", tr: "Minicik bir fare dolabın arkasına koştu." },
         { en: "The cat chased the mouse.", tr: "Kedi fareyi kovaladı." },
@@ -118,6 +210,16 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-12",
       en: "Chicken",
       tr: "Tavuk",
+      similar: [
+        {
+          en: "hen",
+          tr: "tavuk (dişi)",
+          example: {
+            en: "The hen laid an egg.",
+            tr: "Tavuk yumurtladı.",
+          },
+        },
+      ],
       examples: [
         { en: "The chicken laid an egg this morning.", tr: "Tavuk bu sabah yumurtladı." },
         { en: "Free chickens walk around the yard.", tr: "Serbest tavuklar avluda dolaşır." },
@@ -128,6 +230,16 @@ export const vocabularyCategory16: VocabularyCategory = {
       id: "15-13",
       en: "Snake",
       tr: "Yılan",
+      similar: [
+        {
+          en: "serpent",
+          tr: "yılan",
+          example: {
+            en: "The serpent slid into the grass.",
+            tr: "Yılan çimenlerin arasına süzüldü.",
+          },
+        },
+      ],
       examples: [
         { en: "We saw a snake on the hiking path.", tr: "Yürüyüş yolunda bir yılan gördük." },
         { en: "Some snakes live in warm countries.", tr: "Bazı yılanlar sıcak ülkelerde yaşar." },

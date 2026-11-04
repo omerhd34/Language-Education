@@ -8,8 +8,25 @@ export const vocabularyCategory1: VocabularyCategory = {
       id: "1-1",
       en: "Hello",
       tr: "Merhaba",
-      // image: "/vocabulary/hello.webp",
-      similar: ["hi", "what's up", "greetings"],
+      // image: "/vocabulary/a1/hello.webp",
+      similar: [
+        {
+          en: "hi",
+          tr: "selam",
+          example: {
+            en: "Hi! How are you?",
+            tr: "Selam! Nasılsın?",
+          },
+        },
+        {
+          en: "hey",
+          tr: "hey",
+          example: {
+            en: "Hey, wait for me!",
+            tr: "Hey, beni bekle!",
+          },
+        },
+      ],
       examples: [
         { en: "Hello! How are you today?", tr: "Merhaba! Bugün nasılsın?" },
         {
@@ -23,7 +40,24 @@ export const vocabularyCategory1: VocabularyCategory = {
       id: "1-2",
       en: "Hi",
       tr: "Selam",
-      similar: ["hello", "what's up", "greetings"],
+      similar: [
+        {
+          en: "hello",
+          tr: "merhaba",
+          example: {
+            en: "Hello, nice to meet you.",
+            tr: "Merhaba, tanıştığımıza memnun oldum.",
+          },
+        },
+        {
+          en: "hey",
+          tr: "hey",
+          example: {
+            en: "Hey, are you ready?",
+            tr: "Hey, hazır mısın?",
+          },
+        },
+      ],
       examples: [
         { en: "Hi! Nice to see you.", tr: "Selam! Seni görmek güzel." },
         {
@@ -35,46 +69,6 @@ export const vocabularyCategory1: VocabularyCategory = {
     },
     {
       id: "1-3",
-      en: "Greetings",
-      tr: "Selamlar",
-      similar: ["hi", "hello", "what's up"],
-      examples: [
-        {
-          en: "Greetings from Istanbul!",
-          tr: "İstanbul'dan selamlar!",
-        },
-        {
-          en: "Please send my greetings to your family.",
-          tr: "Lütfen aileme selamlarımı ilet.",
-        },
-        {
-          en: "He began his speech with warm greetings.",
-          tr: "Konuşmasına sıcak selamlarla başladı.",
-        },
-      ],
-    },
-    {
-      id: "1-4",
-      en: "What's up",
-      tr: "Naber?",
-      similar: ["hi", "hello", "greetings"],
-      examples: [
-        {
-          en: "Hey! What's up?",
-          tr: "Hey! Ne haber?",
-        },
-        {
-          en: "What's up with the meeting today?",
-          tr: "Bugünkü toplantıda ne haber?",
-        },
-        {
-          en: "Nothing much. What's up with you?",
-          tr: "Bir şey yok. Sende ne haber?",
-        },
-      ],
-    },
-    {
-      id: "1-5",
       en: "Good morning",
       tr: "Günaydın",
       examples: [
@@ -145,86 +139,26 @@ export const vocabularyCategory1: VocabularyCategory = {
     },
     {
       id: "1-9",
-      en: "How are you?",
-      tr: "Nasılsın?",
-      examples: [
-        { en: "Hi Tom, how are you?", tr: "Merhaba Tom, nasılsın?" },
-        {
-          en: "How are you after the long trip?",
-          tr: "Uzun yolculuktan sonra nasılsın?",
-        },
-        {
-          en: "How are you? I missed you.",
-          tr: "Nasılsın? Seni özledim.",
-        },
-      ],
-    },
-    {
-      id: "1-10",
-      en: "I'm fine",
-      tr: "İyiyim",
-      examples: [
-        {
-          en: "Thanks for asking — I'm fine.",
-          tr: "Sorduğun için teşekkürler — iyiyim.",
-        },
-        {
-          en: "I'm fine, just a little tired.",
-          tr: "İyiyim, sadece biraz yorgunum.",
-        },
-        { en: "Tell your mom I'm fine.", tr: "Annene iyiyim de." },
-      ],
-    },
-    {
-      id: "1-11",
-      en: "Nice to meet you",
-      tr: "Tanıştığımıza memnun oldum",
-      examples: [
-        {
-          en: "Nice to meet you, Sarah.",
-          tr: "Tanıştığımıza memnun oldum, Sarah.",
-        },
-        {
-          en: "It was nice to meet you at the conference.",
-          tr: "Konferansta tanıştığımıza memnun oldum.",
-        },
-        {
-          en: "Nice to meet you too!",
-          tr: "Ben de tanıştığımıza memnun oldum!",
-        },
-      ],
-    },
-    {
-      id: "1-12",
-      en: "See you",
-      tr: "Görüşürüz",
-      examples: [
-        {
-          en: "I have to go now. See you!",
-          tr: "Şimdi gitmem lazım. Görüşürüz!",
-        },
-        { en: "See you at school tomorrow.", tr: "Yarın okulda görüşürüz." },
-        { en: "Okay, see you!", tr: "Tamam, görüşürüz!" },
-      ],
-    },
-    {
-      id: "1-13",
-      en: "See you later",
-      tr: "Sonra görüşürüz",
-      examples: [
-        {
-          en: "I am busy now. See you later.",
-          tr: "Şu an meşgulüm. Sonra görüşürüz.",
-        },
-        { en: "See you later at the café.", tr: "Sonra kafede görüşürüz." },
-        { en: "Alright, see you later!", tr: "Peki, sonra görüşürüz!" },
-      ],
-    },
-    {
-      id: "1-14",
       en: "Goodbye",
       tr: "Hoşça kal",
-      similar: ["bye", "later", "see you", "take care"],
+      similar: [
+        {
+          en: "bye",
+          tr: "hoşça kal",
+          example: {
+            en: "Bye! See you tomorrow.",
+            tr: "Hoşça kal! Yarın görüşürüz.",
+          },
+        },
+        {
+          en: "see you",
+          tr: "görüşürüz",
+          example: {
+            en: "I have to go. See you!",
+            tr: "Gitmem lazım. Görüşürüz!",
+          },
+        },
+      ],
       examples: [
         { en: "Goodbye! Have a safe trip.", tr: "Hoşça kal! İyi yolculuklar." },
         {
@@ -235,9 +169,27 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-15",
+      id: "1-10",
       en: "Bye",
       tr: "Hoşça kal / Güle güle",
+      similar: [
+        {
+          en: "goodbye",
+          tr: "hoşça kal",
+          example: {
+            en: "Goodbye, and take care.",
+            tr: "Hoşça kal, kendine iyi bak.",
+          },
+        },
+        {
+          en: "see you",
+          tr: "görüşürüz",
+          example: {
+            en: "See you at school!",
+            tr: "Okulda görüşürüz!",
+          },
+        },
+      ],
       examples: [
         { en: "Bye! Call me tonight.", tr: "Hoşça kal! Bu gece beni ara." },
         {
@@ -251,23 +203,7 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-16",
-      en: "Take care",
-      tr: "Kendine iyi bak",
-      examples: [
-        {
-          en: "It is cold outside. Take care!",
-          tr: "Dışarısı soğuk. Kendine iyi bak!",
-        },
-        {
-          en: "Take care of yourself during the exams.",
-          tr: "Sınavlar sırasında kendine iyi bak.",
-        },
-        { en: "Bye, take care!", tr: "Hoşça kal, kendine iyi bak!" },
-      ],
-    },
-    {
-      id: "1-17",
+      id: "1-11",
       en: "Welcome",
       tr: "Hoş geldin",
       examples: [
@@ -280,9 +216,19 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-18",
+      id: "1-12",
       en: "Thank you",
       tr: "Teşekkür ederim",
+      similar: [
+        {
+          en: "thanks",
+          tr: "teşekkürler",
+          example: {
+            en: "Thanks for your help.",
+            tr: "Yardımın için teşekkürler.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Thank you for your help.",
@@ -296,9 +242,19 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-19",
+      id: "1-13",
       en: "Thanks",
       tr: "Teşekkürler",
+      similar: [
+        {
+          en: "thank you",
+          tr: "teşekkür ederim",
+          example: {
+            en: "Thank you for the gift.",
+            tr: "Hediye için teşekkür ederim.",
+          },
+        },
+      ],
       examples: [
         { en: "Thanks for the coffee.", tr: "Kahve için teşekkürler." },
         {
@@ -312,7 +268,7 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-20",
+      id: "1-14",
       en: "Please",
       tr: "Lütfen",
       examples: [
@@ -328,9 +284,27 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-21",
+      id: "1-15",
       en: "OK",
       tr: "Tamam",
+      similar: [
+        {
+          en: "okay",
+          tr: "tamam",
+          example: {
+            en: "Okay, I understand.",
+            tr: "Tamam, anladım.",
+          },
+        },
+        {
+          en: "alright",
+          tr: "peki",
+          example: {
+            en: "Alright, let's go.",
+            tr: "Peki, gidelim.",
+          },
+        },
+      ],
       examples: [
         {
           en: "OK, I will meet you at five.",
@@ -341,9 +315,27 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-22",
+      id: "1-16",
       en: "Yes",
       tr: "Evet",
+      similar: [
+        {
+          en: "yeah",
+          tr: "evet",
+          example: {
+            en: "Yeah, that sounds good.",
+            tr: "Evet, kulağa iyi geliyor.",
+          },
+        },
+        {
+          en: "sure",
+          tr: "tabii",
+          example: {
+            en: "Sure, I can help you.",
+            tr: "Tabii, sana yardım edebilirim.",
+          },
+        },
+      ],
       examples: [
         {
           en: "Yes, I understand the question.",
@@ -357,7 +349,7 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-23",
+      id: "1-17",
       en: "No",
       tr: "Hayır",
       examples: [
@@ -370,9 +362,27 @@ export const vocabularyCategory1: VocabularyCategory = {
       ],
     },
     {
-      id: "1-24",
+      id: "1-18",
       en: "Sorry",
       tr: "Özür dilerim",
+      similar: [
+        {
+          en: "excuse me",
+          tr: "affedersiniz",
+          example: {
+            en: "Excuse me, where is the station?",
+            tr: "Affedersiniz, istasyon nerede?",
+          },
+        },
+        {
+          en: "apologies",
+          tr: "özürler",
+          example: {
+            en: "Apologies for the delay.",
+            tr: "Gecikme için özürler.",
+          },
+        },
+      ],
       examples: [
         { en: "Sorry, I am late.", tr: "Özür dilerim, geç kaldım." },
         { en: "Sorry for the mistake.", tr: "Hata için özür dilerim." },

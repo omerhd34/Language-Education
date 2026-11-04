@@ -8,6 +8,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-1",
       en: "Desk",
       tr: "Çalışma Masası",
+      similar: [
+        {
+          en: "table",
+          tr: "masa",
+          example: {
+            en: "The books are on the table.",
+            tr: "Kitaplar masanın üzerinde.",
+          },
+        },
+      ],
       examples: [
         { en: "I study at my desk every evening.", tr: "Her akşam çalışma masamda ders çalışırım." },
         { en: "There is a lamp on the desk.", tr: "Masada bir lamba var." },
@@ -18,6 +28,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-2",
       en: "Chair",
       tr: "Sandalye",
+      similar: [
+        {
+          en: "seat",
+          tr: "koltuk / oturak",
+          example: {
+            en: "Please take a seat.",
+            tr: "Lütfen oturun.",
+          },
+        },
+      ],
       examples: [
         { en: "Please sit on this chair.", tr: "Lütfen bu sandalyeye otur." },
         { en: "The chair is broken.", tr: "Sandalye kırık." },
@@ -28,6 +48,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-3",
       en: "Table",
       tr: "Masa",
+      similar: [
+        {
+          en: "desk",
+          tr: "çalışma masası",
+          example: {
+            en: "I work at my desk every day.",
+            tr: "Her gün masamda çalışırım.",
+          },
+        },
+      ],
       examples: [
         { en: "The food is on the table.", tr: "Yemek masanın üzerinde." },
         { en: "Set the table for lunch.", tr: "Öğle yemeği için masayı kur." },
@@ -38,6 +68,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-4",
       en: "Sofa",
       tr: "Kanepe / Koltuk",
+      similar: [
+        {
+          en: "couch",
+          tr: "kanepe",
+          example: {
+            en: "We sat on the couch and watched TV.",
+            tr: "Kanepede oturup televizyon izledik.",
+          },
+        },
+      ],
       examples: [
         { en: "We sit on the sofa and watch TV.", tr: "Kanepede oturup televizyon izleriz." },
         { en: "The sofa is very comfortable.", tr: "Kanepe çok rahat." },
@@ -58,6 +98,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-6",
       en: "Wardrobe",
       tr: "Gardırop",
+      similar: [
+        {
+          en: "closet",
+          tr: "dolap",
+          example: {
+            en: "My shoes are in the closet.",
+            tr: "Ayakkabılarım dolapta.",
+          },
+        },
+      ],
       examples: [
         { en: "My clothes are in the wardrobe.", tr: "Kıyafetlerim gardıropta." },
         { en: "She opened the wardrobe quietly.", tr: "Gardırobu sessizce açtı." },
@@ -68,6 +118,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-7",
       en: "Cabinet",
       tr: "Dolap",
+      similar: [
+        {
+          en: "cupboard",
+          tr: "dolap",
+          example: {
+            en: "The cups are in the cupboard.",
+            tr: "Fincanlar dolapta.",
+          },
+        },
+      ],
       examples: [
         { en: "The plates are in the cabinet.", tr: "Tabaklar dolapta." },
         { en: "Lock the medicine cabinet.", tr: "İlaç dolabını kilitle." },
@@ -88,6 +148,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-9",
       en: "Lamp",
       tr: "Lamba",
+      similar: [
+        {
+          en: "light",
+          tr: "ışık",
+          example: {
+            en: "Turn on the light, please.",
+            tr: "Lütfen ışığı aç.",
+          },
+        },
+      ],
       examples: [
         { en: "Turn on the lamp, please.", tr: "Lütfen lambayı aç." },
         { en: "The lamp gives warm light.", tr: "Lamba sıcak ışık veriyor." },
@@ -108,6 +178,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-11",
       en: "Television",
       tr: "Televizyon",
+      similar: [
+        {
+          en: "TV",
+          tr: "televizyon",
+          example: {
+            en: "We watch the news on TV.",
+            tr: "Televizyonda haberleri izleriz.",
+          },
+        },
+      ],
       examples: [
         { en: "We watch the news on television.", tr: "Televizyonda haberleri izleriz." },
         { en: "The television is in the living room.", tr: "Televizyon oturma odasında." },
@@ -128,6 +208,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-13",
       en: "Phone",
       tr: "Telefon",
+      similar: [
+        {
+          en: "telephone",
+          tr: "telefon",
+          example: {
+            en: "The telephone is ringing.",
+            tr: "Telefon çalıyor.",
+          },
+        },
+      ],
       examples: [
         { en: "Answer the phone, please.", tr: "Lütfen telefona cevap ver." },
         { en: "The phone is ringing.", tr: "Telefon çalıyor." },
@@ -138,6 +228,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-14",
       en: "Computer",
       tr: "Bilgisayar",
+      similar: [
+        {
+          en: "PC",
+          tr: "bilgisayar",
+          example: {
+            en: "I use my PC for work.",
+            tr: "İş için bilgisayarımı kullanırım.",
+          },
+        },
+      ],
       examples: [
         { en: "I work on my computer at home.", tr: "Evde bilgisayarımda çalışırım." },
         { en: "The computer is very fast.", tr: "Bilgisayar çok hızlı." },
@@ -158,6 +258,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-16",
       en: "Refrigerator",
       tr: "Buzdolabı",
+      similar: [
+        {
+          en: "fridge",
+          tr: "buzdolabı",
+          example: {
+            en: "Put the milk in the fridge.",
+            tr: "Sütü buzdolabına koy.",
+          },
+        },
+      ],
       examples: [
         { en: "Put the milk in the refrigerator.", tr: "Sütü buzdolabına koy." },
         { en: "The refrigerator keeps food cold.", tr: "Buzdolabı yiyecekleri soğuk tutar." },
@@ -188,6 +298,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-19",
       en: "Stove",
       tr: "Ocak",
+      similar: [
+        {
+          en: "cooker",
+          tr: "ocak",
+          example: {
+            en: "She boiled water on the cooker.",
+            tr: "Ocakta su kaynattı.",
+          },
+        },
+      ],
       examples: [
         { en: "She cooks rice on the stove.", tr: "Ocakta pilav pişiriyor." },
         { en: "Turn off the stove after cooking.", tr: "Yemekten sonra ocağı kapat." },
@@ -208,6 +328,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-21",
       en: "Dish",
       tr: "Yemek Tabağı",
+      similar: [
+        {
+          en: "plate",
+          tr: "tabak",
+          example: {
+            en: "Put the cake on a plate.",
+            tr: "Pastayı bir tabağa koy.",
+          },
+        },
+      ],
       examples: [
         { en: "Wash the dishes after dinner.", tr: "Akşam yemeğinden sonra bulaşıkları yıka." },
         { en: "She served pasta on a big dish.", tr: "Makarnayı büyük bir tabakta servis etti." },
@@ -248,6 +378,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-25",
       en: "Plate",
       tr: "Tabak",
+      similar: [
+        {
+          en: "dish",
+          tr: "tabak / yemek",
+          example: {
+            en: "This dish tastes wonderful.",
+            tr: "Bu yemek harika tadıyor.",
+          },
+        },
+      ],
       examples: [
         { en: "Put the cake on a plate.", tr: "Pastayı bir tabağa koy." },
         { en: "This plate is clean.", tr: "Bu tabak temiz." },
@@ -258,6 +398,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-26",
       en: "Cup",
       tr: "Kupa",
+      similar: [
+        {
+          en: "mug",
+          tr: "kupa",
+          example: {
+            en: "He drank coffee from a big mug.",
+            tr: "Büyük bir kupadan kahve içti.",
+          },
+        },
+      ],
       examples: [
         { en: "She drank a cup of tea.", tr: "Bir fincan çay içti." },
         { en: "The cup is on the saucer.", tr: "Fincan tabağın üzerinde." },
@@ -318,6 +468,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-32",
       en: "Pillow",
       tr: "Yastık",
+      similar: [
+        {
+          en: "cushion",
+          tr: "minder / yastık",
+          example: {
+            en: "She added a cushion to the chair.",
+            tr: "Sandalyeye bir minder ekledi.",
+          },
+        },
+      ],
       examples: [
         { en: "I need a soft pillow to sleep.", tr: "Uyumak için yumuşak bir yastığa ihtiyacım var." },
         { en: "Fluff the pillow before bed.", tr: "Yatmadan önce yastığı kabart." },
@@ -328,6 +488,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-33",
       en: "Trash Can",
       tr: "Çöp Kutusu",
+      similar: [
+        {
+          en: "bin",
+          tr: "çöp kutusu",
+          example: {
+            en: "Throw it in the bin.",
+            tr: "Çöp kutusuna at.",
+          },
+        },
+      ],
       examples: [
         { en: "Throw the paper in the trash can.", tr: "Kağıdı çöp kutusuna at." },
         { en: "The trash can is full.", tr: "Çöp kutusu dolu." },
@@ -338,6 +508,16 @@ export const vocabularyCategory13: VocabularyCategory = {
       id: "13-34",
       en: "Box",
       tr: "Kutu",
+      similar: [
+        {
+          en: "container",
+          tr: "kap / konteyner",
+          example: {
+            en: "Store food in a clean container.",
+            tr: "Yiyeceği temiz bir kap içinde sakla.",
+          },
+        },
+      ],
       examples: [
         { en: "The toys are in a big box.", tr: "Oyuncaklar büyük bir kutuda." },
         { en: "Open the box carefully.", tr: "Kutuyu dikkatlice aç." },

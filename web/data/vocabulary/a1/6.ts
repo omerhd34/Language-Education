@@ -148,6 +148,24 @@ export const vocabularyCategory6: VocabularyCategory = {
       id: "6-15",
       en: "Autumn / Fall",
       tr: "Sonbahar",
+      similar: [
+        {
+          en: "autumn",
+          tr: "sonbahar",
+          example: {
+            en: "Autumn leaves are red and gold.",
+            tr: "Sonbahar yaprakları kırmızı ve altın rengindedir.",
+          },
+        },
+        {
+          en: "fall",
+          tr: "sonbahar",
+          example: {
+            en: "Fall begins in September here.",
+            tr: "Burada sonbahar eylülde başlar.",
+          },
+        },
+      ],
       examples: [
         { en: "Autumn leaves are red and gold.", tr: "Sonbahar yaprakları kırmızı ve altın rengindedir." },
         { en: "Fall begins in September here.", tr: "Burada sonbahar eylülde başlar." },

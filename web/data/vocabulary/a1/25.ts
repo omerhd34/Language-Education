@@ -8,6 +8,18 @@ export const vocabularyCategory25: VocabularyCategory = {
       id: "25-1",
       en: "Place",
       tr: "Yer",
+      similar: [
+        {
+          en: "location",
+          tr: "konum",
+          example: { en: "Share your location on the map.", tr: "Haritada konumunu paylaş." },
+        },
+        {
+          en: "spot",
+          tr: "nokta",
+          example: { en: "This is a good spot for photos.", tr: "Burası fotoğraf için iyi bir nokta." },
+        },
+      ],
       examples: [
         { en: "This is a nice place for a picnic.", tr: "Burası piknik için güzel bir yer." },
         { en: "Can you show me the place on the map?", tr: "Yeri haritada gösterebilir misin?" },
@@ -88,6 +100,13 @@ export const vocabularyCategory25: VocabularyCategory = {
       id: "25-9",
       en: "Forward",
       tr: "İleri",
+      similar: [
+        {
+          en: "ahead",
+          tr: "ileride",
+          example: { en: "Go straight ahead for two blocks.", tr: "İki blok düz ileride git." },
+        },
+      ],
       examples: [
         { en: "Move forward slowly.", tr: "Yavaşça ileri git." },
         { en: "We must look forward, not back.", tr: "Geriye değil, ileriye bakmalıyız." },
@@ -98,6 +117,13 @@ export const vocabularyCategory25: VocabularyCategory = {
       id: "25-10",
       en: "Backward",
       tr: "Geri",
+      similar: [
+        {
+          en: "backwards",
+          tr: "geriye",
+          example: { en: "He stepped backwards from the edge.", tr: "Kenardan geriye adım attı." },
+        },
+      ],
       examples: [
         { en: "He walked backward to the door.", tr: "Kapıya geri geri yürüdü." },
         { en: "Don't lean backward on the chair.", tr: "Sandalyede geriye yaslanma." },
@@ -128,6 +154,13 @@ export const vocabularyCategory25: VocabularyCategory = {
       id: "25-13",
       en: "Far",
       tr: "Uzak",
+      similar: [
+        {
+          en: "distant",
+          tr: "uzak",
+          example: { en: "We saw a distant village on the hill.", tr: "Tepede uzak bir köy gördük." },
+        },
+      ],
       examples: [
         { en: "The beach is too far to walk.", tr: "Plaj yürümek için çok uzak." },
         { en: "How far is the station from here?", tr: "İstasyon buradan ne kadar uzak?" },
@@ -138,6 +171,13 @@ export const vocabularyCategory25: VocabularyCategory = {
       id: "25-14",
       en: "Near",
       tr: "Yakın",
+      similar: [
+        {
+          en: "close",
+          tr: "yakın",
+          example: { en: "The school is close to our home.", tr: "Okul evimize yakın." },
+        },
+      ],
       examples: [
         { en: "Is there a shop near here?", tr: "Buralarda yakın bir dükkan var mı?" },
         { en: "Christmas is near.", tr: "Noel yaklaşıyor." },

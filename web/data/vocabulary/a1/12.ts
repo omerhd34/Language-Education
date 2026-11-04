@@ -8,6 +8,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-1",
       en: "Building",
       tr: "Bina",
+      similar: [
+        {
+          en: "structure",
+          tr: "yapı",
+          example: {
+            en: "The structure is very old.",
+            tr: "Yapı çok eski.",
+          },
+        },
+      ],
       examples: [
         { en: "That building has twenty floors.", tr: "O binanın yirmi katı var." },
         { en: "We live in an old building.", tr: "Eski bir binada yaşıyoruz." },
@@ -18,6 +28,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-2",
       en: "House",
       tr: "Ev",
+      similar: [
+        {
+          en: "home",
+          tr: "ev",
+          example: {
+            en: "I feel safe at home.",
+            tr: "Evde kendimi güvende hissederim.",
+          },
+        },
+      ],
       examples: [
         { en: "They bought a new house.", tr: "Yeni bir ev aldılar." },
         { en: "Our house has a red door.", tr: "Evimizin kırmızı bir kapısı var." },
@@ -28,6 +48,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-3",
       en: "Home",
       tr: "Ev",
+      similar: [
+        {
+          en: "house",
+          tr: "ev",
+          example: {
+            en: "They bought a new house.",
+            tr: "Yeni bir ev aldılar.",
+          },
+        },
+      ],
       examples: [
         { en: "Welcome home!", tr: "Evine hoş geldin!" },
         { en: "I feel safe at home.", tr: "Evde kendimi güvende hissederim." },
@@ -38,6 +68,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-4",
       en: "Apartment",
       tr: "Daire",
+      similar: [
+        {
+          en: "flat",
+          tr: "daire",
+          example: {
+            en: "She lives in a small flat.",
+            tr: "Küçük bir dairede yaşıyor.",
+          },
+        },
+      ],
       examples: [
         { en: "I live in a small apartment.", tr: "Küçük bir dairede yaşıyorum." },
         { en: "The apartment is on the third floor.", tr: "Daire üçüncü katta." },
@@ -48,6 +88,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-5",
       en: "Floor",
       tr: "Zemin",
+      similar: [
+        {
+          en: "ground",
+          tr: "zemin / toprak",
+          example: {
+            en: "Sit on the ground if you are tired.",
+            tr: "Yorgunsan yere otur.",
+          },
+        },
+      ],
       examples: [
         { en: "The floor is made of wood.", tr: "Zemin ahşaptan yapılmış." },
         { en: "Please do not sit on the floor.", tr: "Lütfen yere oturma." },
@@ -118,6 +168,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-12",
       en: "Living Room",
       tr: "Oturma Odası",
+      similar: [
+        {
+          en: "lounge",
+          tr: "oturma odası",
+          example: {
+            en: "We relax in the lounge.",
+            tr: "Oturma odasında dinleniriz.",
+          },
+        },
+      ],
       examples: [
         { en: "We watch TV in the living room.", tr: "Oturma odasında televizyon izleriz." },
         { en: "The living room has a big sofa.", tr: "Oturma odasında büyük bir kanepe var." },
@@ -148,6 +208,24 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-15",
       en: "Bathroom",
       tr: "Banyo",
+      similar: [
+        {
+          en: "restroom",
+          tr: "tuvalet",
+          example: {
+            en: "Where is the restroom?",
+            tr: "Tuvalet nerede?",
+          },
+        },
+        {
+          en: "washroom",
+          tr: "lavabo / tuvalet",
+          example: {
+            en: "Please use the washroom before we leave.",
+            tr: "Gitmeden önce lavaboyu kullan lütfen.",
+          },
+        },
+      ],
       examples: [
         { en: "The bathroom is next to the bedroom.", tr: "Banyo yatak odasının yanında." },
         { en: "I take a shower in the bathroom.", tr: "Banyoda duş alırım." },
@@ -178,6 +256,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-18",
       en: "Garden",
       tr: "Bahçe",
+      similar: [
+        {
+          en: "yard",
+          tr: "bahçe / avlu",
+          example: {
+            en: "The kids play in the yard.",
+            tr: "Çocuklar avluda oynuyor.",
+          },
+        },
+      ],
       examples: [
         { en: "We grow tomatoes in the garden.", tr: "Bahçede domates yetiştiriyoruz." },
         { en: "The children play in the garden.", tr: "Çocuklar bahçede oynuyor." },
@@ -198,6 +286,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-20",
       en: "Pool",
       tr: "Havuz",
+      similar: [
+        {
+          en: "swimming pool",
+          tr: "yüzme havuzu",
+          example: {
+            en: "The hotel has a swimming pool.",
+            tr: "Otelin yüzme havuzu var.",
+          },
+        },
+      ],
       examples: [
         { en: "The hotel has a swimming pool.", tr: "Otelin yüzme havuzu var." },
         { en: "We swim in the pool in summer.", tr: "Yazın havuzda yüzeriz." },
@@ -228,6 +326,16 @@ export const vocabularyCategory12: VocabularyCategory = {
       id: "12-23",
       en: "Elevator",
       tr: "Asansör",
+      similar: [
+        {
+          en: "lift",
+          tr: "asansör",
+          example: {
+            en: "Take the lift to the top floor.",
+            tr: "En üst kata asansörle çık.",
+          },
+        },
+      ],
       examples: [
         { en: "Take the elevator to the fifth floor.", tr: "Beşinci kata asansörle çık." },
         { en: "The elevator is out of order.", tr: "Asansör arızalı." },

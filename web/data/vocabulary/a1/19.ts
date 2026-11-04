@@ -8,6 +8,18 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-1",
       en: "Food",
       tr: "Yiyecek",
+      similar: [
+        {
+          en: "fare",
+          tr: "yiyecek",
+          example: { en: "The café serves simple fare.", tr: "Kafe basit yemekler sunuyor." },
+        },
+        {
+          en: "nourishment",
+          tr: "besin",
+          example: { en: "Soup gives quick nourishment.", tr: "Çorba hızlı besin sağlar." },
+        },
+      ],
       examples: [
         { en: "Fresh food is better for your health.", tr: "Taze yiyecek sağlığın için daha iyidir." },
         { en: "We bought food for the whole week.", tr: "Bütün hafta için yiyecek aldık." },
@@ -28,6 +40,18 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-3",
       en: "Vegetable",
       tr: "Sebze",
+      similar: [
+        {
+          en: "veggie",
+          tr: "sebze",
+          example: { en: "Add one veggie to your plate.", tr: "Tabağına bir sebze ekle." },
+        },
+        {
+          en: "veggies",
+          tr: "sebzeler",
+          example: { en: "We roast veggies for dinner.", tr: "Akşam yemeği için sebzeleri fırınlıyoruz." },
+        },
+      ],
       examples: [
         { en: "Wash the vegetable before you cook it.", tr: "Sebzeyi pişirmeden önce yıka." },
         { en: "Green vegetables are full of vitamins.", tr: "Yeşil sebzeler vitamin doludur." },
@@ -68,6 +92,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-7",
       en: "Potato",
       tr: "Patates",
+      similar: [
+        {
+          en: "spud",
+          tr: "patates",
+          example: { en: "Peel the spud before you boil it.", tr: "Patatesi haşlamadan önce soy." },
+        },
+      ],
       examples: [
         { en: "Peel the potato before you boil it.", tr: "Patatesi haşlamadan önce soy." },
         { en: "French fries are made from potato.", tr: "Patates kızartması patatesten yapılır." },
@@ -128,6 +159,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-13",
       en: "Corn",
       tr: "Mısır",
+      similar: [
+        {
+          en: "maize",
+          tr: "mısır",
+          example: { en: "Farmers grow maize in summer.", tr: "Çiftçiler yazın mısır yetiştirir." },
+        },
+      ],
       examples: [
         { en: "We boiled corn on the cob for lunch.", tr: "Öğle yemeği için koçan mısır haşladık." },
         { en: "Sweet corn is popular in summer.", tr: "Tatlı mısır yazın popülerdir." },
@@ -248,6 +286,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-25",
       en: "Yogurt",
       tr: "Yoğurt",
+      similar: [
+        {
+          en: "yoghurt",
+          tr: "yoğurt",
+          example: { en: "Yoghurt with honey tastes great.", tr: "Ballı yoğurt harika tadar." },
+        },
+      ],
       examples: [
         { en: "Yogurt with honey is a simple dessert.", tr: "Ballı yoğurt basit bir tatlıdır." },
         { en: "Mix yogurt into the soup to cool it.", tr: "Çorbayı soğutmak için yoğurt karıştır." },
@@ -288,6 +333,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-29",
       en: "Jam",
       tr: "Reçel",
+      similar: [
+        {
+          en: "preserve",
+          tr: "reçel",
+          example: { en: "She spread preserve on her toast.", tr: "Tostunun üzerine reçel sürdü." },
+        },
+      ],
       examples: [
         { en: "Strawberry jam goes well with bread.", tr: "Çilek reçeli ekmeğe iyi gider." },
         { en: "She opened a new jar of jam.", tr: "Yeni bir reçel kavanozu açtı." },
@@ -358,6 +410,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-36",
       en: "Cream",
       tr: "Krema",
+      similar: [
+        {
+          en: "heavy cream",
+          tr: "krema",
+          example: { en: "Stir heavy cream into the sauce.", tr: "Sosa krema karıştır." },
+        },
+      ],
       examples: [
         { en: "Add cream to make the soup thicker.", tr: "Çorbayı koyulaştırmak için krema ekle." },
         { en: "Whipped cream tops the dessert.", tr: "Tatlının üstünde krem şanti var." },
@@ -398,6 +457,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-40",
       en: "Dinner",
       tr: "Akşam Yemeği",
+      similar: [
+        {
+          en: "supper",
+          tr: "akşam yemeği",
+          example: { en: "We had soup for supper.", tr: "Akşam yemeğinde çorba yedik." },
+        },
+      ],
       examples: [
         { en: "Dinner will be ready at seven.", tr: "Akşam yemeği yedide hazır olacak." },
         { en: "The family eats dinner together.", tr: "Aile birlikte akşam yemeği yer." },
@@ -448,6 +514,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-45",
       en: "Cookie",
       tr: "Kurabiye",
+      similar: [
+        {
+          en: "biscuit",
+          tr: "kurabiye",
+          example: { en: "He ate a biscuit with his tea.", tr: "Çayıyla bir kurabiye yedi." },
+        },
+      ],
       examples: [
         { en: "The cookie crumbled in my hand.", tr: "Kurabiye elimde kırıldı." },
         { en: "Children love warm cookies.", tr: "Çocuklar sıcak kurabiyeleri sever." },
@@ -468,6 +541,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-47",
       en: "Ice Cream",
       tr: "Dondurma",
+      similar: [
+        {
+          en: "gelato",
+          tr: "dondurma",
+          example: { en: "We shared a cup of gelato.", tr: "Bir kase dondurmayı paylaştık." },
+        },
+      ],
       examples: [
         { en: "Ice cream melts fast in the sun.", tr: "Dondurma güneşte hızlı erir." },
         { en: "We shared two scoops of ice cream.", tr: "İki top dondurmayı paylaştık." },
@@ -488,6 +568,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-49",
       en: "Soup",
       tr: "Çorba",
+      similar: [
+        {
+          en: "broth",
+          tr: "et suyu",
+          example: { en: "The broth smells wonderful.", tr: "Et suyu harika kokuyor." },
+        },
+      ],
       examples: [
         { en: "Hot soup warms you on cold days.", tr: "Sıcak çorba soğuk günlerde ısıtır." },
         { en: "Stir the soup so it does not stick.", tr: "Yapışmaması için çorbayı karıştır." },
@@ -518,6 +605,13 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-52",
       en: "Sandwich",
       tr: "Sandviç",
+      similar: [
+        {
+          en: "sub",
+          tr: "sandviç",
+          example: { en: "I ordered a turkey sub.", tr: "Hindi sandviç sipariş ettim." },
+        },
+      ],
       examples: [
         { en: "I made a cheese sandwich for lunch.", tr: "Öğle yemeği için peynirli sandviç yaptım." },
         { en: "Cut the sandwich in half.", tr: "Sandviçi ikiye böl." },
@@ -528,6 +622,18 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-53",
       en: "Beer",
       tr: "Bira",
+      similar: [
+        {
+          en: "ale",
+          tr: "bira",
+          example: { en: "He prefers dark ale in winter.", tr: "Kışın koyu birayı tercih eder." },
+        },
+        {
+          en: "lager",
+          tr: "bira",
+          example: { en: "They served cold lager at the bar.", tr: "Barda soğuk bira servis ettiler." },
+        },
+      ],
       examples: [
         { en: "Beer is only for adults in this country.", tr: "Bu ülkede bira yalnızca yetişkinler içindir." },
         { en: "He ordered a cold beer with his meal.", tr: "Yemeğiyle soğuk bir bira sipariş etti." },
@@ -548,6 +654,18 @@ export const vocabularyCategory19: VocabularyCategory = {
       id: "19-55",
       en: "Alcohol",
       tr: "Alkol",
+      similar: [
+        {
+          en: "liquor",
+          tr: "sert içki",
+          example: { en: "The shop does not sell liquor to minors.", tr: "Dükkan reşit olmayanlara sert içki satmaz." },
+        },
+        {
+          en: "spirits",
+          tr: "sert içki",
+          example: { en: "Spirits are kept behind the counter.", tr: "Sert içkiler tezgâhın arkasında tutulur." },
+        },
+      ],
       examples: [
         { en: "This drink contains no alcohol.", tr: "Bu içecekte alkol yoktur." },
         { en: "Stores check ID before selling alcohol.", tr: "Mağazalar alkol satmadan önce kimlik kontrol eder." },

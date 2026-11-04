@@ -28,6 +28,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-3",
       en: "Football",
       tr: "Futbol",
+      similar: [
+        {
+          en: "soccer",
+          tr: "futbol",
+          example: { en: "Kids play soccer in the park.", tr: "Çocuklar parkta futbol oynuyor." },
+        },
+      ],
       examples: [
         { en: "They watch football on Sunday.", tr: "Pazar günü futbol izlerler." },
         { en: "Football is popular in many countries.", tr: "Futbol birçok ülkede popülerdir." },
@@ -68,6 +75,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-7",
       en: "Cycling",
       tr: "Bisiklete Binme",
+      similar: [
+        {
+          en: "biking",
+          tr: "bisiklete binme",
+          example: { en: "Biking to work saves money.", tr: "İşe bisiklete binmek para tasarrufu sağlar." },
+        },
+      ],
       examples: [
         { en: "Cycling is good for your legs.", tr: "Bisiklete binmek bacakların için iyidir." },
         { en: "We went cycling by the river.", tr: "Nehrin kenarında bisiklete bindik." },
@@ -78,6 +92,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-8",
       en: "Running",
       tr: "Koşu",
+      similar: [
+        {
+          en: "jogging",
+          tr: "koşu",
+          example: { en: "She goes jogging every morning.", tr: "Her sabah koşuya gider." },
+        },
+      ],
       examples: [
         { en: "Running helps me feel better.", tr: "Koşmak kendimi daha iyi hissetmeme yardım eder." },
         { en: "She does running every morning.", tr: "Her sabah koşu yapar." },
@@ -108,6 +129,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-11",
       en: "Video Game",
       tr: "Video Oyunu",
+      similar: [
+        {
+          en: "computer game",
+          tr: "bilgisayar oyunu",
+          example: { en: "He plays a computer game after school.", tr: "Okuldan sonra bilgisayar oyunu oynar." },
+        },
+      ],
       examples: [
         { en: "He plays video games after homework.", tr: "Ödevden sonra video oyunu oynar." },
         { en: "This video game has great music.", tr: "Bu video oyununun harika müziği var." },
@@ -128,6 +156,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-13",
       en: "Puzzle",
       tr: "Bulmaca",
+      similar: [
+        {
+          en: "jigsaw",
+          tr: "yapboz",
+          example: { en: "We finished a jigsaw on the table.", tr: "Masada bir yapbozu bitirdik." },
+        },
+      ],
       examples: [
         { en: "We finished the puzzle together.", tr: "Bulmacayı birlikte bitirdik." },
         { en: "A puzzle with a thousand pieces is hard.", tr: "Bin parçalı bir bulmaca zordur." },
@@ -138,6 +173,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-14",
       en: "Hobby",
       tr: "Hobi",
+      similar: [
+        {
+          en: "pastime",
+          tr: "uğraşı",
+          example: { en: "Chess is a popular pastime.", tr: "Satranç popüler bir uğraştır." },
+        },
+      ],
       examples: [
         { en: "Reading is her favorite hobby.", tr: "Okumak onun en sevdiği hobisi." },
         { en: "What is your hobby?", tr: "Hobin ne?" },
@@ -148,6 +190,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-15",
       en: "Movie",
       tr: "Film",
+      similar: [
+        {
+          en: "film",
+          tr: "film",
+          example: { en: "We watched a film at the cinema.", tr: "Sinemada bir film izledik." },
+        },
+      ],
       examples: [
         { en: "We watched a funny movie last night.", tr: "Dün gece komik bir film izledik." },
         { en: "This movie made me cry.", tr: "Bu film beni ağlattı." },
@@ -188,6 +237,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-19",
       en: "Reading Books",
       tr: "Kitap Okuma",
+      similar: [
+        {
+          en: "reading",
+          tr: "okuma",
+          example: { en: "Reading before bed helps me sleep.", tr: "Yatmadan önce okumak uykuya dalmama yardım eder." },
+        },
+      ],
       examples: [
         { en: "Reading books helps you learn new words.", tr: "Kitap okumak yeni kelimeler öğrenmene yardım eder." },
         { en: "He spends hours reading books.", tr: "Saatlerce kitap okumaya harcar." },
@@ -198,6 +254,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-20",
       en: "Newspaper",
       tr: "Gazete",
+      similar: [
+        {
+          en: "paper",
+          tr: "gazete",
+          example: { en: "He buys a paper every morning.", tr: "Her sabah bir gazete alır." },
+        },
+      ],
       examples: [
         { en: "My father reads the newspaper every morning.", tr: "Babam her sabah gazete okur." },
         { en: "I saw the news in the newspaper.", tr: "Haberi gazetede gördüm." },
@@ -218,6 +281,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-22",
       en: "Drawing",
       tr: "Resim Çizme",
+      similar: [
+        {
+          en: "sketching",
+          tr: "eskiz çizme",
+          example: { en: "She enjoys sketching in her notebook.", tr: "Defterinde eskiz çizmekten hoşlanır." },
+        },
+      ],
       examples: [
         { en: "Drawing animals is her talent.", tr: "Hayvan resmi çizmek onun yeteneği." },
         { en: "He spends his Sunday drawing.", tr: "Pazar gününü resim çizerek geçirir." },
@@ -288,6 +358,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-29",
       en: "Hiking",
       tr: "Doğa Yürüyüşü",
+      similar: [
+        {
+          en: "trekking",
+          tr: "trekking",
+          example: { en: "Trekking in the hills takes all day.", tr: "Tepelerde trekking bütün gün sürer." },
+        },
+      ],
       examples: [
         { en: "Hiking in the mountains is beautiful.", tr: "Dağlarda doğa yürüyüşü güzeldir." },
         { en: "Wear good shoes for hiking.", tr: "Doğa yürüyüşü için iyi ayakkabı giy." },
@@ -298,6 +375,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-30",
       en: "Fishing",
       tr: "Balık Tutma",
+      similar: [
+        {
+          en: "angling",
+          tr: "olta balıkçılığı",
+          example: { en: "Angling by the river is peaceful.", tr: "Nehir kenarında olta balıkçılığı huzurludur." },
+        },
+      ],
       examples: [
         { en: "Fishing requires a lot of patience.", tr: "Balık tutmak çok sabır gerektirir." },
         { en: "He goes fishing with his uncle.", tr: "Amcasıyla balık tutmaya gider." },
@@ -308,6 +392,13 @@ export const vocabularyCategory23: VocabularyCategory = {
       id: "23-31",
       en: "Traveling",
       tr: "Seyahat Etme",
+      similar: [
+        {
+          en: "travel",
+          tr: "seyahat",
+          example: { en: "Travel by train is comfortable.", tr: "Trenle seyahat rahattır." },
+        },
+      ],
       examples: [
         { en: "Traveling opens your mind to new cultures.", tr: "Seyahat etmek zihnini yeni kültürlere açar." },
         { en: "She loves traveling by train.", tr: "Trenle seyahat etmeyi sever." },
