@@ -12,6 +12,7 @@ import {
   getTopicTitleEn,
 } from "@/data/dashboardTopics";
 import { getTopicContent } from "@/data/topics";
+import { redirect } from "@/i18n/navigation";
 import {
   PASSED_LEVEL_EXAMS_COOKIE,
   parsePassedLevelExams,
@@ -43,6 +44,14 @@ export default async function TopicLessonPage({ params }: PageProps) {
   const topic = getDashboardTopicById(topicId);
   if (!topic) {
     notFound();
+  }
+
+  // Yeterlilik sınavında anlatım/konu sekmesi yok — doğrudan sınava yönlendir.
+  if (topic.isExam) {
+    redirect({
+      href: `/panelim/konular/${topicId}/alistirmalar`,
+      locale,
+    });
   }
 
   const content = getTopicContent(topicId);

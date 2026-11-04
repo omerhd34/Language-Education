@@ -76,65 +76,67 @@ export function TopicPageHeader({
         ) : null}
       </div>
 
-      <div className="space-y-3 border-b border-border">
-        <nav aria-label={t("tabsAria")} className="flex gap-1">
-          <Link
-            href={lessonHref}
-            className={cn(
-              "border-b-2 px-3 py-2 text-sm font-medium transition-colors",
-              activeTab === "lesson"
-                ? "border-sky-500 text-brand-950 dark:text-brand-100"
-                : "border-transparent text-brand-500 hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100",
-            )}
-            aria-current={activeTab === "lesson" ? "page" : undefined}
-          >
-            {t("lesson")}
-          </Link>
-          <Link
-            href={exercisesHref}
-            className={cn(
-              "border-b-2 px-3 py-2 text-sm font-medium transition-colors",
-              activeTab === "exercises"
-                ? "border-sky-500 text-brand-950 dark:text-brand-100"
-                : "border-transparent text-brand-500 hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100",
-            )}
-            aria-current={activeTab === "exercises" ? "page" : undefined}
-          >
-            {t("exercises")}
-          </Link>
-          {showTopicExamTab ? (
+      {!isExam ? (
+        <div className="space-y-3 border-b border-border">
+          <nav aria-label={t("tabsAria")} className="flex gap-1">
             <Link
-              href={examHref}
+              href={lessonHref}
               className={cn(
                 "border-b-2 px-3 py-2 text-sm font-medium transition-colors",
-                activeTab === "exam"
+                activeTab === "lesson"
                   ? "border-sky-500 text-brand-950 dark:text-brand-100"
                   : "border-transparent text-brand-500 hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100",
               )}
-              aria-current={activeTab === "exam" ? "page" : undefined}
+              aria-current={activeTab === "lesson" ? "page" : undefined}
             >
-              {t("topicExamTab")}
+              {t("lesson")}
             </Link>
-          ) : null}
-        </nav>
-
-        {showSectionNav ? (
-          <nav
-            aria-label={t("sectionsAria")}
-            className="flex flex-wrap gap-2 pb-3"
-          >
-            {sections.map((section) => (
-              <a
-                key={section.id}
-                href={`#section-${section.id}`}
-                className="rounded-md bg-brand-100/70 px-2.5 py-1.5 text-xs font-medium text-brand-700 transition-colors hover:bg-sky-500/15 hover:text-brand-950 dark:bg-brand-900/50 dark:text-brand-300 dark:hover:bg-sky-500/20 dark:hover:text-brand-100"
+            <Link
+              href={exercisesHref}
+              className={cn(
+                "border-b-2 px-3 py-2 text-sm font-medium transition-colors",
+                activeTab === "exercises"
+                  ? "border-sky-500 text-brand-950 dark:text-brand-100"
+                  : "border-transparent text-brand-500 hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100",
+              )}
+              aria-current={activeTab === "exercises" ? "page" : undefined}
+            >
+              {t("exercises")}
+            </Link>
+            {showTopicExamTab ? (
+              <Link
+                href={examHref}
+                className={cn(
+                  "border-b-2 px-3 py-2 text-sm font-medium transition-colors",
+                  activeTab === "exam"
+                    ? "border-sky-500 text-brand-950 dark:text-brand-100"
+                    : "border-transparent text-brand-500 hover:text-brand-950 dark:text-brand-400 dark:hover:text-brand-100",
+                )}
+                aria-current={activeTab === "exam" ? "page" : undefined}
               >
-                {section.title}
-              </a>
-            ))}
+                {t("topicExamTab")}
+              </Link>
+            ) : null}
           </nav>
-        ) : null}
-      </div>
+
+          {showSectionNav ? (
+            <nav
+              aria-label={t("sectionsAria")}
+              className="flex flex-wrap gap-2 pb-3"
+            >
+              {sections.map((section) => (
+                <a
+                  key={section.id}
+                  href={`#section-${section.id}`}
+                  className="rounded-md bg-brand-100/70 px-2.5 py-1.5 text-xs font-medium text-brand-700 transition-colors hover:bg-sky-500/15 hover:text-brand-950 dark:bg-brand-900/50 dark:text-brand-300 dark:hover:bg-sky-500/20 dark:hover:text-brand-100"
+                >
+                  {section.title}
+                </a>
+              ))}
+            </nav>
+          ) : null}
+        </div>
+      ) : null}
     </header>
   );
 }
