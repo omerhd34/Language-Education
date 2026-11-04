@@ -15,18 +15,26 @@ enum ExerciseType {
   TRANSLATION
 }
 
+enum VocabularyWordStatus {
+  KNOWN
+  LEARNING
+}
+
 model User {
-  id                       String                   @id @default(cuid())
-  email                    String                   @unique
-  passwordHash             String
-  name                     String?
-  emailVerifiedAt          DateTime?
-  createdAt                DateTime                 @default(now())
-  updatedAt                DateTime                 @updatedAt
-  refreshTokens            RefreshToken[]
-  emailVerificationTokens  EmailVerificationToken[]
-  progress                 UserProgress[]
-  streak                   Streak?
+  id                            String                   @id @default(cuid())
+  email                         String                   @unique
+  passwordHash                  String
+  name                          String?
+  emailVerifiedAt               DateTime?
+  createdAt                     DateTime                 @default(now())
+  updatedAt                     DateTime                 @updatedAt
+  vocabularyLearnSelectedCount  Int                      @default(0)
+  vocabularyLearnLockedUntil    DateTime?
+  refreshTokens                 RefreshToken[]
+  emailVerificationTokens       EmailVerificationToken[]
+  progress                      UserProgress[]
+  vocabularyWords               UserVocabularyWord[]
+  streak                        Streak?
 }
 
 model EmailVerificationToken {
@@ -160,4 +168,22 @@ model Streak {
   lastActivityAt DateTime?
   updatedAt      DateTime  @updatedAt
   createdAt      DateTime  @default(now())
+}
+
+model UserVocabularyWord {
+  id                   String               @id @default(cuid())
+  userId               String
+  user                 User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wordId               String
+  status               VocabularyWordStatus
+  statusSetAt          DateTime             @default(now())
+  passedMultipleChoice Boolean              @default(false)
+  passedFillBlank      Boolean              @default(false)
+  passedListening      Boolean              @default(false)
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  @@unique([userId, wordId])
+  @@index([userId])
+  @@index([userId, status, statusSetAt])
 }
