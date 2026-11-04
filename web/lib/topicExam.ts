@@ -1,23 +1,42 @@
 import { dashboardTopics, type CefrLevel } from "@/data/dashboardTopics";
-import { getTopicContent } from "@/data/topics";
+import { examA1Clues } from "@/data/topics/exam/examA1";
+import { examA2Clues } from "@/data/topics/exam/examA2";
+import { examB1Clues } from "@/data/topics/exam/examB1";
+import { examB2Clues } from "@/data/topics/exam/examB2";
+import { examBaslangicClues } from "@/data/topics/exam/examBaslangic";
+import { examC1Clues } from "@/data/topics/exam/examC1";
+import { examC2Clues } from "@/data/topics/exam/examC2";
 import type {
   CrosswordExercise,
+  FillBlankExercise,
   MultipleChoiceExercise,
   TopicContent,
 } from "@/data/topics/types";
-import { getLevelExamClues } from "@/data/levelExamClues";
 import {
   buildCrosswordFromCandidates,
   type CrosswordCandidate,
 } from "@/lib/crosswordBuilder";
 
-/** Konu sınavı: yalnızca çoktan seçmeli. */
+const LEVEL_EXAM_CLUES: Record<CefrLevel, CrosswordCandidate[]> = {
+  Başlangıç: examBaslangicClues,
+  A1: examA1Clues,
+  A2: examA2Clues,
+  B1: examB1Clues,
+  B2: examB2Clues,
+  C1: examC1Clues,
+  C2: examC2Clues,
+};
+
+function getLevelExamClues(level: CefrLevel): CrosswordCandidate[] {
+  return LEVEL_EXAM_CLUES[level];
+}
+
 export const TOPIC_EXAM_OPTION_COUNT = 4;
 export const TOPIC_EXAM_QUESTION_COUNT = 10;
 
-/** Yeterlilik sınavı: tek bulmaca, 20 ipucu/soru. */
 export const LEVEL_EXAM_CROSSWORD_COUNT = 1;
 export const LEVEL_EXAM_CLUE_COUNT = 20;
+export const LEVEL_EXAM_FILL_BLANK_COUNT = 20;
 
 export const TOPIC_EXAM_PASS_RATIO = 0.75;
 
@@ -240,123 +259,115 @@ export function resolveTopicExamExercises(
     .map((item) => ensureExamOptionCount(item, pool, TOPIC_EXAM_OPTION_COUNT));
 }
 
+function shuffleCandidates(items: CrosswordCandidate[]): CrosswordCandidate[] {
+  const next = [...items];
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = next[i]!;
+    next[i] = next[j]!;
+    next[j] = tmp;
+  }
+  return next;
+}
+
 function collectLevelCrosswordCandidates(
   level: CefrLevel,
 ): CrosswordCandidate[] {
-  const levelTopics = dashboardTopics.filter(
-    (topic) => topic.level === level && !topic.isExam,
-  );
   const candidates: CrosswordCandidate[] = [];
   const seenAnswers = new Set<string>();
 
-  function pushCandidate(answer: string, text: string) {
-    const normalized = answer.replace(/[^a-zA-Z]/g, "").toUpperCase();
-    if (normalized.length < 2 || normalized.length > 14) {
-      return;
-    }
-    if (seenAnswers.has(normalized)) {
-      return;
-    }
-    seenAnswers.add(normalized);
-    candidates.push({ answer: normalized, text: text.trim() });
-  }
-
-  // 1) Bu seviyenin konularına özel ipuçlar
   for (const item of getLevelExamClues(level)) {
-    pushCandidate(item.answer, item.text);
-  }
-
-  // 2) Konu içeriklerinden (ders örnekleri + alıştırmalar)
-  for (const topic of levelTopics) {
-    const content = getTopicContent(topic.id);
-    if (!content) {
+    const normalized = item.answer.replace(/[^a-zA-Z]/g, "").toUpperCase();
+    if (normalized.length < 2 || normalized.length > 14) {
       continue;
     }
-
-    for (const section of content.lesson.sections) {
-      for (const example of section.examples ?? []) {
-        const en = example.en.trim();
-        const tr = example.tr.trim();
-
-        // "1" → "one" gibi sayı örnekleri
-        if (/^\d/.test(en) && /^[a-zA-Z][a-zA-Z\s-]*$/.test(tr)) {
-          const word = tr.split(/[\s/]/)[0] ?? tr;
-          pushCandidate(word, `${topic.title}: ${en}`);
-          continue;
-        }
-
-        // Tek kelimelik İngilizce örnek
-        if (/^[a-zA-Z]+(?:-[a-zA-Z]+)?$/.test(en) && en.length >= 2) {
-          pushCandidate(en, `${topic.title}: ${tr}`);
-        }
-      }
+    if (seenAnswers.has(normalized)) {
+      continue;
     }
-
-    for (const item of content.exercises) {
-      if (item.type === "crossword") {
-        for (const clue of item.clues) {
-          pushCandidate(clue.answer, `${topic.title}: ${clue.text}`);
-        }
-      }
-      if (item.type === "fill_blank" && /^[a-zA-Z\s-]+$/.test(item.answer)) {
-        pushCandidate(
-          item.answer,
-          `${topic.title}: ${item.prompt.replace(/_+/g, "…")}`,
-        );
-      }
-      if (item.type === "listening") {
-        pushCandidate(item.speakText, `${topic.title}: ${item.prompt}`);
-      }
-      if (item.type === "multiple_choice") {
-        const correct = item.options[item.correctIndex];
-        if (
-          correct &&
-          /^[a-zA-Z]+(?:-[a-zA-Z]+)?$/.test(correct) &&
-          correct.length >= 2 &&
-          correct.length <= 12
-        ) {
-          pushCandidate(correct, `${topic.title}: ${item.prompt}`);
-        }
-      }
-    }
+    seenAnswers.add(normalized);
+    candidates.push({
+      answer: normalized,
+      text: item.text.trim(),
+    });
   }
 
   return candidates;
 }
 
 function createLevelExamCrossword(level: CefrLevel): CrosswordExercise {
-  const candidates = collectLevelCrosswordCandidates(level);
-  const built = buildCrosswordFromCandidates(candidates, {
-    id: `level-exam-cw-${level}`,
-    subtopicId: `level-exam-${level}`,
-    targetClues: LEVEL_EXAM_CLUE_COUNT,
-    minClues: Math.min(8, LEVEL_EXAM_CLUE_COUNT),
-  });
+  const pool = collectLevelCrosswordCandidates(level);
+  const targetClues = Math.min(LEVEL_EXAM_CLUE_COUNT, Math.max(pool.length, 1));
 
-  if (built) {
-    return built;
+  let best: CrosswordExercise | null = null;
+  const attempts = 24;
+
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    const picked = shuffleCandidates(pool).slice(0, targetClues);
+    const built = buildCrosswordFromCandidates(picked, {
+      id: `level-exam-cw-${level}-${attempt}`,
+      subtopicId: `level-exam-${level}`,
+      targetClues,
+      minClues: Math.min(6, targetClues),
+    });
+
+    if (!built) {
+      continue;
+    }
+
+    if (built.clues.length === targetClues) {
+      return built;
+    }
+
+    if (!best || built.clues.length > best.clues.length) {
+      best = built;
+    }
   }
 
-  // Son çare: yine seviye bankası (ortak banka yok)
-  const levelOnly = buildCrosswordFromCandidates(getLevelExamClues(level), {
-    id: `level-exam-cw-${level}-bank`,
-    subtopicId: `level-exam-${level}`,
-    targetClues: LEVEL_EXAM_CLUE_COUNT,
-    minClues: 3,
-  });
-
-  if (levelOnly) {
-    return levelOnly;
+  if (best) {
+    return best;
   }
 
   throw new Error(`Yeterlilik bulmacası üretilemedi: ${level}`);
 }
 
-/** Tek yeterlilik bulmacası (hedef: 20 ipucu). */
 export function resolveLevelExamCrosswords(
   level: CefrLevel,
 ): CrosswordExercise[] {
   return [createLevelExamCrossword(level)].slice(0, LEVEL_EXAM_CROSSWORD_COUNT);
+}
+
+function toTitleCaseAnswer(answer: string): string {
+  const lower = answer.toLocaleLowerCase("en-US");
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
+
+function createLevelExamFillBlanks(level: CefrLevel): FillBlankExercise[] {
+  const pool = collectLevelCrosswordCandidates(level);
+  const target = Math.min(LEVEL_EXAM_FILL_BLANK_COUNT, pool.length);
+  const picked = shuffleCandidates(pool).slice(0, target);
+
+  return picked.map((item, index) => {
+    const displayAnswer = toTitleCaseAnswer(item.answer);
+    return {
+      id: `level-exam-fb-${level}-${index + 1}`,
+      subtopicId: `level-exam-${level}`,
+      type: "fill_blank" as const,
+      prompt: `"${item.text}" İngilizcede _____ olarak yazılır.`,
+      answer: displayAnswer,
+      acceptedAnswers: [
+        item.answer,
+        item.answer.toLocaleLowerCase("en-US"),
+        displayAnswer,
+      ],
+      explanation: `${displayAnswer} = ${item.text}`,
+    };
+  });
+}
+
+export function resolveLevelExamFillBlanks(
+  level: CefrLevel,
+): FillBlankExercise[] {
+  return createLevelExamFillBlanks(level);
 }
 
 export function didPassTopicExamScore(correct: number, total: number): boolean {

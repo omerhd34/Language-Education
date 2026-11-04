@@ -59,7 +59,9 @@ export function getTopicProgress(topic: DashboardTopic): number {
   return Math.round(total / topic.subtopics.length);
 }
 
-export function getLevelExamTopic(level: CefrLevel): DashboardTopic | undefined {
+export function getLevelExamTopic(
+  level: CefrLevel,
+): DashboardTopic | undefined {
   return dashboardTopics.find((topic) => topic.level === level && topic.isExam);
 }
 
@@ -78,7 +80,6 @@ export function isLevelExamPassed(
   return passedExams.includes(level);
 }
 
-/** A level is complete only after its end-of-level exam is passed. */
 export function isLevelComplete(
   level: CefrLevel,
   passedExams: readonly CefrLevel[] = [],
