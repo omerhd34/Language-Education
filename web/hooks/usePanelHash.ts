@@ -14,21 +14,19 @@ export function navigatePanelSection(section: string): void {
 
   const nextHash = section ? `#${section}` : "";
   const { pathname, search } = window.location;
+  const nextUrl = `${pathname}${search}${nextHash}`;
+  const currentUrl = `${window.location.pathname}${window.location.search}${window.location.hash}`;
 
-  if (nextHash) {
-    if (window.location.hash !== nextHash) {
-      window.location.hash = nextHash;
-    }
-  } else if (window.location.hash) {
-    window.history.pushState(null, "", `${pathname}${search}`);
-    window.dispatchEvent(new HashChangeEvent("hashchange"));
+  if (currentUrl !== nextUrl) {
+    window.history.pushState(null, "", nextUrl);
   }
 
+  window.dispatchEvent(new HashChangeEvent("hashchange"));
   window.dispatchEvent(new Event(PANEL_HASH_EVENT));
 }
 
 export function usePanelHash(): string {
-  const [hash, setHash] = useState(readPanelHash);
+  const [hash, setHash] = useState("");
 
   useEffect(() => {
     const sync = () => setHash(readPanelHash());
