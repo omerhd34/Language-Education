@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { CombinedExerciseHeader } from "@/components/features/topics/CombinedExerciseHeader";
@@ -9,6 +10,10 @@ import {
   getCombinedExerciseById,
   getCombinedExerciseQuestions,
 } from "@/data/combinedExercises";
+import {
+  PASSED_LEVEL_EXAMS_COOKIE,
+  parsePassedLevelExams,
+} from "@/lib/levelExamStorage";
 import { canAccessLevel, getRequiredLevelToUnlock } from "@/lib/topicAccess";
 
 type PageProps = {
@@ -43,7 +48,11 @@ export default async function CombinedExercisePage({ params }: PageProps) {
   }
 
   const exercises = getCombinedExerciseQuestions(combined);
-  const unlocked = canAccessLevel(combined.level);
+  const cookieStore = await cookies();
+  const passedExams = parsePassedLevelExams(
+    cookieStore.get(PASSED_LEVEL_EXAMS_COOKIE)?.value,
+  );
+  const unlocked = canAccessLevel(combined.level, passedExams);
   const requiredLevel = getRequiredLevelToUnlock(combined.level);
 
   return (

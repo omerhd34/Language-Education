@@ -1,11 +1,20 @@
+import { cookies } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { TopicContentMissing } from "@/components/features/topics/TopicContentMissing";
 import { TopicExercisesView } from "@/components/features/topics/TopicExercisesView";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
-import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
+import {
+  dashboardTopics,
+  getDashboardTopicById,
+  getTopicTitleEn,
+} from "@/data/dashboardTopics";
 import { getTopicContent } from "@/data/topics";
+import {
+  PASSED_LEVEL_EXAMS_COOKIE,
+  parsePassedLevelExams,
+} from "@/lib/levelExamStorage";
 import { canAccessLevel, getRequiredLevelToUnlock } from "@/lib/topicAccess";
 
 type PageProps = {
@@ -36,8 +45,18 @@ export default async function TopicExercisesPage({ params }: PageProps) {
   }
 
   const content = getTopicContent(topicId);
-  const index = dashboardTopics.findIndex((item) => item.id === topicId) + 1;
-  const unlocked = canAccessLevel(topic.level);
+  const regularTopics = dashboardTopics.filter(
+    (item) => item.level === topic.level && !item.isExam,
+  );
+  const index = topic.isExam
+    ? regularTopics.length + 1
+    : regularTopics.findIndex((item) => item.id === topicId) + 1;
+
+  const cookieStore = await cookies();
+  const passedExams = parsePassedLevelExams(
+    cookieStore.get(PASSED_LEVEL_EXAMS_COOKIE)?.value,
+  );
+  const unlocked = canAccessLevel(topic.level, passedExams);
   const requiredLevel = getRequiredLevelToUnlock(topic.level);
 
   return (
@@ -45,14 +64,21 @@ export default async function TopicExercisesPage({ params }: PageProps) {
       <TopicPageHeader
         topicId={topic.id}
         title={topic.title}
+        titleEn={getTopicTitleEn(topic.id, topic.title)}
         level={topic.level}
         index={index}
         activeTab="exercises"
+        isExam={Boolean(topic.isExam)}
       />
       {!unlocked && requiredLevel ? (
         <TopicLevelLocked level={topic.level} requiredLevel={requiredLevel} />
       ) : content ? (
-        <TopicExercisesView exercises={content.exercises} />
+        <TopicExercisesView
+          topicId={topic.id}
+          exercises={content.exercises}
+          isExam={Boolean(topic.isExam)}
+          level={topic.level}
+        />
       ) : (
         <TopicContentMissing />
       )}

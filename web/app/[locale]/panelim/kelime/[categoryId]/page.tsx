@@ -7,6 +7,7 @@ import {
   getVocabularyCategoryById,
   vocabularyCategories,
 } from "@/data/vocabulary";
+import { getVocabularyCategoryDisplayIndex } from "@/lib/vocabularyAccess";
 
 type PageProps = {
   params: Promise<{ locale: string; categoryId: string }>;
@@ -44,13 +45,13 @@ export default async function VocabularyCategoryPage({
     notFound();
   }
 
-  const index =
-    vocabularyCategories.findIndex((item) => item.id === categoryId) + 1;
+  const index = getVocabularyCategoryDisplayIndex(categoryId);
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-8 p-4 sm:p-6 lg:p-8">
       <VocabularyCategoryHeader
         title={category.title}
+        titleEn={category.titleEn}
         index={index}
         wordCount={category.words.length}
       />
