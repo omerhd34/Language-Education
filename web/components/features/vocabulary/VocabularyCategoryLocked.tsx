@@ -7,10 +7,16 @@ import { ACTIVE_VOCABULARY_WINDOW } from "@/lib/vocabularyAccess";
 
 type VocabularyCategoryLockedProps = {
   index: number;
+  reason?: "level" | "window";
+  requiredLevel?: string | null;
+  level?: string | null;
 };
 
 export function VocabularyCategoryLocked({
   index,
+  reason = "window",
+  requiredLevel,
+  level,
 }: VocabularyCategoryLockedProps) {
   const t = useTranslations("Vocabulary");
 
@@ -20,10 +26,14 @@ export function VocabularyCategoryLocked({
         <Lock className="size-5" aria-hidden />
       </span>
       <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
-        {t("categoryLockedTitle", { index })}
+        {reason === "level" && level
+          ? t("levelLockedTitle", { level })
+          : t("categoryLockedTitle", { index })}
       </h2>
       <p className="text-sm text-brand-600 dark:text-brand-400">
-        {t("categoryLockedBody", { window: ACTIVE_VOCABULARY_WINDOW })}
+        {reason === "level" && requiredLevel && level
+          ? t("levelLockedBody", { level, requiredLevel })
+          : t("categoryLockedBody", { window: ACTIVE_VOCABULARY_WINDOW })}
       </p>
       <ButtonLink href="/panelim#kelime" variant="outline">
         {t("backToVocabulary")}

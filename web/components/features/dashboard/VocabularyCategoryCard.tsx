@@ -1,10 +1,19 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Lock } from "lucide-react";
+import { BookOpen, Lock, PencilLine } from "lucide-react";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import type { VocabularyCategory } from "@/data/vocabulary";
+import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 import { cn } from "@/lib/utils";
 
 type VocabularyCategoryCardProps = {
@@ -20,34 +29,42 @@ export function VocabularyCategoryCard({
 }: VocabularyCategoryCardProps) {
   const t = useTranslations("Dashboard");
   const wordCount = category.words.length;
+  const titleEn = getDistinctSecondaryTitle(category.title, category.titleEn);
 
   return (
-    <article
-      className={cn(
-        "dashboard-panel flex h-full flex-col",
-        locked && "opacity-75",
-      )}
-    >
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <p className="inline-flex w-fit rounded-md bg-zinc-500/15 px-2 py-1 text-[11px] font-semibold tracking-wide text-zinc-700 uppercase dark:bg-zinc-400/15 dark:text-zinc-300">
-            {t("vocabularyCategoryLabel", { index })}
+    <Card className={cn("h-full transition-opacity", locked && "opacity-70")}>
+      <CardHeader>
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">
+              {t("vocabularyCategoryLabel", { index })}
+            </Badge>
+            {locked ? (
+              <Badge
+                variant="outline"
+                className="gap-1 border-amber-500/40 text-amber-700 dark:text-amber-300"
+              >
+                <Lock className="size-3" aria-hidden />
+                {t("locked")}
+              </Badge>
+            ) : null}
+          </div>
+          <p className="shrink-0 text-xs font-medium text-brand-600 dark:text-brand-400">
+            {t("vocabularyWordCount", { count: wordCount })}
           </p>
-          {locked ? (
-            <p className="inline-flex w-fit items-center gap-1 rounded-md bg-brand-600/10 px-2 py-1 text-[11px] font-semibold tracking-wide text-brand-600 uppercase dark:text-brand-300">
-              <Lock className="size-3" aria-hidden />
-              {t("locked")}
-            </p>
+        </div>
+
+        <div className="space-y-1">
+          <CardTitle>{category.title}</CardTitle>
+          {titleEn ? (
+            <CardDescription className="font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
+              {titleEn}
+            </CardDescription>
           ) : null}
         </div>
-        <p className="shrink-0 text-sm text-brand-600 dark:text-brand-400">
-          {t("vocabularyWordCount", { count: wordCount })}
-        </p>
-      </div>
-      <h3 className="mt-3 font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
-        {category.title}
-      </h3>
-      <div className="mt-auto flex flex-col gap-2 pt-6 sm:flex-row">
+      </CardHeader>
+
+      <CardFooter className="flex-col gap-2 pt-2 sm:flex-row">
         {locked ? (
           <>
             <Button
@@ -56,6 +73,7 @@ export function VocabularyCategoryCard({
               disabled
               className="w-full sm:flex-1"
             >
+              <BookOpen aria-hidden />
               {t("vocabularyOpenCategory")}
             </Button>
             <Button
@@ -65,6 +83,7 @@ export function VocabularyCategoryCard({
               disabled
               className="w-full sm:flex-1"
             >
+              <PencilLine aria-hidden />
               {t("vocabularyOpenExercises")}
             </Button>
           </>
@@ -75,6 +94,7 @@ export function VocabularyCategoryCard({
               size="sm"
               className="w-full sm:flex-1"
             >
+              <BookOpen aria-hidden />
               {t("vocabularyOpenCategory")}
             </ButtonLink>
             <ButtonLink
@@ -83,11 +103,12 @@ export function VocabularyCategoryCard({
               variant="outline"
               className="w-full sm:flex-1"
             >
+              <PencilLine aria-hidden />
               {t("vocabularyOpenExercises")}
             </ButtonLink>
           </>
         )}
-      </div>
-    </article>
+      </CardFooter>
+    </Card>
   );
 }

@@ -12,7 +12,10 @@ import { VocabularyWordList } from "@/components/features/vocabulary/VocabularyW
 import { TopicExercisesView } from "@/components/features/topics/TopicExercisesView";
 import {
   canAccessVocabularyCategory,
+  canAccessVocabularyLevel,
+  getRequiredVocabularyLevelToUnlock,
   getVocabularyCategoryDisplayIndex,
+  getVocabularyCategoryLevel,
 } from "@/lib/vocabularyAccess";
 import { generateVocabularyExercises } from "@/lib/vocabulary/generateExercises";
 import { useKnownVocabularyWordsQuery } from "@/store/api";
@@ -41,7 +44,14 @@ export function VocabularyCategoryView({
     [knownWords],
   );
 
+  const level = getVocabularyCategoryLevel(categoryId);
+  const levelUnlocked = level
+    ? canAccessVocabularyLevel(level, knownWordIds)
+    : false;
   const unlocked = canAccessVocabularyCategory(categoryId, knownWordIds);
+  const requiredLevel = level
+    ? getRequiredVocabularyLevelToUnlock(level)
+    : null;
 
   const exercises = useMemo(
     () => generateVocabularyExercises(words, categoryId),
@@ -68,6 +78,9 @@ export function VocabularyCategoryView({
     return (
       <VocabularyCategoryLocked
         index={getVocabularyCategoryDisplayIndex(categoryId)}
+        reason={!levelUnlocked ? "level" : "window"}
+        level={level}
+        requiredLevel={requiredLevel}
       />
     );
   }
