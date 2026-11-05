@@ -2,6 +2,7 @@ export type TopicLessonExample = {
   en: string;
   tr: string;
   note?: string;
+  speakTr?: boolean;
 };
 
 export type TopicLessonExampleHeaders = {
@@ -14,6 +15,7 @@ export type TopicLessonExamplesLayout = "list" | "columns";
 export type TopicLessonSection = {
   subtopicId: string;
   title: string;
+  titleEn?: string;
   paragraphs: string[];
   examples?: TopicLessonExample[];
   examplesTitle?: string;
@@ -95,6 +97,8 @@ export type TopicExercise =
 
 export type TopicContent = {
   topicId: string;
+  /** Anlatım sayfasında ilerleme için gereken süre, dakika. Yazılmazsa 3 dakika kullanılır. */
+  viewMinutes?: number;
   lesson: TopicLesson;
   exercises: TopicExercise[];
   examExercises?: MultipleChoiceExercise[];

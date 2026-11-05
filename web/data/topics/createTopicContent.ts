@@ -203,6 +203,7 @@ export function createTopicContent(topic: DashboardTopic): TopicContent {
         return {
           subtopicId: subtopic.id,
           title: subtopic.title,
+          titleEn: subtopic.titleEx ?? topic.titleEx,
           paragraphs: [
             `"${subtopic.title}" başlığında ${topic.title} konusunun önemli noktalarını adım adım görürsün.`,
             `Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. ${topic.level} seviyesinde düzenli tekrar yeterlidir.`,
