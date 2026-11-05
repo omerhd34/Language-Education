@@ -3,6 +3,8 @@ export type TopicLessonExample = {
   tr: string;
   note?: string;
   speakTr?: boolean;
+  exampleEn?: string;
+  exampleTr?: string;
 };
 
 export type TopicLessonExampleHeaders = {
@@ -11,6 +13,16 @@ export type TopicLessonExampleHeaders = {
 };
 
 export type TopicLessonExamplesLayout = "list" | "columns";
+
+export type TopicLessonPart = {
+  id: string;
+  title: string;
+  titleEn?: string;
+  paragraphs: string[];
+  examples?: TopicLessonExample[];
+  examplesTitle?: string;
+  exampleHeaders?: TopicLessonExampleHeaders;
+};
 
 export type TopicLessonSection = {
   subtopicId: string;
@@ -23,6 +35,7 @@ export type TopicLessonSection = {
   examplesPerRow?: 2 | 3 | 4;
   examplesPerColumn?: number;
   exampleHeaders?: TopicLessonExampleHeaders;
+  parts?: TopicLessonPart[];
 };
 
 export type TopicLesson = {
