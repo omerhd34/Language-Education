@@ -26,7 +26,7 @@ type SpeechRateControlProps = {
 };
 
 export function SpeechRateControl({ className }: SpeechRateControlProps) {
-  const t = useTranslations("Vocabulary");
+  const t = useTranslations("Settings");
   const { rate, setRate } = useSpeechRate();
 
   return (

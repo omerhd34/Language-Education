@@ -13,7 +13,6 @@ import {
   useVocabularyLearnLimitReached,
   VocabularyLearnQuotaBanner,
 } from "@/components/features/vocabulary/VocabularyLearnQuotaBanner";
-import { SpeechRateControl } from "@/components/features/vocabulary/SpeechRateControl";
 import { VocabularyWordJumpNav } from "@/components/features/vocabulary/VocabularyWordJumpNav";
 import { LEARN_WORD_PERIOD_LIMIT } from "@/lib/vocabularyLimits";
 
@@ -84,7 +83,6 @@ export function VocabularyWordList({
   return (
     <div className="space-y-4">
       <VocabularyLearnQuotaBanner />
-      <SpeechRateControl />
       <VocabularyWordJumpNav words={words} />
 
       {isLoading ? (
