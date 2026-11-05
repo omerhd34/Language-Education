@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Card";
-import { getTopicTitleEn, type DashboardTopic } from "@/data/dashboardTopics";
+import type { DashboardTopic } from "@/data/dashboardTopics";
 import { useTopicProgress } from "@/hooks/useTopicProgress";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
@@ -27,10 +27,8 @@ type TopicCardProps = {
 export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
   const t = useTranslations("Dashboard");
   const progress = Math.min(100, Math.max(0, useTopicProgress(topic.id)));
-  const titleEn = getDistinctSecondaryTitle(
-    topic.title,
-    topic.titleEn ?? getTopicTitleEn(topic.id, topic.title),
-  );
+  const titleEng = getDistinctSecondaryTitle(topic.title, topic.titleEng);
+  const titleEx = getDistinctSecondaryTitle(topic.titleEng, topic.titleEx);
 
   return (
     <div
@@ -92,9 +90,14 @@ export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
 
           <div className="space-y-1">
             <CardTitle>{topic.title}</CardTitle>
-            {titleEn ? (
+            {titleEng ? (
               <CardDescription className="font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
-                {titleEn}
+                {titleEng}
+              </CardDescription>
+            ) : null}
+            {titleEx ? (
+              <CardDescription className="text-brand-600 dark:text-brand-300">
+                {titleEx}
               </CardDescription>
             ) : null}
           </div>

@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
+import { PanelimLoading } from "@/components/features/dashboard/PanelimLoading";
 import { QuizReadyNotificationWatcher } from "@/components/features/dashboard/QuizReadyNotificationWatcher";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useRouter } from "@/i18n/navigation";
@@ -26,13 +27,7 @@ export function PanelimGate({ children }: PanelimGateProps) {
 
   return (
     <>
-      {status === "unknown" ? (
-        <div className="flex min-h-[40vh] items-center justify-center p-6">
-          <p className="text-sm text-brand-600 dark:text-brand-400">
-            {t("loading")}
-          </p>
-        </div>
-      ) : null}
+      {status === "unknown" ? <PanelimLoading /> : null}
 
       {!ready && status !== "unknown" ? (
         <div className="mx-auto flex min-h-[50vh] max-w-md flex-col items-center justify-center gap-4 p-6 text-center">

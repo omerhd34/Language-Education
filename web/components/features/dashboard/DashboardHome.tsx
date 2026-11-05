@@ -3,11 +3,23 @@
 import { useTranslations } from "next-intl";
 import { DashboardStatsBar } from "@/components/features/dashboard/DashboardStatsBar";
 import { ProgressSection } from "@/components/features/dashboard/ProgressSection";
+import {
+  isSkillSection,
+  SkillSection,
+} from "@/components/features/dashboard/SkillSection";
 import { TopicsSection } from "@/components/features/dashboard/TopicsSection";
 import { VocabularySection } from "@/components/features/dashboard/VocabularySection";
 import { usePanelHash } from "@/hooks/usePanelHash";
 
-const READY_SECTIONS = new Set(["konular", "kelime", "ilerleme"]);
+const READY_SECTIONS = new Set([
+  "konular",
+  "kelime",
+  "ilerleme",
+  "listening",
+  "writing",
+  "speaking",
+  "reading",
+]);
 
 export function DashboardHome() {
   const t = useTranslations("Dashboard");
@@ -19,6 +31,7 @@ export function DashboardHome() {
       <DashboardStatsBar />
       {section === "konular" ? <TopicsSection /> : null}
       {section === "kelime" ? <VocabularySection /> : null}
+      {isSkillSection(section) ? <SkillSection skill={section} /> : null}
       {section === "ilerleme" ? <ProgressSection /> : null}
       {section !== "" && !READY_SECTIONS.has(section) ? (
         <section className="space-y-2" aria-labelledby="section-soon-heading">
