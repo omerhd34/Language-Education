@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Volume2 } from "lucide-react";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
-import { SpeechRateControl } from "@/components/features/vocabulary/SpeechRateControl";
 import { Button } from "@/components/ui/Button";
 import type { ListeningExercise } from "@/data/topics/types";
 import { speakText, stopSpeaking } from "@/lib/speakText";
@@ -211,7 +210,6 @@ export function ListeningExercises({
               <Volume2 className="size-4" aria-hidden />
               {t("playAudio")}
             </Button>
-            <SpeechRateControl />
           </div>
         </div>
 

@@ -6,11 +6,13 @@ import { useTranslations } from "next-intl";
 import { Clock } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
-  LESSON_VIEW_REQUIRED_MS,
   TOPIC_PROGRESS_CHANGED_EVENT,
   addTopicLessonViewMs,
+  getLessonViewRequiredMs,
   getTopicLessonViewMs,
-  getTopicProgressRecord,
+  getTopicLessonViewRemainingMs,
+  isLessonWaitWaivedByExam,
+  markTopicLessonViewed,
 } from "@/lib/topicProgressStorage";
 
 type TopicLessonProgressTrackerProps = {
@@ -26,25 +28,45 @@ function formatRemaining(ms: number): string {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
+function formatRequiredMinutes(ms: number): string {
+  const minutes = ms / 60_000;
+  const rounded = Math.round(minutes * 10) / 10;
+  const text = Number.isInteger(rounded) ? String(rounded) : rounded.toFixed(1);
+  return text.replace(".", ",");
+}
+
 export function TopicLessonProgressTracker({
   topicId,
 }: TopicLessonProgressTrackerProps) {
   const t = useTranslations("Topic");
+  const requiredMs = getLessonViewRequiredMs(topicId);
   const [earned, setEarned] = useState(false);
-  const [remainingMs, setRemainingMs] = useState(LESSON_VIEW_REQUIRED_MS);
+  const [waivedByExam, setWaivedByExam] = useState(false);
+  const [spentMs, setSpentMs] = useState(0);
+  const remainingMs = Math.max(0, requiredMs - spentMs);
 
   useEffect(() => {
-    const initial = getTopicProgressRecord(topicId);
-    if (initial.lessonViewed) {
+    const required = getLessonViewRequiredMs(topicId);
+
+    if (required <= 0) {
+      markTopicLessonViewed(topicId);
       setEarned(true);
-      setRemainingMs(0);
+      setSpentMs(0);
       return;
     }
 
+    const spent = getTopicLessonViewMs(topicId);
+    const initialRemaining = getTopicLessonViewRemainingMs(topicId);
+    setSpentMs(Math.min(spent, required));
+
+    if (initialRemaining <= 0) {
+      setWaivedByExam(isLessonWaitWaivedByExam(topicId));
+      setEarned(true);
+      return;
+    }
+
+    setWaivedByExam(false);
     setEarned(false);
-    setRemainingMs(
-      Math.max(0, LESSON_VIEW_REQUIRED_MS - getTopicLessonViewMs(topicId)),
-    );
 
     let lastTick = Date.now();
 
@@ -61,8 +83,7 @@ export function TopicLessonProgressTracker({
       }
 
       const done = addTopicLessonViewMs(topicId, delta);
-      const spent = getTopicLessonViewMs(topicId);
-      setRemainingMs(Math.max(0, LESSON_VIEW_REQUIRED_MS - spent));
+      setSpentMs(getTopicLessonViewMs(topicId));
       if (done) {
         setEarned(true);
       }
@@ -82,10 +103,11 @@ export function TopicLessonProgressTracker({
     }
 
     function onProgressEvent() {
-      const record = getTopicProgressRecord(topicId);
-      if (record.lessonViewed) {
+      const remaining = getTopicLessonViewRemainingMs(topicId);
+      if (remaining <= 0) {
+        setWaivedByExam(isLessonWaitWaivedByExam(topicId));
+        setSpentMs(getTopicLessonViewMs(topicId));
         setEarned(true);
-        setRemainingMs(0);
       }
     }
 
@@ -98,14 +120,18 @@ export function TopicLessonProgressTracker({
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener(TOPIC_PROGRESS_CHANGED_EVENT, onProgressEvent);
     };
-  }, [topicId]);
+  }, [topicId, requiredMs]);
 
   if (earned) {
     return (
       <Alert className="border-emerald-500/30 bg-emerald-500/10">
         <Clock aria-hidden />
         <AlertTitle>{t("lessonTimerDoneTitle")}</AlertTitle>
-        <AlertDescription>{t("lessonTimerDoneBody")}</AlertDescription>
+        <AlertDescription>
+          {waivedByExam
+            ? t("lessonTimerExamDoneBody")
+            : t("lessonTimerDoneBody")}
+        </AlertDescription>
       </Alert>
     );
   }
@@ -117,7 +143,7 @@ export function TopicLessonProgressTracker({
       <AlertDescription>
         {t("lessonTimerBody", {
           time: formatRemaining(remainingMs),
-          minutes: 3,
+          minutes: formatRequiredMinutes(requiredMs),
         })}
       </AlertDescription>
     </Alert>

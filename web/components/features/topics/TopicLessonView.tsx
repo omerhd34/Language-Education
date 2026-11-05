@@ -1,10 +1,12 @@
 import { getTranslations } from "next-intl/server";
+import { LessonSpeakButton } from "@/components/features/topics/LessonSpeakButton";
 import type {
   TopicLesson,
   TopicLessonExample,
   TopicLessonExampleHeaders,
   TopicLessonSection,
 } from "@/data/topics/types";
+import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 
 type TopicLessonViewProps = {
   lesson: TopicLesson;
@@ -56,15 +58,21 @@ function ExampleCells({
 }) {
   return (
     <>
-      <td className="px-3 py-2.5 text-sm font-medium text-brand-950 dark:text-brand-100">
-        {example.en}
+      <td className="px-3 py-2.5">
+        <span className="inline-flex items-center gap-1 text-sm font-medium text-brand-950 dark:text-brand-100">
+          {example.en}
+          <LessonSpeakButton text={example.en} />
+        </span>
       </td>
       <td
         className={`px-3 py-2.5 text-sm text-brand-600 dark:text-brand-300 ${
           withDivider ? "border-r border-border" : ""
         }`}
       >
-        <span>{example.tr}</span>
+        <span className="inline-flex items-center gap-1">
+          <span>{example.tr}</span>
+          {example.speakTr ? <LessonSpeakButton text={example.tr} /> : null}
+        </span>
         {example.note ? (
           <span className="mt-0.5 block text-xs text-brand-400">
             {example.note}
@@ -197,12 +205,14 @@ function ListExamples({
             key={`${example.en}-${example.tr}`}
             className="grid gap-1 bg-background/60 px-3 py-2.5 sm:grid-cols-[1fr_1fr] sm:gap-4 dark:bg-brand-950/40"
           >
-            <p className="text-sm font-medium text-brand-950 dark:text-brand-100">
+            <p className="inline-flex items-center gap-1 text-sm font-medium text-brand-950 dark:text-brand-100">
               {example.en}
+              <LessonSpeakButton text={example.en} />
             </p>
             <div>
-              <p className="text-sm text-brand-600 dark:text-brand-300">
-                {example.tr}
+              <p className="inline-flex items-center gap-1 text-sm text-brand-600 dark:text-brand-300">
+                <span>{example.tr}</span>
+                {example.speakTr ? <LessonSpeakButton text={example.tr} /> : null}
               </p>
               {example.note ? (
                 <p className="mt-0.5 text-xs text-brand-400">{example.note}</p>
@@ -262,34 +272,48 @@ export async function TopicLessonView({ lesson }: TopicLessonViewProps) {
         {lesson.intro}
       </p>
 
-      {lesson.sections.map((section) => (
-        <section
-          key={section.subtopicId}
-          id={`section-${section.subtopicId}`}
-          aria-labelledby={`heading-${section.subtopicId}`}
-          className="dashboard-panel scroll-mt-24 space-y-4"
-        >
-          <h2
-            id={`heading-${section.subtopicId}`}
-            className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100"
+      {lesson.sections.map((section) => {
+        const titleEn = getDistinctSecondaryTitle(
+          section.title,
+          section.titleEn,
+        );
+
+        return (
+          <section
+            key={section.subtopicId}
+            id={`section-${section.subtopicId}`}
+            aria-labelledby={`heading-${section.subtopicId}`}
+            className="dashboard-panel scroll-mt-24 space-y-4"
           >
-            {section.title}
-          </h2>
-
-          <div className="space-y-3">
-            {section.paragraphs.map((paragraph) => (
-              <p
-                key={paragraph}
-                className="text-sm leading-relaxed text-brand-700 dark:text-brand-300"
+            <div className="space-y-1">
+              <h2
+                id={`heading-${section.subtopicId}`}
+                className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100"
               >
-                {paragraph}
-              </p>
-            ))}
-          </div>
+                {section.title}
+              </h2>
+              {titleEn ? (
+                <p className="text-sm font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
+                  {titleEn}
+                </p>
+              ) : null}
+            </div>
 
-          <SectionExamples section={section} defaultTitle={t("examples")} />
-        </section>
-      ))}
+            <div className="space-y-3">
+              {section.paragraphs.map((paragraph) => (
+                <p
+                  key={paragraph}
+                  className="text-sm leading-relaxed text-brand-700 dark:text-brand-300"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            <SectionExamples section={section} defaultTitle={t("examples")} />
+          </section>
+        );
+      })}
     </div>
   );
 }

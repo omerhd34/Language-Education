@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ChevronDown } from "lucide-react";
 import type { CefrLevel } from "@/data/dashboardTopics";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Link } from "@/i18n/navigation";
@@ -17,7 +17,8 @@ export type TopicSectionNavItem = {
 type TopicPageHeaderProps = {
   topicId: string;
   title: string;
-  titleEn?: string;
+  titleEng?: string;
+  titleEx?: string;
   level: CefrLevel;
   index: number;
   activeTab: "lesson" | "exercises" | "exam";
@@ -28,7 +29,7 @@ type TopicPageHeaderProps = {
 export function TopicPageHeader({
   topicId,
   title,
-  titleEn,
+  titleEng,
   level,
   index,
   activeTab,
@@ -36,7 +37,7 @@ export function TopicPageHeader({
   isExam = false,
 }: TopicPageHeaderProps) {
   const t = useTranslations("Topic");
-  const secondaryTitle = getDistinctSecondaryTitle(title, titleEn);
+  const englishTitle = getDistinctSecondaryTitle(title, titleEng);
 
   const lessonHref = `/panelim/konular/${topicId}/anlatim`;
   const exercisesHref = `/panelim/konular/${topicId}/alistirmalar`;
@@ -69,9 +70,9 @@ export function TopicPageHeader({
         <h1 className="font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-3xl dark:text-brand-100">
           {title}
         </h1>
-        {secondaryTitle ? (
+        {englishTitle ? (
           <p className="text-base font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
-            {secondaryTitle}
+            {englishTitle}
           </p>
         ) : null}
       </div>
@@ -128,9 +129,10 @@ export function TopicPageHeader({
                 <a
                   key={section.id}
                   href={`#section-${section.id}`}
-                  className="rounded-md bg-brand-100/70 px-2.5 py-1.5 text-xs font-medium text-brand-700 transition-colors hover:bg-sky-500/15 hover:text-brand-950 dark:bg-brand-900/50 dark:text-brand-300 dark:hover:bg-sky-500/20 dark:hover:text-brand-100"
+                  className="inline-flex items-center gap-1 rounded-md bg-brand-100/70 px-2.5 py-1.5 text-xs font-medium text-brand-700 transition-colors hover:bg-sky-500/15 hover:text-brand-950 dark:bg-brand-900/50 dark:text-brand-300 dark:hover:bg-sky-500/20 dark:hover:text-brand-100"
                 >
                   {section.title}
+                  <ChevronDown className="size-3.5 shrink-0" aria-hidden />
                 </a>
               ))}
             </nav>
