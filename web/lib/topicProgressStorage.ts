@@ -4,7 +4,18 @@ import type { ExerciseType } from "@/data/topics/types";
 const STORAGE_KEY = "pylmor-topic-progress";
 export const TOPIC_PROGRESS_CHANGED_EVENT = "pylmor:topic-progress-changed";
 
-export const LESSON_VIEW_REQUIRED_MS = 3 * 60 * 1000;
+const DEFAULT_LESSON_VIEW_MINUTES = 3;
+
+export function getLessonViewRequiredMs(topicId: string): number {
+  const minutes = getTopicContent(topicId)?.viewMinutes;
+  if (minutes === undefined) {
+    return DEFAULT_LESSON_VIEW_MINUTES * 60 * 1000;
+  }
+  if (!Number.isFinite(minutes) || minutes < 0) {
+    return DEFAULT_LESSON_VIEW_MINUTES * 60 * 1000;
+  }
+  return Math.round(minutes * 60 * 1000);
+}
 
 export type TopicProgressRecord = {
   lessonViewed?: boolean;
@@ -71,36 +82,36 @@ export function getTopicProgressRecord(topicId: string): TopicProgressRecord {
 }
 
 export function getTopicLessonViewMs(topicId: string): number {
+  const requiredMs = getLessonViewRequiredMs(topicId);
   const record = getTopicProgressRecord(topicId);
-  if (isLessonProgressEarned(record)) {
-    return LESSON_VIEW_REQUIRED_MS;
+  if (isLessonProgressEarned(record, requiredMs)) {
+    return requiredMs;
   }
   return Math.max(0, record.lessonViewMs ?? 0);
 }
 
 export function getTopicLessonViewRemainingMs(topicId: string): number {
-  return Math.max(0, LESSON_VIEW_REQUIRED_MS - getTopicLessonViewMs(topicId));
+  const requiredMs = getLessonViewRequiredMs(topicId);
+  return Math.max(0, requiredMs - getTopicLessonViewMs(topicId));
 }
 
 export function addTopicLessonViewMs(
   topicId: string,
   deltaMs: number,
 ): boolean {
+  const requiredMs = getLessonViewRequiredMs(topicId);
   if (deltaMs <= 0) {
-    return isLessonProgressEarned(getTopicProgressRecord(topicId));
+    return isLessonProgressEarned(getTopicProgressRecord(topicId), requiredMs);
   }
 
   const all = readAll();
   const current = normalizeRecord(all[topicId] ?? {});
-  if (isLessonProgressEarned(current)) {
+  if (isLessonProgressEarned(current, requiredMs)) {
     return true;
   }
 
-  const nextMs = Math.min(
-    LESSON_VIEW_REQUIRED_MS,
-    (current.lessonViewMs ?? 0) + deltaMs,
-  );
-  const lessonViewed = nextMs >= LESSON_VIEW_REQUIRED_MS;
+  const nextMs = Math.min(requiredMs, (current.lessonViewMs ?? 0) + deltaMs);
+  const lessonViewed = requiredMs <= 0 || nextMs >= requiredMs;
 
   writeAll({
     ...all,
@@ -115,9 +126,10 @@ export function addTopicLessonViewMs(
 }
 
 export function markTopicLessonViewed(topicId: string): void {
+  const requiredMs = getLessonViewRequiredMs(topicId);
   const all = readAll();
   const current = normalizeRecord(all[topicId] ?? {});
-  if (isLessonProgressEarned(current)) {
+  if (isLessonProgressEarned(current, requiredMs)) {
     return;
   }
   writeAll({
@@ -125,7 +137,7 @@ export function markTopicLessonViewed(topicId: string): void {
     [topicId]: {
       ...current,
       lessonViewed: true,
-      lessonViewMs: LESSON_VIEW_REQUIRED_MS,
+      lessonViewMs: requiredMs,
     },
   });
 }
@@ -207,15 +219,40 @@ function topicHasExam(topicId: string): boolean {
   return content.exercises.some((item) => item.type === "multiple_choice");
 }
 
-function isLessonProgressEarned(record: TopicProgressRecord): boolean {
-  return (
-    record.lessonViewed === true &&
-    (record.lessonViewMs ?? 0) >= LESSON_VIEW_REQUIRED_MS
-  );
+function hasLessonViewTime(
+  record: TopicProgressRecord,
+  requiredMs: number,
+): boolean {
+  if (requiredMs <= 0) {
+    return record.lessonViewed === true;
+  }
+  return (record.lessonViewMs ?? 0) >= requiredMs;
+}
+
+function isLessonProgressEarned(
+  record: TopicProgressRecord,
+  requiredMs: number,
+): boolean {
+  if (record.examPassed === true) {
+    return true;
+  }
+  return hasLessonViewTime(record, requiredMs);
+}
+
+export function isLessonWaitWaivedByExam(topicId: string): boolean {
+  const record = getTopicProgressRecord(topicId);
+  if (record.examPassed !== true) {
+    return false;
+  }
+  return !hasLessonViewTime(record, getLessonViewRequiredMs(topicId));
 }
 
 export function computeTopicProgressPercent(topicId: string): number {
   const record = getTopicProgressRecord(topicId);
+  if (record.examPassed === true) {
+    return 100;
+  }
+
   const availableTypes = getAvailableExerciseTypes(topicId);
   const hasExam = topicHasExam(topicId);
   const totalParts = 1 + availableTypes.length + (hasExam ? 1 : 0);
@@ -225,7 +262,7 @@ export function computeTopicProgressPercent(topicId: string): number {
   }
 
   let done = 0;
-  if (isLessonProgressEarned(record)) {
+  if (isLessonProgressEarned(record, getLessonViewRequiredMs(topicId))) {
     done += 1;
   }
 
