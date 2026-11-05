@@ -1,225 +1,163 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent38: TopicContent = {
-  "topicId": "38",
-  "lesson": {
-    "intro": "\"Basit Gelecek (Will)\" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "38",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"İleri Düzey İsimleştirme" konusu C2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "38-1",
-        "title": "Will - Olumlu ve Olumsuz",
-        "paragraphs": [
-          "\"Will - Olumlu ve Olumsuz\" başlığında Basit Gelecek (Will) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "38-1",
+        title: "İleri Düzey İsimleştirme",
+        titleEn: "Advanced Nominalization",
+        paragraphs: [
+          '"İleri Düzey İsimleştirme" başlığında İleri Düzey İsimleştirme konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. C2 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "This is a useful example.",
-            "tr": "Bu faydalı bir örnek.",
-            "note": "Will - Olumlu ve Olumsuz — örnek 1"
+            en: "This is a useful example.",
+            tr: "Bu faydalı bir örnek.",
+            note: "İleri Düzey İsimleştirme — örnek 1",
           },
           {
-            "en": "Topic focus: Basit Gelecek (Will)",
-            "tr": "Konu odağı: Basit Gelecek (Will)"
+            en: "Topic focus: İleri Düzey İsimleştirme",
+            tr: "Konu odağı: İleri Düzey İsimleştirme",
           },
           {
-            "en": "Subtopic: Will - Olumlu ve Olumsuz",
-            "tr": "Alt konu: Will - Olumlu ve Olumsuz"
-          }
-        ]
+            en: "Subtopic: İleri Düzey İsimleştirme",
+            tr: "Alt konu: İleri Düzey İsimleştirme",
+          },
+        ],
       },
-      {
-        "subtopicId": "38-2",
-        "title": "Will - Soru ve Cevap",
-        "paragraphs": [
-          "\"Will - Soru ve Cevap\" başlığında Basit Gelecek (Will) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Can you repeat that?",
-            "tr": "Tekrar eder misin?",
-            "note": "Will - Soru ve Cevap — örnek 2"
-          },
-          {
-            "en": "Topic focus: Basit Gelecek (Will)",
-            "tr": "Konu odağı: Basit Gelecek (Will)"
-          },
-          {
-            "en": "Subtopic: Will - Soru ve Cevap",
-            "tr": "Alt konu: Will - Soru ve Cevap"
-          }
-        ]
-      },
-      {
-        "subtopicId": "38-3",
-        "title": "Karar, Tahmin ve Söz Verme",
-        "paragraphs": [
-          "\"Karar, Tahmin ve Söz Verme\" başlığında Basit Gelecek (Will) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "I use this every day.",
-            "tr": "Bunu her gün kullanırım.",
-            "note": "Karar, Tahmin ve Söz Verme — örnek 3"
-          },
-          {
-            "en": "Topic focus: Basit Gelecek (Will)",
-            "tr": "Konu odağı: Basit Gelecek (Will)"
-          },
-          {
-            "en": "Subtopic: Karar, Tahmin ve Söz Verme",
-            "tr": "Alt konu: Karar, Tahmin ve Söz Verme"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "38-ex-38-1-1",
-      "subtopicId": "38-1",
-      "type": "multiple_choice",
-      "prompt": "\"Will - Olumlu ve Olumsuz\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Basit Gelecek (Will)",
+      id: "38-ex-38-1-1",
+      subtopicId: "38-1",
+      type: "multiple_choice",
+      prompt: '"İleri Düzey İsimleştirme" alt konusu hangi ana konuya aittir?',
+      options: [
+        "İleri Düzey İsimleştirme",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Basit Gelecek (Will)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation: 'Bu alt konu "İleri Düzey İsimleştirme" başlığı altındadır.',
     },
     {
-      "id": "38-ex-38-1-2",
-      "subtopicId": "38-1",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Will - Olumlu ve Olumsuz\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "38-ex-38-1-2",
+      subtopicId: "38-1",
+      type: "multiple_choice",
+      prompt:
+        'C2 seviyesindeki "İleri Düzey İsimleştirme" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "38-fb-38-1-1",
-      "subtopicId": "38-1",
-      "type": "fill_blank",
-      "prompt": "\"Will - Olumlu ve Olumsuz\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
+      id: "38-fb-38-1-1",
+      subtopicId: "38-1",
+      type: "fill_blank",
+      prompt: '"İleri Düzey İsimleştirme" konusu _____ seviyesine uygundur.',
+      answer: "C2",
+      explanation: "Bu konu C2 seviyesindedir.",
     },
     {
-      "id": "38-ex-38-2-1",
-      "subtopicId": "38-2",
-      "type": "multiple_choice",
-      "prompt": "\"Will - Soru ve Cevap\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Basit Gelecek (Will)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Basit Gelecek (Will)\" başlığı altındadır."
-    },
-    {
-      "id": "38-ex-38-2-2",
-      "subtopicId": "38-2",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Will - Soru ve Cevap\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "38-fb-38-2-1",
-      "subtopicId": "38-2",
-      "type": "fill_blank",
-      "prompt": "\"Will - Soru ve Cevap\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "38-ex-38-3-1",
-      "subtopicId": "38-3",
-      "type": "multiple_choice",
-      "prompt": "\"Karar, Tahmin ve Söz Verme\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Basit Gelecek (Will)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Basit Gelecek (Will)\" başlığı altındadır."
-    },
-    {
-      "id": "38-ex-38-3-2",
-      "subtopicId": "38-3",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Karar, Tahmin ve Söz Verme\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "38-fb-38-3-1",
-      "subtopicId": "38-3",
-      "type": "fill_blank",
-      "prompt": "\"Karar, Tahmin ve Söz Verme\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "38-cw-1",
-      "subtopicId": "38-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "38-cw-1",
+      subtopicId: "38-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-38-38-1-1",
+      subtopicId: "38-1",
+      type: "multiple_choice",
+      prompt: '"İleri Düzey İsimleştirme" alt konusu hangi ana konuya aittir?',
+      options: [
+        "İleri Düzey İsimleştirme",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation: 'Bu alt konu "İleri Düzey İsimleştirme" başlığı altındadır.',
+    },
+    {
+      id: "exam-38-38-1-2",
+      subtopicId: "38-1",
+      type: "multiple_choice",
+      prompt:
+        'C2 seviyesindeki "İleri Düzey İsimleştirme" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-38-38-1-3",
+      subtopicId: "38-1",
+      type: "multiple_choice",
+      prompt: '"İleri Düzey İsimleştirme" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-38-level",
+      subtopicId: "38-1",
+      type: "multiple_choice",
+      prompt: '"İleri Düzey İsimleştirme" konusu hangi seviyeye aittir?',
+      options: ["C2", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu C2 seviyesindedir.",
+    },
+  ],
 };

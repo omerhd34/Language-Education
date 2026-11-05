@@ -1,225 +1,170 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent37: TopicContent = {
-  "topicId": "37",
-  "lesson": {
-    "intro": "\"Yakın Gelecek (Be going to)\" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "37",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" konusu C2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "37-1",
-        "title": "Be going to - Olumlu",
-        "paragraphs": [
-          "\"Be going to - Olumlu\" başlığında Yakın Gelecek (Be going to) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "37-1",
+        title: "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
+        titleEn: "Fixed Subjunctive & Archaic Expressions",
+        paragraphs: [
+          '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" başlığında Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. C2 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "Let's practice together.",
-            "tr": "Birlikte pratik yapalım.",
-            "note": "Be going to - Olumlu — örnek 1"
+            en: "Let's practice together.",
+            tr: "Birlikte pratik yapalım.",
+            note: "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler — örnek 1",
           },
           {
-            "en": "Topic focus: Yakın Gelecek (Be going to)",
-            "tr": "Konu odağı: Yakın Gelecek (Be going to)"
+            en: "Topic focus: Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
+            tr: "Konu odağı: Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
           },
           {
-            "en": "Subtopic: Be going to - Olumlu",
-            "tr": "Alt konu: Be going to - Olumlu"
-          }
-        ]
+            en: "Subtopic: Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
+            tr: "Alt konu: Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
+          },
+        ],
       },
-      {
-        "subtopicId": "37-2",
-        "title": "Be going to - Olumsuz",
-        "paragraphs": [
-          "\"Be going to - Olumsuz\" başlığında Yakın Gelecek (Be going to) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "This is a useful example.",
-            "tr": "Bu faydalı bir örnek.",
-            "note": "Be going to - Olumsuz — örnek 2"
-          },
-          {
-            "en": "Topic focus: Yakın Gelecek (Be going to)",
-            "tr": "Konu odağı: Yakın Gelecek (Be going to)"
-          },
-          {
-            "en": "Subtopic: Be going to - Olumsuz",
-            "tr": "Alt konu: Be going to - Olumsuz"
-          }
-        ]
-      },
-      {
-        "subtopicId": "37-3",
-        "title": "Be going to - Soru ve Cevap",
-        "paragraphs": [
-          "\"Be going to - Soru ve Cevap\" başlığında Yakın Gelecek (Be going to) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Can you repeat that?",
-            "tr": "Tekrar eder misin?",
-            "note": "Be going to - Soru ve Cevap — örnek 3"
-          },
-          {
-            "en": "Topic focus: Yakın Gelecek (Be going to)",
-            "tr": "Konu odağı: Yakın Gelecek (Be going to)"
-          },
-          {
-            "en": "Subtopic: Be going to - Soru ve Cevap",
-            "tr": "Alt konu: Be going to - Soru ve Cevap"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "37-ex-37-1-1",
-      "subtopicId": "37-1",
-      "type": "multiple_choice",
-      "prompt": "\"Be going to - Olumlu\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Yakın Gelecek (Be going to)",
+      id: "37-ex-37-1-1",
+      subtopicId: "37-1",
+      type: "multiple_choice",
+      prompt:
+        '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Yakın Gelecek (Be going to)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" başlığı altındadır.',
     },
     {
-      "id": "37-ex-37-1-2",
-      "subtopicId": "37-1",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Be going to - Olumlu\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "37-ex-37-1-2",
+      subtopicId: "37-1",
+      type: "multiple_choice",
+      prompt:
+        'C2 seviyesindeki "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "37-fb-37-1-1",
-      "subtopicId": "37-1",
-      "type": "fill_blank",
-      "prompt": "\"Be going to - Olumlu\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
+      id: "37-fb-37-1-1",
+      subtopicId: "37-1",
+      type: "fill_blank",
+      prompt:
+        '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" konusu _____ seviyesine uygundur.',
+      answer: "C2",
+      explanation: "Bu konu C2 seviyesindedir.",
     },
     {
-      "id": "37-ex-37-2-1",
-      "subtopicId": "37-2",
-      "type": "multiple_choice",
-      "prompt": "\"Be going to - Olumsuz\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Yakın Gelecek (Be going to)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Yakın Gelecek (Be going to)\" başlığı altındadır."
-    },
-    {
-      "id": "37-ex-37-2-2",
-      "subtopicId": "37-2",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Be going to - Olumsuz\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "37-fb-37-2-1",
-      "subtopicId": "37-2",
-      "type": "fill_blank",
-      "prompt": "\"Be going to - Olumsuz\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "37-ex-37-3-1",
-      "subtopicId": "37-3",
-      "type": "multiple_choice",
-      "prompt": "\"Be going to - Soru ve Cevap\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Yakın Gelecek (Be going to)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Yakın Gelecek (Be going to)\" başlığı altındadır."
-    },
-    {
-      "id": "37-ex-37-3-2",
-      "subtopicId": "37-3",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Be going to - Soru ve Cevap\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "37-fb-37-3-1",
-      "subtopicId": "37-3",
-      "type": "fill_blank",
-      "prompt": "\"Be going to - Soru ve Cevap\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "37-cw-1",
-      "subtopicId": "37-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "37-cw-1",
+      subtopicId: "37-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-37-37-1-1",
+      subtopicId: "37-1",
+      type: "multiple_choice",
+      prompt:
+        '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" başlığı altındadır.',
+    },
+    {
+      id: "exam-37-37-1-2",
+      subtopicId: "37-1",
+      type: "multiple_choice",
+      prompt:
+        'C2 seviyesindeki "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-37-37-1-3",
+      subtopicId: "37-1",
+      type: "multiple_choice",
+      prompt:
+        '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-37-level",
+      subtopicId: "37-1",
+      type: "multiple_choice",
+      prompt:
+        '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" konusu hangi seviyeye aittir?',
+      options: ["C2", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu C2 seviyesindedir.",
+    },
+  ],
 };

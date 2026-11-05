@@ -1,225 +1,170 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent33: TopicContent = {
-  "topicId": "33",
-  "lesson": {
-    "intro": "\"Karşılaştırma Dereceleri (Comparatives)\" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "33",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"İleri Düzey Ortaç / Ulaç Cümlecikleri" konusu C1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "33-1",
-        "title": "Kısa Sıfatlarda -er",
-        "paragraphs": [
-          "\"Kısa Sıfatlarda -er\" başlığında Karşılaştırma Dereceleri (Comparatives) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "33-1",
+        title: "İleri Düzey Ortaç / Ulaç Cümlecikleri",
+        titleEn: "Advanced Participle Clauses",
+        paragraphs: [
+          '"İleri Düzey Ortaç / Ulaç Cümlecikleri" başlığında İleri Düzey Ortaç / Ulaç Cümlecikleri konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. C1 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "Can you repeat that?",
-            "tr": "Tekrar eder misin?",
-            "note": "Kısa Sıfatlarda -er — örnek 1"
+            en: "Can you repeat that?",
+            tr: "Tekrar eder misin?",
+            note: "İleri Düzey Ortaç / Ulaç Cümlecikleri — örnek 1",
           },
           {
-            "en": "Topic focus: Karşılaştırma Dereceleri (Comparatives)",
-            "tr": "Konu odağı: Karşılaştırma Dereceleri (Comparatives)"
+            en: "Topic focus: İleri Düzey Ortaç / Ulaç Cümlecikleri",
+            tr: "Konu odağı: İleri Düzey Ortaç / Ulaç Cümlecikleri",
           },
           {
-            "en": "Subtopic: Kısa Sıfatlarda -er",
-            "tr": "Alt konu: Kısa Sıfatlarda -er"
-          }
-        ]
+            en: "Subtopic: İleri Düzey Ortaç / Ulaç Cümlecikleri",
+            tr: "Alt konu: İleri Düzey Ortaç / Ulaç Cümlecikleri",
+          },
+        ],
       },
-      {
-        "subtopicId": "33-2",
-        "title": "Uzun Sıfatlarda more",
-        "paragraphs": [
-          "\"Uzun Sıfatlarda more\" başlığında Karşılaştırma Dereceleri (Comparatives) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "I use this every day.",
-            "tr": "Bunu her gün kullanırım.",
-            "note": "Uzun Sıfatlarda more — örnek 2"
-          },
-          {
-            "en": "Topic focus: Karşılaştırma Dereceleri (Comparatives)",
-            "tr": "Konu odağı: Karşılaştırma Dereceleri (Comparatives)"
-          },
-          {
-            "en": "Subtopic: Uzun Sıfatlarda more",
-            "tr": "Alt konu: Uzun Sıfatlarda more"
-          }
-        ]
-      },
-      {
-        "subtopicId": "33-3",
-        "title": "Düzensiz Karşılaştırmalar ve as ... as",
-        "paragraphs": [
-          "\"Düzensiz Karşılaştırmalar ve as ... as\" başlığında Karşılaştırma Dereceleri (Comparatives) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "That sounds correct.",
-            "tr": "Kulağa doğru geliyor.",
-            "note": "Düzensiz Karşılaştırmalar ve as ... as — örnek 3"
-          },
-          {
-            "en": "Topic focus: Karşılaştırma Dereceleri (Comparatives)",
-            "tr": "Konu odağı: Karşılaştırma Dereceleri (Comparatives)"
-          },
-          {
-            "en": "Subtopic: Düzensiz Karşılaştırmalar ve as ... as",
-            "tr": "Alt konu: Düzensiz Karşılaştırmalar ve as ... as"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "33-ex-33-1-1",
-      "subtopicId": "33-1",
-      "type": "multiple_choice",
-      "prompt": "\"Kısa Sıfatlarda -er\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Karşılaştırma Dereceleri (Comparatives)",
+      id: "33-ex-33-1-1",
+      subtopicId: "33-1",
+      type: "multiple_choice",
+      prompt:
+        '"İleri Düzey Ortaç / Ulaç Cümlecikleri" alt konusu hangi ana konuya aittir?',
+      options: [
+        "İleri Düzey Ortaç / Ulaç Cümlecikleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Karşılaştırma Dereceleri (Comparatives)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "İleri Düzey Ortaç / Ulaç Cümlecikleri" başlığı altındadır.',
     },
     {
-      "id": "33-ex-33-1-2",
-      "subtopicId": "33-1",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Kısa Sıfatlarda -er\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "33-ex-33-1-2",
+      subtopicId: "33-1",
+      type: "multiple_choice",
+      prompt:
+        'C1 seviyesindeki "İleri Düzey Ortaç / Ulaç Cümlecikleri" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "33-fb-33-1-1",
-      "subtopicId": "33-1",
-      "type": "fill_blank",
-      "prompt": "\"Kısa Sıfatlarda -er\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
+      id: "33-fb-33-1-1",
+      subtopicId: "33-1",
+      type: "fill_blank",
+      prompt:
+        '"İleri Düzey Ortaç / Ulaç Cümlecikleri" konusu _____ seviyesine uygundur.',
+      answer: "C1",
+      explanation: "Bu konu C1 seviyesindedir.",
     },
     {
-      "id": "33-ex-33-2-1",
-      "subtopicId": "33-2",
-      "type": "multiple_choice",
-      "prompt": "\"Uzun Sıfatlarda more\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Karşılaştırma Dereceleri (Comparatives)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Karşılaştırma Dereceleri (Comparatives)\" başlığı altındadır."
-    },
-    {
-      "id": "33-ex-33-2-2",
-      "subtopicId": "33-2",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Uzun Sıfatlarda more\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "33-fb-33-2-1",
-      "subtopicId": "33-2",
-      "type": "fill_blank",
-      "prompt": "\"Uzun Sıfatlarda more\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "33-ex-33-3-1",
-      "subtopicId": "33-3",
-      "type": "multiple_choice",
-      "prompt": "\"Düzensiz Karşılaştırmalar ve as ... as\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Karşılaştırma Dereceleri (Comparatives)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Karşılaştırma Dereceleri (Comparatives)\" başlığı altındadır."
-    },
-    {
-      "id": "33-ex-33-3-2",
-      "subtopicId": "33-3",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Düzensiz Karşılaştırmalar ve as ... as\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "33-fb-33-3-1",
-      "subtopicId": "33-3",
-      "type": "fill_blank",
-      "prompt": "\"Düzensiz Karşılaştırmalar ve as ... as\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "33-cw-1",
-      "subtopicId": "33-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "33-cw-1",
+      subtopicId: "33-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-33-33-1-1",
+      subtopicId: "33-1",
+      type: "multiple_choice",
+      prompt:
+        '"İleri Düzey Ortaç / Ulaç Cümlecikleri" alt konusu hangi ana konuya aittir?',
+      options: [
+        "İleri Düzey Ortaç / Ulaç Cümlecikleri",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "İleri Düzey Ortaç / Ulaç Cümlecikleri" başlığı altındadır.',
+    },
+    {
+      id: "exam-33-33-1-2",
+      subtopicId: "33-1",
+      type: "multiple_choice",
+      prompt:
+        'C1 seviyesindeki "İleri Düzey Ortaç / Ulaç Cümlecikleri" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-33-33-1-3",
+      subtopicId: "33-1",
+      type: "multiple_choice",
+      prompt:
+        '"İleri Düzey Ortaç / Ulaç Cümlecikleri" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-33-level",
+      subtopicId: "33-1",
+      type: "multiple_choice",
+      prompt:
+        '"İleri Düzey Ortaç / Ulaç Cümlecikleri" konusu hangi seviyeye aittir?',
+      options: ["C1", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu C1 seviyesindedir.",
+    },
+  ],
 };

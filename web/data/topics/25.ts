@@ -1,225 +1,170 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent25: TopicContent = {
-  "topicId": "25",
-  "lesson": {
-    "intro": "\"Temel Edatlar (From / To / With / Without)\" konusu A1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "25",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" konusu B2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "25-1",
-        "title": "From ve To",
-        "paragraphs": [
-          "\"From ve To\" başlığında Temel Edatlar (From / To / With / Without) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "25-1",
+        title: "Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
+        titleEn: "Past Perfect Continuous & Future Perfect",
+        paragraphs: [
+          "\"Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman\" başlığında Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman konusunun önemli noktalarını adım adım görürsün.",
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. B2 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "Let's practice together.",
-            "tr": "Birlikte pratik yapalım.",
-            "note": "From ve To — örnek 1"
+            en: "Let's practice together.",
+            tr: "Birlikte pratik yapalım.",
+            note: "Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman — örnek 1",
           },
           {
-            "en": "Topic focus: Temel Edatlar (From / To / With / Without)",
-            "tr": "Konu odağı: Temel Edatlar (From / To / With / Without)"
+            en: "Topic focus: Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
+            tr: "Konu odağı: Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
           },
           {
-            "en": "Subtopic: From ve To",
-            "tr": "Alt konu: From ve To"
-          }
-        ]
+            en: "Subtopic: Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
+            tr: "Alt konu: Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
+          },
+        ],
       },
-      {
-        "subtopicId": "25-2",
-        "title": "With ve Without",
-        "paragraphs": [
-          "\"With ve Without\" başlığında Temel Edatlar (From / To / With / Without) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "This is a useful example.",
-            "tr": "Bu faydalı bir örnek.",
-            "note": "With ve Without — örnek 2"
-          },
-          {
-            "en": "Topic focus: Temel Edatlar (From / To / With / Without)",
-            "tr": "Konu odağı: Temel Edatlar (From / To / With / Without)"
-          },
-          {
-            "en": "Subtopic: With ve Without",
-            "tr": "Alt konu: With ve Without"
-          }
-        ]
-      },
-      {
-        "subtopicId": "25-3",
-        "title": "Edatlarla Karışık Alıştırma",
-        "paragraphs": [
-          "\"Edatlarla Karışık Alıştırma\" başlığında Temel Edatlar (From / To / With / Without) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Can you repeat that?",
-            "tr": "Tekrar eder misin?",
-            "note": "Edatlarla Karışık Alıştırma — örnek 3"
-          },
-          {
-            "en": "Topic focus: Temel Edatlar (From / To / With / Without)",
-            "tr": "Konu odağı: Temel Edatlar (From / To / With / Without)"
-          },
-          {
-            "en": "Subtopic: Edatlarla Karışık Alıştırma",
-            "tr": "Alt konu: Edatlarla Karışık Alıştırma"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "25-ex-25-1-1",
-      "subtopicId": "25-1",
-      "type": "multiple_choice",
-      "prompt": "\"From ve To\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Temel Edatlar (From / To / With / Without)",
+      id: "25-ex-25-1-1",
+      subtopicId: "25-1",
+      type: "multiple_choice",
+      prompt:
+        '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Temel Edatlar (From / To / With / Without)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" başlığı altındadır.',
     },
     {
-      "id": "25-ex-25-1-2",
-      "subtopicId": "25-1",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"From ve To\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "25-ex-25-1-2",
+      subtopicId: "25-1",
+      type: "multiple_choice",
+      prompt:
+        'B2 seviyesindeki "Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "25-fb-25-1-1",
-      "subtopicId": "25-1",
-      "type": "fill_blank",
-      "prompt": "\"From ve To\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
+      id: "25-fb-25-1-1",
+      subtopicId: "25-1",
+      type: "fill_blank",
+      prompt:
+        '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" konusu _____ seviyesine uygundur.',
+      answer: "B2",
+      explanation: "Bu konu B2 seviyesindedir.",
     },
     {
-      "id": "25-ex-25-2-1",
-      "subtopicId": "25-2",
-      "type": "multiple_choice",
-      "prompt": "\"With ve Without\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Temel Edatlar (From / To / With / Without)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Temel Edatlar (From / To / With / Without)\" başlığı altındadır."
-    },
-    {
-      "id": "25-ex-25-2-2",
-      "subtopicId": "25-2",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"With ve Without\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "25-fb-25-2-1",
-      "subtopicId": "25-2",
-      "type": "fill_blank",
-      "prompt": "\"With ve Without\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "25-ex-25-3-1",
-      "subtopicId": "25-3",
-      "type": "multiple_choice",
-      "prompt": "\"Edatlarla Karışık Alıştırma\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Temel Edatlar (From / To / With / Without)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Temel Edatlar (From / To / With / Without)\" başlığı altındadır."
-    },
-    {
-      "id": "25-ex-25-3-2",
-      "subtopicId": "25-3",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Edatlarla Karışık Alıştırma\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "25-fb-25-3-1",
-      "subtopicId": "25-3",
-      "type": "fill_blank",
-      "prompt": "\"Edatlarla Karışık Alıştırma\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "25-cw-1",
-      "subtopicId": "25-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "25-cw-1",
+      subtopicId: "25-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-25-25-1-1",
+      subtopicId: "25-1",
+      type: "multiple_choice",
+      prompt:
+        '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" başlığı altındadır.',
+    },
+    {
+      id: "exam-25-25-1-2",
+      subtopicId: "25-1",
+      type: "multiple_choice",
+      prompt:
+        'B2 seviyesindeki "Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-25-25-1-3",
+      subtopicId: "25-1",
+      type: "multiple_choice",
+      prompt:
+        '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-25-level",
+      subtopicId: "25-1",
+      type: "multiple_choice",
+      prompt:
+        '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" konusu hangi seviyeye aittir?',
+      options: ["B2", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu B2 seviyesindedir.",
+    },
+  ],
 };

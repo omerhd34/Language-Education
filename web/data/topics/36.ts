@@ -1,225 +1,170 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent36: TopicContent = {
-  "topicId": "36",
-  "lesson": {
-    "intro": "\"Tarz Zarfları (Adverbs of Manner)\" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "36",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" konusu C2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "36-1",
-        "title": "Zarf Yapımı (-ly)",
-        "paragraphs": [
-          "\"Zarf Yapımı (-ly)\" başlığında Tarz Zarfları (Adverbs of Manner) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "36-1",
+        title: "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
+        titleEn: "Stylistic Fronting & Adjective Inversion",
+        paragraphs: [
+          '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" başlığında Üslupsal Öne Çıkarma ve Sıfat Devriklikleri konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. C2 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "I understand this topic.",
-            "tr": "Bu konuyu anlıyorum.",
-            "note": "Zarf Yapımı (-ly) — örnek 1"
+            en: "I understand this topic.",
+            tr: "Bu konuyu anlıyorum.",
+            note: "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri — örnek 1",
           },
           {
-            "en": "Topic focus: Tarz Zarfları (Adverbs of Manner)",
-            "tr": "Konu odağı: Tarz Zarfları (Adverbs of Manner)"
+            en: "Topic focus: Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
+            tr: "Konu odağı: Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
           },
           {
-            "en": "Subtopic: Zarf Yapımı (-ly)",
-            "tr": "Alt konu: Zarf Yapımı (-ly)"
-          }
-        ]
+            en: "Subtopic: Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
+            tr: "Alt konu: Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
+          },
+        ],
       },
-      {
-        "subtopicId": "36-2",
-        "title": "Düzensiz Zarflar (fast, hard, well)",
-        "paragraphs": [
-          "\"Düzensiz Zarflar (fast, hard, well)\" başlığında Tarz Zarfları (Adverbs of Manner) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Let's practice together.",
-            "tr": "Birlikte pratik yapalım.",
-            "note": "Düzensiz Zarflar (fast, hard, well) — örnek 2"
-          },
-          {
-            "en": "Topic focus: Tarz Zarfları (Adverbs of Manner)",
-            "tr": "Konu odağı: Tarz Zarfları (Adverbs of Manner)"
-          },
-          {
-            "en": "Subtopic: Düzensiz Zarflar (fast, hard, well)",
-            "tr": "Alt konu: Düzensiz Zarflar (fast, hard, well)"
-          }
-        ]
-      },
-      {
-        "subtopicId": "36-3",
-        "title": "Sıfat ve Zarf Farkı",
-        "paragraphs": [
-          "\"Sıfat ve Zarf Farkı\" başlığında Tarz Zarfları (Adverbs of Manner) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "This is a useful example.",
-            "tr": "Bu faydalı bir örnek.",
-            "note": "Sıfat ve Zarf Farkı — örnek 3"
-          },
-          {
-            "en": "Topic focus: Tarz Zarfları (Adverbs of Manner)",
-            "tr": "Konu odağı: Tarz Zarfları (Adverbs of Manner)"
-          },
-          {
-            "en": "Subtopic: Sıfat ve Zarf Farkı",
-            "tr": "Alt konu: Sıfat ve Zarf Farkı"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "36-ex-36-1-1",
-      "subtopicId": "36-1",
-      "type": "multiple_choice",
-      "prompt": "\"Zarf Yapımı (-ly)\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Tarz Zarfları (Adverbs of Manner)",
+      id: "36-ex-36-1-1",
+      subtopicId: "36-1",
+      type: "multiple_choice",
+      prompt:
+        '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Tarz Zarfları (Adverbs of Manner)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" başlığı altındadır.',
     },
     {
-      "id": "36-ex-36-1-2",
-      "subtopicId": "36-1",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Zarf Yapımı (-ly)\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "36-ex-36-1-2",
+      subtopicId: "36-1",
+      type: "multiple_choice",
+      prompt:
+        'C2 seviyesindeki "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "36-fb-36-1-1",
-      "subtopicId": "36-1",
-      "type": "fill_blank",
-      "prompt": "\"Zarf Yapımı (-ly)\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
+      id: "36-fb-36-1-1",
+      subtopicId: "36-1",
+      type: "fill_blank",
+      prompt:
+        '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" konusu _____ seviyesine uygundur.',
+      answer: "C2",
+      explanation: "Bu konu C2 seviyesindedir.",
     },
     {
-      "id": "36-ex-36-2-1",
-      "subtopicId": "36-2",
-      "type": "multiple_choice",
-      "prompt": "\"Düzensiz Zarflar (fast, hard, well)\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Tarz Zarfları (Adverbs of Manner)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Tarz Zarfları (Adverbs of Manner)\" başlığı altındadır."
-    },
-    {
-      "id": "36-ex-36-2-2",
-      "subtopicId": "36-2",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Düzensiz Zarflar (fast, hard, well)\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "36-fb-36-2-1",
-      "subtopicId": "36-2",
-      "type": "fill_blank",
-      "prompt": "\"Düzensiz Zarflar (fast, hard, well)\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "36-ex-36-3-1",
-      "subtopicId": "36-3",
-      "type": "multiple_choice",
-      "prompt": "\"Sıfat ve Zarf Farkı\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Tarz Zarfları (Adverbs of Manner)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Tarz Zarfları (Adverbs of Manner)\" başlığı altındadır."
-    },
-    {
-      "id": "36-ex-36-3-2",
-      "subtopicId": "36-3",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Sıfat ve Zarf Farkı\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "36-fb-36-3-1",
-      "subtopicId": "36-3",
-      "type": "fill_blank",
-      "prompt": "\"Sıfat ve Zarf Farkı\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "36-cw-1",
-      "subtopicId": "36-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "36-cw-1",
+      subtopicId: "36-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-36-36-1-1",
+      subtopicId: "36-1",
+      type: "multiple_choice",
+      prompt:
+        '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" başlığı altındadır.',
+    },
+    {
+      id: "exam-36-36-1-2",
+      subtopicId: "36-1",
+      type: "multiple_choice",
+      prompt:
+        'C2 seviyesindeki "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-36-36-1-3",
+      subtopicId: "36-1",
+      type: "multiple_choice",
+      prompt:
+        '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-36-level",
+      subtopicId: "36-1",
+      type: "multiple_choice",
+      prompt:
+        '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" konusu hangi seviyeye aittir?',
+      options: ["C2", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu C2 seviyesindedir.",
+    },
+  ],
 };

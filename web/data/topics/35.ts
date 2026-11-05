@@ -1,225 +1,163 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent35: TopicContent = {
-  "topicId": "35",
-  "lesson": {
-    "intro": "\"Fazlalık ve Yeterlilik (Too / Enough / Very)\" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "35",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Eksiltme ve Yerine Koyma" konusu C1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "35-1",
-        "title": "Too ve Very Farkı",
-        "paragraphs": [
-          "\"Too ve Very Farkı\" başlığında Fazlalık ve Yeterlilik (Too / Enough / Very) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "35-1",
+        title: "Eksiltme ve Yerine Koyma",
+        titleEn: "Ellipsis & Substitution",
+        paragraphs: [
+          '"Eksiltme ve Yerine Koyma" başlığında Eksiltme ve Yerine Koyma konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. C1 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "That sounds correct.",
-            "tr": "Kulağa doğru geliyor.",
-            "note": "Too ve Very Farkı — örnek 1"
+            en: "That sounds correct.",
+            tr: "Kulağa doğru geliyor.",
+            note: "Eksiltme ve Yerine Koyma — örnek 1",
           },
           {
-            "en": "Topic focus: Fazlalık ve Yeterlilik (Too / Enough / Very)",
-            "tr": "Konu odağı: Fazlalık ve Yeterlilik (Too / Enough / Very)"
+            en: "Topic focus: Eksiltme ve Yerine Koyma",
+            tr: "Konu odağı: Eksiltme ve Yerine Koyma",
           },
           {
-            "en": "Subtopic: Too ve Very Farkı",
-            "tr": "Alt konu: Too ve Very Farkı"
-          }
-        ]
+            en: "Subtopic: Eksiltme ve Yerine Koyma",
+            tr: "Alt konu: Eksiltme ve Yerine Koyma",
+          },
+        ],
       },
-      {
-        "subtopicId": "35-2",
-        "title": "Enough Kullanımı",
-        "paragraphs": [
-          "\"Enough Kullanımı\" başlığında Fazlalık ve Yeterlilik (Too / Enough / Very) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "I understand this topic.",
-            "tr": "Bu konuyu anlıyorum.",
-            "note": "Enough Kullanımı — örnek 2"
-          },
-          {
-            "en": "Topic focus: Fazlalık ve Yeterlilik (Too / Enough / Very)",
-            "tr": "Konu odağı: Fazlalık ve Yeterlilik (Too / Enough / Very)"
-          },
-          {
-            "en": "Subtopic: Enough Kullanımı",
-            "tr": "Alt konu: Enough Kullanımı"
-          }
-        ]
-      },
-      {
-        "subtopicId": "35-3",
-        "title": "Too / Enough + To Yapısı",
-        "paragraphs": [
-          "\"Too / Enough + To Yapısı\" başlığında Fazlalık ve Yeterlilik (Too / Enough / Very) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Let's practice together.",
-            "tr": "Birlikte pratik yapalım.",
-            "note": "Too / Enough + To Yapısı — örnek 3"
-          },
-          {
-            "en": "Topic focus: Fazlalık ve Yeterlilik (Too / Enough / Very)",
-            "tr": "Konu odağı: Fazlalık ve Yeterlilik (Too / Enough / Very)"
-          },
-          {
-            "en": "Subtopic: Too / Enough + To Yapısı",
-            "tr": "Alt konu: Too / Enough + To Yapısı"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "35-ex-35-1-1",
-      "subtopicId": "35-1",
-      "type": "multiple_choice",
-      "prompt": "\"Too ve Very Farkı\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Fazlalık ve Yeterlilik (Too / Enough / Very)",
+      id: "35-ex-35-1-1",
+      subtopicId: "35-1",
+      type: "multiple_choice",
+      prompt: '"Eksiltme ve Yerine Koyma" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Eksiltme ve Yerine Koyma",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Fazlalık ve Yeterlilik (Too / Enough / Very)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Eksiltme ve Yerine Koyma" başlığı altındadır.',
     },
     {
-      "id": "35-ex-35-1-2",
-      "subtopicId": "35-1",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Too ve Very Farkı\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "35-ex-35-1-2",
+      subtopicId: "35-1",
+      type: "multiple_choice",
+      prompt:
+        'C1 seviyesindeki "Eksiltme ve Yerine Koyma" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "35-fb-35-1-1",
-      "subtopicId": "35-1",
-      "type": "fill_blank",
-      "prompt": "\"Too ve Very Farkı\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
+      id: "35-fb-35-1-1",
+      subtopicId: "35-1",
+      type: "fill_blank",
+      prompt: '"Eksiltme ve Yerine Koyma" konusu _____ seviyesine uygundur.',
+      answer: "C1",
+      explanation: "Bu konu C1 seviyesindedir.",
     },
     {
-      "id": "35-ex-35-2-1",
-      "subtopicId": "35-2",
-      "type": "multiple_choice",
-      "prompt": "\"Enough Kullanımı\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Fazlalık ve Yeterlilik (Too / Enough / Very)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Fazlalık ve Yeterlilik (Too / Enough / Very)\" başlığı altındadır."
-    },
-    {
-      "id": "35-ex-35-2-2",
-      "subtopicId": "35-2",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Enough Kullanımı\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "35-fb-35-2-1",
-      "subtopicId": "35-2",
-      "type": "fill_blank",
-      "prompt": "\"Enough Kullanımı\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "35-ex-35-3-1",
-      "subtopicId": "35-3",
-      "type": "multiple_choice",
-      "prompt": "\"Too / Enough + To Yapısı\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Fazlalık ve Yeterlilik (Too / Enough / Very)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Fazlalık ve Yeterlilik (Too / Enough / Very)\" başlığı altındadır."
-    },
-    {
-      "id": "35-ex-35-3-2",
-      "subtopicId": "35-3",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Too / Enough + To Yapısı\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "35-fb-35-3-1",
-      "subtopicId": "35-3",
-      "type": "fill_blank",
-      "prompt": "\"Too / Enough + To Yapısı\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "35-cw-1",
-      "subtopicId": "35-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "35-cw-1",
+      subtopicId: "35-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-35-35-1-1",
+      subtopicId: "35-1",
+      type: "multiple_choice",
+      prompt: '"Eksiltme ve Yerine Koyma" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Eksiltme ve Yerine Koyma",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Eksiltme ve Yerine Koyma" başlığı altındadır.',
+    },
+    {
+      id: "exam-35-35-1-2",
+      subtopicId: "35-1",
+      type: "multiple_choice",
+      prompt:
+        'C1 seviyesindeki "Eksiltme ve Yerine Koyma" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-35-35-1-3",
+      subtopicId: "35-1",
+      type: "multiple_choice",
+      prompt: '"Eksiltme ve Yerine Koyma" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-35-level",
+      subtopicId: "35-1",
+      type: "multiple_choice",
+      prompt: '"Eksiltme ve Yerine Koyma" konusu hangi seviyeye aittir?',
+      options: ["C1", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu C1 seviyesindedir.",
+    },
+  ],
 };

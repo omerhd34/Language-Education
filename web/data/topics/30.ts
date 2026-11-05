@@ -1,225 +1,163 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent30: TopicContent = {
-  "topicId": "30",
-  "lesson": {
-    "intro": "\"Düzensiz Fiiller (Past Simple: Irregular)\" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "30",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Devrik Cümleler" konusu C1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "30-1",
-        "title": "Sık Kullanılan Düzensiz Fiiller",
-        "paragraphs": [
-          "\"Sık Kullanılan Düzensiz Fiiller\" başlığında Düzensiz Fiiller (Past Simple: Irregular) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "30-1",
+        title: "Devrik Cümleler",
+        titleEn: "Inversion",
+        paragraphs: [
+          '"Devrik Cümleler" başlığında Devrik Cümleler konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. C1 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "I understand this topic.",
-            "tr": "Bu konuyu anlıyorum.",
-            "note": "Sık Kullanılan Düzensiz Fiiller — örnek 1"
+            en: "I understand this topic.",
+            tr: "Bu konuyu anlıyorum.",
+            note: "Devrik Cümleler — örnek 1",
           },
           {
-            "en": "Topic focus: Düzensiz Fiiller (Past Simple: Irregular)",
-            "tr": "Konu odağı: Düzensiz Fiiller (Past Simple: Irregular)"
+            en: "Topic focus: Devrik Cümleler",
+            tr: "Konu odağı: Devrik Cümleler",
           },
           {
-            "en": "Subtopic: Sık Kullanılan Düzensiz Fiiller",
-            "tr": "Alt konu: Sık Kullanılan Düzensiz Fiiller"
-          }
-        ]
+            en: "Subtopic: Devrik Cümleler",
+            tr: "Alt konu: Devrik Cümleler",
+          },
+        ],
       },
-      {
-        "subtopicId": "30-2",
-        "title": "Düzensiz Fiillerde Olumsuz ve Soru",
-        "paragraphs": [
-          "\"Düzensiz Fiillerde Olumsuz ve Soru\" başlığında Düzensiz Fiiller (Past Simple: Irregular) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Let's practice together.",
-            "tr": "Birlikte pratik yapalım.",
-            "note": "Düzensiz Fiillerde Olumsuz ve Soru — örnek 2"
-          },
-          {
-            "en": "Topic focus: Düzensiz Fiiller (Past Simple: Irregular)",
-            "tr": "Konu odağı: Düzensiz Fiiller (Past Simple: Irregular)"
-          },
-          {
-            "en": "Subtopic: Düzensiz Fiillerde Olumsuz ve Soru",
-            "tr": "Alt konu: Düzensiz Fiillerde Olumsuz ve Soru"
-          }
-        ]
-      },
-      {
-        "subtopicId": "30-3",
-        "title": "Geçmiş Zaman Belirteçleri (yesterday, ago, last)",
-        "paragraphs": [
-          "\"Geçmiş Zaman Belirteçleri (yesterday, ago, last)\" başlığında Düzensiz Fiiller (Past Simple: Irregular) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "This is a useful example.",
-            "tr": "Bu faydalı bir örnek.",
-            "note": "Geçmiş Zaman Belirteçleri (yesterday, ago, last) — örnek 3"
-          },
-          {
-            "en": "Topic focus: Düzensiz Fiiller (Past Simple: Irregular)",
-            "tr": "Konu odağı: Düzensiz Fiiller (Past Simple: Irregular)"
-          },
-          {
-            "en": "Subtopic: Geçmiş Zaman Belirteçleri (yesterday, ago, last)",
-            "tr": "Alt konu: Geçmiş Zaman Belirteçleri (yesterday, ago, last)"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "30-ex-30-1-1",
-      "subtopicId": "30-1",
-      "type": "multiple_choice",
-      "prompt": "\"Sık Kullanılan Düzensiz Fiiller\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Düzensiz Fiiller (Past Simple: Irregular)",
+      id: "30-ex-30-1-1",
+      subtopicId: "30-1",
+      type: "multiple_choice",
+      prompt: '"Devrik Cümleler" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Devrik Cümleler",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Düzensiz Fiiller (Past Simple: Irregular)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Devrik Cümleler" başlığı altındadır.',
     },
     {
-      "id": "30-ex-30-1-2",
-      "subtopicId": "30-1",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Sık Kullanılan Düzensiz Fiiller\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "30-ex-30-1-2",
+      subtopicId: "30-1",
+      type: "multiple_choice",
+      prompt:
+        'C1 seviyesindeki "Devrik Cümleler" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "30-fb-30-1-1",
-      "subtopicId": "30-1",
-      "type": "fill_blank",
-      "prompt": "\"Sık Kullanılan Düzensiz Fiiller\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
+      id: "30-fb-30-1-1",
+      subtopicId: "30-1",
+      type: "fill_blank",
+      prompt: '"Devrik Cümleler" konusu _____ seviyesine uygundur.',
+      answer: "C1",
+      explanation: "Bu konu C1 seviyesindedir.",
     },
     {
-      "id": "30-ex-30-2-1",
-      "subtopicId": "30-2",
-      "type": "multiple_choice",
-      "prompt": "\"Düzensiz Fiillerde Olumsuz ve Soru\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Düzensiz Fiiller (Past Simple: Irregular)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Düzensiz Fiiller (Past Simple: Irregular)\" başlığı altındadır."
-    },
-    {
-      "id": "30-ex-30-2-2",
-      "subtopicId": "30-2",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Düzensiz Fiillerde Olumsuz ve Soru\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "30-fb-30-2-1",
-      "subtopicId": "30-2",
-      "type": "fill_blank",
-      "prompt": "\"Düzensiz Fiillerde Olumsuz ve Soru\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "30-ex-30-3-1",
-      "subtopicId": "30-3",
-      "type": "multiple_choice",
-      "prompt": "\"Geçmiş Zaman Belirteçleri (yesterday, ago, last)\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Düzensiz Fiiller (Past Simple: Irregular)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Düzensiz Fiiller (Past Simple: Irregular)\" başlığı altındadır."
-    },
-    {
-      "id": "30-ex-30-3-2",
-      "subtopicId": "30-3",
-      "type": "multiple_choice",
-      "prompt": "A2 seviyesindeki \"Geçmiş Zaman Belirteçleri (yesterday, ago, last)\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "30-fb-30-3-1",
-      "subtopicId": "30-3",
-      "type": "fill_blank",
-      "prompt": "\"Geçmiş Zaman Belirteçleri (yesterday, ago, last)\" konusu _____ seviyesine uygundur.",
-      "answer": "A2",
-      "explanation": "Bu konu A2 seviyesindedir."
-    },
-    {
-      "id": "30-cw-1",
-      "subtopicId": "30-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "30-cw-1",
+      subtopicId: "30-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-30-30-1-1",
+      subtopicId: "30-1",
+      type: "multiple_choice",
+      prompt: '"Devrik Cümleler" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Devrik Cümleler",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Devrik Cümleler" başlığı altındadır.',
+    },
+    {
+      id: "exam-30-30-1-2",
+      subtopicId: "30-1",
+      type: "multiple_choice",
+      prompt:
+        'C1 seviyesindeki "Devrik Cümleler" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-30-30-1-3",
+      subtopicId: "30-1",
+      type: "multiple_choice",
+      prompt: '"Devrik Cümleler" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-30-level",
+      subtopicId: "30-1",
+      type: "multiple_choice",
+      prompt: '"Devrik Cümleler" konusu hangi seviyeye aittir?',
+      options: ["C1", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu C1 seviyesindedir.",
+    },
+  ],
 };

@@ -1,225 +1,168 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent19: TopicContent = {
-  "topicId": "19",
-  "lesson": {
-    "intro": "\"Şimdiki Zaman (Present Continuous)\" konusu A1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "19",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Süregelen Yakın Geçmiş Zaman" konusu B1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "19-1",
-        "title": "Şimdiki Zaman - Olumlu Cümleler",
-        "paragraphs": [
-          "\"Şimdiki Zaman - Olumlu Cümleler\" başlığında Şimdiki Zaman (Present Continuous) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "19-1",
+        title: "Süregelen Yakın Geçmiş Zaman",
+        titleEn: "Present Perfect Continuous",
+        paragraphs: [
+          '"Süregelen Yakın Geçmiş Zaman" başlığında Süregelen Yakın Geçmiş Zaman konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. B1 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "Let's practice together.",
-            "tr": "Birlikte pratik yapalım.",
-            "note": "Şimdiki Zaman - Olumlu Cümleler — örnek 1"
+            en: "Let's practice together.",
+            tr: "Birlikte pratik yapalım.",
+            note: "Süregelen Yakın Geçmiş Zaman — örnek 1",
           },
           {
-            "en": "Topic focus: Şimdiki Zaman (Present Continuous)",
-            "tr": "Konu odağı: Şimdiki Zaman (Present Continuous)"
+            en: "Topic focus: Süregelen Yakın Geçmiş Zaman",
+            tr: "Konu odağı: Süregelen Yakın Geçmiş Zaman",
           },
           {
-            "en": "Subtopic: Şimdiki Zaman - Olumlu Cümleler",
-            "tr": "Alt konu: Şimdiki Zaman - Olumlu Cümleler"
-          }
-        ]
+            en: "Subtopic: Süregelen Yakın Geçmiş Zaman",
+            tr: "Alt konu: Süregelen Yakın Geçmiş Zaman",
+          },
+        ],
       },
-      {
-        "subtopicId": "19-2",
-        "title": "Şimdiki Zaman - Olumsuz Cümleler",
-        "paragraphs": [
-          "\"Şimdiki Zaman - Olumsuz Cümleler\" başlığında Şimdiki Zaman (Present Continuous) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "This is a useful example.",
-            "tr": "Bu faydalı bir örnek.",
-            "note": "Şimdiki Zaman - Olumsuz Cümleler — örnek 2"
-          },
-          {
-            "en": "Topic focus: Şimdiki Zaman (Present Continuous)",
-            "tr": "Konu odağı: Şimdiki Zaman (Present Continuous)"
-          },
-          {
-            "en": "Subtopic: Şimdiki Zaman - Olumsuz Cümleler",
-            "tr": "Alt konu: Şimdiki Zaman - Olumsuz Cümleler"
-          }
-        ]
-      },
-      {
-        "subtopicId": "19-3",
-        "title": "Şimdiki Zaman - Soru ve Cevap Cümleleri",
-        "paragraphs": [
-          "\"Şimdiki Zaman - Soru ve Cevap Cümleleri\" başlığında Şimdiki Zaman (Present Continuous) konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Can you repeat that?",
-            "tr": "Tekrar eder misin?",
-            "note": "Şimdiki Zaman - Soru ve Cevap Cümleleri — örnek 3"
-          },
-          {
-            "en": "Topic focus: Şimdiki Zaman (Present Continuous)",
-            "tr": "Konu odağı: Şimdiki Zaman (Present Continuous)"
-          },
-          {
-            "en": "Subtopic: Şimdiki Zaman - Soru ve Cevap Cümleleri",
-            "tr": "Alt konu: Şimdiki Zaman - Soru ve Cevap Cümleleri"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "19-ex-19-1-1",
-      "subtopicId": "19-1",
-      "type": "multiple_choice",
-      "prompt": "\"Şimdiki Zaman - Olumlu Cümleler\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Şimdiki Zaman (Present Continuous)",
+      id: "19-ex-19-1-1",
+      subtopicId: "19-1",
+      type: "multiple_choice",
+      prompt:
+        '"Süregelen Yakın Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Süregelen Yakın Geçmiş Zaman",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Şimdiki Zaman (Present Continuous)\" başlığı altındadır."
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Süregelen Yakın Geçmiş Zaman" başlığı altındadır.',
     },
     {
-      "id": "19-ex-19-1-2",
-      "subtopicId": "19-1",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Şimdiki Zaman - Olumlu Cümleler\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "19-ex-19-1-2",
+      subtopicId: "19-1",
+      type: "multiple_choice",
+      prompt:
+        'B1 seviyesindeki "Süregelen Yakın Geçmiş Zaman" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "19-fb-19-1-1",
-      "subtopicId": "19-1",
-      "type": "fill_blank",
-      "prompt": "\"Şimdiki Zaman - Olumlu Cümleler\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
+      id: "19-fb-19-1-1",
+      subtopicId: "19-1",
+      type: "fill_blank",
+      prompt:
+        '"Süregelen Yakın Geçmiş Zaman" konusu _____ seviyesine uygundur.',
+      answer: "B1",
+      explanation: "Bu konu B1 seviyesindedir.",
     },
     {
-      "id": "19-ex-19-2-1",
-      "subtopicId": "19-2",
-      "type": "multiple_choice",
-      "prompt": "\"Şimdiki Zaman - Olumsuz Cümleler\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Şimdiki Zaman (Present Continuous)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Şimdiki Zaman (Present Continuous)\" başlığı altındadır."
-    },
-    {
-      "id": "19-ex-19-2-2",
-      "subtopicId": "19-2",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Şimdiki Zaman - Olumsuz Cümleler\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "19-fb-19-2-1",
-      "subtopicId": "19-2",
-      "type": "fill_blank",
-      "prompt": "\"Şimdiki Zaman - Olumsuz Cümleler\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "19-ex-19-3-1",
-      "subtopicId": "19-3",
-      "type": "multiple_choice",
-      "prompt": "\"Şimdiki Zaman - Soru ve Cevap Cümleleri\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Şimdiki Zaman (Present Continuous)",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Şimdiki Zaman (Present Continuous)\" başlığı altındadır."
-    },
-    {
-      "id": "19-ex-19-3-2",
-      "subtopicId": "19-3",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Şimdiki Zaman - Soru ve Cevap Cümleleri\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "19-fb-19-3-1",
-      "subtopicId": "19-3",
-      "type": "fill_blank",
-      "prompt": "\"Şimdiki Zaman - Soru ve Cevap Cümleleri\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "19-cw-1",
-      "subtopicId": "19-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "19-cw-1",
+      subtopicId: "19-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-19-19-1-1",
+      subtopicId: "19-1",
+      type: "multiple_choice",
+      prompt:
+        '"Süregelen Yakın Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Süregelen Yakın Geçmiş Zaman",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Süregelen Yakın Geçmiş Zaman" başlığı altındadır.',
+    },
+    {
+      id: "exam-19-19-1-2",
+      subtopicId: "19-1",
+      type: "multiple_choice",
+      prompt:
+        'B1 seviyesindeki "Süregelen Yakın Geçmiş Zaman" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-19-19-1-3",
+      subtopicId: "19-1",
+      type: "multiple_choice",
+      prompt: '"Süregelen Yakın Geçmiş Zaman" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-19-level",
+      subtopicId: "19-1",
+      type: "multiple_choice",
+      prompt: '"Süregelen Yakın Geçmiş Zaman" konusu hangi seviyeye aittir?',
+      options: ["B1", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu B1 seviyesindedir.",
+    },
+  ],
 };

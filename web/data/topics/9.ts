@@ -1,225 +1,163 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent9: TopicContent = {
-  "topicId": "9",
-  "lesson": {
-    "intro": "\"Sahiplik Yapıları\" konusu A1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "9",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Şimdiki Zaman" konusu A1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "9-1",
-        "title": "Tamlama 's (Tom's book)",
-        "paragraphs": [
-          "\"Tamlama 's (Tom's book)\" başlığında Sahiplik Yapıları konusunun önemli noktalarını adım adım görürsün.",
+        subtopicId: "9-1",
+        title: "Şimdiki Zaman",
+        titleEn: "Present Continuous",
+        paragraphs: [
+          '"Şimdiki Zaman" başlığında Şimdiki Zaman konusunun önemli noktalarını adım adım görürsün.',
           "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "Can you repeat that?",
-            "tr": "Tekrar eder misin?",
-            "note": "Tamlama 's (Tom's book) — örnek 1"
+            en: "Can you repeat that?",
+            tr: "Tekrar eder misin?",
+            note: "Şimdiki Zaman — örnek 1",
           },
           {
-            "en": "Topic focus: Sahiplik Yapıları",
-            "tr": "Konu odağı: Sahiplik Yapıları"
+            en: "Topic focus: Şimdiki Zaman",
+            tr: "Konu odağı: Şimdiki Zaman",
           },
           {
-            "en": "Subtopic: Tamlama 's (Tom's book)",
-            "tr": "Alt konu: Tamlama 's (Tom's book)"
-          }
-        ]
+            en: "Subtopic: Şimdiki Zaman",
+            tr: "Alt konu: Şimdiki Zaman",
+          },
+        ],
       },
-      {
-        "subtopicId": "9-2",
-        "title": "Whose ve Sahiplik Soruları",
-        "paragraphs": [
-          "\"Whose ve Sahiplik Soruları\" başlığında Sahiplik Yapıları konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "I use this every day.",
-            "tr": "Bunu her gün kullanırım.",
-            "note": "Whose ve Sahiplik Soruları — örnek 2"
-          },
-          {
-            "en": "Topic focus: Sahiplik Yapıları",
-            "tr": "Konu odağı: Sahiplik Yapıları"
-          },
-          {
-            "en": "Subtopic: Whose ve Sahiplik Soruları",
-            "tr": "Alt konu: Whose ve Sahiplik Soruları"
-          }
-        ]
-      },
-      {
-        "subtopicId": "9-3",
-        "title": "Sahiplik Zamirleri (mine, yours, his...)",
-        "paragraphs": [
-          "\"Sahiplik Zamirleri (mine, yours, his...)\" başlığında Sahiplik Yapıları konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "That sounds correct.",
-            "tr": "Kulağa doğru geliyor.",
-            "note": "Sahiplik Zamirleri (mine, yours, his...) — örnek 3"
-          },
-          {
-            "en": "Topic focus: Sahiplik Yapıları",
-            "tr": "Konu odağı: Sahiplik Yapıları"
-          },
-          {
-            "en": "Subtopic: Sahiplik Zamirleri (mine, yours, his...)",
-            "tr": "Alt konu: Sahiplik Zamirleri (mine, yours, his...)"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "9-ex-9-1-1",
-      "subtopicId": "9-1",
-      "type": "multiple_choice",
-      "prompt": "\"Tamlama 's (Tom's book)\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Sahiplik Yapıları",
+      id: "9-ex-9-1-1",
+      subtopicId: "9-1",
+      type: "multiple_choice",
+      prompt: '"Şimdiki Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Şimdiki Zaman",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Sahiplik Yapıları\" başlığı altındadır."
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Şimdiki Zaman" başlığı altındadır.',
     },
     {
-      "id": "9-ex-9-1-2",
-      "subtopicId": "9-1",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Tamlama 's (Tom's book)\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "9-ex-9-1-2",
+      subtopicId: "9-1",
+      type: "multiple_choice",
+      prompt:
+        'A1 seviyesindeki "Şimdiki Zaman" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "9-fb-9-1-1",
-      "subtopicId": "9-1",
-      "type": "fill_blank",
-      "prompt": "\"Tamlama 's (Tom's book)\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
+      id: "9-fb-9-1-1",
+      subtopicId: "9-1",
+      type: "fill_blank",
+      prompt: '"Şimdiki Zaman" konusu _____ seviyesine uygundur.',
+      answer: "A1",
+      explanation: "Bu konu A1 seviyesindedir.",
     },
     {
-      "id": "9-ex-9-2-1",
-      "subtopicId": "9-2",
-      "type": "multiple_choice",
-      "prompt": "\"Whose ve Sahiplik Soruları\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Sahiplik Yapıları",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Sahiplik Yapıları\" başlığı altındadır."
-    },
-    {
-      "id": "9-ex-9-2-2",
-      "subtopicId": "9-2",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Whose ve Sahiplik Soruları\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "9-fb-9-2-1",
-      "subtopicId": "9-2",
-      "type": "fill_blank",
-      "prompt": "\"Whose ve Sahiplik Soruları\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "9-ex-9-3-1",
-      "subtopicId": "9-3",
-      "type": "multiple_choice",
-      "prompt": "\"Sahiplik Zamirleri (mine, yours, his...)\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Sahiplik Yapıları",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Sahiplik Yapıları\" başlığı altındadır."
-    },
-    {
-      "id": "9-ex-9-3-2",
-      "subtopicId": "9-3",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Sahiplik Zamirleri (mine, yours, his...)\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "9-fb-9-3-1",
-      "subtopicId": "9-3",
-      "type": "fill_blank",
-      "prompt": "\"Sahiplik Zamirleri (mine, yours, his...)\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "9-cw-1",
-      "subtopicId": "9-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "9-cw-1",
+      subtopicId: "9-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-9-9-1-1",
+      subtopicId: "9-1",
+      type: "multiple_choice",
+      prompt: '"Şimdiki Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Şimdiki Zaman",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Şimdiki Zaman" başlığı altındadır.',
+    },
+    {
+      id: "exam-9-9-1-2",
+      subtopicId: "9-1",
+      type: "multiple_choice",
+      prompt:
+        'A1 seviyesindeki "Şimdiki Zaman" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-9-9-1-3",
+      subtopicId: "9-1",
+      type: "multiple_choice",
+      prompt: '"Şimdiki Zaman" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-9-level",
+      subtopicId: "9-1",
+      type: "multiple_choice",
+      prompt: '"Şimdiki Zaman" konusu hangi seviyeye aittir?',
+      options: ["A1", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu A1 seviyesindedir.",
+    },
+  ],
 };

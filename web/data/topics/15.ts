@@ -1,225 +1,163 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent15: TopicContent = {
-  "topicId": "15",
-  "lesson": {
-    "intro": "\"Sıklık Zarfları\" konusu A1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "15",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Yakın Geçmiş Zaman" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "15-1",
-        "title": "Always / Usually / Often",
-        "paragraphs": [
-          "\"Always / Usually / Often\" başlığında Sıklık Zarfları konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "15-1",
+        title: "Yakın Geçmiş Zaman",
+        titleEn: "Present Perfect Simple",
+        paragraphs: [
+          '"Yakın Geçmiş Zaman" başlığında Yakın Geçmiş Zaman konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "Can you repeat that?",
-            "tr": "Tekrar eder misin?",
-            "note": "Always / Usually / Often — örnek 1"
+            en: "Can you repeat that?",
+            tr: "Tekrar eder misin?",
+            note: "Yakın Geçmiş Zaman — örnek 1",
           },
           {
-            "en": "Topic focus: Sıklık Zarfları",
-            "tr": "Konu odağı: Sıklık Zarfları"
+            en: "Topic focus: Yakın Geçmiş Zaman",
+            tr: "Konu odağı: Yakın Geçmiş Zaman",
           },
           {
-            "en": "Subtopic: Always / Usually / Often",
-            "tr": "Alt konu: Always / Usually / Often"
-          }
-        ]
+            en: "Subtopic: Yakın Geçmiş Zaman",
+            tr: "Alt konu: Yakın Geçmiş Zaman",
+          },
+        ],
       },
-      {
-        "subtopicId": "15-2",
-        "title": "Sometimes / Rarely / Never",
-        "paragraphs": [
-          "\"Sometimes / Rarely / Never\" başlığında Sıklık Zarfları konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "I use this every day.",
-            "tr": "Bunu her gün kullanırım.",
-            "note": "Sometimes / Rarely / Never — örnek 2"
-          },
-          {
-            "en": "Topic focus: Sıklık Zarfları",
-            "tr": "Konu odağı: Sıklık Zarfları"
-          },
-          {
-            "en": "Subtopic: Sometimes / Rarely / Never",
-            "tr": "Alt konu: Sometimes / Rarely / Never"
-          }
-        ]
-      },
-      {
-        "subtopicId": "15-3",
-        "title": "Sıklık Zarflarının Cümledeki Yeri",
-        "paragraphs": [
-          "\"Sıklık Zarflarının Cümledeki Yeri\" başlığında Sıklık Zarfları konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "That sounds correct.",
-            "tr": "Kulağa doğru geliyor.",
-            "note": "Sıklık Zarflarının Cümledeki Yeri — örnek 3"
-          },
-          {
-            "en": "Topic focus: Sıklık Zarfları",
-            "tr": "Konu odağı: Sıklık Zarfları"
-          },
-          {
-            "en": "Subtopic: Sıklık Zarflarının Cümledeki Yeri",
-            "tr": "Alt konu: Sıklık Zarflarının Cümledeki Yeri"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "15-ex-15-1-1",
-      "subtopicId": "15-1",
-      "type": "multiple_choice",
-      "prompt": "\"Always / Usually / Often\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Sıklık Zarfları",
+      id: "15-ex-15-1-1",
+      subtopicId: "15-1",
+      type: "multiple_choice",
+      prompt: '"Yakın Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Yakın Geçmiş Zaman",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Sıklık Zarfları\" başlığı altındadır."
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Yakın Geçmiş Zaman" başlığı altındadır.',
     },
     {
-      "id": "15-ex-15-1-2",
-      "subtopicId": "15-1",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Always / Usually / Often\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "15-ex-15-1-2",
+      subtopicId: "15-1",
+      type: "multiple_choice",
+      prompt:
+        'A2 seviyesindeki "Yakın Geçmiş Zaman" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "15-fb-15-1-1",
-      "subtopicId": "15-1",
-      "type": "fill_blank",
-      "prompt": "\"Always / Usually / Often\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
+      id: "15-fb-15-1-1",
+      subtopicId: "15-1",
+      type: "fill_blank",
+      prompt: '"Yakın Geçmiş Zaman" konusu _____ seviyesine uygundur.',
+      answer: "A2",
+      explanation: "Bu konu A2 seviyesindedir.",
     },
     {
-      "id": "15-ex-15-2-1",
-      "subtopicId": "15-2",
-      "type": "multiple_choice",
-      "prompt": "\"Sometimes / Rarely / Never\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Sıklık Zarfları",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Sıklık Zarfları\" başlığı altındadır."
-    },
-    {
-      "id": "15-ex-15-2-2",
-      "subtopicId": "15-2",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Sometimes / Rarely / Never\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "15-fb-15-2-1",
-      "subtopicId": "15-2",
-      "type": "fill_blank",
-      "prompt": "\"Sometimes / Rarely / Never\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "15-ex-15-3-1",
-      "subtopicId": "15-3",
-      "type": "multiple_choice",
-      "prompt": "\"Sıklık Zarflarının Cümledeki Yeri\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Sıklık Zarfları",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Sıklık Zarfları\" başlığı altındadır."
-    },
-    {
-      "id": "15-ex-15-3-2",
-      "subtopicId": "15-3",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Sıklık Zarflarının Cümledeki Yeri\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "15-fb-15-3-1",
-      "subtopicId": "15-3",
-      "type": "fill_blank",
-      "prompt": "\"Sıklık Zarflarının Cümledeki Yeri\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "15-cw-1",
-      "subtopicId": "15-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "15-cw-1",
+      subtopicId: "15-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-15-15-1-1",
+      subtopicId: "15-1",
+      type: "multiple_choice",
+      prompt: '"Yakın Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Yakın Geçmiş Zaman",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation: 'Bu alt konu "Yakın Geçmiş Zaman" başlığı altındadır.',
+    },
+    {
+      id: "exam-15-15-1-2",
+      subtopicId: "15-1",
+      type: "multiple_choice",
+      prompt:
+        'A2 seviyesindeki "Yakın Geçmiş Zaman" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-15-15-1-3",
+      subtopicId: "15-1",
+      type: "multiple_choice",
+      prompt: '"Yakın Geçmiş Zaman" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-15-level",
+      subtopicId: "15-1",
+      type: "multiple_choice",
+      prompt: '"Yakın Geçmiş Zaman" konusu hangi seviyeye aittir?',
+      options: ["A2", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu A2 seviyesindedir.",
+    },
+  ],
 };

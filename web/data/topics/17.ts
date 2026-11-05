@@ -1,225 +1,168 @@
 import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent17: TopicContent = {
-  "topicId": "17",
-  "lesson": {
-    "intro": "\"Nesne Zamirleri\" konusu A1 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.",
-    "sections": [
+  topicId: "17",
+  viewMinutes: 10,
+  lesson: {
+    intro:
+      '"Kipler: Zorunluluk ve Tavsiye" konusu A2 seviyesine uygundur. Aşağıdaki alt başlıklarda temel kuralları, örnekleri ve kısa notları bulursun. İçerik geçicidir; ileride zenginleştirilebilir.',
+    sections: [
       {
-        "subtopicId": "17-1",
-        "title": "Nesne Zamirleri (me, you, him...)",
-        "paragraphs": [
-          "\"Nesne Zamirleri (me, you, him...)\" başlığında Nesne Zamirleri konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
+        subtopicId: "17-1",
+        title: "Kipler: Zorunluluk ve Tavsiye",
+        titleEn: "Modals: Must, Should, Have to",
+        paragraphs: [
+          '"Kipler: Zorunluluk ve Tavsiye" başlığında Kipler: Zorunluluk ve Tavsiye konusunun önemli noktalarını adım adım görürsün.',
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A2 seviyesinde düzenli tekrar yeterlidir.",
+          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
-        "examples": [
+        examples: [
           {
-            "en": "That sounds correct.",
-            "tr": "Kulağa doğru geliyor.",
-            "note": "Nesne Zamirleri (me, you, him...) — örnek 1"
+            en: "That sounds correct.",
+            tr: "Kulağa doğru geliyor.",
+            note: "Kipler: Zorunluluk ve Tavsiye — örnek 1",
           },
           {
-            "en": "Topic focus: Nesne Zamirleri",
-            "tr": "Konu odağı: Nesne Zamirleri"
+            en: "Topic focus: Kipler: Zorunluluk ve Tavsiye",
+            tr: "Konu odağı: Kipler: Zorunluluk ve Tavsiye",
           },
           {
-            "en": "Subtopic: Nesne Zamirleri (me, you, him...)",
-            "tr": "Alt konu: Nesne Zamirleri (me, you, him...)"
-          }
-        ]
+            en: "Subtopic: Kipler: Zorunluluk ve Tavsiye",
+            tr: "Alt konu: Kipler: Zorunluluk ve Tavsiye",
+          },
+        ],
       },
-      {
-        "subtopicId": "17-2",
-        "title": "Özne ve Nesne Zamirleri Farkı",
-        "paragraphs": [
-          "\"Özne ve Nesne Zamirleri Farkı\" başlığında Nesne Zamirleri konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "I understand this topic.",
-            "tr": "Bu konuyu anlıyorum.",
-            "note": "Özne ve Nesne Zamirleri Farkı — örnek 2"
-          },
-          {
-            "en": "Topic focus: Nesne Zamirleri",
-            "tr": "Konu odağı: Nesne Zamirleri"
-          },
-          {
-            "en": "Subtopic: Özne ve Nesne Zamirleri Farkı",
-            "tr": "Alt konu: Özne ve Nesne Zamirleri Farkı"
-          }
-        ]
-      },
-      {
-        "subtopicId": "17-3",
-        "title": "Fiil ve Edat Sonrası Nesne Zamirleri",
-        "paragraphs": [
-          "\"Fiil ve Edat Sonrası Nesne Zamirleri\" başlığında Nesne Zamirleri konusunun önemli noktalarını adım adım görürsün.",
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
-          "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene."
-        ],
-        "examples": [
-          {
-            "en": "Let's practice together.",
-            "tr": "Birlikte pratik yapalım.",
-            "note": "Fiil ve Edat Sonrası Nesne Zamirleri — örnek 3"
-          },
-          {
-            "en": "Topic focus: Nesne Zamirleri",
-            "tr": "Konu odağı: Nesne Zamirleri"
-          },
-          {
-            "en": "Subtopic: Fiil ve Edat Sonrası Nesne Zamirleri",
-            "tr": "Alt konu: Fiil ve Edat Sonrası Nesne Zamirleri"
-          }
-        ]
-      }
-    ]
+    ],
   },
-  "exercises": [
+  exercises: [
     {
-      "id": "17-ex-17-1-1",
-      "subtopicId": "17-1",
-      "type": "multiple_choice",
-      "prompt": "\"Nesne Zamirleri (me, you, him...)\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Nesne Zamirleri",
+      id: "17-ex-17-1-1",
+      subtopicId: "17-1",
+      type: "multiple_choice",
+      prompt:
+        '"Kipler: Zorunluluk ve Tavsiye" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Kipler: Zorunluluk ve Tavsiye",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
-        "Hiçbiri"
+        "Hiçbiri",
       ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Nesne Zamirleri\" başlığı altındadır."
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Kipler: Zorunluluk ve Tavsiye" başlığı altındadır.',
     },
     {
-      "id": "17-ex-17-1-2",
-      "subtopicId": "17-1",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Nesne Zamirleri (me, you, him...)\" için doğru yaklaşım hangisidir?",
-      "options": [
+      id: "17-ex-17-1-2",
+      subtopicId: "17-1",
+      type: "multiple_choice",
+      prompt:
+        'A2 seviyesindeki "Kipler: Zorunluluk ve Tavsiye" için doğru yaklaşım hangisidir?',
+      options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
         "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
+        "Hiç alıştırma çözmemek",
       ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      "id": "17-fb-17-1-1",
-      "subtopicId": "17-1",
-      "type": "fill_blank",
-      "prompt": "\"Nesne Zamirleri (me, you, him...)\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
+      id: "17-fb-17-1-1",
+      subtopicId: "17-1",
+      type: "fill_blank",
+      prompt:
+        '"Kipler: Zorunluluk ve Tavsiye" konusu _____ seviyesine uygundur.',
+      answer: "A2",
+      explanation: "Bu konu A2 seviyesindedir.",
     },
     {
-      "id": "17-ex-17-2-1",
-      "subtopicId": "17-2",
-      "type": "multiple_choice",
-      "prompt": "\"Özne ve Nesne Zamirleri Farkı\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Nesne Zamirleri",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Nesne Zamirleri\" başlığı altındadır."
-    },
-    {
-      "id": "17-ex-17-2-2",
-      "subtopicId": "17-2",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Özne ve Nesne Zamirleri Farkı\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "17-fb-17-2-1",
-      "subtopicId": "17-2",
-      "type": "fill_blank",
-      "prompt": "\"Özne ve Nesne Zamirleri Farkı\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "17-ex-17-3-1",
-      "subtopicId": "17-3",
-      "type": "multiple_choice",
-      "prompt": "\"Fiil ve Edat Sonrası Nesne Zamirleri\" alt konusu hangi ana konuya aittir?",
-      "options": [
-        "Nesne Zamirleri",
-        "Tamamen farklı bir konu",
-        "Sadece kelime listesi",
-        "Hiçbiri"
-      ],
-      "correctIndex": 0,
-      "explanation": "Bu alt konu \"Nesne Zamirleri\" başlığı altındadır."
-    },
-    {
-      "id": "17-ex-17-3-2",
-      "subtopicId": "17-3",
-      "type": "multiple_choice",
-      "prompt": "A1 seviyesindeki \"Fiil ve Edat Sonrası Nesne Zamirleri\" için doğru yaklaşım hangisidir?",
-      "options": [
-        "Örnekleri okuyup kısa pratik yapmak",
-        "Konuyu tamamen atlamak",
-        "Sadece çeviri yapmadan ezberlemek",
-        "Hiç alıştırma çözmemek"
-      ],
-      "correctIndex": 0,
-      "explanation": "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur."
-    },
-    {
-      "id": "17-fb-17-3-1",
-      "subtopicId": "17-3",
-      "type": "fill_blank",
-      "prompt": "\"Fiil ve Edat Sonrası Nesne Zamirleri\" konusu _____ seviyesine uygundur.",
-      "answer": "A1",
-      "explanation": "Bu konu A1 seviyesindedir."
-    },
-    {
-      "id": "17-cw-1",
-      "subtopicId": "17-1",
-      "type": "crossword",
-      "rows": 3,
-      "cols": 5,
-      "clues": [
+      id: "17-cw-1",
+      subtopicId: "17-1",
+      type: "crossword",
+      rows: 3,
+      cols: 5,
+      clues: [
         {
-          "number": 1,
-          "direction": "across",
-          "text": "3 sayısı İngilizcede",
-          "answer": "THREE",
-          "row": 0,
-          "col": 0
+          number: 1,
+          direction: "across",
+          text: "3 sayısı İngilizcede",
+          answer: "THREE",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 2,
-          "direction": "down",
-          "text": "10 sayısı İngilizcede",
-          "answer": "TEN",
-          "row": 0,
-          "col": 0
+          number: 2,
+          direction: "down",
+          text: "10 sayısı İngilizcede",
+          answer: "TEN",
+          row: 0,
+          col: 0,
         },
         {
-          "number": 3,
-          "direction": "across",
-          "text": "9 sayısı İngilizcede",
-          "answer": "NINE",
-          "row": 2,
-          "col": 0
-        }
-      ]
-    }
-  ]
+          number: 3,
+          direction: "across",
+          text: "9 sayısı İngilizcede",
+          answer: "NINE",
+          row: 2,
+          col: 0,
+        },
+      ],
+    },
+  ],
+  examExercises: [
+    {
+      id: "exam-17-17-1-1",
+      subtopicId: "17-1",
+      type: "multiple_choice",
+      prompt:
+        '"Kipler: Zorunluluk ve Tavsiye" alt konusu hangi ana konuya aittir?',
+      options: [
+        "Kipler: Zorunluluk ve Tavsiye",
+        "Tamamen farklı bir konu",
+        "Sadece kelime listesi",
+        "Hiçbiri",
+      ],
+      correctIndex: 0,
+      explanation:
+        'Bu alt konu "Kipler: Zorunluluk ve Tavsiye" başlığı altındadır.',
+    },
+    {
+      id: "exam-17-17-1-2",
+      subtopicId: "17-1",
+      type: "multiple_choice",
+      prompt:
+        'A2 seviyesindeki "Kipler: Zorunluluk ve Tavsiye" için doğru yaklaşım hangisidir?',
+      options: [
+        "Örnekleri okuyup kısa pratik yapmak",
+        "Konuyu tamamen atlamak",
+        "Sadece çeviri yapmadan ezberlemek",
+        "Hiç alıştırma çözmemek",
+      ],
+      correctIndex: 0,
+      explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
+    },
+    {
+      id: "exam-17-17-1-3",
+      subtopicId: "17-1",
+      type: "multiple_choice",
+      prompt: '"Kipler: Zorunluluk ve Tavsiye" çalışırken hangisi doğrudur?',
+      options: [
+        "Anlamadığın örneği işaretleyip tekrar etmek",
+        "Hiç örnek okumamak",
+        "Konuyu tamamen atlamak",
+        "Sadece dinleyip bırakmak",
+      ],
+      correctIndex: 0,
+      explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
+    },
+    {
+      id: "exam-17-level",
+      subtopicId: "17-1",
+      type: "multiple_choice",
+      prompt: '"Kipler: Zorunluluk ve Tavsiye" konusu hangi seviyeye aittir?',
+      options: ["A2", "Yanlış seviye", "Belirsiz", "Seviye yok"],
+      correctIndex: 0,
+      explanation: "Bu konu A2 seviyesindedir.",
+    },
+  ],
 };
