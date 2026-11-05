@@ -1,15 +1,8 @@
 "use client";
 
+import type { MouseEvent } from "react";
 import { useTranslations } from "next-intl";
-import {
-  LogOut,
-  Menu,
-  PanelLeftClose,
-  PanelLeftOpen,
-  Settings,
-  X,
-} from "lucide-react";
-import { useEffect, useState } from "react";
+import { LogOut, Settings } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import {
@@ -21,6 +14,21 @@ import { navigatePanelSection, usePanelHash } from "@/hooks/usePanelHash";
 import { cn } from "@/lib/utils";
 import { getUserInitials } from "@/lib/userInitials";
 import type { AuthUser } from "@/store/api";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/ui/sidebar";
 
 function hrefHash(href: string): string {
   const index = href.indexOf("#");
@@ -32,44 +40,44 @@ function hrefPath(href: string): string {
   return index >= 0 ? href.slice(0, index) : href;
 }
 
-const COLLAPSE_KEY = "pylmor-sidebar-collapsed";
-
 type AppSidebarProps = {
   user: AuthUser;
   isLoggingOut: boolean;
   onLogout: () => void;
 };
 
+const menuButtonClassName =
+  "h-auto rounded-xl px-3 py-2.5 font-medium text-brand-400";
+
+export function AppSidebarMobileBar() {
+  const tNav = useTranslations("Nav");
+  const { openMobile } = useSidebar();
+
+  return (
+    <div className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-sidebar-border bg-sidebar px-4 text-sidebar-foreground lg:hidden">
+      <Link
+        href="/panelim"
+        className="font-display text-lg font-semibold text-brand-100"
+      >
+        {tNav("brand")}
+      </Link>
+      <SidebarTrigger
+        aria-label={openMobile ? tNav("closeMenu") : tNav("openMenu")}
+        className="border border-white/10 text-brand-100"
+      />
+    </div>
+  );
+}
+
 export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
   const t = useTranslations("AppNav");
   const tNav = useTranslations("Nav");
   const pathname = usePathname();
   const panelHash = usePanelHash();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const { setOpenMobile, state } = useSidebar();
+  const collapsed = state === "collapsed";
   const initials = getUserInitials(user.name, user.email);
   const displayName = user.name?.trim() || user.email;
-
-  useEffect(() => {
-    try {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- localStorage tercihini ilk yüklemede oku
-      setCollapsed(window.localStorage.getItem(COLLAPSE_KEY) === "1");
-    } catch {
-      // ignore
-    }
-  }, []);
-
-  function toggleCollapsed() {
-    setCollapsed((value) => {
-      const next = !value;
-      try {
-        window.localStorage.setItem(COLLAPSE_KEY, next ? "1" : "0");
-      } catch {
-        // ignore
-      }
-      return next;
-    });
-  }
 
   function isActive(href: string): boolean {
     const path = hrefPath(href);
@@ -87,102 +95,109 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
     return pathname === path || pathname.startsWith(`${path}/`);
   }
 
-  function renderLink(item: AppNavLink, compact: boolean) {
-    const Icon = item.Icon;
-    const path = hrefPath(item.href);
-    const hash = hrefHash(item.href);
+  function handleNavClick(event: MouseEvent<HTMLButtonElement>, href: string) {
+    const path = hrefPath(href);
+    const hash = hrefHash(href);
     const onPanelim = pathname === "/panelim" || pathname === "/";
+
+    setOpenMobile(false);
+
+    if (path === "/panelim" && onPanelim) {
+      event.preventDefault();
+      navigatePanelSection(hash.replace(/^#/, ""));
+    }
+  }
+
+  function renderLink(item: AppNavLink) {
+    const Icon = item.Icon;
     const active = isActive(item.href);
     const label = t(item.labelKey);
     const tooltip = item.tooltipKey ? t(item.tooltipKey) : label;
 
     return (
-      <Link
-        key={item.labelKey}
-        href={item.href}
-        title={tooltip}
-        onClick={(event) => {
-          setMobileOpen(false);
-          if (path === "/panelim" && onPanelim) {
-            event.preventDefault();
-            navigatePanelSection(hash.replace(/^#/, ""));
-          }
-        }}
-        className={cn(
-          "inline-flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-          compact && "justify-center px-2",
-          active
-            ? "bg-brand-800 text-brand-100"
-            : "text-brand-400 hover:bg-brand-900 hover:text-brand-100",
-        )}
-      >
-        <Icon className="size-4 shrink-0" strokeWidth={1.75} aria-hidden />
-        {!compact ? <span>{label}</span> : null}
-        {compact ? <span className="sr-only">{label}</span> : null}
-      </Link>
-    );
-  }
-
-  function renderNav(compact: boolean) {
-    return (
-      <nav className="mt-6 flex flex-col gap-1" aria-label={t("menu")}>
-        {appNavLinks.map((item) => renderLink(item, compact))}
-      </nav>
-    );
-  }
-
-  function renderFooter(compact: boolean) {
-    return (
-      <div className="space-y-3 border-t border-white/8 pt-4">
-        <div
-          className={cn(
-            "flex items-center gap-3 px-1",
-            compact && "flex-col gap-2",
-          )}
+      <SidebarMenuItem key={item.labelKey}>
+        <SidebarMenuButton
+          isActive={active}
+          tooltip={tooltip}
+          className={menuButtonClassName}
+          render={<Link href={item.href} />}
+          onClick={(event) => handleNavClick(event, item.href)}
         >
-          <Avatar className="size-9 rounded-full">
+          <Icon className="size-4" strokeWidth={1.75} aria-hidden />
+          <span>{label}</span>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  }
+
+  const settingsActive =
+    pathname === "/panelim/ayarlar" || pathname.startsWith("/panelim/ayarlar/");
+
+  return (
+    <Sidebar collapsible="icon">
+      <SidebarHeader className="p-4 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:p-2">
+        <div className="flex items-center justify-between gap-3 group-data-[collapsible=icon]:justify-center">
+          <Link
+            href="/panelim"
+            className="font-display text-xl font-semibold tracking-tight text-brand-100 group-data-[collapsible=icon]:hidden"
+          >
+            {tNav("brand")}
+          </Link>
+          <SidebarTrigger
+            aria-label={collapsed ? t("expandSidebar") : t("collapseSidebar")}
+            title={collapsed ? t("expandSidebar") : t("collapseSidebar")}
+            className="border border-white/10 text-brand-100 hover:bg-brand-900"
+          />
+        </div>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup className="px-2 py-0">
+          <SidebarGroupContent>
+            <nav aria-label={t("menu")}>
+              <SidebarMenu className="gap-1">
+                {appNavLinks.map((item) => renderLink(item))}
+              </SidebarMenu>
+            </nav>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter className="p-4 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:p-2">
+        <SidebarSeparator className="mx-0 bg-white/8" />
+        <div className="flex items-center gap-3 px-1 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+          <Avatar className="size-9 rounded-full group-data-[collapsible=icon]:size-8">
             <AvatarFallback className="rounded-full text-[0.65rem]">
               {initials}
             </AvatarFallback>
           </Avatar>
-          {!compact ? (
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium text-brand-100">
-                {displayName}
-              </p>
-              {user.name?.trim() ? (
-                <p className="truncate text-xs text-brand-400">{user.email}</p>
-              ) : null}
-            </div>
-          ) : null}
+          <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+            <p className="truncate text-sm font-medium text-brand-100">
+              {displayName}
+            </p>
+            {user.name?.trim() ? (
+              <p className="truncate text-xs text-brand-400">{user.email}</p>
+            ) : null}
+          </div>
         </div>
-        <Link
-          href="/panelim/ayarlar"
-          title={t("settings")}
-          onClick={() => setMobileOpen(false)}
-          className={cn(
-            "inline-flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-            compact && "justify-center px-2",
-            pathname === "/panelim/ayarlar" ||
-              pathname.startsWith("/panelim/ayarlar/")
-              ? "bg-brand-800 text-brand-100"
-              : "text-brand-400 hover:bg-brand-900 hover:text-brand-100",
-          )}
-        >
-          <Settings
-            className="size-4 shrink-0"
-            strokeWidth={1.75}
-            aria-hidden
-          />
-          {!compact ? <span>{t("settings")}</span> : null}
-          {compact ? <span className="sr-only">{t("settings")}</span> : null}
-        </Link>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              isActive={settingsActive}
+              tooltip={t("settings")}
+              className={menuButtonClassName}
+              render={<Link href="/panelim/ayarlar" />}
+              onClick={() => setOpenMobile(false)}
+            >
+              <Settings className="size-4" strokeWidth={1.75} aria-hidden />
+              <span>{t("settings")}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
         <Button
           type="button"
           variant="outline"
           className={cn(
             "w-full border-white/10 bg-transparent text-brand-300 hover:bg-brand-900 hover:text-brand-100",
-            compact ? "justify-center px-0" : "justify-start",
+            "group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:px-0",
           )}
           disabled={isLoggingOut}
           aria-label={tNav("logout")}
@@ -190,98 +205,12 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
           onClick={onLogout}
         >
           <LogOut className="size-4" aria-hidden />
-          {!compact ? tNav("logout") : null}
+          <span className="group-data-[collapsible=icon]:hidden">
+            {tNav("logout")}
+          </span>
         </Button>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <div className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-brand-950 px-4 lg:hidden">
-        <Link
-          href="/panelim"
-          className="font-display text-lg font-semibold text-brand-100"
-        >
-          {tNav("brand")}
-        </Link>
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            className="inline-flex size-9 items-center justify-center rounded-lg border border-white/10 text-brand-100"
-            aria-expanded={mobileOpen}
-            aria-label={mobileOpen ? tNav("closeMenu") : tNav("openMenu")}
-            onClick={() => setMobileOpen((value) => !value)}
-          >
-            {mobileOpen ? (
-              <X className="size-4" aria-hidden />
-            ) : (
-              <Menu className="size-4" aria-hidden />
-            )}
-          </button>
-        </div>
-      </div>
-
-      {mobileOpen ? (
-        <div className="fixed inset-0 z-40 bg-brand-950/95 p-4 lg:hidden">
-          <div className="flex h-full flex-col">
-            <div className="flex shrink-0 items-center justify-between gap-3 px-1">
-              <Link
-                href="/panelim"
-                className="font-display text-xl font-semibold tracking-tight text-brand-100"
-                onClick={() => setMobileOpen(false)}
-              >
-                {tNav("brand")}
-              </Link>
-            </div>
-            <div className="min-h-0 flex-1 overflow-y-auto">
-              {renderNav(false)}
-            </div>
-            <div className="shrink-0">{renderFooter(false)}</div>
-          </div>
-        </div>
-      ) : null}
-
-      <aside
-        className={cn(
-          "sticky top-0 hidden h-dvh shrink-0 flex-col border-r border-white/8 bg-brand-950 p-4 text-brand-100 transition-[width] duration-200 lg:flex",
-          collapsed ? "w-19" : "w-64",
-        )}
-      >
-        <div
-          className={cn(
-            "flex shrink-0 items-center gap-3 px-1",
-            collapsed ? "flex-col" : "justify-between",
-          )}
-        >
-          {!collapsed ? (
-            <Link
-              href="/panelim"
-              className="font-display text-xl font-semibold tracking-tight text-brand-100"
-            >
-              {tNav("brand")}
-            </Link>
-          ) : null}
-          <button
-            type="button"
-            className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-white/10 text-brand-100 transition-colors hover:bg-brand-900"
-            aria-expanded={!collapsed}
-            aria-label={collapsed ? t("expandSidebar") : t("collapseSidebar")}
-            title={collapsed ? t("expandSidebar") : t("collapseSidebar")}
-            onClick={toggleCollapsed}
-          >
-            {collapsed ? (
-              <PanelLeftOpen className="size-4" aria-hidden />
-            ) : (
-              <PanelLeftClose className="size-4" aria-hidden />
-            )}
-          </button>
-        </div>
-        <div className="min-h-0 flex-1 overflow-y-auto">
-          {renderNav(collapsed)}
-        </div>
-        <div className="shrink-0">{renderFooter(collapsed)}</div>
-      </aside>
-    </>
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
   );
 }
