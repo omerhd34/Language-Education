@@ -1,4 +1,7 @@
 {
+  "Toast": {
+    "close": "Bildirimi kapat"
+  },
   "Meta": {
     "title": "Pylmor",
     "description": "Yapay zeka destekli alıştırmalarla adım adım İngilizce öğren"
@@ -319,6 +322,13 @@
     "lessonMetaTitle": "{title} — Konu",
     "exercisesMetaTitle": "{title} — Alıştırma",
     "examples": "Örnekler",
+    "examplesPrevious": "Önceki örnekler",
+    "examplesNext": "Sonraki örnekler",
+    "cardFlip": "{text} kartını çevir",
+    "cardFlipBack": "{text} kartının önüne dön",
+    "cardEnglish": "İngilizce",
+    "cardExample": "Örnek",
+    "cardHint": "Çevir",
     "speakItem": "{text} sesini dinle",
     "contentMissingTitle": "İçerik yakında",
     "contentMissingBody": "Bu konunun anlatımı ve alıştırmaları henüz eklenmedi. Örnek yapı için 1. konuya bakabilirsin.",
