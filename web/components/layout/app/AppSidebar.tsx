@@ -1,12 +1,21 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { LogOut, Menu, PanelLeftClose, PanelLeftOpen, X } from "lucide-react";
+import {
+  LogOut,
+  Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Settings,
+  X,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { appNavLinks } from "@/components/layout/app/appNavLinks";
+import {
+  appNavLinks,
+  type AppNavLink,
+} from "@/components/layout/app/appNavLinks";
 import { Link, usePathname } from "@/i18n/navigation";
 import { navigatePanelSection, usePanelHash } from "@/hooks/usePanelHash";
 import { cn } from "@/lib/utils";
@@ -62,52 +71,62 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
     });
   }
 
+  function isActive(href: string): boolean {
+    const path = hrefPath(href);
+    const hash = hrefHash(href);
+    const onPanelim = pathname === "/panelim" || pathname === "/";
+
+    if (hash) {
+      return onPanelim && panelHash === hash;
+    }
+
+    if (path === "/panelim") {
+      return onPanelim && panelHash === "";
+    }
+
+    return pathname === path || pathname.startsWith(`${path}/`);
+  }
+
+  function renderLink(item: AppNavLink, compact: boolean) {
+    const Icon = item.Icon;
+    const path = hrefPath(item.href);
+    const hash = hrefHash(item.href);
+    const onPanelim = pathname === "/panelim" || pathname === "/";
+    const active = isActive(item.href);
+    const label = t(item.labelKey);
+    const tooltip = item.tooltipKey ? t(item.tooltipKey) : label;
+
+    return (
+      <Link
+        key={item.labelKey}
+        href={item.href}
+        title={tooltip}
+        onClick={(event) => {
+          setMobileOpen(false);
+          if (path === "/panelim" && onPanelim) {
+            event.preventDefault();
+            navigatePanelSection(hash.replace(/^#/, ""));
+          }
+        }}
+        className={cn(
+          "inline-flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+          compact && "justify-center px-2",
+          active
+            ? "bg-brand-800 text-brand-100"
+            : "text-brand-400 hover:bg-brand-900 hover:text-brand-100",
+        )}
+      >
+        <Icon className="size-4 shrink-0" strokeWidth={1.75} aria-hidden />
+        {!compact ? <span>{label}</span> : null}
+        {compact ? <span className="sr-only">{label}</span> : null}
+      </Link>
+    );
+  }
+
   function renderNav(compact: boolean) {
     return (
       <nav className="mt-6 flex flex-col gap-1" aria-label={t("menu")}>
-        {appNavLinks.map((item) => {
-          const Icon = item.Icon;
-          const path = hrefPath(item.href);
-          const hash = hrefHash(item.href);
-          const onPanelim = pathname === "/panelim" || pathname === "/";
-          const active = hash
-            ? onPanelim && panelHash === hash
-            : path === "/panelim"
-              ? onPanelim && panelHash === ""
-              : pathname === path || pathname.startsWith(`${path}/`);
-
-          return (
-            <Link
-              key={item.labelKey}
-              href={item.href}
-              title={t(item.labelKey)}
-              onClick={(event) => {
-                setMobileOpen(false);
-                if (path === "/panelim" && onPanelim) {
-                  event.preventDefault();
-                  navigatePanelSection(hash.replace(/^#/, ""));
-                }
-              }}
-              className={cn(
-                "inline-flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-                compact && "justify-center px-2",
-                active
-                  ? "bg-brand-800 text-brand-100"
-                  : "text-brand-400 hover:bg-brand-900 hover:text-brand-100",
-              )}
-            >
-              <Icon
-                className="size-4 shrink-0"
-                strokeWidth={1.75}
-                aria-hidden
-              />
-              {!compact ? <span>{t(item.labelKey)}</span> : null}
-              {compact ? (
-                <span className="sr-only">{t(item.labelKey)}</span>
-              ) : null}
-            </Link>
-          );
-        })}
+        {appNavLinks.map((item) => renderLink(item, compact))}
       </nav>
     );
   }
@@ -136,8 +155,28 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
               ) : null}
             </div>
           ) : null}
-          <ThemeToggle className="shrink-0 border-white/10 bg-transparent text-brand-300 hover:bg-brand-900 hover:text-brand-100" />
         </div>
+        <Link
+          href="/panelim/ayarlar"
+          title={t("settings")}
+          onClick={() => setMobileOpen(false)}
+          className={cn(
+            "inline-flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
+            compact && "justify-center px-2",
+            pathname === "/panelim/ayarlar" ||
+              pathname.startsWith("/panelim/ayarlar/")
+              ? "bg-brand-800 text-brand-100"
+              : "text-brand-400 hover:bg-brand-900 hover:text-brand-100",
+          )}
+        >
+          <Settings
+            className="size-4 shrink-0"
+            strokeWidth={1.75}
+            aria-hidden
+          />
+          {!compact ? <span>{t("settings")}</span> : null}
+          {compact ? <span className="sr-only">{t("settings")}</span> : null}
+        </Link>
         <Button
           type="button"
           variant="outline"
@@ -167,7 +206,6 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
           {tNav("brand")}
         </Link>
         <div className="flex items-center gap-2">
-          <ThemeToggle className="border-white/10 bg-transparent text-brand-100 hover:bg-brand-900" />
           <button
             type="button"
             className="inline-flex size-9 items-center justify-center rounded-lg border border-white/10 text-brand-100"

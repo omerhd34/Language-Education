@@ -7,7 +7,6 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { navLinks } from "@/components/layout/navLinks";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -80,13 +79,10 @@ export function Navbar() {
               onLogout={() => void handleLogout()}
             />
           ) : (
-            <>
-              <ThemeToggle />
-              <ButtonLink href="/panel" size="lg">
-                <HiRectangleStack aria-hidden />
-                {t("myPanel")}
-              </ButtonLink>
-            </>
+            <ButtonLink href="/panel" size="lg">
+              <HiRectangleStack aria-hidden />
+              {t("myPanel")}
+            </ButtonLink>
           )}
         </nav>
 
@@ -97,9 +93,7 @@ export function Navbar() {
               isLoggingOut={isLoggingOut}
               onLogout={() => void handleLogout()}
             />
-          ) : (
-            <ThemeToggle />
-          )}
+          ) : null}
           <button
             type="button"
             className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-brand-400/70 dark:border-brand-600"

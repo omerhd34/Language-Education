@@ -1,14 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useTheme } from "next-themes";
 import {
   useCallback,
   useEffect,
   useId,
   useRef,
   useState,
-  useSyncExternalStore,
   type KeyboardEvent as ReactKeyboardEvent,
   type ReactNode,
 } from "react";
@@ -21,25 +19,15 @@ import {
   Search,
   Settings,
   Sparkles,
-  Sun,
   UserRound,
 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
-import { Switch } from "@/components/ui/switch";
 import { Link } from "@/i18n/navigation";
 import { getUserInitials } from "@/lib/userInitials";
 import type { AuthUser } from "@/store/api";
 
 const ROW_SELECTOR = ".menu-item, .sign-out-row";
 const UNREAD_MESSAGES = 3;
-
-const subscribe = () => () => {};
-const useIsMounted = () =>
-  useSyncExternalStore(
-    subscribe,
-    () => true,
-    () => false,
-  );
 
 type UserMenuProps = {
   user: AuthUser;
@@ -57,9 +45,6 @@ type MenuLink = {
 
 export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
   const t = useTranslations("Nav");
-  const tTheme = useTranslations("Theme");
-  const { resolvedTheme, setTheme } = useTheme();
-  const mounted = useIsMounted();
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -69,7 +54,6 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
 
   const displayName = user.name?.trim() || user.email;
   const initials = getUserInitials(user.name, user.email);
-  const isDark = resolvedTheme === "dark";
 
   const menuLinks: MenuLink[] = [
     {
@@ -80,7 +64,7 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
     },
     {
       key: "accountSettings",
-      href: "/panelim",
+      href: "/panelim/ayarlar",
       icon: Settings,
       shortcut: ["⌘", ","],
     },
@@ -330,40 +314,6 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
             })}
 
             <div className="account-dropdown__divider" />
-
-            <div
-              className="menu-item menu-item--theme"
-              role="menuitem"
-              tabIndex={0}
-              onClick={() => {
-                if (!mounted) {
-                  return;
-                }
-                setTheme(isDark ? "light" : "dark");
-              }}
-              onKeyDown={(event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault();
-                  if (mounted) {
-                    setTheme(isDark ? "light" : "dark");
-                  }
-                }
-              }}
-            >
-              <Sun className="menu-item__icon" strokeWidth={1.75} aria-hidden />
-              <span className="menu-item__label">{tTheme("darkMode")}</span>
-              <Switch
-                checked={mounted ? isDark : false}
-                disabled={!mounted}
-                aria-label={tTheme("toggle")}
-                className="ml-auto data-checked:bg-(--account-accent)"
-                onClick={(event) => event.stopPropagation()}
-                onPointerDown={(event) => event.stopPropagation()}
-                onCheckedChange={(checked) => {
-                  setTheme(checked ? "dark" : "light");
-                }}
-              />
-            </div>
 
             <button
               type="button"
