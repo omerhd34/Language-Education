@@ -5,11 +5,7 @@ import { TopicContentMissing } from "@/components/features/topics/TopicContentMi
 import { TopicExercisesView } from "@/components/features/topics/TopicExercisesView";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
-import {
-  dashboardTopics,
-  getDashboardTopicById,
-  getTopicTitleEn,
-} from "@/data/dashboardTopics";
+import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
 import { getTopicContent } from "@/data/topics";
 import {
   PASSED_LEVEL_EXAMS_COOKIE,
@@ -64,7 +60,8 @@ export default async function TopicExercisesPage({ params }: PageProps) {
       <TopicPageHeader
         topicId={topic.id}
         title={topic.title}
-        titleEn={getTopicTitleEn(topic.id, topic.title)}
+        titleEng={topic.titleEng}
+        titleEx={topic.titleEx}
         level={topic.level}
         index={index}
         activeTab="exercises"

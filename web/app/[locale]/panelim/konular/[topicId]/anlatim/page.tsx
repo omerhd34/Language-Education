@@ -6,11 +6,7 @@ import { TopicLessonProgressTracker } from "@/components/features/topics/TopicLe
 import { TopicLessonView } from "@/components/features/topics/TopicLessonView";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
-import {
-  dashboardTopics,
-  getDashboardTopicById,
-  getTopicTitleEn,
-} from "@/data/dashboardTopics";
+import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
 import { getTopicContent } from "@/data/topics";
 import { redirect } from "@/i18n/navigation";
 import {
@@ -74,7 +70,8 @@ export default async function TopicLessonPage({ params }: PageProps) {
       <TopicPageHeader
         topicId={topic.id}
         title={topic.title}
-        titleEn={getTopicTitleEn(topic.id, topic.title)}
+        titleEng={topic.titleEng}
+        titleEx={topic.titleEx}
         level={topic.level}
         index={index}
         activeTab="lesson"

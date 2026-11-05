@@ -8,7 +8,6 @@ import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
 import {
   dashboardTopics,
   getDashboardTopicById,
-  getTopicTitleEn,
 } from "@/data/dashboardTopics";
 import { getTopicContent } from "@/data/topics";
 import {
@@ -68,7 +67,8 @@ export default async function TopicExamPage({ params }: PageProps) {
       <TopicPageHeader
         topicId={topic.id}
         title={topic.title}
-        titleEn={getTopicTitleEn(topic.id, topic.title)}
+        titleEng={topic.titleEng}
+        titleEx={topic.titleEx}
         level={topic.level}
         index={index}
         activeTab="exam"
