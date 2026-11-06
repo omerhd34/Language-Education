@@ -5,7 +5,9 @@ import { useTranslations } from "next-intl";
 import { RotateCcw } from "lucide-react";
 import { useResetProgressMutation, type ProgressResetScope } from "@/store/api";
 import { Button } from "@/components/ui/Button";
+import { clearExerciseDraftStorage } from "@/lib/exerciseDraftStorage";
 import { clearPassedLevelExams } from "@/lib/levelExamStorage";
+import { clearTopicExamDrafts } from "@/lib/topicExamDraftStorage";
 import { clearTopicProgressStorage } from "@/lib/topicProgressStorage";
 import { clearLastVocabularyQuizResult } from "@/lib/vocabularyQuizResultStorage";
 
@@ -34,6 +36,8 @@ export function ProgressResetPanel() {
       if (pendingScope === "topics" || pendingScope === "all") {
         clearPassedLevelExams();
         clearTopicProgressStorage();
+        clearExerciseDraftStorage();
+        clearTopicExamDrafts();
       }
       setDoneScope(pendingScope);
       setPendingScope(null);

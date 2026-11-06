@@ -162,6 +162,26 @@ export function markTopicExerciseTypeCompleted(
   });
 }
 
+export function unmarkTopicExerciseTypeCompleted(
+  topicId: string,
+  type: ExerciseType,
+): void {
+  const all = readAll();
+  const current = all[topicId];
+  const completed = current?.completedTypes ?? [];
+  if (!completed.includes(type)) {
+    return;
+  }
+
+  writeAll({
+    ...all,
+    [topicId]: {
+      ...current,
+      completedTypes: completed.filter((item) => item !== type),
+    },
+  });
+}
+
 export function isTopicExerciseTypeCompleted(
   topicId: string,
   type: ExerciseType,

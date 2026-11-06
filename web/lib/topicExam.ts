@@ -53,6 +53,32 @@ const FALLBACK_DISTRACTORS = [
   "Sadece ezber",
 ];
 
+function hashString(value: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < value.length; i += 1) {
+    hash ^= value.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function shuffleOptions(options: string[], seed: string): string[] {
+  const next = [...options];
+  let state = hashString(seed) || 1;
+  for (let i = next.length - 1; i > 0; i -= 1) {
+    state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+    const j = state % (i + 1);
+    const current = next[i];
+    const swap = next[j];
+    if (current === undefined || swap === undefined) {
+      continue;
+    }
+    next[i] = swap;
+    next[j] = current;
+  }
+  return next;
+}
+
 function uniquePush(options: string[], value: string): void {
   const trimmed = value.trim();
   if (!trimmed) {
@@ -104,7 +130,10 @@ export function ensureExamOptionCount(
     filler += 1;
   }
 
-  const finalOptions = options.slice(0, count);
+  const finalOptions = shuffleOptions(
+    options.slice(0, count),
+    `${exercise.id}|${correct}`,
+  );
   const correctIndex = Math.max(0, finalOptions.indexOf(correct));
 
   return {
@@ -226,6 +255,10 @@ function buildExtraTopicQuestions(
 export function resolveTopicExamExercises(
   content: TopicContent,
 ): MultipleChoiceExercise[] {
+  const questionCount =
+    content.examQuestionCount && content.examQuestionCount > 0
+      ? content.examQuestionCount
+      : TOPIC_EXAM_QUESTION_COUNT;
   const practice = practiceMultipleChoice(content);
   const pool = [
     ...practice.flatMap((item) => item.options),
@@ -244,19 +277,24 @@ export function resolveTopicExamExercises(
     });
   }
 
-  if (source.length < TOPIC_EXAM_QUESTION_COUNT) {
+  if (source.length < questionCount) {
     for (const item of buildExtraTopicQuestions(
       content,
-      TOPIC_EXAM_QUESTION_COUNT - source.length,
+      questionCount - source.length,
       pool,
     )) {
       pushUniqueQuestion(source, seen, item);
     }
   }
 
+  const optionCount =
+    content.examOptionCount && content.examOptionCount > 1
+      ? content.examOptionCount
+      : TOPIC_EXAM_OPTION_COUNT;
+
   return source
-    .slice(0, TOPIC_EXAM_QUESTION_COUNT)
-    .map((item) => ensureExamOptionCount(item, pool, TOPIC_EXAM_OPTION_COUNT));
+    .slice(0, questionCount)
+    .map((item) => ensureExamOptionCount(item, pool, optionCount));
 }
 
 function shuffleCandidates(items: CrosswordCandidate[]): CrosswordCandidate[] {
