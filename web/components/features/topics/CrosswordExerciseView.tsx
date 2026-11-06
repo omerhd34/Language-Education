@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Check, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import type {
   CrosswordDirection,
@@ -15,6 +16,7 @@ import {
   readCrosswordDraft,
   writeCrosswordDraft,
 } from "@/lib/exerciseDraftStorage";
+import { isCrosswordClueSolved } from "@/lib/exerciseTypeProgress";
 import { cn } from "@/lib/utils";
 
 type ExerciseSessionResult = {
@@ -26,6 +28,7 @@ type CrosswordExerciseViewProps = {
   exercises: CrosswordExercise[];
   onComplete?: (result: ExerciseSessionResult) => void;
   onRestart?: () => void;
+  onProgress?: (percent: number) => void;
   draftKey?: string | null;
 };
 
@@ -134,6 +137,7 @@ export function CrosswordExerciseView({
   exercises,
   onComplete,
   onRestart,
+  onProgress,
   draftKey,
 }: CrosswordExerciseViewProps) {
   const t = useTranslations("Topic");
@@ -158,6 +162,33 @@ export function CrosswordExerciseView({
   const [finished, setFinished] = useState(false);
   const [resultOpen, setResultOpen] = useState(false);
   const restoredKeyRef = useRef<string | null>(null);
+  const progressPercent = useMemo(() => {
+    if (!exercise || finished) {
+      return finished ? 100 : 0;
+    }
+    const totalClues = exercises.reduce(
+      (sum, item) => sum + item.clues.length,
+      0,
+    );
+    const solvedBefore = exercises
+      .slice(0, puzzleIndex)
+      .reduce((sum, item) => sum + item.clues.length, 0);
+    const solvedClues =
+      solvedBefore +
+      exercise.clues.filter((clue) => isCrosswordClueSolved(clue, values))
+        .length;
+    if (totalClues === 0) {
+      return 0;
+    }
+    return Math.round((solvedClues / totalClues) * 100);
+  }, [exercise, exercises, finished, puzzleIndex, values]);
+
+  useEffect(() => {
+    if (!ready || !exercise) {
+      return;
+    }
+    onProgress?.(progressPercent);
+  }, [exercise, onProgress, progressPercent, ready]);
 
   useEffect(() => {
     if (storageKey === null) {
@@ -250,6 +281,7 @@ export function CrosswordExerciseView({
   }
 
   const clues = [...exercise.clues].sort((a, b) => a.number - b.number);
+  const percent = progressPercent;
   const clueColumnCount = 3;
   const clueRowCount = Math.ceil(clues.length / clueColumnCount);
   const isLastPuzzle = puzzleIndex >= exercises.length - 1;
@@ -365,14 +397,22 @@ export function CrosswordExerciseView({
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-4">
-      {exercises.length > 1 ? (
-        <p className="text-sm text-brand-500 dark:text-brand-400">
-          {t("crosswordProgress", {
-            current: puzzleIndex + 1,
-            total: exercises.length,
-          })}
-        </p>
-      ) : null}
+      <div
+        className={cn(
+          "flex items-center gap-3",
+          exercises.length > 1 ? "justify-between" : "justify-end",
+        )}
+      >
+        {exercises.length > 1 ? (
+          <p className="text-sm text-brand-500 dark:text-brand-400">
+            {t("crosswordProgress", {
+              current: puzzleIndex + 1,
+              total: exercises.length,
+            })}
+          </p>
+        ) : null}
+        <ExercisePercentBadge percent={percent} />
+      </div>
       <article className="dashboard-panel space-y-5">
         <div className="overflow-x-auto">
           <div

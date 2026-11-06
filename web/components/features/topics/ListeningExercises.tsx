@@ -165,11 +165,7 @@ export function ListeningExercises({
     current.englishSelected !== null &&
     current.turkishSelected !== null &&
     !current.checked;
-  const canRestart =
-    index > 0 ||
-    current.englishSelected !== null ||
-    current.turkishSelected !== null ||
-    current.checked;
+  const canRestart = index > 0;
   const continueLabel = t(nextLabelKey);
 
   function resetAll() {

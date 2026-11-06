@@ -1,7 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { FormEvent } from "react";
+import { useEffect, useRef, type FormEvent } from "react";
+import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
@@ -18,6 +19,14 @@ type FillBlankExercisesProps = {
   exercises: FillBlankExercise[];
   onComplete?: (result: ExerciseSessionResult) => void;
   onRestart?: () => void;
+  initialIndex?: number;
+  initialSlots?: BlankSlot[];
+  onSessionChange?: (session: {
+    index: number;
+    correct: number;
+    total: number;
+    slots: BlankSlot[];
+  }) => void;
 };
 
 type BlankSlot = {
@@ -56,8 +65,12 @@ export function FillBlankExercises({
   exercises,
   onComplete,
   onRestart,
+  initialIndex = 0,
+  initialSlots,
+  onSessionChange,
 }: FillBlankExercisesProps) {
   const t = useTranslations("Topic");
+  const skipSessionSave = useRef(true);
   const {
     index,
     slots,
@@ -75,7 +88,29 @@ export function FillBlankExercises({
   } = useExerciseNavigation({
     length: exercises.length,
     createSlot: createBlankSlot,
+    initialIndex,
+    initialSlots,
   });
+
+  useEffect(() => {
+    if (!onSessionChange) {
+      return;
+    }
+    if (skipSessionSave.current) {
+      skipSessionSave.current = false;
+      return;
+    }
+
+    onSessionChange({
+      index,
+      correct: countCorrect(exercises, slots),
+      total: exercises.length,
+      slots: slots.map((slot) => ({
+        answer: slot.answer,
+        checked: slot.checked,
+      })),
+    });
+  }, [exercises, index, onSessionChange, slots]);
 
   if (exercises.length === 0 || !current) {
     return (
@@ -92,8 +127,12 @@ export function FillBlankExercises({
 
   const isCorrect =
     current.checked && isAnswerCorrect(exercise, current.answer);
-  const canRestart = index > 0 || current.answer.length > 0 || current.checked;
+  const canRestart = index > 0;
   const continueLabel = t(nextLabelKey);
+  const percent =
+    exercises.length === 0
+      ? 0
+      : Math.round((countCorrect(exercises, slots) / exercises.length) * 100);
 
   if (finished) {
     const correctCount = countCorrect(exercises, slots);
@@ -135,9 +174,12 @@ export function FillBlankExercises({
 
   return (
     <div className="mx-auto max-w-2xl space-y-4">
-      <p className="text-sm text-brand-500 dark:text-brand-400">
-        {t("progress", { current: index + 1, total: exercises.length })}
-      </p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm text-brand-500 dark:text-brand-400">
+          {t("progress", { current: index + 1, total: exercises.length })}
+        </p>
+        <ExercisePercentBadge percent={percent} />
+      </div>
 
       <article className="dashboard-panel space-y-5">
         <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">

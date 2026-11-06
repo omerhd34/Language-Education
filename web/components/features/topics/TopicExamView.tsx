@@ -2,105 +2,183 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useState } from "react";
-import { CheckCircle2 } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { ExerciseTypePicker } from "@/components/features/topics/ExerciseTypePicker";
+import { FillBlankExercises } from "@/components/features/topics/FillBlankExercises";
 import { MultipleChoiceExercises } from "@/components/features/topics/MultipleChoiceExercises";
-import type { MultipleChoiceExercise } from "@/data/topics/types";
+import type {
+  FillBlankExercise,
+  MultipleChoiceExercise,
+} from "@/data/topics/types";
 import { didPassTopicExamScore } from "@/lib/topicExam";
 import {
-  clearTopicExamDraft,
+  emptyTopicExamDraft,
   readTopicExamDraft,
-  readTopicExamPercent,
   toExamPercent,
   writeTopicExamDraft,
   type TopicExamDraft,
+  type TopicExamPartDraft,
+  type TopicQuizPart,
 } from "@/lib/topicExamDraftStorage";
-import { markTopicExamPassed } from "@/lib/topicProgressStorage";
-import { cn } from "@/lib/utils";
+import {
+  isTopicExamPassed,
+  markTopicExamPassed,
+} from "@/lib/topicProgressStorage";
 
 type TopicExamViewProps = {
   topicId: string;
-  exercises: MultipleChoiceExercise[];
+  multipleChoice: MultipleChoiceExercise[];
+  fillBlanks: FillBlankExercise[];
 };
 
-type ExamOutcome = "passed" | "failed";
+type PartOutcome = "passed" | "failed";
 
-type ExamSession = {
+type PartSession = {
   index: number;
   correct: number;
   total: number;
-  slots: TopicExamDraft["slots"];
+  slots: TopicExamPartDraft["slots"];
 };
 
-function ExamPercentBadge({ percent }: { percent: number }) {
-  const t = useTranslations("Topic");
-  const done = percent >= 100;
-
-  return (
-    <Badge
-      variant="outline"
-      aria-label={t("typeProgressAria", { percent })}
-      className={cn(
-        "shrink-0 tabular-nums",
-        done
-          ? "border-emerald-500/40 text-emerald-700 dark:text-emerald-300"
-          : percent > 0
-            ? "border-sky-500/40 text-sky-700 dark:text-sky-300"
-            : "text-brand-500 dark:text-brand-400",
-      )}
-    >
-      {t("typeProgressBadge", { percent })}
-    </Badge>
-  );
+function partProgress(draft: TopicExamDraft, part: TopicQuizPart): number {
+  const item = draft.parts[part];
+  if (item?.active) {
+    return toExamPercent(item.correct, item.total);
+  }
+  if (draft.passedParts.includes(part)) {
+    return 100;
+  }
+  return 0;
 }
 
-export function TopicExamView({ topicId, exercises }: TopicExamViewProps) {
+export function TopicExamView({
+  topicId,
+  multipleChoice,
+  fillBlanks,
+}: TopicExamViewProps) {
   const t = useTranslations("Topic");
+  const requiredParts = useMemo<TopicQuizPart[]>(() => {
+    const parts: TopicQuizPart[] = [];
+    if (multipleChoice.length > 0) {
+      parts.push("multiple_choice");
+    }
+    if (fillBlanks.length > 0) {
+      parts.push("fill_blank");
+    }
+    return parts;
+  }, [fillBlanks.length, multipleChoice.length]);
   const [ready, setReady] = useState(false);
-  const [draft, setDraft] = useState<TopicExamDraft | null>(null);
-  const [percent, setPercent] = useState(0);
-  const [outcome, setOutcome] = useState<ExamOutcome | null>(null);
+  const [draft, setDraft] = useState<TopicExamDraft>(emptyTopicExamDraft());
+  const [selected, setSelected] = useState<TopicQuizPart | null>(null);
+  const [partOutcome, setPartOutcome] = useState<PartOutcome | null>(null);
 
   useEffect(() => {
-    const saved = readTopicExamDraft(topicId);
-    const compatible =
-      saved && saved.slots.length === exercises.length ? saved : null;
-    if (saved && !compatible) {
-      clearTopicExamDraft(topicId);
-    }
-    setDraft(compatible);
-    setPercent(
-      compatible?.active
-        ? toExamPercent(compatible.correct, compatible.total)
-        : readTopicExamPercent(topicId),
+    const saved = readTopicExamDraft(topicId) ?? emptyTopicExamDraft();
+    let passedParts = saved.passedParts.filter((part) =>
+      requiredParts.includes(part),
     );
-    setReady(true);
-  }, [exercises.length, topicId]);
+    const anyActive = requiredParts.some((part) => saved.parts[part]?.active);
+    if (passedParts.length === 0 && !anyActive && isTopicExamPassed(topicId)) {
+      passedParts = [...requiredParts];
+    }
 
-  const handleSessionChange = useCallback(
-    (session: ExamSession) => {
-      const next: TopicExamDraft = {
-        active: true,
-        index: session.index,
-        correct: session.correct,
-        total: session.total,
-        slots: session.slots,
-      };
+    const next: TopicExamDraft = {
+      ...saved,
+      requiredParts,
+      passedParts,
+    };
+    writeTopicExamDraft(topicId, next);
+    setDraft(next);
+    setReady(true);
+  }, [fillBlanks.length, multipleChoice.length, requiredParts, topicId]);
+
+  const saveDraft = useCallback(
+    (next: TopicExamDraft) => {
       writeTopicExamDraft(topicId, next);
       setDraft(next);
-      setPercent(toExamPercent(session.correct, session.total));
     },
     [topicId],
+  );
+
+  const handleSessionChange = useCallback(
+    (part: TopicQuizPart, session: PartSession) => {
+      const current = readTopicExamDraft(topicId) ?? emptyTopicExamDraft();
+      saveDraft({
+        ...current,
+        requiredParts,
+        parts: {
+          ...current.parts,
+          [part]: {
+            active: true,
+            index: session.index,
+            correct: session.correct,
+            total: session.total,
+            slots: session.slots,
+          },
+        },
+      });
+    },
+    [requiredParts, saveDraft, topicId],
+  );
+
+  const handleMultipleChoiceSession = useCallback(
+    (session: {
+      index: number;
+      correct: number;
+      total: number;
+      slots: { selected: number | null; checked: boolean }[];
+    }) => {
+      handleSessionChange("multiple_choice", {
+        ...session,
+        slots: session.slots.map((slot) => ({
+          selected: slot.selected,
+          answer: "",
+          checked: slot.checked,
+        })),
+      });
+    },
+    [handleSessionChange],
+  );
+
+  const handleFillBlankSession = useCallback(
+    (session: {
+      index: number;
+      correct: number;
+      total: number;
+      slots: { answer: string; checked: boolean }[];
+    }) => {
+      handleSessionChange("fill_blank", {
+        ...session,
+        slots: session.slots.map((slot) => ({
+          selected: null,
+          answer: slot.answer,
+          checked: slot.checked,
+        })),
+      });
+    },
+    [handleSessionChange],
+  );
+
+  const clearPartPass = useCallback(
+    (part: TopicQuizPart) => {
+      const current = readTopicExamDraft(topicId) ?? emptyTopicExamDraft();
+      saveDraft({
+        ...current,
+        passedParts: current.passedParts.filter((item) => item !== part),
+      });
+    },
+    [saveDraft, topicId],
   );
 
   if (!ready) {
     return null;
   }
 
-  if (exercises.length === 0) {
+  if (multipleChoice.length === 0 && fillBlanks.length === 0) {
     return (
       <p className="text-sm text-brand-600 dark:text-brand-400">
         {t("noExamQuestions")}
@@ -108,63 +186,175 @@ export function TopicExamView({ topicId, exercises }: TopicExamViewProps) {
     );
   }
 
-  function handleComplete(result: { correct: number; total: number }) {
-    if (didPassTopicExamScore(result.correct, result.total)) {
-      clearTopicExamDraft(topicId);
-      markTopicExamPassed(topicId);
-      setDraft(null);
-      setPercent(100);
-      setOutcome("passed");
+  function handleComplete(
+    part: TopicQuizPart,
+    result: { correct: number; total: number },
+  ) {
+    const current = readTopicExamDraft(topicId) ?? draft;
+    if (!didPassTopicExamScore(result.correct, result.total)) {
+      setPartOutcome("failed");
       return;
     }
-    setOutcome("failed");
+
+    const passedParts = current.passedParts.includes(part)
+      ? current.passedParts
+      : [...current.passedParts, part];
+    const partDraft = current.parts[part];
+    const next: TopicExamDraft = {
+      ...current,
+      requiredParts,
+      passedParts,
+      parts: {
+        ...current.parts,
+        [part]: partDraft ? { ...partDraft, active: false } : partDraft,
+      },
+    };
+    saveDraft(next);
+
+    if (requiredParts.every((item) => passedParts.includes(item))) {
+      markTopicExamPassed(topicId);
+    }
+    setPartOutcome("passed");
   }
 
-  if (outcome === "passed") {
+  const allPassed = requiredParts.every((part) =>
+    draft.passedParts.includes(part),
+  );
+  const showPicker = fillBlanks.length > 0 && multipleChoice.length > 0;
+
+  if (showPicker && !selected) {
     return (
-      <Alert className="mx-auto max-w-lg border-emerald-500/40 bg-emerald-500/10">
-        <CheckCircle2 className="text-emerald-600 dark:text-emerald-400" />
-        <AlertTitle>{t("topicExamPassedTitle")}</AlertTitle>
-        <AlertDescription className="space-y-3">
-          <p>{t("topicExamPassedBody")}</p>
-          <ButtonLink href="/panelim#konular" size="sm">
-            {t("examBackToTopics")}
-          </ButtonLink>
-        </AlertDescription>
-      </Alert>
+      <div className="space-y-4">
+        {allPassed ? (
+          <Alert className="border-emerald-500/40 bg-emerald-500/10">
+            <CheckCircle2 className="text-emerald-600 dark:text-emerald-400" />
+            <AlertTitle>{t("topicExamPassedTitle")}</AlertTitle>
+            <AlertDescription>{t("topicExamPassedBody")}</AlertDescription>
+          </Alert>
+        ) : (
+          <p className="text-sm text-brand-600 dark:text-brand-400">
+            {t("topicExamIntro")}
+          </p>
+        )}
+        <ExerciseTypePicker
+          counts={{
+            multiple_choice: multipleChoice.length,
+            fill_blank: fillBlanks.length,
+            crossword: 0,
+            listening: 0,
+          }}
+          completedTypes={draft.passedParts}
+          progressPercents={{
+            multiple_choice: partProgress(draft, "multiple_choice"),
+            fill_blank: partProgress(draft, "fill_blank"),
+          }}
+          title={t("quizChooseTitle")}
+          subtitle={t("quizChooseSubtitle")}
+          onSelect={(type) => {
+            if (type !== "multiple_choice" && type !== "fill_blank") {
+              return;
+            }
+            setPartOutcome(null);
+            setSelected(type);
+          }}
+        />
+      </div>
     );
   }
 
+  const activePart: TopicQuizPart =
+    selected ?? (multipleChoice.length > 0 ? "multiple_choice" : "fill_blank");
+  const partDraft = draft.parts[activePart];
+
   return (
     <div className="space-y-4">
-      {outcome === "failed" ? (
+      {showPicker ? (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => {
+            setSelected(null);
+            setPartOutcome(null);
+          }}
+        >
+          <ArrowLeft className="size-4" aria-hidden />
+          {t("quizBackToParts")}
+        </Button>
+      ) : (
+        <p className="text-sm text-brand-600 dark:text-brand-400">
+          {t("quizSingleIntro")}
+        </p>
+      )}
+
+      {partOutcome === "failed" ? (
         <Alert className="border-amber-500/40 bg-amber-500/10">
           <AlertTitle>{t("topicExamFailedTitle")}</AlertTitle>
           <AlertDescription>{t("topicExamFailedBody")}</AlertDescription>
         </Alert>
-      ) : (
-        <div className="flex items-start justify-between gap-3">
-          <p className="text-sm text-brand-600 dark:text-brand-400">
-            {t("topicExamIntro", {
-              questionCount: exercises.length,
-              optionCount: exercises[0]?.options.length ?? 4,
-            })}
-          </p>
-          <ExamPercentBadge percent={percent} />
-        </div>
-      )}
-      {outcome === "failed" ? (
-        <div className="flex justify-end">
-          <ExamPercentBadge percent={percent} />
-        </div>
       ) : null}
-      <MultipleChoiceExercises
-        exercises={exercises}
-        initialIndex={draft?.active ? draft.index : 0}
-        initialSlots={draft?.active ? draft.slots : undefined}
-        onSessionChange={handleSessionChange}
-        onComplete={handleComplete}
-      />
+
+      {partOutcome === "passed" ? (
+        <Alert className="border-emerald-500/40 bg-emerald-500/10">
+          <CheckCircle2 className="text-emerald-600 dark:text-emerald-400" />
+          <AlertTitle>
+            {allPassed ? t("topicExamPassedTitle") : t("quizPartPassedTitle")}
+          </AlertTitle>
+          <AlertDescription>
+            {allPassed ? t("topicExamPassedBody") : t("quizPartPassedBody")}
+          </AlertDescription>
+        </Alert>
+      ) : null}
+
+      {partOutcome === "passed" ? (
+        showPicker ? null : (
+          <ButtonLink href="/panel#dilbilgisi" size="sm">
+            {t("examBackToTopics")}
+          </ButtonLink>
+        )
+      ) : activePart === "fill_blank" ? (
+        <FillBlankExercises
+          key="fill_blank"
+          exercises={fillBlanks}
+          initialIndex={
+            partDraft && partDraft.slots.length === fillBlanks.length
+              ? partDraft.index
+              : 0
+          }
+          initialSlots={
+            partDraft && partDraft.slots.length === fillBlanks.length
+              ? partDraft.slots.map((slot) => ({
+                  answer: slot.answer,
+                  checked: slot.checked,
+                }))
+              : undefined
+          }
+          onSessionChange={handleFillBlankSession}
+          onRestart={() => clearPartPass("fill_blank")}
+          onComplete={(result) => handleComplete("fill_blank", result)}
+        />
+      ) : (
+        <MultipleChoiceExercises
+          key="multiple_choice"
+          exercises={multipleChoice}
+          initialIndex={
+            partDraft && partDraft.slots.length === multipleChoice.length
+              ? partDraft.index
+              : 0
+          }
+          initialSlots={
+            partDraft && partDraft.slots.length === multipleChoice.length
+              ? partDraft.slots.map((slot) => ({
+                  selected: slot.selected,
+                  checked: slot.checked,
+                }))
+              : undefined
+          }
+          onSessionChange={handleMultipleChoiceSession}
+          onRestart={() => clearPartPass("multiple_choice")}
+          onComplete={(result) => handleComplete("multiple_choice", result)}
+        />
+      )}
     </div>
   );
 }

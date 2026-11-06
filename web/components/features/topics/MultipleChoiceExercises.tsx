@@ -2,12 +2,12 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
+import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
 import type { MultipleChoiceExercise } from "@/data/topics/types";
 import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
-import type { TopicExamSlot } from "@/lib/topicExamDraftStorage";
 import { cn } from "@/lib/utils";
 
 export type ExerciseSessionResult = {
@@ -15,23 +15,23 @@ export type ExerciseSessionResult = {
   total: number;
 };
 
+type ChoiceSlot = {
+  selected: number | null;
+  checked: boolean;
+};
+
 type MultipleChoiceExercisesProps = {
   exercises: MultipleChoiceExercise[];
   onComplete?: (result: ExerciseSessionResult) => void;
   onRestart?: () => void;
   initialIndex?: number;
-  initialSlots?: TopicExamSlot[];
+  initialSlots?: ChoiceSlot[];
   onSessionChange?: (session: {
     index: number;
     correct: number;
     total: number;
-    slots: TopicExamSlot[];
+    slots: ChoiceSlot[];
   }) => void;
-};
-
-type ChoiceSlot = {
-  selected: number | null;
-  checked: boolean;
 };
 
 function createChoiceSlot(): ChoiceSlot {
@@ -117,8 +117,12 @@ export function MultipleChoiceExercises({
 
   const isCorrect =
     current.checked && current.selected === exercise.correctIndex;
-  const canRestart = index > 0 || current.selected !== null || current.checked;
+  const canRestart = index > 0;
   const continueLabel = t(nextLabelKey);
+  const percent =
+    exercises.length === 0
+      ? 0
+      : Math.round((countCorrect(exercises, slots) / exercises.length) * 100);
 
   if (finished) {
     const correctCount = countCorrect(exercises, slots);
@@ -166,9 +170,12 @@ export function MultipleChoiceExercises({
           : "max-w-2xl",
       )}
     >
-      <p className="text-sm text-brand-500 dark:text-brand-400">
-        {t("progress", { current: index + 1, total: exercises.length })}
-      </p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm text-brand-500 dark:text-brand-400">
+          {t("progress", { current: index + 1, total: exercises.length })}
+        </p>
+        <ExercisePercentBadge percent={percent} />
+      </div>
 
       <article className="dashboard-panel space-y-5">
         <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">

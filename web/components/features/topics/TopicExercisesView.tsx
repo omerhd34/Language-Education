@@ -2,7 +2,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, CheckCircle2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -23,8 +23,16 @@ import type {
 } from "@/data/topics/types";
 import { didPassExamScore, markLevelExamPassed } from "@/lib/levelExamStorage";
 import {
+  LEVEL_EXAM_PROGRESS_EVENT,
+  readLevelExamProgress,
+  resetUnpassedLevelExamParts,
+  writeLevelExamPartProgress,
+} from "@/lib/levelExamProgressStorage";
+import {
+  getLevelExamParts,
   resolveLevelExamCrosswords,
   resolveLevelExamFillBlanks,
+  type LevelExamPart,
 } from "@/lib/topicExam";
 import {
   TOPIC_PROGRESS_CHANGED_EVENT,
@@ -47,7 +55,6 @@ type TopicExercisesViewProps = {
 };
 
 type ExamPartScore = { correct: number; total: number };
-type LevelExamPart = "crossword" | "fill_blank";
 type LevelExamPartOutcome = "passed" | "failed";
 
 export function TopicExercisesView({
@@ -89,10 +96,15 @@ export function TopicExercisesView({
       setLevelExamPassed(false);
       return;
     }
+    resetUnpassedLevelExamParts(level);
+    const saved = readLevelExamProgress(level);
+    const restored = getLevelExamParts(level).filter(
+      (part) => saved.parts[part]?.passed,
+    );
     setLevelExamCrosswords(resolveLevelExamCrosswords(level));
     setLevelExamFillBlanks(resolveLevelExamFillBlanks(level));
     setLevelExamSelected(null);
-    setPassedLevelParts([]);
+    setPassedLevelParts(restored);
     setLevelPartOutcome(null);
     setLevelExamPassed(false);
   }, [isExam, level]);
@@ -165,6 +177,80 @@ export function TopicExercisesView({
     [exercises],
   );
 
+  const [levelPartPercents, setLevelPartPercents] = useState<
+    Partial<Record<LevelExamPart, number>>
+  >({});
+
+  useEffect(() => {
+    if (!isExam || !level) {
+      return;
+    }
+
+    function refresh() {
+      const saved = readLevelExamProgress(level!);
+      const next: Partial<Record<LevelExamPart, number>> = {};
+      for (const part of getLevelExamParts(level!)) {
+        const item = saved.parts[part];
+        next[part] = item ? (item.passed ? 100 : item.percent) : 0;
+      }
+      setLevelPartPercents(next);
+    }
+
+    refresh();
+    window.addEventListener(LEVEL_EXAM_PROGRESS_EVENT, refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener(LEVEL_EXAM_PROGRESS_EVENT, refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, [isExam, level]);
+
+  const reportLevelPart = useCallback(
+    (part: LevelExamPart, percent: number, passed: boolean) => {
+      if (!level) {
+        return;
+      }
+      const current = readLevelExamProgress(level).parts[part];
+      if (current?.passed && !passed) {
+        return;
+      }
+      writeLevelExamPartProgress(level, part, {
+        percent: passed ? 100 : percent,
+        passed,
+      });
+    },
+    [level],
+  );
+
+  const handleCrosswordProgress = useCallback(
+    (percent: number) => {
+      reportLevelPart("crossword", percent, false);
+    },
+    [reportLevelPart],
+  );
+
+  const handleFillBlankSession = useCallback(
+    (session: { correct: number; total: number }) => {
+      const percent =
+        session.total <= 0
+          ? 0
+          : Math.round((session.correct / session.total) * 100);
+      reportLevelPart("fill_blank", percent, false);
+    },
+    [reportLevelPart],
+  );
+
+  const restartLevelPart = useCallback(
+    (part: LevelExamPart) => {
+      if (!level) {
+        return;
+      }
+      writeLevelExamPartProgress(level, part, { percent: 0, passed: false });
+      setPassedLevelParts((current) => current.filter((item) => item !== part));
+    },
+    [level],
+  );
+
   const levelExamCounts = useMemo(
     () =>
       ({
@@ -180,7 +266,11 @@ export function TopicExercisesView({
     if (!level) {
       return;
     }
-    if (nextPassed.includes("crossword") && nextPassed.includes("fill_blank")) {
+    const required = getLevelExamParts(level);
+    if (
+      required.length > 0 &&
+      required.every((part) => nextPassed.includes(part))
+    ) {
       markLevelExamPassed(level);
       setLevelExamPassed(true);
       setLevelExamSelected(null);
@@ -192,16 +282,20 @@ export function TopicExercisesView({
     part: LevelExamPart,
     result: ExamPartScore,
   ) {
+    const percent =
+      result.total <= 0 ? 0 : Math.round((result.correct / result.total) * 100);
     if (didPassExamScore(result.correct, result.total)) {
       const nextPassed = passedLevelParts.includes(part)
         ? passedLevelParts
         : [...passedLevelParts, part];
       setPassedLevelParts(nextPassed);
+      reportLevelPart(part, percent, true);
       setLevelPartOutcome("passed");
       tryFinalizeLevelExam(nextPassed);
       return;
     }
 
+    reportLevelPart(part, percent, false);
     setLevelPartOutcome("failed");
   }
 
@@ -210,6 +304,13 @@ export function TopicExercisesView({
       return;
     }
     setLevelPartOutcome(null);
+    writeLevelExamPartProgress(level, levelExamSelected, {
+      percent: 0,
+      passed: false,
+    });
+    setPassedLevelParts((current) =>
+      current.filter((part) => part !== levelExamSelected),
+    );
     if (levelExamSelected === "crossword") {
       setLevelExamCrosswords(resolveLevelExamCrosswords(level));
       setCrosswordSessionKey((value) => value + 1);
@@ -267,7 +368,7 @@ export function TopicExercisesView({
               ? t("examPassedBody", { nextLevel })
               : t("examPassedBodyFinal")}
           </p>
-          <ButtonLink href="/panelim#konular" size="sm">
+          <ButtonLink href="/panel#dilbilgisi" size="sm">
             {t("examBackToTopics")}
           </ButtonLink>
         </div>
@@ -283,6 +384,12 @@ export function TopicExercisesView({
           <ExerciseTypePicker
             counts={levelExamCounts}
             completedTypes={passedLevelParts}
+            progressPercents={{
+              multiple_choice: 0,
+              fill_blank: levelPartPercents.fill_blank ?? 0,
+              crossword: levelPartPercents.crossword ?? 0,
+              listening: 0,
+            }}
             title={t("levelExamChooseTitle")}
             subtitle={t("levelExamChooseSubtitle")}
             onSelect={(type) => {
@@ -360,6 +467,8 @@ export function TopicExercisesView({
               key={`cw-${crosswordSessionKey}-${levelExamCrosswords[0]?.id ?? "cw"}`}
               exercises={levelExamCrosswords}
               draftKey={null}
+              onProgress={handleCrosswordProgress}
+              onRestart={() => restartLevelPart("crossword")}
               onComplete={(result) =>
                 handleLevelExamPartComplete("crossword", result)
               }
@@ -368,6 +477,8 @@ export function TopicExercisesView({
             <FillBlankExercises
               key={`fb-${fillBlankSessionKey}-${levelExamFillBlanks[0]?.id ?? "fb"}`}
               exercises={levelExamFillBlanks}
+              onSessionChange={handleFillBlankSession}
+              onRestart={() => restartLevelPart("fill_blank")}
               onComplete={(result) =>
                 handleLevelExamPartComplete("fill_blank", result)
               }
