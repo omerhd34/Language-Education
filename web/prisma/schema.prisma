@@ -30,6 +30,8 @@ model User {
   updatedAt                     DateTime                 @updatedAt
   vocabularyLearnSelectedCount  Int                      @default(0)
   vocabularyLearnLockedUntil    DateTime?
+  vocabularyLearnLastSelectedAt DateTime?
+  vocabularyLearnLastUnlockedAt DateTime?
   refreshTokens                 RefreshToken[]
   emailVerificationTokens       EmailVerificationToken[]
   progress                      UserProgress[]
