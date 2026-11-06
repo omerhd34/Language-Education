@@ -195,7 +195,7 @@ export function VocabularyQuizView() {
             {t("quizBackToTypes")}
           </Button>
           <ButtonLink
-            href="/panelim#ilerleme"
+            href="/panel#ilerleme"
             onClick={() => {
               void refetch();
             }}
@@ -239,7 +239,7 @@ export function VocabularyQuizView() {
             {t("quizNextDue", { time: formatDurationHms(remainingMs) })}
           </p>
         ) : null}
-        <ButtonLink href="/panelim#ilerleme" variant="outline">
+        <ButtonLink href="/panel#ilerleme" variant="outline">
           <ArrowLeft className="size-4" aria-hidden />
           {t("backToProgress")}
         </ButtonLink>
@@ -250,7 +250,7 @@ export function VocabularyQuizView() {
   if (!selectedType) {
     return (
       <div className="space-y-4">
-        <ButtonLink href="/panelim#ilerleme" variant="outline" size="sm">
+        <ButtonLink href="/panel#ilerleme" variant="outline" size="sm">
           <ArrowLeft className="size-4" aria-hidden />
           {t("backToProgress")}
         </ButtonLink>

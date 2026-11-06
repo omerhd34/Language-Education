@@ -48,7 +48,7 @@ export function QuizReadyNotificationWatcher() {
       body: t("quizReadyNotificationBody", {
         count: quiz?.dueCount ?? 0,
       }),
-      href: "/panelim/kelime/sinav",
+      href: "/panel/kelime/sinav",
       createdAt: new Date().toISOString(),
       read: false,
     });

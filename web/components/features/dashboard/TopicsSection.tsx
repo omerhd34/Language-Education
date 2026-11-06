@@ -54,7 +54,7 @@ export function TopicsSection() {
 
   return (
     <section
-      id="konular"
+      id="dilbilgisi"
       aria-labelledby="topics-heading"
       className="space-y-4"
     >

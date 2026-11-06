@@ -35,7 +35,7 @@ export function VocabularyCategoryLocked({
           ? t("levelLockedBody", { level, requiredLevel })
           : t("categoryLockedBody", { window: ACTIVE_VOCABULARY_WINDOW })}
       </p>
-      <ButtonLink href="/panelim#kelime" variant="outline">
+      <ButtonLink href="/panel#kelimeler" variant="outline">
         {t("backToVocabulary")}
       </ButtonLink>
     </div>

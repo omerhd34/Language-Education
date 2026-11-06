@@ -50,7 +50,7 @@ export function VocabularyLearnQuotaBanner({
       <p className="text-sm font-medium text-brand-800 dark:text-brand-200">
         {tDashboard("quizCardReady", { count: quiz?.dueCount ?? 0 })}
       </p>
-      <ButtonLink href="/panelim/kelime/sinav" size="sm">
+      <ButtonLink href="/panel/kelime/sinav" size="sm">
         {t("startQuizEarly")}
       </ButtonLink>
     </div>

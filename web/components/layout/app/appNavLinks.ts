@@ -32,40 +32,40 @@ export type AppNavLink = {
 };
 
 export const appNavLinks: AppNavLink[] = [
-  { href: "/panelim", labelKey: "home", Icon: Home },
-  { href: "/panelim#genel", labelKey: "overview", Icon: ClipboardList },
+  { href: "/panel", labelKey: "home", Icon: Home },
+  { href: "/panel#genel", labelKey: "overview", Icon: ClipboardList },
   {
-    href: "/panelim#konular",
+    href: "/panel#dilbilgisi",
     labelKey: "topics",
     Icon: Layers,
   },
   {
-    href: "/panelim#kelime",
+    href: "/panel#kelimeler",
     labelKey: "vocabulary",
     Icon: Brain,
   },
   {
-    href: "/panelim#listening",
+    href: "/panel#dinleme",
     labelKey: "listening",
     Icon: Headphones,
   },
   {
-    href: "/panelim#writing",
+    href: "/panel#yazma",
     labelKey: "writing",
     Icon: PenLine,
   },
   {
-    href: "/panelim#speaking",
+    href: "/panel#konusma",
     labelKey: "speaking",
     Icon: Mic,
   },
   {
-    href: "/panelim#reading",
+    href: "/panel#okuma",
     labelKey: "reading",
     Icon: BookOpen,
   },
   {
-    href: "/panelim#ilerleme",
+    href: "/panel#ilerleme",
     labelKey: "progress",
     Icon: ChartColumnIncreasing,
   },

@@ -90,7 +90,7 @@ export function VocabularyCategoryCard({
         ) : (
           <>
             <ButtonLink
-              href={`/panelim/kelime/${category.id}`}
+              href={`/panel/kelime/${category.id}`}
               size="sm"
               className="w-full sm:flex-1"
             >
@@ -98,7 +98,7 @@ export function VocabularyCategoryCard({
               {t("vocabularyOpenCategory")}
             </ButtonLink>
             <ButtonLink
-              href={`/panelim/kelime/${category.id}?tab=exercises`}
+              href={`/panel/kelime/${category.id}?tab=exercises`}
               size="sm"
               variant="outline"
               className="w-full sm:flex-1"

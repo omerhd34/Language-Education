@@ -42,10 +42,9 @@ export default async function TopicLessonPage({ params }: PageProps) {
     notFound();
   }
 
-  // Yeterlilik sınavında anlatım/konu sekmesi yok — doğrudan sınava yönlendir.
   if (topic.isExam) {
     redirect({
-      href: `/panelim/konular/${topicId}/alistirmalar`,
+      href: `/panel/konular/${topicId}/alistirmalar`,
       locale,
     });
   }

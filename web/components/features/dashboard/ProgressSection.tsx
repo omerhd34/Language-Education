@@ -108,7 +108,7 @@ export function ProgressSection() {
               </div>
 
               {dueCount > 0 ? (
-                <ButtonLink href="/panelim/kelime/sinav" size="sm">
+                <ButtonLink href="/panel/kelime/sinav" size="sm">
                   {t("quizCardCta")}
                 </ButtonLink>
               ) : (
@@ -116,7 +116,7 @@ export function ProgressSection() {
                   type="button"
                   size="sm"
                   variant="outline"
-                  onClick={() => navigatePanelSection("kelime")}
+                  onClick={() => navigatePanelSection("kelimeler")}
                 >
                   {t("knownWordsBrowseCta")}
                 </Button>
@@ -165,7 +165,7 @@ export function ProgressSection() {
                 type="button"
                 size="sm"
                 variant="outline"
-                onClick={() => navigatePanelSection("kelime")}
+                onClick={() => navigatePanelSection("kelimeler")}
               >
                 {t("knownWordsBrowseCta")}
               </Button>

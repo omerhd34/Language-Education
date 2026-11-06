@@ -18,7 +18,7 @@ export function CombinedExerciseHeader({
 
   return (
     <header className="space-y-4">
-      <ButtonLink href="/panelim#konular" variant="outline" size="sm">
+      <ButtonLink href="/panel#dilbilgisi" variant="outline" size="sm">
         <ArrowLeft className="size-4" aria-hidden />
         {t("backToTopics")}
       </ButtonLink>

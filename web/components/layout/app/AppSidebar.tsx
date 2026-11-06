@@ -56,7 +56,7 @@ export function AppSidebarMobileBar() {
   return (
     <div className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-sidebar-border bg-sidebar px-4 text-sidebar-foreground lg:hidden">
       <Link
-        href="/panelim"
+        href="/panel"
         className="font-display text-lg font-semibold text-brand-100"
       >
         {tNav("brand")}
@@ -82,14 +82,14 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
   function isActive(href: string): boolean {
     const path = hrefPath(href);
     const hash = hrefHash(href);
-    const onPanelim = pathname === "/panelim" || pathname === "/";
+    const onPanel = pathname === "/panel" || pathname === "/";
 
     if (hash) {
-      return onPanelim && panelHash === hash;
+      return onPanel && panelHash === hash;
     }
 
-    if (path === "/panelim") {
-      return onPanelim && panelHash === "";
+    if (path === "/panel") {
+      return onPanel && panelHash === "";
     }
 
     return pathname === path || pathname.startsWith(`${path}/`);
@@ -98,11 +98,11 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
   function handleNavClick(event: MouseEvent<HTMLButtonElement>, href: string) {
     const path = hrefPath(href);
     const hash = hrefHash(href);
-    const onPanelim = pathname === "/panelim" || pathname === "/";
+    const onPanel = pathname === "/panel" || pathname === "/";
 
     setOpenMobile(false);
 
-    if (path === "/panelim" && onPanelim) {
+    if (path === "/panel" && onPanel) {
       event.preventDefault();
       navigatePanelSection(hash.replace(/^#/, ""));
     }
@@ -130,14 +130,14 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
   }
 
   const settingsActive =
-    pathname === "/panelim/ayarlar" || pathname.startsWith("/panelim/ayarlar/");
+    pathname === "/panel/ayarlar" || pathname.startsWith("/panel/ayarlar/");
 
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="p-4 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:p-2">
         <div className="flex items-center justify-between gap-3 group-data-[collapsible=icon]:justify-center">
           <Link
-            href="/panelim"
+            href="/panel"
             className="font-display text-xl font-semibold tracking-tight text-brand-100 group-data-[collapsible=icon]:hidden"
           >
             {tNav("brand")}
@@ -183,7 +183,7 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
               isActive={settingsActive}
               tooltip={t("settings")}
               className={menuButtonClassName}
-              render={<Link href="/panelim/ayarlar" />}
+              render={<Link href="/panel/ayarlar" />}
               onClick={() => setOpenMobile(false)}
             >
               <Settings className="size-4" strokeWidth={1.75} aria-hidden />

@@ -14,7 +14,7 @@ import {
   PASSED_LEVEL_EXAMS_COOKIE,
   parsePassedLevelExams,
 } from "@/lib/levelExamStorage";
-import { resolveTopicExamExercises } from "@/lib/topicExam";
+import { resolveTopicExamExercises, resolveTopicExamFillBlanks } from "@/lib/topicExam";
 import { canAccessLevel, getRequiredLevelToUnlock } from "@/lib/topicAccess";
 
 type PageProps = {
@@ -61,6 +61,7 @@ export default async function TopicExamPage({ params }: PageProps) {
   const unlocked = canAccessLevel(topic.level, passedExams);
   const requiredLevel = getRequiredLevelToUnlock(topic.level);
   const examExercises = content ? resolveTopicExamExercises(content) : [];
+  const examFillBlanks = content ? resolveTopicExamFillBlanks(content) : [];
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-8 p-4 sm:p-6 lg:p-8">
@@ -75,8 +76,13 @@ export default async function TopicExamPage({ params }: PageProps) {
       />
       {!unlocked && requiredLevel ? (
         <TopicLevelLocked level={topic.level} requiredLevel={requiredLevel} />
-      ) : content && examExercises.length > 0 ? (
-        <TopicExamView topicId={topic.id} exercises={examExercises} />
+      ) : content &&
+        (examExercises.length > 0 || examFillBlanks.length > 0) ? (
+        <TopicExamView
+          topicId={topic.id}
+          multipleChoice={examExercises}
+          fillBlanks={examFillBlanks}
+        />
       ) : (
         <TopicContentMissing />
       )}

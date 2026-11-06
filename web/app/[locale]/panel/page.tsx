@@ -1,6 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { AuthPanel } from "@/components/features/auth/AuthPanel";
-import { AuthPanelShell } from "@/components/features/auth/AuthPanelShell";
+import { DashboardHome } from "@/components/features/dashboard/DashboardHome";
 
 export async function generateMetadata({
   params,
@@ -8,10 +7,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Auth" });
+  const t = await getTranslations({ locale, namespace: "Dashboard" });
 
   return {
-    title: t("myPanel"),
+    title: t("title"),
   };
 }
 
@@ -23,9 +22,5 @@ export default async function PanelPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  return (
-    <AuthPanelShell>
-      <AuthPanel />
-    </AuthPanelShell>
-  );
+  return <DashboardHome />;
 }

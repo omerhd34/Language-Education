@@ -68,7 +68,7 @@ export function VocabularySection() {
 
   return (
     <section
-      id="kelime"
+      id="kelimeler"
       aria-labelledby="vocabulary-heading"
       className="space-y-4"
     >

@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Skeleton } from "@/components/ui/skeleton";
 
-export function PanelimLoading() {
+export function PanelLoading() {
   const t = useTranslations("Dashboard");
 
   return (
@@ -15,11 +15,8 @@ export function PanelimLoading() {
     >
       <p className="sr-only">{t("loading")}</p>
 
-      <div
-        className="grid gap-3 xl:grid-cols-[1.1fr_1.2fr_0.9fr_1.3fr]"
-        aria-hidden
-      >
-        {Array.from({ length: 4 }, (_, index) => (
+      <div className="grid gap-3 xl:grid-cols-[1fr_1.2fr_1.65fr]" aria-hidden>
+        {Array.from({ length: 3 }, (_, index) => (
           <div key={index} className="dashboard-panel space-y-3">
             <Skeleton className="h-3 w-24" />
             <Skeleton className="h-8 w-16" />

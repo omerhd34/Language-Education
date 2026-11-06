@@ -6,6 +6,7 @@ import { TopicContentMissing } from "@/components/features/topics/TopicContentMi
 import { TopicExercisesView } from "@/components/features/topics/TopicExercisesView";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import {
+  combinedExerciseStorageId,
   getAllCombinedExercises,
   getCombinedExerciseById,
   getCombinedExerciseQuestions,
@@ -64,7 +65,10 @@ export default async function CombinedExercisePage({ params }: PageProps) {
           requiredLevel={requiredLevel}
         />
       ) : exercises.length > 0 ? (
-        <TopicExercisesView exercises={exercises} />
+        <TopicExercisesView
+          topicId={combinedExerciseStorageId(combined.id)}
+          exercises={exercises}
+        />
       ) : (
         <TopicContentMissing />
       )}

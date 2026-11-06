@@ -12,7 +12,7 @@ export async function TopicContentMissing() {
       <p className="text-sm text-brand-600 dark:text-brand-400">
         {t("contentMissingBody")}
       </p>
-      <ButtonLink href="/panelim#konular" variant="outline">
+      <ButtonLink href="/panel#dilbilgisi" variant="outline">
         {t("backToTopics")}
       </ButtonLink>
     </div>

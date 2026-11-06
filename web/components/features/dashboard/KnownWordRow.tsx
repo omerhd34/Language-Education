@@ -84,7 +84,7 @@ export function KnownWordRow({ word, compact = false }: KnownWordRowProps) {
           {t("knownWordsRelearn")}
         </Button>
         <ButtonLink
-          href={`/panelim/kelime/${word.categoryId}`}
+          href={`/panel/kelime/${word.categoryId}`}
           size="sm"
           variant="outline"
         >

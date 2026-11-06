@@ -25,7 +25,7 @@ export async function TopicLevelLocked({
       <p className="text-sm text-brand-600 dark:text-brand-400">
         {t("levelLockedBody", { requiredLevel })}
       </p>
-      <ButtonLink href="/panelim#konular" variant="outline">
+      <ButtonLink href="/panel#dilbilgisi" variant="outline">
         {t("backToTopics")}
       </ButtonLink>
     </div>
