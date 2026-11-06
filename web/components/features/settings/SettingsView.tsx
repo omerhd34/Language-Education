@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { ProgressResetPanel } from "@/components/features/settings/ProgressResetPanel";
 import { SpeechRateControl } from "@/components/features/vocabulary/SpeechRateControl";
 import { ThemeSetting } from "@/components/features/settings/ThemeSetting";
 
@@ -18,7 +19,10 @@ export function SettingsView() {
         </p>
       </header>
 
-      <section className="dashboard-panel space-y-3" aria-labelledby="settings-appearance">
+      <section
+        className="dashboard-panel space-y-3"
+        aria-labelledby="settings-appearance"
+      >
         <div className="space-y-1">
           <h2
             id="settings-appearance"
@@ -39,6 +43,8 @@ export function SettingsView() {
         </p>
         <SpeechRateControl />
       </section>
+
+      <ProgressResetPanel />
     </div>
   );
 }

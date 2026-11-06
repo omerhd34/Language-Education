@@ -10,12 +10,13 @@ import { clearLevelExamProgress } from "@/lib/levelExamProgressStorage";
 import { clearPassedLevelExams } from "@/lib/levelExamStorage";
 import { clearTopicExamDrafts } from "@/lib/topicExamDraftStorage";
 import { clearTopicProgressStorage } from "@/lib/topicProgressStorage";
+import { clearVocabularyActivityStorage } from "@/lib/vocabularyActivityStorage";
 import { clearLastVocabularyQuizResult } from "@/lib/vocabularyQuizResultStorage";
 
 const SCOPES: ProgressResetScope[] = ["vocabulary", "topics", "all"];
 
 export function ProgressResetPanel() {
-  const t = useTranslations("Dashboard");
+  const t = useTranslations("Settings");
   const [resetProgress, { isLoading }] = useResetProgressMutation();
   const [pendingScope, setPendingScope] = useState<ProgressResetScope | null>(
     null,
@@ -33,6 +34,7 @@ export function ProgressResetPanel() {
       await resetProgress({ scope: pendingScope }).unwrap();
       if (pendingScope === "vocabulary" || pendingScope === "all") {
         clearLastVocabularyQuizResult();
+        clearVocabularyActivityStorage();
       }
       if (pendingScope === "topics" || pendingScope === "all") {
         clearPassedLevelExams();
