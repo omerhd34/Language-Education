@@ -2,7 +2,7 @@ import type { VocabularyCategory } from "@/data/vocabulary/types";
 
 export const vocabularyCategory7: VocabularyCategory = {
   id: "7",
-  title: "Saat ve Tarih",
+  title: "Saat & Tarih",
   words: [
     {
       id: "7-1",

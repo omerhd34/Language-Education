@@ -2,7 +2,7 @@ import type { VocabularyCategory } from "@/data/vocabulary/types";
 
 export const vocabularyCategory27: VocabularyCategory = {
   id: "27",
-  title: "Edatlar ve Belirleyiciler",
+  title: "Edatlar & Belirleyiciler",
   words: [
     {
       id: "27-1",
@@ -21,7 +21,10 @@ export const vocabularyCategory27: VocabularyCategory = {
       examples: [
         { en: "This book is mine.", tr: "Bu kitap benim." },
         { en: "This is my first time here.", tr: "Buraya ilk kez geliyorum." },
-        { en: "Can you help me with this problem?", tr: "Bu sorunda bana yardım edebilir misin?" },
+        {
+          en: "Can you help me with this problem?",
+          tr: "Bu sorunda bana yardım edebilir misin?",
+        },
       ],
     },
     {
@@ -31,7 +34,10 @@ export const vocabularyCategory27: VocabularyCategory = {
       examples: [
         { en: "That house on the hill is old.", tr: "Tepeki o ev eskidir." },
         { en: "I don't like that idea.", tr: "O fikri sevmiyorum." },
-        { en: "Is that your bag on the chair?", tr: "Sandalyedeki o çanta senin mi?" },
+        {
+          en: "Is that your bag on the chair?",
+          tr: "Sandalyedeki o çanta senin mi?",
+        },
       ],
     },
     {
@@ -42,13 +48,22 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "one more",
           tr: "bir tane daha",
-          example: { en: "Can I have one more cookie?", tr: "Bir tane daha kurabiye alabilir miyim?" },
+          example: {
+            en: "Can I have one more cookie?",
+            tr: "Bir tane daha kurabiye alabilir miyim?",
+          },
         },
       ],
       examples: [
-        { en: "Can I have another piece of cake?", tr: "Bir dilim daha kek alabilir miyim?" },
+        {
+          en: "Can I have another piece of cake?",
+          tr: "Bir dilim daha kek alabilir miyim?",
+        },
         { en: "Let's try another route.", tr: "Başka bir yol deneyelim." },
-        { en: "One student left; another arrived.", tr: "Bir öğrenci gitti, bir diğeri geldi." },
+        {
+          en: "One student left; another arrived.",
+          tr: "Bir öğrenci gitti, bir diğeri geldi.",
+        },
       ],
     },
     {
@@ -57,8 +72,14 @@ export const vocabularyCategory27: VocabularyCategory = {
       tr: "Her İkisi De",
       examples: [
         { en: "Both answers are correct.", tr: "Her iki cevap da doğru." },
-        { en: "I like both tea and coffee.", tr: "Hem çayı hem kahveyi severim." },
-        { en: "Both of my parents speak English.", tr: "Annem ve babamın ikisi de İngilizce konuşuyor." },
+        {
+          en: "I like both tea and coffee.",
+          tr: "Hem çayı hem kahveyi severim.",
+        },
+        {
+          en: "Both of my parents speak English.",
+          tr: "Annem ve babamın ikisi de İngilizce konuşuyor.",
+        },
       ],
     },
     {
@@ -68,7 +89,10 @@ export const vocabularyCategory27: VocabularyCategory = {
       examples: [
         { en: "What day is the exam?", tr: "Sınav hangi gün?" },
         { en: "What did you buy at the shop?", tr: "Dükkandan ne aldın?" },
-        { en: "She asked what we wanted for lunch.", tr: "Öğle yemeği için ne istediğimizi sordu." },
+        {
+          en: "She asked what we wanted for lunch.",
+          tr: "Öğle yemeği için ne istediğimizi sordu.",
+        },
       ],
     },
     {
@@ -79,12 +103,21 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "prior to",
           tr: "öncesinde",
-          example: { en: "Wash your hands prior to eating.", tr: "Yemekten öncesinde ellerini yıka." },
+          example: {
+            en: "Wash your hands prior to eating.",
+            tr: "Yemekten öncesinde ellerini yıka.",
+          },
         },
       ],
       examples: [
-        { en: "Wash your hands before dinner.", tr: "Akşam yemeğinden önce ellerini yıka." },
-        { en: "I met her before the meeting started.", tr: "Toplantı başlamadan önce onunla tanıştım." },
+        {
+          en: "Wash your hands before dinner.",
+          tr: "Akşam yemeğinden önce ellerini yıka.",
+        },
+        {
+          en: "I met her before the meeting started.",
+          tr: "Toplantı başlamadan önce onunla tanıştım.",
+        },
         { en: "Think before you speak.", tr: "Konuşmadan önce düşün." },
       ],
     },
@@ -96,13 +129,19 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "following",
           tr: "sonrasında",
-          example: { en: "We rested following the long walk.", tr: "Uzun yürüyüşün sonrasında dinlendik." },
+          example: {
+            en: "We rested following the long walk.",
+            tr: "Uzun yürüyüşün sonrasında dinlendik.",
+          },
         },
       ],
       examples: [
         { en: "We went home after the film.", tr: "Filmden sonra eve gittik." },
         { en: "Call me after you arrive.", tr: "Vardıktan sonra beni ara." },
-        { en: "After lunch, we took a short walk.", tr: "Öğle yemeğinden sonra kısa bir yürüyüş yaptık." },
+        {
+          en: "After lunch, we took a short walk.",
+          tr: "Öğle yemeğinden sonra kısa bir yürüyüş yaptık.",
+        },
       ],
     },
     {
@@ -121,8 +160,14 @@ export const vocabularyCategory27: VocabularyCategory = {
       tr: "Üstünde / -da, -de",
       examples: [
         { en: "The book is on the table.", tr: "Kitap masanın üstünde." },
-        { en: "We meet on Monday mornings.", tr: "Pazartesi sabahları buluşuruz." },
-        { en: "There is a picture on the wall.", tr: "Duvarın üstünde bir resim var." },
+        {
+          en: "We meet on Monday mornings.",
+          tr: "Pazartesi sabahları buluşuruz.",
+        },
+        {
+          en: "There is a picture on the wall.",
+          tr: "Duvarın üstünde bir resim var.",
+        },
       ],
     },
     {
@@ -131,7 +176,10 @@ export const vocabularyCategory27: VocabularyCategory = {
       tr: "-da, -de",
       examples: [
         { en: "She is at work now.", tr: "Şimdi işte." },
-        { en: "We arrived at the station early.", tr: "İstasyona erken vardık." },
+        {
+          en: "We arrived at the station early.",
+          tr: "İstasyona erken vardık.",
+        },
         { en: "The party starts at eight.", tr: "Parti sekizde başlıyor." },
       ],
     },
@@ -141,8 +189,14 @@ export const vocabularyCategory27: VocabularyCategory = {
       tr: "-a, -e (Yönelme)",
       examples: [
         { en: "I walk to school every day.", tr: "Her gün okula yürürüm." },
-        { en: "Give this letter to your teacher.", tr: "Bu mektubu öğretmenine ver." },
-        { en: "We are going to the beach tomorrow.", tr: "Yarın plaja gidiyoruz." },
+        {
+          en: "Give this letter to your teacher.",
+          tr: "Bu mektubu öğretmenine ver.",
+        },
+        {
+          en: "We are going to the beach tomorrow.",
+          tr: "Yarın plaja gidiyoruz.",
+        },
       ],
     },
     {
@@ -153,13 +207,22 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "below",
           tr: "altında",
-          example: { en: "The keys are below the shelf.", tr: "Anahtarlar rafın altında." },
+          example: {
+            en: "The keys are below the shelf.",
+            tr: "Anahtarlar rafın altında.",
+          },
         },
       ],
       examples: [
         { en: "The cat is under the bed.", tr: "Kedi yatağın altında." },
-        { en: "Hide the gift under the table.", tr: "Hediyeyi masanın altına sakla." },
-        { en: "Children under ten get a discount.", tr: "On yaşın altındaki çocuklar indirim alır." },
+        {
+          en: "Hide the gift under the table.",
+          tr: "Hediyeyi masanın altına sakla.",
+        },
+        {
+          en: "Children under ten get a discount.",
+          tr: "On yaşın altındaki çocuklar indirim alır.",
+        },
       ],
     },
     {
@@ -170,13 +233,22 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "under",
           tr: "altında",
-          example: { en: "The dog slept under the table.", tr: "Köpek masanın altında uyudu." },
+          example: {
+            en: "The dog slept under the table.",
+            tr: "Köpek masanın altında uyudu.",
+          },
         },
       ],
       examples: [
-        { en: "The valley is below the mountain.", tr: "Vadi dağın aşağısındadır." },
+        {
+          en: "The valley is below the mountain.",
+          tr: "Vadi dağın aşağısındadır.",
+        },
         { en: "See the notes below.", tr: "Aşağıdaki notlara bakın." },
-        { en: "Temperatures dropped below zero.", tr: "Sıcaklıklar sıfırın altına düştü." },
+        {
+          en: "Temperatures dropped below zero.",
+          tr: "Sıcaklıklar sıfırın altına düştü.",
+        },
       ],
     },
     {
@@ -187,12 +259,21 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "above",
           tr: "üstünde",
-          example: { en: "The lamp hangs above the desk.", tr: "Lamba masanın üstünde asılı." },
+          example: {
+            en: "The lamp hangs above the desk.",
+            tr: "Lamba masanın üstünde asılı.",
+          },
         },
       ],
       examples: [
-        { en: "A plane flew over our house.", tr: "Evimizin üzerinden bir uçak geçti." },
-        { en: "She put a blanket over the baby.", tr: "Bebeğin üzerine bir battaniye örttü." },
+        {
+          en: "A plane flew over our house.",
+          tr: "Evimizin üzerinden bir uçak geçti.",
+        },
+        {
+          en: "She put a blanket over the baby.",
+          tr: "Bebeğin üzerine bir battaniye örttü.",
+        },
         { en: "We talked over coffee.", tr: "Kahve eşliğinde konuştuk." },
       ],
     },
@@ -204,13 +285,25 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "over",
           tr: "üzerinde",
-          example: { en: "A bridge goes over the river.", tr: "Nehir üzerinden bir köprü geçiyor." },
+          example: {
+            en: "A bridge goes over the river.",
+            tr: "Nehir üzerinden bir köprü geçiyor.",
+          },
         },
       ],
       examples: [
-        { en: "The clouds are above the city.", tr: "Bulutlar şehrin yukarısında." },
-        { en: "Read the text above the picture.", tr: "Resmin üstündeki metni oku." },
-        { en: "Temperatures stayed above twenty degrees.", tr: "Sıcaklıklar yirmi derecenin üstünde kaldı." },
+        {
+          en: "The clouds are above the city.",
+          tr: "Bulutlar şehrin yukarısında.",
+        },
+        {
+          en: "Read the text above the picture.",
+          tr: "Resmin üstündeki metni oku.",
+        },
+        {
+          en: "Temperatures stayed above twenty degrees.",
+          tr: "Sıcaklıklar yirmi derecenin üstünde kaldı.",
+        },
       ],
     },
     {
@@ -221,12 +314,21 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "close",
           tr: "yakın",
-          example: { en: "The bus stop is close to my house.", tr: "Otobüs durağı evime yakın." },
+          example: {
+            en: "The bus stop is close to my house.",
+            tr: "Otobüs durağı evime yakın.",
+          },
         },
       ],
       examples: [
-        { en: "There is a bakery near my house.", tr: "Evimin yakınında bir fırın var." },
-        { en: "Sit near the window, please.", tr: "Lütfen pencerenin yakınına otur." },
+        {
+          en: "There is a bakery near my house.",
+          tr: "Evimin yakınında bir fırın var.",
+        },
+        {
+          en: "Sit near the window, please.",
+          tr: "Lütfen pencerenin yakınına otur.",
+        },
         { en: "We camped near the lake.", tr: "Gölün yakınında kamp yaptık." },
       ],
     },
@@ -238,13 +340,22 @@ export const vocabularyCategory27: VocabularyCategory = {
         {
           en: "beside",
           tr: "yanında",
-          example: { en: "Sit beside me on the bench.", tr: "Bankta yanıma otur." },
+          example: {
+            en: "Sit beside me on the bench.",
+            tr: "Bankta yanıma otur.",
+          },
         },
       ],
       examples: [
-        { en: "The bank is next to the post office.", tr: "Banka postanenin yanında." },
+        {
+          en: "The bank is next to the post office.",
+          tr: "Banka postanenin yanında.",
+        },
         { en: "Sit next to me, please.", tr: "Lütfen yanıma otur." },
-        { en: "There is a park next to our school.", tr: "Okulumuzun bitişiğinde bir park var." },
+        {
+          en: "There is a park next to our school.",
+          tr: "Okulumuzun bitişiğinde bir park var.",
+        },
       ],
     },
     {
@@ -262,9 +373,18 @@ export const vocabularyCategory27: VocabularyCategory = {
       en: "Between",
       tr: "Arasında",
       examples: [
-        { en: "The cafe is between the bank and the library.", tr: "Kafe banka ile kütüphane arasında." },
-        { en: "Choose between tea and juice.", tr: "Çay ile meyve suyu arasında seç." },
-        { en: "She sat between her two friends.", tr: "İki arkadaşının arasına oturdu." },
+        {
+          en: "The cafe is between the bank and the library.",
+          tr: "Kafe banka ile kütüphane arasında.",
+        },
+        {
+          en: "Choose between tea and juice.",
+          tr: "Çay ile meyve suyu arasında seç.",
+        },
+        {
+          en: "She sat between her two friends.",
+          tr: "İki arkadaşının arasına oturdu.",
+        },
       ],
     },
     {
@@ -272,9 +392,15 @@ export const vocabularyCategory27: VocabularyCategory = {
       en: "Across",
       tr: "Karşısında / Karşıdan Karşıya",
       examples: [
-        { en: "The shop is across the street.", tr: "Dükkan sokağın karşısında." },
+        {
+          en: "The shop is across the street.",
+          tr: "Dükkan sokağın karşısında.",
+        },
         { en: "We swam across the river.", tr: "Nehirden karşıya yüzdük." },
-        { en: "Look across the room at the clock.", tr: "Odanın karşısındaki saate bak." },
+        {
+          en: "Look across the room at the clock.",
+          tr: "Odanın karşısındaki saate bak.",
+        },
       ],
     },
     {
@@ -282,7 +408,10 @@ export const vocabularyCategory27: VocabularyCategory = {
       en: "With",
       tr: "İle",
       examples: [
-        { en: "I went to the party with my friends.", tr: "Partiye arkadaşlarımla gittim." },
+        {
+          en: "I went to the party with my friends.",
+          tr: "Partiye arkadaşlarımla gittim.",
+        },
         { en: "Cut the bread with a knife.", tr: "Ekmeği bıçakla kes." },
         { en: "She agrees with your idea.", tr: "Fikrine katılıyor." },
       ],

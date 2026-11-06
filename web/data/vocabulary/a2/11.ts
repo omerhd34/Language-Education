@@ -2,7 +2,7 @@ import type { VocabularyCategory } from "@/data/vocabulary/types";
 
 export const vocabularyCategory11: VocabularyCategory = {
   id: "11",
-  title: "Sinema ve Tiyatro",
+  title: "Sinema & Tiyatro",
   words: [
     {
       id: "11-1",
