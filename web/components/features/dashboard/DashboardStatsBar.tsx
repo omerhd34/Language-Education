@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Radio, Timer, Trophy } from "lucide-react";
+import { Radio, Timer } from "lucide-react";
 import { useVocabularyLearnQuotaQuery } from "@/store/api";
 import { NotificationsMenu } from "@/components/features/dashboard/NotificationsMenu";
 import { Button } from "@/components/ui/Button";
@@ -27,7 +27,7 @@ export function DashboardStatsBar() {
   return (
     <section
       aria-label={t("statsAria")}
-      className="grid gap-3 xl:grid-cols-[1.1fr_1.2fr_0.9fr_1.3fr]"
+      className="grid gap-3 xl:grid-cols-[1fr_1.2fr_1.65fr]"
     >
       <article className="dashboard-panel">
         <p className="dashboard-panel__label">
@@ -64,21 +64,6 @@ export function DashboardStatsBar() {
         </dl>
       </article>
 
-      <article className="dashboard-panel">
-        <p className="dashboard-panel__label">{t("achievements")}</p>
-        <div className="mt-3 flex items-center gap-3">
-          <span className="inline-flex size-11 items-center justify-center rounded-xl bg-amber-500/15 text-amber-500">
-            <Trophy className="size-5" aria-hidden />
-          </span>
-          <div>
-            <p className="text-sm font-semibold text-brand-950 dark:text-brand-100">
-              {t("leader")}
-            </p>
-            <p className="text-xs text-brand-400">{t("leaderHint")}</p>
-          </div>
-        </div>
-      </article>
-
       <article className="dashboard-panel grid gap-3 sm:grid-cols-[1.2fr_0.8fr]">
         <div>
           <p className="dashboard-panel__label">
@@ -100,7 +85,7 @@ export function DashboardStatsBar() {
             variant="outline"
             size="sm"
             className="mt-3"
-            onClick={() => navigatePanelSection("kelime")}
+            onClick={() => navigatePanelSection("kelimeler")}
           >
             {t("selectWord")}
           </Button>

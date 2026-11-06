@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/Card";
 import type { DashboardTopic } from "@/data/dashboardTopics";
+import { useLevelExamPercent } from "@/hooks/useLevelExamPercent";
 import { getCefrLevelBadgeClass, getNextLevel } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";
 
@@ -29,6 +30,7 @@ export function LevelExamCard({
 }: LevelExamCardProps) {
   const t = useTranslations("Dashboard");
   const nextLevel = getNextLevel(topic.level);
+  const progress = useLevelExamPercent(topic.level);
 
   return (
     <Card
@@ -73,6 +75,13 @@ export function LevelExamCard({
               {t("locked")}
             </Badge>
           ) : null}
+          <Badge
+            variant="outline"
+            aria-label={t("examProgressAria", { progress })}
+            className="ml-auto tabular-nums"
+          >
+            {t("examProgress", { progress })}
+          </Badge>
         </div>
 
         <div className="space-y-1">
@@ -92,7 +101,7 @@ export function LevelExamCard({
           </Button>
         ) : (
           <ButtonLink
-            href={`/panelim/konular/${topic.id}/alistirmalar`}
+            href={`/panel/konular/${topic.id}/alistirmalar`}
             size="sm"
             className="w-full"
           >

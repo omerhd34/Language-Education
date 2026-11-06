@@ -3,22 +3,29 @@
 import { useTranslations } from "next-intl";
 import { DashboardStatsBar } from "@/components/features/dashboard/DashboardStatsBar";
 import { ProgressSection } from "@/components/features/dashboard/ProgressSection";
-import {
-  isSkillSection,
-  SkillSection,
-} from "@/components/features/dashboard/SkillSection";
+import { SkillSection } from "@/components/features/dashboard/SkillSection";
 import { TopicsSection } from "@/components/features/dashboard/TopicsSection";
 import { VocabularySection } from "@/components/features/dashboard/VocabularySection";
 import { usePanelHash } from "@/hooks/usePanelHash";
 
-const READY_SECTIONS = new Set([
-  "konular",
-  "kelime",
+const SKILL_BY_HASH = {
+  dinleme: "listening",
+  yazma: "writing",
+  konusma: "speaking",
+  okuma: "reading",
+} as const;
+
+type SkillHash = keyof typeof SKILL_BY_HASH;
+
+function isSkillHash(section: string): section is SkillHash {
+  return section in SKILL_BY_HASH;
+}
+
+const READY_SECTIONS = new Set<string>([
+  "dilbilgisi",
+  "kelimeler",
   "ilerleme",
-  "listening",
-  "writing",
-  "speaking",
-  "reading",
+  ...Object.keys(SKILL_BY_HASH),
 ]);
 
 export function DashboardHome() {
@@ -29,9 +36,11 @@ export function DashboardHome() {
   return (
     <div className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:p-6 lg:p-8">
       <DashboardStatsBar />
-      {section === "konular" ? <TopicsSection /> : null}
-      {section === "kelime" ? <VocabularySection /> : null}
-      {isSkillSection(section) ? <SkillSection skill={section} /> : null}
+      {section === "dilbilgisi" ? <TopicsSection /> : null}
+      {section === "kelimeler" ? <VocabularySection /> : null}
+      {isSkillHash(section) ? (
+        <SkillSection skill={SKILL_BY_HASH[section]} />
+      ) : null}
       {section === "ilerleme" ? <ProgressSection /> : null}
       {section !== "" && !READY_SECTIONS.has(section) ? (
         <section className="space-y-2" aria-labelledby="section-soon-heading">

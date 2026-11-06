@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/Card";
 import type { CombinedExercise } from "@/data/combinedExercises";
+import { useCombinedExerciseProgress } from "@/hooks/useCombinedExerciseProgress";
 import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";
 
@@ -26,6 +27,7 @@ export function CombinedExerciseCard({
   locked = false,
 }: CombinedExerciseCardProps) {
   const t = useTranslations("Dashboard");
+  const progress = useCombinedExerciseProgress(combined.id);
 
   return (
     <Card
@@ -61,6 +63,13 @@ export function CombinedExerciseCard({
               {t("locked")}
             </Badge>
           ) : null}
+          <Badge
+            variant="outline"
+            aria-label={t("combinedExerciseProgressAria", { progress })}
+            className="ml-auto tabular-nums"
+          >
+            {t("combinedExerciseProgress", { progress })}
+          </Badge>
         </div>
 
         <div className="space-y-1">
@@ -80,7 +89,7 @@ export function CombinedExerciseCard({
           </Button>
         ) : (
           <ButtonLink
-            href={`/panelim/konular/birlesik/${combined.id}`}
+            href={`/panel/konular/birlesik/${combined.id}`}
             size="sm"
             className="w-full"
           >

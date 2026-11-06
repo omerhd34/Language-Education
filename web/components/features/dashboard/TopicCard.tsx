@@ -13,7 +13,6 @@ import {
   CardTitle,
 } from "@/components/ui/Card";
 import type { DashboardTopic } from "@/data/dashboardTopics";
-import { useTopicExamPercent } from "@/hooks/useTopicExamPercent";
 import { useTopicProgress } from "@/hooks/useTopicProgress";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
@@ -28,7 +27,6 @@ type TopicCardProps = {
 export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
   const t = useTranslations("Dashboard");
   const progress = Math.min(100, Math.max(0, useTopicProgress(topic.id)));
-  const examPercent = Math.min(100, Math.max(0, useTopicExamPercent(topic.id)));
   const titleEng = getDistinctSecondaryTitle(topic.title, topic.titleEng);
   const titleEx = getDistinctSecondaryTitle(topic.titleEng, topic.titleEx);
 
@@ -116,23 +114,15 @@ export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
                 <PencilLine aria-hidden />
                 {t("exercises")}
               </Button>
-              <Button
-                type="button"
-                size="sm"
-                disabled
-                className="w-full shrink"
-              >
+              <Button type="button" size="sm" disabled>
                 <ClipboardCheck aria-hidden />
                 {t("topicExam")}
-                <span className="tabular-nums">
-                  {t("topicExamProgress", { percent: examPercent })}
-                </span>
               </Button>
             </>
           ) : (
             <>
               <ButtonLink
-                href={`/panelim/konular/${topic.id}/anlatim`}
+                href={`/panel/konular/${topic.id}/anlatim`}
                 variant="outline"
                 size="sm"
               >
@@ -140,23 +130,16 @@ export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
                 {t("lesson")}
               </ButtonLink>
               <ButtonLink
-                href={`/panelim/konular/${topic.id}/alistirmalar`}
+                href={`/panel/konular/${topic.id}/alistirmalar`}
                 variant="outline"
                 size="sm"
               >
                 <PencilLine aria-hidden />
                 {t("exercises")}
               </ButtonLink>
-              <ButtonLink
-                href={`/panelim/konular/${topic.id}/sinav`}
-                size="sm"
-                className="w-full shrink"
-              >
+              <ButtonLink href={`/panel/konular/${topic.id}/sinav`} size="sm">
                 <ClipboardCheck aria-hidden />
                 {t("topicExam")}
-                <span className="tabular-nums">
-                  {t("topicExamProgress", { percent: examPercent })}
-                </span>
               </ButtonLink>
             </>
           )}

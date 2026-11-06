@@ -6,6 +6,7 @@ import { RotateCcw } from "lucide-react";
 import { useResetProgressMutation, type ProgressResetScope } from "@/store/api";
 import { Button } from "@/components/ui/Button";
 import { clearExerciseDraftStorage } from "@/lib/exerciseDraftStorage";
+import { clearLevelExamProgress } from "@/lib/levelExamProgressStorage";
 import { clearPassedLevelExams } from "@/lib/levelExamStorage";
 import { clearTopicExamDrafts } from "@/lib/topicExamDraftStorage";
 import { clearTopicProgressStorage } from "@/lib/topicProgressStorage";
@@ -35,6 +36,7 @@ export function ProgressResetPanel() {
       }
       if (pendingScope === "topics" || pendingScope === "all") {
         clearPassedLevelExams();
+        clearLevelExamProgress();
         clearTopicProgressStorage();
         clearExerciseDraftStorage();
         clearTopicExamDrafts();

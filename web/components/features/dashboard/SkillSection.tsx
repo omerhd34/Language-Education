@@ -9,11 +9,14 @@ const SKILL_TITLE_KEYS = {
   reading: "skillReadingTitle",
 } as const;
 
-export type SkillSectionId = keyof typeof SKILL_TITLE_KEYS;
+const SKILL_SECTION_IDS = {
+  listening: "dinleme",
+  writing: "yazma",
+  speaking: "konusma",
+  reading: "okuma",
+} as const;
 
-export function isSkillSection(section: string): section is SkillSectionId {
-  return section in SKILL_TITLE_KEYS;
-}
+export type SkillSectionId = keyof typeof SKILL_TITLE_KEYS;
 
 type SkillSectionProps = {
   skill: SkillSectionId;
@@ -24,7 +27,11 @@ export function SkillSection({ skill }: SkillSectionProps) {
   const headingId = `${skill}-heading`;
 
   return (
-    <section id={skill} aria-labelledby={headingId} className="space-y-2">
+    <section
+      id={SKILL_SECTION_IDS[skill]}
+      aria-labelledby={headingId}
+      className="space-y-2"
+    >
       <h1
         id={headingId}
         className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
