@@ -72,8 +72,16 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   const [formError, setFormError] = useState<string | null>(null);
   const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
   const [forgotNotice, setForgotNotice] = useState<string | null>(null);
+  const [loginPressed, setLoginPressed] = useState(false);
 
   const isLoading = isLoggingIn || isRegistering;
+
+  function pulseLoginButton() {
+    setLoginPressed(false);
+    window.requestAnimationFrame(() => {
+      setLoginPressed(true);
+    });
+  }
 
   useEffect(() => {
     if (authStatus === "authenticated" && authUser) {
@@ -131,6 +139,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
 
   async function onLoginSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    pulseLoginButton();
     setFormError(null);
 
     const parsed = loginSchema.safeParse({ email, password });
@@ -331,8 +340,13 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
 
               <button
                 type="submit"
-                className="btn ixir-split-btn"
+                className={cn("btn ixir-split-btn", loginPressed && "is-pressed")}
                 disabled={isLoading}
+                onAnimationEnd={(event) => {
+                  if (event.animationName === "ixirLoginPress") {
+                    setLoginPressed(false);
+                  }
+                }}
               >
                 <LogIn className="size-4" aria-hidden />
                 {t("submitLogin")}

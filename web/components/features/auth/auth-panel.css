@@ -1453,6 +1453,65 @@
   color: #fff !important;
 }
 
+.ixir-login-form .ixir-split-btn {
+  transition: transform 120ms ease, background-color 150ms ease;
+}
+
+.ixir-login-form .ixir-split-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.ixir-login-form .ixir-split-btn.is-pressed {
+  animation: ixirLoginPress 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ixir-login-form .ixir-split-btn.is-pressed svg {
+  animation: ixirLoginIcon 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes ixirLoginPress {
+  0% {
+    transform: scale(1);
+  }
+
+  28% {
+    transform: scale(0.96);
+  }
+
+  62% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes ixirLoginIcon {
+  0% {
+    transform: translateX(0);
+  }
+
+  45% {
+    transform: translateX(6px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ixir-login-form .ixir-split-btn,
+  .ixir-login-form .ixir-split-btn:active:not(:disabled),
+  .ixir-login-form .ixir-split-btn.is-pressed,
+  .ixir-login-form .ixir-split-btn.is-pressed svg {
+    animation: none;
+    transition: none;
+    transform: none;
+  }
+}
+
 a.ixir-split-btn {
   display: flex !important;
   align-items: center;
