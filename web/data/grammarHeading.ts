@@ -12,7 +12,7 @@ export const grammarHeadings: GrammarHeading[] = [
     level: "Başlangıç",
     title: "Alfabe & Ses Bilgisi",
     titleEng: "Alphabet & Basic Phonics",
-    titleEx: "A as in Apple, B as in Boy",
+    titleEx: "A, B, C — C is /k/ in cat and /s/ in city.",
   },
   {
     id: "2",
