@@ -226,7 +226,9 @@ export function clearTopicExamDrafts(): void {
 function partPercent(draft: TopicExamDraft, part: TopicQuizPart): number {
   const item = draft.parts[part];
   if (item?.active) {
-    return toExamPercent(item.correct, item.total);
+    const checked = item.slots.filter((slot) => slot.checked).length;
+    const total = item.total > 0 ? item.total : item.slots.length;
+    return toExamPercent(checked, total);
   }
   if (draft.passedParts.includes(part)) {
     return 100;

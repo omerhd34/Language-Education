@@ -8,25 +8,18 @@ import type {
   TopicExercise,
 } from "@/data/topics/types";
 
-function shuffle<T>(items: T[]): T[] {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const tmp = copy[i];
-    copy[i] = copy[j]!;
-    copy[j] = tmp!;
-  }
-  return copy;
-}
+import { shuffleSeeded } from "@/lib/seededRandom";
 
 function pickDistractors(
   words: VocabularyWord[],
   excludeId: string,
   count: number,
   field: "en" | "tr",
+  seed: string,
 ): string[] {
-  const pool = shuffle(
+  const pool = shuffleSeeded(
     words.filter((word) => word.id !== excludeId).map((word) => word[field]),
+    seed,
   );
   return pool.slice(0, count);
 }
@@ -40,12 +33,21 @@ export function generateMultipleChoiceExercises(
   }
 
   return words.map((word) => {
-    const distractors = pickDistractors(words, word.id, 3, "en");
+    const distractors = pickDistractors(
+      words,
+      word.id,
+      3,
+      "en",
+      `${categoryId}:${word.id}:mc-en`,
+    );
     while (distractors.length < 3) {
       distractors.push(`Option ${distractors.length + 1}`);
     }
 
-    const options = shuffle([word.en, ...distractors.slice(0, 3)]);
+    const options = shuffleSeeded(
+      [word.en, ...distractors.slice(0, 3)],
+      `${categoryId}:${word.id}:mc-options`,
+    );
     const correctIndex = options.indexOf(word.en);
 
     return {
@@ -82,24 +84,36 @@ export function generateListeningExercises(
   }
 
   return words.map((word) => {
-    const englishDistractors = pickDistractors(words, word.id, 3, "en");
+    const englishDistractors = pickDistractors(
+      words,
+      word.id,
+      3,
+      "en",
+      `${categoryId}:${word.id}:listen-en`,
+    );
     while (englishDistractors.length < 3) {
       englishDistractors.push(`Option ${englishDistractors.length + 1}`);
     }
 
-    const turkishDistractors = pickDistractors(words, word.id, 3, "tr");
+    const turkishDistractors = pickDistractors(
+      words,
+      word.id,
+      3,
+      "tr",
+      `${categoryId}:${word.id}:listen-tr`,
+    );
     while (turkishDistractors.length < 3) {
       turkishDistractors.push(`Seçenek ${turkishDistractors.length + 1}`);
     }
 
-    const englishOptions = shuffle([
-      word.en,
-      ...englishDistractors.slice(0, 3),
-    ]);
-    const turkishOptions = shuffle([
-      word.tr,
-      ...turkishDistractors.slice(0, 3),
-    ]);
+    const englishOptions = shuffleSeeded(
+      [word.en, ...englishDistractors.slice(0, 3)],
+      `${categoryId}:${word.id}:listen-en-options`,
+    );
+    const turkishOptions = shuffleSeeded(
+      [word.tr, ...turkishDistractors.slice(0, 3)],
+      `${categoryId}:${word.id}:listen-tr-options`,
+    );
 
     return {
       id: `vocab-listen-${categoryId}-${word.id}`,

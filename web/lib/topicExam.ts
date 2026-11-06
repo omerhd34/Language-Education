@@ -16,6 +16,7 @@ import {
   buildCrosswordFromCandidates,
   type CrosswordCandidate,
 } from "@/lib/crosswordBuilder";
+import { shuffleSeeded } from "@/lib/seededRandom";
 
 const LEVEL_EXAM_CLUES: Record<CefrLevel, CrosswordCandidate[]> = {
   Başlangıç: examBaslangicClues,
@@ -321,15 +322,11 @@ export function resolveTopicExamFillBlanks(
   return questions;
 }
 
-function shuffleCandidates(items: CrosswordCandidate[]): CrosswordCandidate[] {
-  const next = [...items];
-  for (let i = next.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const tmp = next[i]!;
-    next[i] = next[j]!;
-    next[j] = tmp;
-  }
-  return next;
+function shuffleCandidates(
+  items: CrosswordCandidate[],
+  seed: string,
+): CrosswordCandidate[] {
+  return shuffleSeeded(items, seed);
 }
 
 function collectLevelCrosswordCandidates(
@@ -364,7 +361,10 @@ function createLevelExamCrossword(level: CefrLevel): CrosswordExercise {
   const attempts = 24;
 
   for (let attempt = 0; attempt < attempts; attempt += 1) {
-    const picked = shuffleCandidates(pool).slice(0, targetClues);
+    const picked = shuffleCandidates(
+      pool,
+      `level-cw:${level}:${attempt}`,
+    ).slice(0, targetClues);
     const built = buildCrosswordFromCandidates(picked, {
       id: `level-exam-cw-${level}-${attempt}`,
       subtopicId: `level-exam-${level}`,
@@ -427,7 +427,7 @@ function toTitleCaseAnswer(answer: string): string {
 function createLevelExamFillBlanks(level: CefrLevel): FillBlankExercise[] {
   const pool = collectLevelCrosswordCandidates(level);
   const target = Math.min(LEVEL_EXAM_FILL_BLANK_COUNT, pool.length);
-  const picked = shuffleCandidates(pool).slice(0, target);
+  const picked = shuffleCandidates(pool, `level-fb:${level}`).slice(0, target);
 
   return picked.map((item, index) => {
     const displayAnswer = toTitleCaseAnswer(item.answer);
