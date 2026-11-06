@@ -284,7 +284,7 @@
     "statusLoading": "Durumlar yükleniyor…",
     "quizDocumentTitle": "Pylmor - Kelime sınavı",
     "quizTitle": "Kelime sınavı",
-    "quizSubtitle": "15 soru var. Çoktan seçmeli, boşluk doldurma ve sesli dinleme karışıktır. Sınavı bitirince kelimeler bilinenlere eklenir.",
+    "quizSubtitle": "Her kelime için çoktan seçmeli, boşluk doldurma ve sesli dinleme sorusu çıkar; sıra karışıktır. Sınavı bitirince kelimeler bilinenlere eklenir.",
     "quizLoading": "Sınav yükleniyor…",
     "quizError": "Sınav yüklenemedi. Lütfen tekrar dene.",
     "quizEmptyTitle": "Sınava hazır kelime yok",
