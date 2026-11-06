@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { VocabularyWord } from "@/data/vocabulary";
 import {
@@ -14,6 +14,8 @@ import {
   VocabularyLearnQuotaBanner,
 } from "@/components/features/vocabulary/VocabularyLearnQuotaBanner";
 import { VocabularyWordJumpNav } from "@/components/features/vocabulary/VocabularyWordJumpNav";
+import { vocabularyStatusActivityId } from "@/lib/vocabularyActivity";
+import { markVocabularyActivities } from "@/lib/vocabularyActivityStorage";
 import { LEARN_WORD_PERIOD_LIMIT } from "@/lib/vocabularyLimits";
 
 type VocabularyWordListProps = {
@@ -50,16 +52,37 @@ export function VocabularyWordList({
   const learnLimitReached = useVocabularyLearnLimitReached();
   const learnLimit =
     data?.learnLimit ?? data?.dailyLearnLimit ?? LEARN_WORD_PERIOD_LIMIT;
+  const pendingWordIds = new Set(data?.pendingStudyWordIds ?? []);
+
+  useEffect(() => {
+    if (!data?.statuses) {
+      return;
+    }
+
+    const actionIds: string[] = [];
+    for (const [wordId, status] of Object.entries(data.statuses)) {
+      if (status === "KNOWN") {
+        actionIds.push(vocabularyStatusActivityId(wordId, "known"));
+      }
+    }
+    markVocabularyActivities(categoryId, actionIds);
+  }, [categoryId, data?.statuses]);
 
   async function handleSetStatus(
     wordId: string,
     status: VocabularyWordStatusValue | null,
+    activity?: "known" | "learn" | "relearn",
   ) {
     setErrorMessage(null);
     setPendingWordId(wordId);
 
     try {
       await setStatus({ categoryId, wordId, status }).unwrap();
+      if (activity && activity !== "learn") {
+        markVocabularyActivities(categoryId, [
+          vocabularyStatusActivityId(wordId, activity),
+        ]);
+      }
     } catch (error) {
       const code = getApiErrorCode(error);
       if (code === "LEARN_PERIOD_LOCKED" || code === "DAILY_LEARN_LIMIT") {
@@ -102,13 +125,15 @@ export function VocabularyWordList({
           <li key={`${word.id}-${index}`}>
             <VocabularyWordCard
               word={word}
+              categoryId={categoryId}
               categoryWords={words}
               index={index + 1}
               status={data?.statuses[word.id]}
+              timerPending={pendingWordIds.has(word.id)}
               learnDisabled={learnLimitReached}
               isUpdating={pendingWordId === word.id}
-              onSetStatus={(nextStatus) => {
-                void handleSetStatus(word.id, nextStatus);
+              onSetStatus={(nextStatus, activity) => {
+                void handleSetStatus(word.id, nextStatus, activity);
               }}
             />
           </li>

@@ -7,6 +7,7 @@ import {
   Check,
   ChevronDown,
   MessageCircle,
+  Timer,
   Volume2,
 } from "lucide-react";
 import type { VocabularyWord } from "@/data/vocabulary";
@@ -14,6 +15,11 @@ import type { VocabularyWordStatusValue } from "@/store/api";
 import { LanguageFlag } from "@/components/features/vocabulary/LanguageFlag";
 import { VocabularyWordImage } from "@/components/features/vocabulary/VocabularyWordImage";
 import { Button } from "@/components/ui/Button";
+import {
+  vocabularyListenActivityId,
+  type VocabularyStatusActivity,
+} from "@/lib/vocabularyActivity";
+import { markVocabularyActivity } from "@/lib/vocabularyActivityStorage";
 import { speakText } from "@/lib/speakText";
 import {
   getSimilarWords,
@@ -24,12 +30,17 @@ import { cn } from "@/lib/utils";
 
 type VocabularyWordCardProps = {
   word: VocabularyWord;
+  categoryId: string;
   categoryWords: VocabularyWord[];
   index: number;
   status?: VocabularyWordStatusValue;
+  timerPending?: boolean;
   learnDisabled: boolean;
   isUpdating: boolean;
-  onSetStatus: (status: VocabularyWordStatusValue | null) => void;
+  onSetStatus: (
+    status: VocabularyWordStatusValue | null,
+    activity?: VocabularyStatusActivity,
+  ) => void;
 };
 
 const lockedButtonClassName =
@@ -57,9 +68,11 @@ function highlightWord(sentence: string, target: string) {
 
 export function VocabularyWordCard({
   word,
+  categoryId,
   categoryWords,
   index,
   status,
+  timerPending = false,
   learnDisabled,
   isUpdating,
   onSetStatus,
@@ -75,6 +88,13 @@ export function VocabularyWordCard({
   const similarWordsWithoutLink = similarWords.filter(
     (similar) => !similar.targetWordId,
   );
+
+  function recordListen(target: string) {
+    markVocabularyActivity(
+      categoryId,
+      vocabularyListenActivityId(word.id, target),
+    );
+  }
 
   return (
     <article
@@ -127,7 +147,10 @@ export function VocabularyWordCard({
               </span>
               <button
                 type="button"
-                onClick={() => speakText(word.en)}
+                onClick={() => {
+                  recordListen("word");
+                  speakText(word.en);
+                }}
                 className="inline-flex size-9 cursor-pointer items-center justify-center rounded-xl bg-sky-500/15 text-sky-700 transition-colors hover:bg-sky-500/25 dark:bg-sky-400/20 dark:text-sky-200 dark:hover:bg-sky-400/30"
                 aria-label={t("speakWord", { word: word.en })}
               >
@@ -142,8 +165,12 @@ export function VocabularyWordCard({
             ) : null}
             {isLearning ? (
               <span className="inline-flex items-center gap-1 rounded-full bg-sky-500/15 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-sky-800 uppercase dark:text-sky-200">
-                <BookOpen className="size-3" aria-hidden />
-                {t("learningBadge")}
+                {timerPending ? (
+                  <Timer className="size-3" aria-hidden />
+                ) : (
+                  <BookOpen className="size-3" aria-hidden />
+                )}
+                {timerPending ? t("timerPendingBadge") : t("learningBadge")}
               </span>
             ) : null}
           </div>
@@ -166,7 +193,10 @@ export function VocabularyWordCard({
                 if (knowDisabled) {
                   return;
                 }
-                onSetStatus(isKnown ? null : "KNOWN");
+                onSetStatus(
+                  isKnown ? null : "KNOWN",
+                  isKnown ? undefined : "known",
+                );
               }}
             >
               <Check className="size-3.5" aria-hidden />
@@ -196,7 +226,11 @@ export function VocabularyWordCard({
                 if (learnButtonDisabled) {
                   return;
                 }
-                onSetStatus(isLearning ? null : "LEARNING");
+                if (isLearning) {
+                  onSetStatus(null);
+                  return;
+                }
+                onSetStatus("LEARNING", isKnown ? "relearn" : "learn");
               }}
             >
               <BookOpen className="size-3.5" aria-hidden />
@@ -212,7 +246,7 @@ export function VocabularyWordCard({
                 className="flex flex-wrap gap-2"
                 aria-label={t("similarWordsTitle")}
               >
-                {similarWords.map((similar) => {
+                {similarWords.map((similar, similarIndex) => {
                   const canNavigate = Boolean(similar.targetWordId);
                   const label = t("similarWordLabel", {
                     word: similar.label,
@@ -245,7 +279,10 @@ export function VocabularyWordCard({
                       )}
                       <button
                         type="button"
-                        onClick={() => speakText(similar.label)}
+                        onClick={() => {
+                          recordListen(`similar:${similarIndex}`);
+                          speakText(similar.label);
+                        }}
                         className="inline-flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-emerald-500/25 bg-emerald-500/10 text-emerald-700 transition-colors hover:bg-emerald-500/20 dark:border-emerald-400/25 dark:bg-emerald-400/15 dark:text-emerald-200 dark:hover:bg-emerald-400/25"
                         aria-label={t("speakSimilarWord", {
                           word: similar.label,
@@ -292,7 +329,10 @@ export function VocabularyWordCard({
                       <div className="flex items-start gap-2.5">
                         <button
                           type="button"
-                          onClick={() => speakText(example.en)}
+                          onClick={() => {
+                            recordListen(`example:${exampleIndex}`);
+                            speakText(example.en);
+                          }}
                           className="mt-0.5 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-sky-500/10 text-sky-700 transition-colors hover:bg-sky-500/15 dark:bg-sky-400/15 dark:text-sky-200"
                           aria-label={t("speakExample", {
                             index: exampleIndex + 1,
@@ -324,36 +364,47 @@ export function VocabularyWordCard({
                   {t("similarExamplesTitle")}
                 </p>
                 <ul className="mt-3 space-y-3">
-                  {similarWordsWithoutLink.map((similar) => (
-                    <li
-                      key={`${word.id}-similar-ex-${similar.label}`}
-                      className="rounded-2xl bg-white/80 px-3.5 py-3 dark:bg-brand-950/45"
-                    >
-                      <div className="flex items-start gap-2.5">
-                        <button
-                          type="button"
-                          onClick={() => speakText(similar.example.en)}
-                          className="mt-0.5 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-emerald-500/10 text-emerald-700 transition-colors hover:bg-emerald-500/15 dark:bg-emerald-400/15 dark:text-emerald-200"
-                          aria-label={t("speakSimilarExample", {
-                            word: similar.label,
-                          })}
-                        >
-                          <Volume2 className="size-3.5" aria-hidden />
-                        </button>
-                        <div className="min-w-0 space-y-1">
-                          <p className="text-xs font-semibold tracking-wide text-emerald-800 uppercase dark:text-emerald-200">
-                            {t("similarWordLabel", { word: similar.label })}
-                          </p>
-                          <p className="text-sm leading-relaxed text-brand-800 dark:text-brand-200">
-                            {highlightWord(similar.example.tr, similar.labelTr)}
-                          </p>
-                          <p className="text-sm leading-relaxed text-brand-500 dark:text-brand-400">
-                            {highlightWord(similar.example.en, similar.label)}
-                          </p>
+                  {similarWordsWithoutLink.map((similar) => {
+                    const similarIndex = similarWords.findIndex(
+                      (item) => item.label === similar.label,
+                    );
+                    return (
+                      <li
+                        key={`${word.id}-similar-ex-${similar.label}`}
+                        className="rounded-2xl bg-white/80 px-3.5 py-3 dark:bg-brand-950/45"
+                      >
+                        <div className="flex items-start gap-2.5">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              recordListen(`similar-example:${similarIndex}`);
+                              speakText(similar.example.en);
+                            }}
+                            className="mt-0.5 inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-emerald-500/10 text-emerald-700 transition-colors hover:bg-emerald-500/15 dark:bg-emerald-400/15 dark:text-emerald-200"
+                            aria-label={t("speakSimilarExample", {
+                              word: similar.label,
+                            })}
+                          >
+                            <Volume2 className="size-3.5" aria-hidden />
+                          </button>
+                          <div className="min-w-0 space-y-1">
+                            <p className="text-xs font-semibold tracking-wide text-emerald-800 uppercase dark:text-emerald-200">
+                              {t("similarWordLabel", { word: similar.label })}
+                            </p>
+                            <p className="text-sm leading-relaxed text-brand-800 dark:text-brand-200">
+                              {highlightWord(
+                                similar.example.tr,
+                                similar.labelTr,
+                              )}
+                            </p>
+                            <p className="text-sm leading-relaxed text-brand-500 dark:text-brand-400">
+                              {highlightWord(similar.example.en, similar.label)}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  ))}
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             ) : null}

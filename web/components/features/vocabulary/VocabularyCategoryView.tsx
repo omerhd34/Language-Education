@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import type { VocabularyWord } from "@/data/vocabulary";
+import { useRouter } from "@/i18n/navigation";
 import {
   VocabularyCategoryTabs,
   type VocabularyCategoryTab,
@@ -18,21 +20,36 @@ import {
   getVocabularyCategoryLevel,
 } from "@/lib/vocabularyAccess";
 import { generateVocabularyExercises } from "@/lib/vocabulary/generateExercises";
+import { vocabularyExerciseProgressKey } from "@/lib/vocabularySectionProgress";
 import { useKnownVocabularyWordsQuery } from "@/store/api";
 
 type VocabularyCategoryViewProps = {
   categoryId: string;
   words: VocabularyWord[];
-  initialTab?: VocabularyCategoryTab;
 };
 
 export function VocabularyCategoryView({
   categoryId,
   words,
-  initialTab = "words",
 }: VocabularyCategoryViewProps) {
   const t = useTranslations("Vocabulary");
-  const [tab, setTab] = useState<VocabularyCategoryTab>(initialTab);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const tab: VocabularyCategoryTab =
+    searchParams.get("tab") === "exercises" ? "exercises" : "words";
+
+  function handleTabChange(next: VocabularyCategoryTab) {
+    if (next === tab) {
+      return;
+    }
+
+    router.replace(
+      next === "exercises"
+        ? `/panel/kelime/${categoryId}?tab=exercises`
+        : `/panel/kelime/${categoryId}`,
+      { scroll: false },
+    );
+  }
   const {
     data: knownWords,
     isLoading,
@@ -87,12 +104,15 @@ export function VocabularyCategoryView({
 
   return (
     <div className="space-y-6">
-      <VocabularyCategoryTabs activeTab={tab} onChange={setTab} />
+      <VocabularyCategoryTabs activeTab={tab} onChange={handleTabChange} />
 
       {tab === "words" ? (
         <VocabularyWordList categoryId={categoryId} words={words} />
       ) : (
-        <TopicExercisesView exercises={exercises} />
+        <TopicExercisesView
+          progressKey={vocabularyExerciseProgressKey(categoryId)}
+          exercises={exercises}
+        />
       )}
     </div>
   );

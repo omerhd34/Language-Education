@@ -6,6 +6,7 @@ import {
   useVocabularyLearnQuotaQuery,
   useVocabularyQuizQuery,
 } from "@/store/api";
+import { StudyTimerPendingNotice } from "@/components/features/vocabulary/StartStudyTimerButton";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useCountdown } from "@/hooks/useCountdown";
 import {
@@ -29,6 +30,7 @@ export function VocabularyLearnQuotaBanner({
   const lockedUntil = data?.lockedUntil ?? null;
   const remainingMs = useCountdown(lockedUntil);
   const quizReady = (quiz?.dueCount ?? 0) > 0;
+  const pending = data?.pendingStudyCount ?? 0;
 
   useEffect(() => {
     if (lockedUntil && remainingMs === 0) {
@@ -36,23 +38,23 @@ export function VocabularyLearnQuotaBanner({
     }
   }, [lockedUntil, remainingMs, refetch]);
 
-  if (!quizReady) {
+  if (!quizReady && pending === 0) {
     return null;
   }
 
   return (
-    <div
-      className={cn(
-        "flex min-h-12 items-center justify-between gap-3 rounded-2xl border border-brand-200/70 bg-brand-50/50 px-4 py-3 dark:border-brand-800/70 dark:bg-brand-900/40",
-        className,
-      )}
-    >
-      <p className="text-sm font-medium text-brand-800 dark:text-brand-200">
-        {tDashboard("quizCardReady", { count: quiz?.dueCount ?? 0 })}
-      </p>
-      <ButtonLink href="/panel/kelime/sinav" size="sm">
-        {t("startQuizEarly")}
-      </ButtonLink>
+    <div className={cn("space-y-3", className)}>
+      <StudyTimerPendingNotice />
+      {quizReady ? (
+        <div className="flex min-h-12 items-center justify-between gap-3 rounded-2xl border border-brand-200/70 bg-brand-50/50 px-4 py-3 dark:border-brand-800/70 dark:bg-brand-900/40">
+          <p className="text-sm font-medium text-brand-800 dark:text-brand-200">
+            {tDashboard("quizCardReady", { count: quiz?.dueCount ?? 0 })}
+          </p>
+          <ButtonLink href="/panel/kelime/sinav" size="sm">
+            {t("startQuizEarly")}
+          </ButtonLink>
+        </div>
+      ) : null}
     </div>
   );
 }

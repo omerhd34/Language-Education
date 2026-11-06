@@ -1,4 +1,5 @@
 export const instant = false;
+import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { VocabularyCategoryHeader } from "@/components/features/vocabulary/VocabularyCategoryHeader";
@@ -11,7 +12,6 @@ import { getVocabularyCategoryDisplayIndex } from "@/lib/vocabularyAccess";
 
 type PageProps = {
   params: Promise<{ locale: string; categoryId: string }>;
-  searchParams: Promise<{ tab?: string }>;
 };
 
 export function generateStaticParams() {
@@ -32,13 +32,10 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-export default async function VocabularyCategoryPage({
-  params,
-  searchParams,
-}: PageProps) {
+export default async function VocabularyCategoryPage({ params }: PageProps) {
   const { locale, categoryId } = await params;
-  const { tab } = await searchParams;
   setRequestLocale(locale);
+  const t = await getTranslations("Vocabulary");
 
   const category = getVocabularyCategoryById(categoryId);
   if (!category) {
@@ -55,11 +52,18 @@ export default async function VocabularyCategoryPage({
         index={index}
         wordCount={category.words.length}
       />
-      <VocabularyCategoryView
-        categoryId={category.id}
-        words={category.words}
-        initialTab={tab === "exercises" ? "exercises" : "words"}
-      />
+      <Suspense
+        fallback={
+          <p className="text-sm text-brand-600 dark:text-brand-400">
+            {t("statusLoading")}
+          </p>
+        }
+      >
+        <VocabularyCategoryView
+          categoryId={category.id}
+          words={category.words}
+        />
+      </Suspense>
     </div>
   );
 }
