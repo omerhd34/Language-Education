@@ -25,7 +25,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
 
   useEffect(() => {
     if (existingUser) {
-      router.replace("/panelim");
+      router.replace("/panel");
     }
   }, [existingUser, router]);
 
@@ -51,7 +51,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
           }),
         );
         setDone(true);
-        router.replace("/panelim");
+        router.replace("/panel");
       } catch {
         startedTokens.delete(token);
         setError(t("verifyInvalid"));
@@ -67,7 +67,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
         </p>
         <p className="text-sm text-brand-600 dark:text-brand-400">
           <Link
-            href="/panel"
+            href="/panelLogin"
             className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
           >
             {t("myPanel")}

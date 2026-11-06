@@ -79,7 +79,7 @@ export function Navbar() {
               onLogout={() => void handleLogout()}
             />
           ) : (
-            <ButtonLink href="/panel" size="lg">
+            <ButtonLink href="/panelLogin" size="lg">
               <HiRectangleStack aria-hidden />
               {t("myPanel")}
             </ButtonLink>
@@ -145,7 +145,7 @@ export function Navbar() {
               </div>
             ) : (
               <ButtonLink
-                href="/panel"
+                href="/panelLogin"
                 size="lg"
                 className="w-full"
                 onClick={() => setOpen(false)}

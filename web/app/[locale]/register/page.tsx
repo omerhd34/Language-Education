@@ -8,5 +8,5 @@ export default async function RegisterPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  redirect({ href: "/panel", locale });
+  redirect({ href: "/panelLogin", locale });
 }

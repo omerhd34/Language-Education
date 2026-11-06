@@ -14,7 +14,7 @@ export function AuthHomeSwitch({ children }: AuthHomeSwitchProps) {
 
   useEffect(() => {
     if (status === "authenticated") {
-      router.replace("/panelim");
+      router.replace("/panel");
     }
   }, [router, status]);
 

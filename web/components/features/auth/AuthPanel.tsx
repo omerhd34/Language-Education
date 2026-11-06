@@ -16,6 +16,7 @@ import {
 import { AuthEmailField } from "@/components/features/auth/AuthEmailField";
 import { AuthFloatingField } from "@/components/features/auth/AuthFloatingField";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { useAppSelector } from "@/hooks/useAppSelector";
 import { useRouter } from "@/i18n/navigation";
 import { createLoginSchema, createRegisterSchema } from "@/lib/authValidation";
 import { cn } from "@/lib/utils";
@@ -47,6 +48,8 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   const tNav = useTranslations("Nav");
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.auth.status);
+  const authUser = useAppSelector((state) => state.auth.user);
   const [login, { isLoading: isLoggingIn }] = useLoginMutation();
   const [register, { isLoading: isRegistering }] = useRegisterMutation();
 
@@ -73,6 +76,11 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   const isLoading = isLoggingIn || isRegistering;
 
   useEffect(() => {
+    if (authStatus === "authenticated" && authUser) {
+      router.replace("/panel");
+      return;
+    }
+
     const remembered = window.localStorage.getItem("pylmor-remember-email");
     if (remembered) {
       setEmail(remembered);
@@ -84,9 +92,9 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
       setMode("kayit");
     }
     if (window.location.search) {
-      router.replace("/panel");
+      router.replace("/panelLogin");
     }
-  }, [router]);
+  }, [authStatus, authUser, router]);
 
   const loginSchema = useMemo(
     () =>
@@ -151,7 +159,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
           accessToken: result.accessToken,
         }),
       );
-      router.push("/panelim");
+      router.push("/panel");
     } catch (error) {
       if (getErrorCode(error) === "EMAIL_NOT_VERIFIED") {
         setFormError(t("errors.emailNotVerified"));
