@@ -127,12 +127,12 @@ export async function getVocabularyQuizForUser(
     where: {
       userId,
       status: "LEARNING",
-      ...(earlyAccess ? {} : { statusSetAt: { lte: threshold } }),
+      studyStartedAt: earlyAccess ? { not: null } : { lte: threshold },
     },
-    orderBy: { statusSetAt: "asc" },
+    orderBy: { studyStartedAt: "asc" },
     select: {
       wordId: true,
-      statusSetAt: true,
+      studyStartedAt: true,
       passedMultipleChoice: true,
       passedFillBlank: true,
       passedListening: true,
@@ -145,10 +145,10 @@ export async function getVocabularyQuizForUser(
         where: {
           userId,
           status: "LEARNING",
-          statusSetAt: { gt: threshold },
+          studyStartedAt: { gt: threshold },
         },
-        orderBy: { statusSetAt: "asc" },
-        select: { statusSetAt: true },
+        orderBy: { studyStartedAt: "asc" },
+        select: { studyStartedAt: true },
       });
 
   const pool = allEnglishPool();
@@ -186,11 +186,12 @@ export async function getVocabularyQuizForUser(
     });
   }
 
-  const nextDueAt = waiting
-    ? new Date(
-        waiting.statusSetAt.getTime() + VOCABULARY_QUIZ_DUE_MS,
-      ).toISOString()
-    : null;
+  const nextDueAt =
+    waiting?.studyStartedAt != null
+      ? new Date(
+          waiting.studyStartedAt.getTime() + VOCABULARY_QUIZ_DUE_MS,
+        ).toISOString()
+      : null;
 
   return {
     dueCount: words.length,
@@ -221,7 +222,7 @@ export async function answerVocabularyQuizQuestion(
     select: {
       id: true,
       status: true,
-      statusSetAt: true,
+      studyStartedAt: true,
       passedMultipleChoice: true,
       passedFillBlank: true,
       passedListening: true,
@@ -234,9 +235,14 @@ export async function answerVocabularyQuizQuestion(
 
   if (!ALLOW_EARLY_VOCABULARY_QUIZ) {
     const threshold = dueThreshold();
-    if (existing.statusSetAt.getTime() > threshold.getTime()) {
+    if (
+      !existing.studyStartedAt ||
+      existing.studyStartedAt.getTime() > threshold.getTime()
+    ) {
       throw new AppError("Word is not due for quiz yet", 400, "NOT_DUE");
     }
+  } else if (!existing.studyStartedAt) {
+    throw new AppError("Word is not due for quiz yet", 400, "NOT_DUE");
   }
 
   const correct = isVocabularyQuizAnswerCorrect(found.word, answer);
@@ -270,6 +276,7 @@ export async function answerVocabularyQuizQuestion(
       data: {
         status: "LEARNING",
         statusSetAt: now,
+        studyStartedAt: now,
       },
     });
   }
