@@ -177,6 +177,7 @@ model UserVocabularyWord {
   wordId               String
   status               VocabularyWordStatus
   statusSetAt          DateTime             @default(now())
+  studyStartedAt       DateTime?
   passedMultipleChoice Boolean              @default(false)
   passedFillBlank      Boolean              @default(false)
   passedListening      Boolean              @default(false)
@@ -186,4 +187,5 @@ model UserVocabularyWord {
   @@unique([userId, wordId])
   @@index([userId])
   @@index([userId, status, statusSetAt])
+  @@index([userId, status, studyStartedAt])
 }
