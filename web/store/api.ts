@@ -46,6 +46,8 @@ export type VocabularyStatusPayload = {
   dailyLearnLimit: number;
   pendingStudyCount: number;
   pendingStudyWordIds: string[];
+  lastLearnSelectedAt: string | null;
+  learnUnlockedAt: string | null;
 };
 
 export type SetVocabularyWordStatusBody = {
@@ -75,6 +77,7 @@ export type StudiedTodayVocabularyWord = KnownVocabularyWord & {
 export type StudiedTodayVocabularyWordsPayload = {
   words: StudiedTodayVocabularyWord[];
   count: number;
+  cancellableCount: number;
 };
 
 export type VocabularyQuizTypeProgress = {
@@ -117,6 +120,10 @@ export type VocabularyQuizAnswerBody = {
 
 export type StartVocabularyStudyTimerPayload = {
   startedCount: number;
+};
+
+export type CancelVocabularyStudyTimerPayload = {
+  cancelledCount: number;
 };
 
 export type VocabularyQuizAnswerPayload = {
@@ -317,7 +324,34 @@ export const api = createApi({
         }
         return response.data;
       },
-      invalidatesTags: ["KnownVocabularyWords", "StudiedTodayWords"],
+      invalidatesTags: [
+        "VocabularyStatus",
+        "KnownVocabularyWords",
+        "StudiedTodayWords",
+        "VocabularyQuiz",
+      ],
+    }),
+    completeVocabularyQuiz: builder.mutation<
+      { knownCount: number },
+      { wordIds: string[] }
+    >({
+      query: (body) => ({
+        url: "/vocabulary/quiz/complete",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: ApiResponse<{ knownCount: number }>) => {
+        if (!response.success) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      },
+      invalidatesTags: [
+        "VocabularyStatus",
+        "KnownVocabularyWords",
+        "StudiedTodayWords",
+        "VocabularyQuiz",
+      ],
     }),
     setVocabularyWordStatus: builder.mutation<
       VocabularyStatusPayload,
@@ -418,6 +452,28 @@ export const api = createApi({
         "VocabularyQuiz",
       ],
     }),
+    cancelVocabularyStudyTimer: builder.mutation<
+      CancelVocabularyStudyTimerPayload,
+      void
+    >({
+      query: () => ({
+        url: "/vocabulary/study-timer",
+        method: "DELETE",
+      }),
+      transformResponse: (
+        response: ApiResponse<CancelVocabularyStudyTimerPayload>,
+      ) => {
+        if (!response.success) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      },
+      invalidatesTags: [
+        "VocabularyStatus",
+        "StudiedTodayWords",
+        "VocabularyQuiz",
+      ],
+    }),
     resetProgress: builder.mutation<ProgressResetPayload, ProgressResetBody>({
       query: (body) => ({
         url: "/progress/reset",
@@ -453,7 +509,9 @@ export const {
   useStudiedTodayVocabularyWordsQuery,
   useVocabularyQuizQuery,
   useAnswerVocabularyQuizMutation,
+  useCompleteVocabularyQuizMutation,
   useSetVocabularyWordStatusMutation,
   useStartVocabularyStudyTimerMutation,
+  useCancelVocabularyStudyTimerMutation,
   useResetProgressMutation,
 } = api;
