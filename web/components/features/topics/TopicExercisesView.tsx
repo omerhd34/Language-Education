@@ -2,7 +2,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, CheckCircle2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
@@ -30,7 +30,13 @@ import {
   TOPIC_PROGRESS_CHANGED_EVENT,
   getCompletedTopicExerciseTypes,
   markTopicExerciseTypeCompleted,
+  unmarkTopicExerciseTypeCompleted,
 } from "@/lib/topicProgressStorage";
+import {
+  readSelectedExerciseType,
+  writeSelectedExerciseType,
+} from "@/lib/exerciseDraftStorage";
+import { computeExerciseTypeProgress } from "@/lib/exerciseTypeProgress";
 import { getNextLevel } from "@/lib/topicAccess";
 
 type TopicExercisesViewProps = {
@@ -52,6 +58,9 @@ export function TopicExercisesView({
 }: TopicExercisesViewProps) {
   const t = useTranslations("Topic");
   const [selectedType, setSelectedType] = useState<ExerciseType | null>(null);
+  const [sessionReady, setSessionReady] = useState(isExam || !topicId);
+  const [progressReady, setProgressReady] = useState(false);
+  const restoredTopicRef = useRef<string | null>(null);
   const [completedTypes, setCompletedTypes] = useState<ExerciseType[]>([]);
   const nextLevel = level ? getNextLevel(level) : null;
 
@@ -107,6 +116,42 @@ export function TopicExercisesView({
       window.removeEventListener("storage", refresh);
     };
   }, [topicId]);
+
+  useEffect(() => {
+    setProgressReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (isExam || !topicId) {
+      setSessionReady(true);
+      return;
+    }
+
+    if (restoredTopicRef.current === topicId) {
+      return;
+    }
+    restoredTopicRef.current = topicId;
+
+    const saved = readSelectedExerciseType(topicId);
+    const available = new Set(exercises.map((item) => item.type));
+    setSelectedType(saved && available.has(saved) ? saved : null);
+    setSessionReady(true);
+  }, [exercises, isExam, topicId]);
+
+  useEffect(() => {
+    if (!sessionReady || isExam || !topicId) {
+      return;
+    }
+    writeSelectedExerciseType(topicId, selectedType);
+  }, [isExam, selectedType, sessionReady, topicId]);
+
+  const typeProgress = progressReady
+    ? computeExerciseTypeProgress({
+        topicId,
+        exercises,
+        completedTypes,
+      })
+    : undefined;
 
   const counts = useMemo(
     () => ({
@@ -182,6 +227,12 @@ export function TopicExercisesView({
   function handleSessionComplete() {
     if (topicId && selectedType) {
       markTopicExerciseTypeCompleted(topicId, selectedType);
+    }
+  }
+
+  function handleSessionRestart() {
+    if (topicId && selectedType) {
+      unmarkTopicExerciseTypeCompleted(topicId, selectedType);
     }
   }
 
@@ -308,6 +359,7 @@ export function TopicExercisesView({
             <CrosswordExerciseView
               key={`cw-${crosswordSessionKey}-${levelExamCrosswords[0]?.id ?? "cw"}`}
               exercises={levelExamCrosswords}
+              draftKey={null}
               onComplete={(result) =>
                 handleLevelExamPartComplete("crossword", result)
               }
@@ -334,11 +386,16 @@ export function TopicExercisesView({
     );
   }
 
+  if (topicId && !sessionReady) {
+    return null;
+  }
+
   if (!selectedType) {
     return (
       <ExerciseTypePicker
         counts={counts}
         completedTypes={completedTypes}
+        progressPercents={typeProgress}
         onSelect={setSelectedType}
       />
     );
@@ -371,6 +428,7 @@ export function TopicExercisesView({
         <MultipleChoiceExercises
           exercises={filtered as MultipleChoiceExercise[]}
           onComplete={handleSessionComplete}
+          onRestart={handleSessionRestart}
         />
       ) : null}
 
@@ -378,13 +436,20 @@ export function TopicExercisesView({
         <FillBlankExercises
           exercises={filtered as FillBlankExercise[]}
           onComplete={handleSessionComplete}
+          onRestart={handleSessionRestart}
         />
       ) : null}
 
       {selectedType === "crossword" ? (
         <CrosswordExerciseView
           exercises={filtered as CrosswordExercise[]}
+          draftKey={
+            topicId
+              ? `topic:${topicId}:crossword`
+              : `crossword:${filtered.map((item) => item.id).join(",")}`
+          }
           onComplete={handleSessionComplete}
+          onRestart={handleSessionRestart}
         />
       ) : null}
 
@@ -392,6 +457,7 @@ export function TopicExercisesView({
         <ListeningExercises
           exercises={filtered as ListeningExercise[]}
           onComplete={handleSessionComplete}
+          onRestart={handleSessionRestart}
         />
       ) : null}
     </div>

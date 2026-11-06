@@ -1,10 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { Button } from "@/components/ui/Button";
+import { useEffect, useRef } from "react";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
+import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
+import { Button } from "@/components/ui/Button";
 import type { MultipleChoiceExercise } from "@/data/topics/types";
+import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
+import type { TopicExamSlot } from "@/lib/topicExamDraftStorage";
 import { cn } from "@/lib/utils";
 
 export type ExerciseSessionResult = {
@@ -15,30 +18,91 @@ export type ExerciseSessionResult = {
 type MultipleChoiceExercisesProps = {
   exercises: MultipleChoiceExercise[];
   onComplete?: (result: ExerciseSessionResult) => void;
+  onRestart?: () => void;
+  initialIndex?: number;
+  initialSlots?: TopicExamSlot[];
+  onSessionChange?: (session: {
+    index: number;
+    correct: number;
+    total: number;
+    slots: TopicExamSlot[];
+  }) => void;
 };
+
+type ChoiceSlot = {
+  selected: number | null;
+  checked: boolean;
+};
+
+function createChoiceSlot(): ChoiceSlot {
+  return { selected: null, checked: false };
+}
+
+function countCorrect(
+  exercises: MultipleChoiceExercise[],
+  slots: ChoiceSlot[],
+) {
+  return exercises.reduce((count, exercise, exerciseIndex) => {
+    const slot = slots[exerciseIndex];
+    if (slot?.checked && slot.selected === exercise.correctIndex) {
+      return count + 1;
+    }
+    return count;
+  }, 0);
+}
 
 export function MultipleChoiceExercises({
   exercises,
   onComplete,
+  onRestart,
+  initialIndex = 0,
+  initialSlots,
+  onSessionChange,
 }: MultipleChoiceExercisesProps) {
   const t = useTranslations("Topic");
-  const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
-  const [checked, setChecked] = useState(false);
-  const [correctCount, setCorrectCount] = useState(0);
-  const [finished, setFinished] = useState(false);
-  const [resultOpen, setResultOpen] = useState(false);
+  const skipSessionSave = useRef(true);
+  const {
+    index,
+    slots,
+    current,
+    finished,
+    resultOpen,
+    setResultOpen,
+    nextLabelKey,
+    canGoPrevious,
+    canGoNext,
+    updateCurrent,
+    handlePrevious,
+    handleAdvance,
+    resetSession,
+  } = useExerciseNavigation({
+    length: exercises.length,
+    createSlot: createChoiceSlot,
+    initialIndex,
+    initialSlots,
+  });
 
-  function resetAll() {
-    setIndex(0);
-    setSelected(null);
-    setChecked(false);
-    setCorrectCount(0);
-    setFinished(false);
-    setResultOpen(false);
-  }
+  useEffect(() => {
+    if (!onSessionChange) {
+      return;
+    }
+    if (skipSessionSave.current) {
+      skipSessionSave.current = false;
+      return;
+    }
 
-  if (exercises.length === 0) {
+    onSessionChange({
+      index,
+      correct: countCorrect(exercises, slots),
+      total: exercises.length,
+      slots: slots.map((slot) => ({
+        selected: slot.selected,
+        checked: slot.checked,
+      })),
+    });
+  }, [exercises, index, onSessionChange, slots]);
+
+  if (exercises.length === 0 || !current) {
     return (
       <p className="text-sm text-brand-600 dark:text-brand-400">
         {t("noExercisesForType")}
@@ -46,7 +110,18 @@ export function MultipleChoiceExercises({
     );
   }
 
+  const exercise = exercises[index];
+  if (!exercise) {
+    return null;
+  }
+
+  const isCorrect =
+    current.checked && current.selected === exercise.correctIndex;
+  const canRestart = index > 0 || current.selected !== null || current.checked;
+  const continueLabel = t(nextLabelKey);
+
   if (finished) {
+    const correctCount = countCorrect(exercises, slots);
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
         <h2 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
@@ -58,40 +133,28 @@ export function MultipleChoiceExercises({
             total: exercises.length,
           })}
         </p>
-        <Button type="button" onClick={resetAll}>
+        <Button type="button" onClick={resetSession}>
           {t("retry")}
         </Button>
       </div>
     );
   }
 
-  const exercise = exercises[index];
-  const isCorrect = selected === exercise.correctIndex;
-  const canRestart = index > 0 || selected !== null || checked;
-  const continueLabel =
-    index >= exercises.length - 1 ? t("seeResult") : t("next");
-
   function handleCheck() {
-    if (selected === null || checked) {
+    if (current.selected === null || current.checked) {
       return;
     }
-    setChecked(true);
-    if (selected === exercise.correctIndex) {
-      setCorrectCount((value) => value + 1);
-    }
+    updateCurrent({ checked: true });
     setResultOpen(true);
   }
 
   function handleNext() {
-    setResultOpen(false);
-    if (index >= exercises.length - 1) {
-      setFinished(true);
-      onComplete?.({ correct: correctCount, total: exercises.length });
-      return;
-    }
-    setIndex((value) => value + 1);
-    setSelected(null);
-    setChecked(false);
+    handleAdvance((answered) => {
+      onComplete?.({
+        correct: countCorrect(exercises, answered),
+        total: exercises.length,
+      });
+    });
   }
 
   return (
@@ -121,11 +184,13 @@ export function MultipleChoiceExercises({
           aria-label={t("optionsAria")}
         >
           {exercise.options.map((option, optionIndex) => {
-            const isSelected = selected === optionIndex;
+            const isSelected = current.selected === optionIndex;
             const showCorrect =
-              checked && optionIndex === exercise.correctIndex;
+              current.checked && optionIndex === exercise.correctIndex;
             const showWrong =
-              checked && isSelected && optionIndex !== exercise.correctIndex;
+              current.checked &&
+              isSelected &&
+              optionIndex !== exercise.correctIndex;
 
             return (
               <li key={`${optionIndex}-${option}`}>
@@ -133,8 +198,8 @@ export function MultipleChoiceExercises({
                   type="button"
                   role="option"
                   aria-selected={isSelected}
-                  disabled={checked}
-                  onClick={() => setSelected(optionIndex)}
+                  disabled={current.checked}
+                  onClick={() => updateCurrent({ selected: optionIndex })}
                   className={cn(
                     "w-full cursor-pointer rounded-xl border px-4 py-3 text-left text-sm transition-colors",
                     "disabled:cursor-default",
@@ -159,30 +224,42 @@ export function MultipleChoiceExercises({
           })}
         </ul>
 
-        <div className="flex flex-wrap gap-2">
-          {!checked ? (
+        <ExerciseStepNav
+          canGoPrevious={canGoPrevious}
+          canGoNext={canGoNext}
+          nextLabel={continueLabel}
+          nextVariant={current.checked ? "default" : "outline"}
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          trailing={
+            canRestart ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  onRestart?.();
+                  resetSession();
+                }}
+              >
+                {t("restart")}
+              </Button>
+            ) : null
+          }
+        >
+          {!current.checked ? (
             <Button
               type="button"
-              disabled={selected === null}
+              disabled={current.selected === null}
               onClick={handleCheck}
             >
               {t("check")}
             </Button>
-          ) : !resultOpen ? (
-            <Button type="button" onClick={handleNext}>
-              {continueLabel}
-            </Button>
           ) : null}
-          {canRestart ? (
-            <Button type="button" variant="outline" onClick={resetAll}>
-              {t("restart")}
-            </Button>
-          ) : null}
-        </div>
+        </ExerciseStepNav>
       </article>
 
       <ExerciseResultDialog
-        open={resultOpen && checked}
+        open={resultOpen && current.checked}
         variant={isCorrect ? "correct" : "incorrect"}
         explanation={exercise.explanation}
         onOpenChange={setResultOpen}

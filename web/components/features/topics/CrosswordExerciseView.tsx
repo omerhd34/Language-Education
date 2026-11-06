@@ -1,14 +1,20 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useTranslations } from "next-intl";
 import { Check, RotateCcw } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import type {
   CrosswordDirection,
   CrosswordExercise,
 } from "@/data/topics/types";
+import {
+  clearCrosswordDraft,
+  readCrosswordDraft,
+  writeCrosswordDraft,
+} from "@/lib/exerciseDraftStorage";
 import { cn } from "@/lib/utils";
 
 type ExerciseSessionResult = {
@@ -19,6 +25,8 @@ type ExerciseSessionResult = {
 type CrosswordExerciseViewProps = {
   exercises: CrosswordExercise[];
   onComplete?: (result: ExerciseSessionResult) => void;
+  onRestart?: () => void;
+  draftKey?: string | null;
 };
 
 type CellStart = {
@@ -103,13 +111,40 @@ function isClueFullyTyped(
   return getClueCellKeys(clue).every((key) => (values[key] ?? "").length > 0);
 }
 
+function isGridCorrect(
+  exercise: CrosswordExercise,
+  solution: Array<Array<GridCell | null>>,
+  values: Record<string, string>,
+): boolean {
+  for (let row = 0; row < exercise.rows; row += 1) {
+    for (let col = 0; col < exercise.cols; col += 1) {
+      const cell = solution[row]?.[col];
+      if (!cell) {
+        continue;
+      }
+      if ((values[cellKey(row, col)] ?? "").toUpperCase() !== cell.letter) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 export function CrosswordExerciseView({
   exercises,
   onComplete,
+  onRestart,
+  draftKey,
 }: CrosswordExerciseViewProps) {
   const t = useTranslations("Topic");
+  const storageKey =
+    draftKey === null
+      ? null
+      : (draftKey ?? `crossword:${exercises.map((item) => item.id).join(",")}`);
+  const exerciseIds = exercises.map((item) => item.id).join("\u0000");
   const [puzzleIndex, setPuzzleIndex] = useState(0);
   const [solvedCount, setSolvedCount] = useState(0);
+  const [ready, setReady] = useState(draftKey === null);
   const exercise = exercises[puzzleIndex];
   const solution = useMemo(
     () => (exercise ? buildSolutionGrid(exercise) : null),
@@ -122,6 +157,72 @@ export function CrosswordExerciseView({
   const [isCorrect, setIsCorrect] = useState(false);
   const [finished, setFinished] = useState(false);
   const [resultOpen, setResultOpen] = useState(false);
+  const restoredKeyRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (storageKey === null) {
+      setReady(true);
+      return;
+    }
+
+    if (restoredKeyRef.current === storageKey) {
+      return;
+    }
+    restoredKeyRef.current = storageKey;
+
+    const draft = readCrosswordDraft(storageKey);
+    const matchIndex = draft
+      ? exercises.findIndex((item) => item.id === draft.exerciseId)
+      : -1;
+
+    if (draft && matchIndex >= 0) {
+      const matched = exercises[matchIndex];
+      let correct = false;
+      try {
+        correct =
+          draft.checked &&
+          isGridCorrect(matched, buildSolutionGrid(matched), draft.values);
+      } catch {
+        correct = false;
+      }
+      setPuzzleIndex(matchIndex);
+      setSolvedCount(Math.min(draft.solvedCount, exercises.length));
+      setFinished(draft.finished);
+      setChecked(draft.checked);
+      setIsCorrect(correct);
+      setValues(draft.values);
+      setResultOpen(false);
+    }
+
+    setReady(true);
+  }, [exerciseIds, exercises, storageKey]);
+
+  useEffect(() => {
+    if (!ready || !storageKey || !exercise) {
+      return;
+    }
+    if (restoredKeyRef.current !== storageKey) {
+      return;
+    }
+
+    writeCrosswordDraft(storageKey, {
+      exerciseId: exercise.id,
+      puzzleIndex,
+      solvedCount,
+      finished,
+      checked,
+      values,
+    });
+  }, [
+    checked,
+    exercise,
+    finished,
+    puzzleIndex,
+    ready,
+    solvedCount,
+    storageKey,
+    values,
+  ]);
 
   const cluesByCell = useMemo(() => {
     const map = new Map<string, CrosswordExercise["clues"]>();
@@ -136,6 +237,10 @@ export function CrosswordExerciseView({
     return map;
   }, [exercise]);
 
+  if (!ready) {
+    return null;
+  }
+
   if (!exercise || !solution) {
     return (
       <p className="text-sm text-brand-600 dark:text-brand-400">
@@ -145,6 +250,8 @@ export function CrosswordExerciseView({
   }
 
   const clues = [...exercise.clues].sort((a, b) => a.number - b.number);
+  const clueColumnCount = 3;
+  const clueRowCount = Math.ceil(clues.length / clueColumnCount);
   const isLastPuzzle = puzzleIndex >= exercises.length - 1;
   const continueLabel = isLastPuzzle ? t("seeResult") : t("next");
 
@@ -197,6 +304,9 @@ export function CrosswordExerciseView({
   }
 
   function resetAll() {
+    if (storageKey) {
+      clearCrosswordDraft(storageKey);
+    }
     setPuzzleIndex(0);
     setSolvedCount(0);
     setFinished(false);
@@ -208,20 +318,7 @@ export function CrosswordExerciseView({
       return;
     }
 
-    let allCorrect = true;
-
-    for (let row = 0; row < exercise.rows; row += 1) {
-      for (let col = 0; col < exercise.cols; col += 1) {
-        const cell = solution[row][col];
-        if (!cell) {
-          continue;
-        }
-        const typed = (values[cellKey(row, col)] ?? "").toUpperCase();
-        if (typed !== cell.letter) {
-          allCorrect = false;
-        }
-      }
-    }
+    const allCorrect = isGridCorrect(exercise, solution, values);
 
     setChecked(true);
     setIsCorrect(allCorrect);
@@ -267,7 +364,7 @@ export function CrosswordExerciseView({
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-4">
+    <div className="mx-auto w-full max-w-7xl space-y-4">
       {exercises.length > 1 ? (
         <p className="text-sm text-brand-500 dark:text-brand-400">
           {t("crosswordProgress", {
@@ -408,16 +505,19 @@ export function CrosswordExerciseView({
           </div>
         </div>
 
-        <ul className="grid grid-cols-3 gap-x-3 gap-y-1.5 text-xs text-brand-700 sm:gap-x-4 sm:text-sm dark:text-brand-300">
+        <ul
+          className="grid grid-flow-col grid-cols-3 gap-x-3 gap-y-2 text-xs text-brand-700 sm:gap-x-4 sm:text-sm dark:text-brand-300"
+          style={{ gridTemplateRows: `repeat(${clueRowCount}, auto)` }}
+        >
           {clues.map((clue) => (
-            <li key={`${clue.direction}-${clue.number}`}>
-              <span className="font-semibold tabular-nums text-brand-950 dark:text-brand-100">
-                {clue.number}-
-              </span>{" "}
-              {clue.text}{" "}
-              <span className="text-brand-500 dark:text-brand-400">
-                ({clue.answer.length})
+            <li
+              key={`${clue.direction}-${clue.number}`}
+              className="flex items-start gap-1.5"
+            >
+              <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-brand-400 text-[10px] leading-none font-semibold tabular-nums text-brand-950 sm:size-6 sm:text-[11px] dark:border-brand-500 dark:text-brand-100">
+                {clue.number}
               </span>
+              <span className="min-w-0 pt-0.5">{clue.text}</span>
             </li>
           ))}
         </ul>
@@ -433,7 +533,14 @@ export function CrosswordExerciseView({
               {continueLabel}
             </Button>
           ) : null}
-          <Button type="button" variant="outline" onClick={resetAll}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => {
+              onRestart?.();
+              resetAll();
+            }}
+          >
             <RotateCcw aria-hidden />
             {t("restart")}
           </Button>
