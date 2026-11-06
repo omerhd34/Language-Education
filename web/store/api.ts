@@ -44,6 +44,8 @@ export type VocabularyStatusPayload = {
   lockedUntil: string | null;
   learningSelectedToday: number;
   dailyLearnLimit: number;
+  pendingStudyCount: number;
+  pendingStudyWordIds: string[];
 };
 
 export type SetVocabularyWordStatusBody = {
@@ -62,6 +64,16 @@ export type KnownVocabularyWord = {
 
 export type KnownVocabularyWordsPayload = {
   words: KnownVocabularyWord[];
+  count: number;
+};
+
+export type StudiedTodayVocabularyWord = KnownVocabularyWord & {
+  status: "LEARNING";
+  dueAt: string;
+};
+
+export type StudiedTodayVocabularyWordsPayload = {
+  words: StudiedTodayVocabularyWord[];
   count: number;
 };
 
@@ -103,6 +115,10 @@ export type VocabularyQuizAnswerBody = {
   quizType: "multiple_choice" | "fill_blank" | "listening";
 };
 
+export type StartVocabularyStudyTimerPayload = {
+  startedCount: number;
+};
+
 export type VocabularyQuizAnswerPayload = {
   correct: boolean;
   expected: string;
@@ -139,7 +155,12 @@ export const api = createApi({
       return headers;
     },
   }),
-  tagTypes: ["VocabularyStatus", "KnownVocabularyWords", "VocabularyQuiz"],
+  tagTypes: [
+    "VocabularyStatus",
+    "KnownVocabularyWords",
+    "StudiedTodayWords",
+    "VocabularyQuiz",
+  ],
   endpoints: (builder) => ({
     register: builder.mutation<RegisterPayload, RegisterBody>({
       query: (body) => ({
@@ -254,6 +275,21 @@ export const api = createApi({
       },
       providesTags: ["KnownVocabularyWords"],
     }),
+    studiedTodayVocabularyWords: builder.query<
+      StudiedTodayVocabularyWordsPayload,
+      void
+    >({
+      query: () => "/vocabulary/studied-today",
+      transformResponse: (
+        response: ApiResponse<StudiedTodayVocabularyWordsPayload>,
+      ) => {
+        if (!response.success) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      },
+      providesTags: ["StudiedTodayWords"],
+    }),
     vocabularyQuiz: builder.query<VocabularyQuizPayload, void>({
       query: () => "/vocabulary/quiz",
       transformResponse: (response: ApiResponse<VocabularyQuizPayload>) => {
@@ -281,7 +317,7 @@ export const api = createApi({
         }
         return response.data;
       },
-      invalidatesTags: ["KnownVocabularyWords"],
+      invalidatesTags: ["KnownVocabularyWords", "StudiedTodayWords"],
     }),
     setVocabularyWordStatus: builder.mutation<
       VocabularyStatusPayload,
@@ -307,11 +343,28 @@ export const api = createApi({
             "vocabularyStatus",
             { categoryId },
             (draft) => {
+              const pendingIds = draft.pendingStudyWordIds ?? [];
+              const withoutWord = pendingIds.filter((id) => id !== wordId);
+
               if (status === null) {
                 delete draft.statuses[wordId];
+                draft.pendingStudyWordIds = withoutWord;
+                draft.pendingStudyCount = withoutWord.length;
                 return;
               }
+
               draft.statuses[wordId] = status;
+              if (status === "LEARNING") {
+                const nextIds = pendingIds.includes(wordId)
+                  ? pendingIds
+                  : [...pendingIds, wordId];
+                draft.pendingStudyWordIds = nextIds;
+                draft.pendingStudyCount = nextIds.length;
+                return;
+              }
+
+              draft.pendingStudyWordIds = withoutWord;
+              draft.pendingStudyCount = withoutWord.length;
             },
           ),
         );
@@ -338,6 +391,30 @@ export const api = createApi({
       invalidatesTags: [
         { type: "VocabularyStatus", id: "QUOTA" },
         "KnownVocabularyWords",
+        "StudiedTodayWords",
+        "VocabularyQuiz",
+      ],
+    }),
+    startVocabularyStudyTimer: builder.mutation<
+      StartVocabularyStudyTimerPayload,
+      void
+    >({
+      query: () => ({
+        url: "/vocabulary/study-timer",
+        method: "POST",
+        body: {},
+      }),
+      transformResponse: (
+        response: ApiResponse<StartVocabularyStudyTimerPayload>,
+      ) => {
+        if (!response.success) {
+          throw new Error(response.error.message);
+        }
+        return response.data;
+      },
+      invalidatesTags: [
+        "VocabularyStatus",
+        "StudiedTodayWords",
         "VocabularyQuiz",
       ],
     }),
@@ -356,6 +433,7 @@ export const api = createApi({
       invalidatesTags: [
         "VocabularyStatus",
         "KnownVocabularyWords",
+        "StudiedTodayWords",
         "VocabularyQuiz",
       ],
     }),
@@ -372,8 +450,10 @@ export const {
   useVocabularyStatusQuery,
   useVocabularyLearnQuotaQuery,
   useKnownVocabularyWordsQuery,
+  useStudiedTodayVocabularyWordsQuery,
   useVocabularyQuizQuery,
   useAnswerVocabularyQuizMutation,
   useSetVocabularyWordStatusMutation,
+  useStartVocabularyStudyTimerMutation,
   useResetProgressMutation,
 } = api;
