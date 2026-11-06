@@ -21,6 +21,7 @@ type FillBlankExercisesProps = {
   onRestart?: () => void;
   initialIndex?: number;
   initialSlots?: BlankSlot[];
+  progressShare?: number;
   onSessionChange?: (session: {
     index: number;
     correct: number;
@@ -67,6 +68,7 @@ export function FillBlankExercises({
   onRestart,
   initialIndex = 0,
   initialSlots,
+  progressShare = 100,
   onSessionChange,
 }: FillBlankExercisesProps) {
   const t = useTranslations("Topic");
@@ -129,10 +131,11 @@ export function FillBlankExercises({
     current.checked && isAnswerCorrect(exercise, current.answer);
   const canRestart = index > 0;
   const continueLabel = t(nextLabelKey);
+  const answered = slots.filter((slot) => slot.checked).length;
   const percent =
     exercises.length === 0
       ? 0
-      : Math.round((countCorrect(exercises, slots) / exercises.length) * 100);
+      : Math.round((answered / exercises.length) * progressShare);
 
   if (finished) {
     const correctCount = countCorrect(exercises, slots);

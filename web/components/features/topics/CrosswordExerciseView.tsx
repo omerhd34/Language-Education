@@ -30,6 +30,7 @@ type CrosswordExerciseViewProps = {
   onRestart?: () => void;
   onProgress?: (percent: number) => void;
   draftKey?: string | null;
+  progressShare?: number;
 };
 
 type CellStart = {
@@ -139,6 +140,7 @@ export function CrosswordExerciseView({
   onRestart,
   onProgress,
   draftKey,
+  progressShare = 100,
 }: CrosswordExerciseViewProps) {
   const t = useTranslations("Topic");
   const storageKey =
@@ -164,7 +166,7 @@ export function CrosswordExerciseView({
   const restoredKeyRef = useRef<string | null>(null);
   const progressPercent = useMemo(() => {
     if (!exercise || finished) {
-      return finished ? 100 : 0;
+      return finished ? progressShare : 0;
     }
     const totalClues = exercises.reduce(
       (sum, item) => sum + item.clues.length,
@@ -180,8 +182,8 @@ export function CrosswordExerciseView({
     if (totalClues === 0) {
       return 0;
     }
-    return Math.round((solvedClues / totalClues) * 100);
-  }, [exercise, exercises, finished, puzzleIndex, values]);
+    return Math.round((solvedClues / totalClues) * progressShare);
+  }, [exercise, exercises, finished, progressShare, puzzleIndex, values]);
 
   useEffect(() => {
     if (!ready || !exercise) {

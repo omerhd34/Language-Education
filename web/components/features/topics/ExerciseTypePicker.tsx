@@ -16,6 +16,7 @@ type ExerciseTypePickerProps = {
   counts: Record<ExerciseType, number>;
   completedTypes?: readonly ExerciseType[];
   progressPercents?: Partial<Record<ExerciseType, number>>;
+  completeAt?: number;
   onSelect: (type: ExerciseType) => void;
   title?: string;
   subtitle?: string;
@@ -65,6 +66,7 @@ export function ExerciseTypePicker({
   counts,
   completedTypes = [],
   progressPercents,
+  completeAt = 100,
   onSelect,
   title,
   subtitle,
@@ -96,15 +98,16 @@ export function ExerciseTypePicker({
               ? t("puzzleCount", { count })
               : t("questionCount", { count });
           const percent = Math.min(
-            100,
+            completeAt,
             Math.max(
               0,
               Math.round(
-                progressPercents?.[type] ?? (completedSet.has(type) ? 100 : 0),
+                progressPercents?.[type] ??
+                  (completedSet.has(type) ? completeAt : 0),
               ),
             ),
           );
-          const done = percent >= 100;
+          const done = percent >= completeAt;
 
           return (
             <li key={type}>

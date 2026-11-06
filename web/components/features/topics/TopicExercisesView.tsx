@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
@@ -25,7 +26,6 @@ import { didPassExamScore, markLevelExamPassed } from "@/lib/levelExamStorage";
 import {
   LEVEL_EXAM_PROGRESS_EVENT,
   readLevelExamProgress,
-  resetUnpassedLevelExamParts,
   writeLevelExamPartProgress,
 } from "@/lib/levelExamProgressStorage";
 import {
@@ -41,32 +41,70 @@ import {
   unmarkTopicExerciseTypeCompleted,
 } from "@/lib/topicProgressStorage";
 import {
+  EXERCISE_DRAFT_EVENT,
+  clearCrosswordDraft,
+  clearLinearSession,
+  readLinearSession,
   readSelectedExerciseType,
+  writeLinearSession,
   writeSelectedExerciseType,
+  type LinearSlot,
 } from "@/lib/exerciseDraftStorage";
-import { computeExerciseTypeProgress } from "@/lib/exerciseTypeProgress";
+import {
+  computeExerciseTypeProgress,
+  crosswordDraftKey,
+} from "@/lib/exerciseTypeProgress";
 import { getNextLevel } from "@/lib/topicAccess";
+import { VOCABULARY_EXERCISE_SHARE } from "@/lib/vocabularySectionProgress";
 
 type TopicExercisesViewProps = {
   topicId?: string;
+  progressKey?: string;
   exercises: TopicExercise[];
   isExam?: boolean;
   level?: CefrLevel;
 };
 
+type LinearSessionInput = {
+  index: number;
+  correct: number;
+  total: number;
+  slots: Array<{
+    selected?: number | null;
+    answer?: string;
+    englishSelected?: number | null;
+    turkishSelected?: number | null;
+    checked: boolean;
+  }>;
+};
+
 type ExamPartScore = { correct: number; total: number };
 type LevelExamPartOutcome = "passed" | "failed";
 
+function toLinearSlots(session: LinearSessionInput): LinearSlot[] {
+  return session.slots.map((slot) => ({
+    selected: slot.selected ?? null,
+    answer: slot.answer ?? "",
+    englishSelected: slot.englishSelected ?? null,
+    turkishSelected: slot.turkishSelected ?? null,
+    checked: slot.checked,
+  }));
+}
+
 export function TopicExercisesView({
   topicId,
+  progressKey,
   exercises,
   isExam = false,
   level,
 }: TopicExercisesViewProps) {
   const t = useTranslations("Topic");
+  const selectionKey = progressKey ?? topicId ?? null;
   const [selectedType, setSelectedType] = useState<ExerciseType | null>(null);
-  const [sessionReady, setSessionReady] = useState(isExam || !topicId);
+  const [sessionReady, setSessionReady] = useState(isExam);
+  const [sessionNonce, setSessionNonce] = useState(0);
   const [progressReady, setProgressReady] = useState(false);
+  const [draftVersion, setDraftVersion] = useState(0);
   const restoredTopicRef = useRef<string | null>(null);
   const [completedTypes, setCompletedTypes] = useState<ExerciseType[]>([]);
   const nextLevel = level ? getNextLevel(level) : null;
@@ -96,7 +134,6 @@ export function TopicExercisesView({
       setLevelExamPassed(false);
       return;
     }
-    resetUnpassedLevelExamParts(level);
     const saved = readLevelExamProgress(level);
     const restored = getLevelExamParts(level).filter(
       (part) => saved.parts[part]?.passed,
@@ -134,36 +171,103 @@ export function TopicExercisesView({
   }, []);
 
   useEffect(() => {
-    if (isExam || !topicId) {
+    function refresh() {
+      setDraftVersion((value) => value + 1);
+    }
+
+    window.addEventListener(EXERCISE_DRAFT_EVENT, refresh);
+    window.addEventListener("storage", refresh);
+    return () => {
+      window.removeEventListener(EXERCISE_DRAFT_EVENT, refresh);
+      window.removeEventListener("storage", refresh);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isExam || !selectionKey) {
       setSessionReady(true);
       return;
     }
 
-    if (restoredTopicRef.current === topicId) {
+    if (restoredTopicRef.current === selectionKey) {
       return;
     }
-    restoredTopicRef.current = topicId;
+    restoredTopicRef.current = selectionKey;
 
-    const saved = readSelectedExerciseType(topicId);
+    const saved = readSelectedExerciseType(selectionKey);
     const available = new Set(exercises.map((item) => item.type));
     setSelectedType(saved && available.has(saved) ? saved : null);
     setSessionReady(true);
-  }, [exercises, isExam, topicId]);
+  }, [exercises, isExam, selectionKey]);
 
   useEffect(() => {
-    if (!sessionReady || isExam || !topicId) {
+    if (!sessionReady || isExam || !selectionKey) {
       return;
     }
-    writeSelectedExerciseType(topicId, selectedType);
-  }, [isExam, selectedType, sessionReady, topicId]);
+    writeSelectedExerciseType(selectionKey, selectedType);
+  }, [isExam, selectedType, selectionKey, sessionReady]);
 
-  const typeProgress = progressReady
-    ? computeExerciseTypeProgress({
-        topicId,
-        exercises,
-        completedTypes,
-      })
-    : undefined;
+  const exerciseShare = selectionKey?.startsWith("vocabulary:")
+    ? VOCABULARY_EXERCISE_SHARE
+    : 100;
+
+  const typeProgress = useMemo(() => {
+    if (!progressReady) {
+      return undefined;
+    }
+
+    const raw = computeExerciseTypeProgress({
+      topicId,
+      progressKey: selectionKey ?? undefined,
+      exercises,
+      completedTypes,
+    });
+
+    if (exerciseShare === 100) {
+      return raw;
+    }
+
+    const scaled: Partial<Record<ExerciseType, number>> = {};
+    for (const type of Object.keys(raw) as ExerciseType[]) {
+      const value = raw[type] ?? 0;
+      scaled[type] = Math.round((value / 100) * exerciseShare);
+    }
+    return scaled;
+  }, [
+    completedTypes,
+    draftVersion,
+    exerciseShare,
+    exercises,
+    progressReady,
+    selectionKey,
+    topicId,
+  ]);
+
+  const persistPracticeSession = useCallback(
+    (type: ExerciseType, session: LinearSessionInput) => {
+      if (!selectionKey || isExam) {
+        return;
+      }
+      writeLinearSession(`${selectionKey}:${type}`, {
+        index: session.index,
+        correct: session.correct,
+        total: session.total,
+        slots: toLinearSlots(session),
+      });
+    },
+    [isExam, selectionKey],
+  );
+
+  function savedPracticeSession(type: ExerciseType, total: number) {
+    if (!selectionKey || isExam) {
+      return null;
+    }
+    const saved = readLinearSession(`${selectionKey}:${type}`);
+    if (!saved || saved.slots.length !== total) {
+      return null;
+    }
+    return saved;
+  }
 
   const counts = useMemo(
     () => ({
@@ -230,14 +334,26 @@ export function TopicExercisesView({
   );
 
   const handleFillBlankSession = useCallback(
-    (session: { correct: number; total: number }) => {
+    (session: {
+      index: number;
+      correct: number;
+      total: number;
+      slots: { answer: string; checked: boolean }[];
+    }) => {
+      const checked = session.slots.filter((slot) => slot.checked).length;
       const percent =
-        session.total <= 0
-          ? 0
-          : Math.round((session.correct / session.total) * 100);
+        session.total <= 0 ? 0 : Math.round((checked / session.total) * 100);
       reportLevelPart("fill_blank", percent, false);
+      if (level) {
+        writeLinearSession(`level:${level}:fill_blank`, {
+          index: session.index,
+          correct: session.correct,
+          total: session.total,
+          slots: toLinearSlots(session),
+        });
+      }
     },
-    [reportLevelPart],
+    [level, reportLevelPart],
   );
 
   const restartLevelPart = useCallback(
@@ -312,10 +428,12 @@ export function TopicExercisesView({
       current.filter((part) => part !== levelExamSelected),
     );
     if (levelExamSelected === "crossword") {
+      clearCrosswordDraft(`level:${level}:crossword`);
       setLevelExamCrosswords(resolveLevelExamCrosswords(level));
       setCrosswordSessionKey((value) => value + 1);
       return;
     }
+    clearLinearSession(`level:${level}:fill_blank`);
     setLevelExamFillBlanks(resolveLevelExamFillBlanks(level));
     setFillBlankSessionKey((value) => value + 1);
   }
@@ -335,6 +453,20 @@ export function TopicExercisesView({
     if (topicId && selectedType) {
       unmarkTopicExerciseTypeCompleted(topicId, selectedType);
     }
+    if (selectionKey && selectedType) {
+      clearLinearSession(`${selectionKey}:${selectedType}`);
+      if (selectedType === "crossword") {
+        clearCrosswordDraft(
+          crosswordDraftKey(
+            topicId,
+            exercises.filter(
+              (item): item is CrosswordExercise => item.type === "crossword",
+            ),
+          ),
+        );
+      }
+    }
+    setSessionNonce((value) => value + 1);
   }
 
   if (isExam && level) {
@@ -404,6 +536,10 @@ export function TopicExercisesView({
       );
     }
 
+    const levelFillDraft = level
+      ? readLinearSession(`level:${level}:fill_blank`)
+      : null;
+
     return (
       <div className="space-y-4">
         <Button
@@ -466,7 +602,7 @@ export function TopicExercisesView({
             <CrosswordExerciseView
               key={`cw-${crosswordSessionKey}-${levelExamCrosswords[0]?.id ?? "cw"}`}
               exercises={levelExamCrosswords}
-              draftKey={null}
+              draftKey={level ? `level:${level}:crossword` : null}
               onProgress={handleCrosswordProgress}
               onRestart={() => restartLevelPart("crossword")}
               onComplete={(result) =>
@@ -477,6 +613,21 @@ export function TopicExercisesView({
             <FillBlankExercises
               key={`fb-${fillBlankSessionKey}-${levelExamFillBlanks[0]?.id ?? "fb"}`}
               exercises={levelExamFillBlanks}
+              initialIndex={
+                levelFillDraft &&
+                levelFillDraft.slots.length === levelExamFillBlanks.length
+                  ? levelFillDraft.index
+                  : 0
+              }
+              initialSlots={
+                levelFillDraft &&
+                levelFillDraft.slots.length === levelExamFillBlanks.length
+                  ? levelFillDraft.slots.map((slot) => ({
+                      answer: slot.answer,
+                      checked: slot.checked,
+                    }))
+                  : undefined
+              }
               onSessionChange={handleFillBlankSession}
               onRestart={() => restartLevelPart("fill_blank")}
               onComplete={(result) =>
@@ -497,7 +648,7 @@ export function TopicExercisesView({
     );
   }
 
-  if (topicId && !sessionReady) {
+  if (!isExam && selectionKey && !sessionReady) {
     return null;
   }
 
@@ -507,6 +658,7 @@ export function TopicExercisesView({
         counts={counts}
         completedTypes={completedTypes}
         progressPercents={typeProgress}
+        completeAt={exerciseShare}
         onSelect={setSelectedType}
       />
     );
@@ -514,6 +666,12 @@ export function TopicExercisesView({
 
   const filtered = exercises.filter((item) => item.type === selectedType);
   const alreadyCompleted = completedTypes.includes(selectedType);
+  const savedMultipleChoice = savedPracticeSession(
+    "multiple_choice",
+    filtered.length,
+  );
+  const savedFillBlank = savedPracticeSession("fill_blank", filtered.length);
+  const savedListening = savedPracticeSession("listening", filtered.length);
 
   return (
     <div className="space-y-4">
@@ -537,7 +695,17 @@ export function TopicExercisesView({
 
       {selectedType === "multiple_choice" ? (
         <MultipleChoiceExercises
+          key={`mc-${sessionNonce}`}
           exercises={filtered as MultipleChoiceExercise[]}
+          initialIndex={savedMultipleChoice?.index ?? 0}
+          initialSlots={savedMultipleChoice?.slots.map((slot) => ({
+            selected: slot.selected,
+            checked: slot.checked,
+          }))}
+          progressShare={exerciseShare}
+          onSessionChange={(session) =>
+            persistPracticeSession("multiple_choice", session)
+          }
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
         />
@@ -545,7 +713,17 @@ export function TopicExercisesView({
 
       {selectedType === "fill_blank" ? (
         <FillBlankExercises
+          key={`fb-${sessionNonce}`}
           exercises={filtered as FillBlankExercise[]}
+          initialIndex={savedFillBlank?.index ?? 0}
+          initialSlots={savedFillBlank?.slots.map((slot) => ({
+            answer: slot.answer,
+            checked: slot.checked,
+          }))}
+          progressShare={exerciseShare}
+          onSessionChange={(session) =>
+            persistPracticeSession("fill_blank", session)
+          }
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
         />
@@ -553,12 +731,10 @@ export function TopicExercisesView({
 
       {selectedType === "crossword" ? (
         <CrosswordExerciseView
+          key={`cw-${sessionNonce}`}
           exercises={filtered as CrosswordExercise[]}
-          draftKey={
-            topicId
-              ? `topic:${topicId}:crossword`
-              : `crossword:${filtered.map((item) => item.id).join(",")}`
-          }
+          draftKey={crosswordDraftKey(topicId, filtered as CrosswordExercise[])}
+          progressShare={exerciseShare}
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
         />
@@ -566,7 +742,18 @@ export function TopicExercisesView({
 
       {selectedType === "listening" ? (
         <ListeningExercises
+          key={`listen-${sessionNonce}`}
           exercises={filtered as ListeningExercise[]}
+          initialIndex={savedListening?.index ?? 0}
+          initialSlots={savedListening?.slots.map((slot) => ({
+            englishSelected: slot.englishSelected,
+            turkishSelected: slot.turkishSelected,
+            checked: slot.checked,
+          }))}
+          progressShare={exerciseShare}
+          onSessionChange={(session) =>
+            persistPracticeSession("listening", session)
+          }
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
         />

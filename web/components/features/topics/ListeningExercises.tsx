@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Volume2 } from "lucide-react";
+import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
@@ -20,6 +21,15 @@ type ListeningExercisesProps = {
   exercises: ListeningExercise[];
   onComplete?: (result: ExerciseSessionResult) => void;
   onRestart?: () => void;
+  initialIndex?: number;
+  initialSlots?: ListeningSlot[];
+  progressShare?: number;
+  onSessionChange?: (session: {
+    index: number;
+    correct: number;
+    total: number;
+    slots: ListeningSlot[];
+  }) => void;
 };
 
 type ListeningSlot = {
@@ -119,8 +129,13 @@ export function ListeningExercises({
   exercises,
   onComplete,
   onRestart,
+  initialIndex = 0,
+  initialSlots,
+  progressShare = 100,
+  onSessionChange,
 }: ListeningExercisesProps) {
   const t = useTranslations("Topic");
+  const skipSessionSave = useRef(true);
   const {
     index,
     slots,
@@ -138,7 +153,30 @@ export function ListeningExercises({
   } = useExerciseNavigation({
     length: exercises.length,
     createSlot: createListeningSlot,
+    initialIndex,
+    initialSlots,
   });
+
+  useEffect(() => {
+    if (!onSessionChange) {
+      return;
+    }
+    if (skipSessionSave.current) {
+      skipSessionSave.current = false;
+      return;
+    }
+
+    onSessionChange({
+      index,
+      correct: countCorrect(exercises, slots),
+      total: exercises.length,
+      slots: slots.map((slot) => ({
+        englishSelected: slot.englishSelected,
+        turkishSelected: slot.turkishSelected,
+        checked: slot.checked,
+      })),
+    });
+  }, [exercises, index, onSessionChange, slots]);
 
   const exercise = exercises[index];
 
@@ -167,6 +205,11 @@ export function ListeningExercises({
     !current.checked;
   const canRestart = index > 0;
   const continueLabel = t(nextLabelKey);
+  const answered = slots.filter((slot) => slot.checked).length;
+  const percent =
+    exercises.length === 0
+      ? 0
+      : Math.round((answered / exercises.length) * progressShare);
 
   function resetAll() {
     stopSpeaking();
@@ -212,9 +255,12 @@ export function ListeningExercises({
 
   return (
     <div className="mx-auto max-w-2xl space-y-4">
-      <p className="text-sm text-brand-500 dark:text-brand-400">
-        {t("progress", { current: index + 1, total: exercises.length })}
-      </p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-sm text-brand-500 dark:text-brand-400">
+          {t("progress", { current: index + 1, total: exercises.length })}
+        </p>
+        <ExercisePercentBadge percent={percent} />
+      </div>
 
       <article className="dashboard-panel space-y-5">
         <div className="space-y-3">

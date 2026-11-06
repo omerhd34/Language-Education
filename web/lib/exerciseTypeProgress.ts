@@ -6,6 +6,7 @@ import type {
 } from "@/data/topics/types";
 import {
   readCrosswordDraft,
+  readLinearSession,
   type CrosswordDraft,
 } from "@/lib/exerciseDraftStorage";
 
@@ -71,7 +72,7 @@ function toPercent(solved: number, total: number): number {
   return Math.round((solved / total) * 100);
 }
 
-function crosswordStorageKey(
+export function crosswordDraftKey(
   topicId: string | undefined,
   exercises: CrosswordExercise[],
 ): string {
@@ -83,6 +84,7 @@ function crosswordStorageKey(
 
 export function computeExerciseTypeProgress(options: {
   topicId?: string;
+  progressKey?: string;
   exercises: TopicExercise[];
   completedTypes: readonly ExerciseType[];
 }): Partial<Record<ExerciseType, number>> {
@@ -104,14 +106,18 @@ export function computeExerciseTypeProgress(options: {
 
     if (exercise.type === "crossword") {
       const draft = readCrosswordDraft(
-        crosswordStorageKey(options.topicId, crosswords),
+        crosswordDraftKey(options.topicId, crosswords),
       );
       const { solved, total } = countSolvedCrosswordClues(crosswords, draft);
       progress.crossword = toPercent(solved, total);
       continue;
     }
 
-    progress[exercise.type] = 0;
+    const scope = options.progressKey ?? options.topicId;
+    const saved = scope ? readLinearSession(`${scope}:${exercise.type}`) : null;
+    const checked = saved?.slots.filter((slot) => slot.checked).length ?? 0;
+    progress[exercise.type] =
+      saved && saved.total > 0 ? toPercent(checked, saved.total) : 0;
   }
 
   return progress;
