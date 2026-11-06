@@ -50,8 +50,6 @@ function distractors(
   return picked;
 }
 
-export const VOCABULARY_QUIZ_QUESTION_COUNT = 15;
-
 export function generateMixedQuizItems(
   words: VocabularyQuizWordInput[],
 ): VocabularyQuizItem[] {
@@ -65,7 +63,7 @@ export function generateMixedQuizItems(
     ...generateQuizItemsByType(words, "listening"),
   ];
 
-  return shuffle(pool).slice(0, VOCABULARY_QUIZ_QUESTION_COUNT);
+  return shuffle(pool);
 }
 
 export function generateQuizItemsByType(
