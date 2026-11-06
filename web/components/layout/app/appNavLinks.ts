@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import {
+  BadgeCheck,
   BookOpen,
   Brain,
   ChartColumnIncreasing,
@@ -8,8 +9,10 @@ import {
   Home,
   Info,
   Layers,
+  Library,
   Mic,
   PenLine,
+  Timer,
 } from "lucide-react";
 
 export type AppNavLabelKey =
@@ -17,6 +20,9 @@ export type AppNavLabelKey =
   | "overview"
   | "topics"
   | "vocabulary"
+  | "vocabularyWords"
+  | "vocabularyStudiedToday"
+  | "vocabularyKnown"
   | "listening"
   | "writing"
   | "speaking"
@@ -30,6 +36,28 @@ export type AppNavLink = {
   labelKey: AppNavLabelKey;
   Icon: LucideIcon;
 };
+
+export const vocabularySubNav = [
+  {
+    href: "/panel#kelimeler",
+    labelKey: "vocabularyWords",
+    Icon: Library,
+  },
+  {
+    href: "/panel/kelime/bugun-calisilan",
+    labelKey: "vocabularyStudiedToday",
+    Icon: Timer,
+  },
+  {
+    href: "/panel/kelime/bilinen",
+    labelKey: "vocabularyKnown",
+    Icon: BadgeCheck,
+  },
+] as const satisfies readonly {
+  href: string;
+  labelKey: AppNavLabelKey;
+  Icon: LucideIcon;
+}[];
 
 export const appNavLinks: AppNavLink[] = [
   { href: "/panel", labelKey: "home", Icon: Home },

@@ -9,6 +9,7 @@ import {
   appNavLinks,
   type AppNavLink,
 } from "@/components/layout/app/appNavLinks";
+import { VocabularyNavItem } from "@/components/layout/app/VocabularyNavItem";
 import { Link, usePathname } from "@/i18n/navigation";
 import { navigatePanelSection, usePanelHash } from "@/hooks/usePanelHash";
 import { cn } from "@/lib/utils";
@@ -95,7 +96,7 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
     return pathname === path || pathname.startsWith(`${path}/`);
   }
 
-  function handleNavClick(event: MouseEvent<HTMLButtonElement>, href: string) {
+  function handleNavClick(event: MouseEvent<HTMLElement>, href: string) {
     const path = hrefPath(href);
     const hash = hrefHash(href);
     const onPanel = pathname === "/panel" || pathname === "/";
@@ -154,7 +155,16 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
           <SidebarGroupContent>
             <nav aria-label={t("menu")}>
               <SidebarMenu className="gap-1">
-                {appNavLinks.map((item) => renderLink(item))}
+                {appNavLinks.map((item) =>
+                  item.labelKey === "vocabulary" ? (
+                    <VocabularyNavItem
+                      key={item.labelKey}
+                      onNavigate={handleNavClick}
+                    />
+                  ) : (
+                    renderLink(item)
+                  ),
+                )}
               </SidebarMenu>
             </nav>
           </SidebarGroupContent>
