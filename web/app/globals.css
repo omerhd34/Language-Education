@@ -187,6 +187,25 @@ body {
   border-color: rgba(255, 255, 255, 0.06);
 }
 
+.dashboard-panel--stat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--card);
+  border-color: color-mix(in srgb, var(--brand-950) 8%, transparent);
+  box-shadow:
+    0 1px 2px color-mix(in srgb, var(--brand-950) 4%, transparent),
+    0 10px 28px color-mix(in srgb, var(--brand-950) 5%, transparent);
+}
+
+.dark .dashboard-panel--stat {
+  background: color-mix(in srgb, var(--brand-900) 72%, #000);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 28%),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
 .dashboard-panel__label {
   display: inline-flex;
   align-items: center;
