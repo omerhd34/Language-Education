@@ -28,6 +28,7 @@ const CEFR_LEVEL_SLUG: Record<CefrLevel, string> = {
   C2: "c2",
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getCombinedInterval(level: CefrLevel): number {
   return 3;
 }
@@ -125,6 +126,10 @@ export function buildTopicGridItems(level: CefrLevel): TopicGridItem[] {
   }
 
   return items;
+}
+
+export function combinedExerciseStorageId(combinedId: string): string {
+  return `combined:${combinedId}`;
 }
 
 export function getCombinedExerciseQuestions(

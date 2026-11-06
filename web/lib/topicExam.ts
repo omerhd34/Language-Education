@@ -297,6 +297,30 @@ export function resolveTopicExamExercises(
     .map((item) => ensureExamOptionCount(item, pool, optionCount));
 }
 
+export function resolveTopicExamFillBlanks(
+  content: TopicContent,
+): FillBlankExercise[] {
+  const seen = new Set<string>();
+  const questions: FillBlankExercise[] = [];
+
+  for (const item of content.exercises) {
+    if (item.type !== "fill_blank") {
+      continue;
+    }
+    const key = item.prompt.trim().toLocaleLowerCase("tr");
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    questions.push({
+      ...item,
+      id: `exam-fb-${item.id}`,
+    });
+  }
+
+  return questions;
+}
+
 function shuffleCandidates(items: CrosswordCandidate[]): CrosswordCandidate[] {
   const next = [...items];
   for (let i = next.length - 1; i > 0; i -= 1) {
@@ -366,6 +390,27 @@ function createLevelExamCrossword(level: CefrLevel): CrosswordExercise {
   }
 
   throw new Error(`Yeterlilik bulmacası üretilemedi: ${level}`);
+}
+
+export type LevelExamPart = "crossword" | "fill_blank";
+
+export function getLevelExamParts(level: CefrLevel): LevelExamPart[] {
+  const usable = getLevelExamClues(level).filter((item) => {
+    const normalized = item.answer.replace(/[^a-zA-Z]/g, "");
+    return normalized.length >= 2 && normalized.length <= 14;
+  });
+  if (usable.length === 0) {
+    return [];
+  }
+
+  const parts: LevelExamPart[] = [];
+  if (LEVEL_EXAM_FILL_BLANK_COUNT > 0) {
+    parts.push("fill_blank");
+  }
+  if (LEVEL_EXAM_CROSSWORD_COUNT > 0) {
+    parts.push("crossword");
+  }
+  return parts;
 }
 
 export function resolveLevelExamCrosswords(

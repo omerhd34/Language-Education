@@ -215,30 +215,6 @@ export function isTopicExamPassed(topicId: string): boolean {
   return getTopicProgressRecord(topicId).examPassed === true;
 }
 
-function getAvailableExerciseTypes(topicId: string): ExerciseType[] {
-  const content = getTopicContent(topicId);
-  if (!content) {
-    return [];
-  }
-
-  const types = new Set<ExerciseType>();
-  for (const exercise of content.exercises) {
-    types.add(exercise.type);
-  }
-  return Array.from(types);
-}
-
-function topicHasExam(topicId: string): boolean {
-  const content = getTopicContent(topicId);
-  if (!content) {
-    return false;
-  }
-  if (content.examExercises && content.examExercises.length > 0) {
-    return true;
-  }
-  return content.exercises.some((item) => item.type === "multiple_choice");
-}
-
 function hasLessonViewTime(
   record: TopicProgressRecord,
   requiredMs: number,
@@ -253,9 +229,6 @@ function isLessonProgressEarned(
   record: TopicProgressRecord,
   requiredMs: number,
 ): boolean {
-  if (record.examPassed === true) {
-    return true;
-  }
   return hasLessonViewTime(record, requiredMs);
 }
 
@@ -265,39 +238,6 @@ export function isLessonWaitWaivedByExam(topicId: string): boolean {
     return false;
   }
   return !hasLessonViewTime(record, getLessonViewRequiredMs(topicId));
-}
-
-export function computeTopicProgressPercent(topicId: string): number {
-  const record = getTopicProgressRecord(topicId);
-  if (record.examPassed === true) {
-    return 100;
-  }
-
-  const availableTypes = getAvailableExerciseTypes(topicId);
-  const hasExam = topicHasExam(topicId);
-  const totalParts = 1 + availableTypes.length + (hasExam ? 1 : 0);
-
-  if (totalParts <= 0) {
-    return 0;
-  }
-
-  let done = 0;
-  if (isLessonProgressEarned(record, getLessonViewRequiredMs(topicId))) {
-    done += 1;
-  }
-
-  const completed = new Set(record.completedTypes ?? []);
-  for (const type of availableTypes) {
-    if (completed.has(type)) {
-      done += 1;
-    }
-  }
-
-  if (hasExam && record.examPassed) {
-    done += 1;
-  }
-
-  return Math.round((done / totalParts) * 100);
 }
 
 export function clearTopicProgressStorage(): void {

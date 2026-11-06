@@ -3,12 +3,15 @@ import { isTopicExamPassed } from "@/lib/topicProgressStorage";
 const STORAGE_KEY = "pylmor-topic-exam-drafts";
 export const TOPIC_EXAM_DRAFT_EVENT = "pylmor:topic-exam-draft";
 
+export type TopicQuizPart = "multiple_choice" | "fill_blank";
+
 export type TopicExamSlot = {
   selected: number | null;
+  answer: string;
   checked: boolean;
 };
 
-export type TopicExamDraft = {
+export type TopicExamPartDraft = {
   active: boolean;
   index: number;
   correct: number;
@@ -16,7 +19,15 @@ export type TopicExamDraft = {
   slots: TopicExamSlot[];
 };
 
+export type TopicExamDraft = {
+  requiredParts: TopicQuizPart[];
+  passedParts: TopicQuizPart[];
+  parts: Partial<Record<TopicQuizPart, TopicExamPartDraft>>;
+};
+
 type TopicExamDraftMap = Record<string, TopicExamDraft>;
+
+const QUIZ_PARTS: readonly TopicQuizPart[] = ["multiple_choice", "fill_blank"];
 
 function canUseDom(): boolean {
   return typeof window !== "undefined";
@@ -29,6 +40,10 @@ function emitChanged(): void {
   window.dispatchEvent(new Event(TOPIC_EXAM_DRAFT_EVENT));
 }
 
+function isQuizPart(value: unknown): value is TopicQuizPart {
+  return value === "multiple_choice" || value === "fill_blank";
+}
+
 function isSlot(value: unknown): value is TopicExamSlot {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return false;
@@ -36,13 +51,26 @@ function isSlot(value: unknown): value is TopicExamSlot {
   const slot = value as Record<string, unknown>;
   const selectedOk =
     slot.selected === null ||
+    slot.selected === undefined ||
     (typeof slot.selected === "number" &&
       Number.isInteger(slot.selected) &&
       slot.selected >= 0);
-  return selectedOk && typeof slot.checked === "boolean";
+  const answerOk = slot.answer === undefined || typeof slot.answer === "string";
+  return selectedOk && answerOk && typeof slot.checked === "boolean";
 }
 
-function isDraft(value: unknown): value is TopicExamDraft {
+function normalizeSlot(value: TopicExamSlot): TopicExamSlot {
+  return {
+    selected:
+      typeof value.selected === "number" && value.selected >= 0
+        ? value.selected
+        : null,
+    answer: typeof value.answer === "string" ? value.answer : "",
+    checked: value.checked,
+  };
+}
+
+function isPartDraft(value: unknown): value is TopicExamPartDraft {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return false;
   }
@@ -63,6 +91,59 @@ function isDraft(value: unknown): value is TopicExamDraft {
   );
 }
 
+function normalizePart(value: TopicExamPartDraft): TopicExamPartDraft {
+  return {
+    active: value.active,
+    index: value.index,
+    correct: value.correct,
+    total: value.total,
+    slots: value.slots.map((slot) => normalizeSlot(slot)),
+  };
+}
+
+function emptyDraft(): TopicExamDraft {
+  return { requiredParts: [], passedParts: [], parts: {} };
+}
+
+function normalizeDraft(value: unknown): TopicExamDraft | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+  const item = value as Record<string, unknown>;
+
+  if (isPartDraft(item)) {
+    return {
+      requiredParts: ["multiple_choice"],
+      passedParts: [],
+      parts: { multiple_choice: normalizePart(item) },
+    };
+  }
+
+  if (
+    !item.parts ||
+    typeof item.parts !== "object" ||
+    Array.isArray(item.parts)
+  ) {
+    return null;
+  }
+
+  const parts: TopicExamDraft["parts"] = {};
+  for (const [key, part] of Object.entries(item.parts)) {
+    if (isQuizPart(key) && isPartDraft(part)) {
+      parts[key] = normalizePart(part);
+    }
+  }
+
+  const requiredParts = Array.isArray(item.requiredParts)
+    ? item.requiredParts.filter(isQuizPart)
+    : [];
+  const passedParts = Array.isArray(item.passedParts)
+    ? item.passedParts.filter(isQuizPart)
+    : [];
+
+  return { requiredParts, passedParts, parts };
+}
+
 function readAll(): TopicExamDraftMap {
   if (!canUseDom()) {
     return {};
@@ -80,8 +161,9 @@ function readAll(): TopicExamDraftMap {
 
     const map: TopicExamDraftMap = {};
     for (const [topicId, value] of Object.entries(parsed)) {
-      if (isDraft(value)) {
-        map[topicId] = value;
+      const draft = normalizeDraft(value);
+      if (draft) {
+        map[topicId] = draft;
       }
     }
     return map;
@@ -118,23 +200,6 @@ export function writeTopicExamDraft(
   draft: TopicExamDraft,
 ): void {
   const all = readAll();
-  const current = all[topicId];
-  if (
-    current &&
-    current.active === draft.active &&
-    current.index === draft.index &&
-    current.correct === draft.correct &&
-    current.total === draft.total &&
-    current.slots.length === draft.slots.length &&
-    current.slots.every(
-      (slot, index) =>
-        slot.selected === draft.slots[index]?.selected &&
-        slot.checked === draft.slots[index]?.checked,
-    )
-  ) {
-    return;
-  }
-
   writeAll({
     ...all,
     [topicId]: draft,
@@ -158,13 +223,70 @@ export function clearTopicExamDrafts(): void {
   emitChanged();
 }
 
-export function readTopicExamPercent(topicId: string): number {
-  const draft = readTopicExamDraft(topicId);
-  if (draft?.active) {
-    return toExamPercent(draft.correct, draft.total);
+function partPercent(draft: TopicExamDraft, part: TopicQuizPart): number {
+  const item = draft.parts[part];
+  if (item?.active) {
+    return toExamPercent(item.correct, item.total);
   }
-  if (isTopicExamPassed(topicId)) {
+  if (draft.passedParts.includes(part)) {
     return 100;
   }
   return 0;
+}
+
+export function readTopicQuizPartPercents(
+  topicId: string,
+  parts: readonly TopicQuizPart[],
+): number[] {
+  if (parts.length === 0) {
+    return [];
+  }
+
+  const draft = readTopicExamDraft(topicId);
+  const passed = isTopicExamPassed(topicId);
+  if (!draft) {
+    return parts.map(() => (passed ? 100 : 0));
+  }
+
+  const anyActive = parts.some((part) => draft.parts[part]?.active);
+  if (!anyActive && draft.passedParts.length === 0 && passed) {
+    return parts.map(() => 100);
+  }
+
+  return parts.map((part) => partPercent(draft, part));
+}
+
+export function readTopicExamPercent(topicId: string): number {
+  const draft = readTopicExamDraft(topicId);
+  if (!draft) {
+    return isTopicExamPassed(topicId) ? 100 : 0;
+  }
+
+  const required =
+    draft.requiredParts.length > 0
+      ? draft.requiredParts
+      : QUIZ_PARTS.filter((part) => draft.parts[part]);
+
+  if (required.length === 0) {
+    return isTopicExamPassed(topicId) ? 100 : 0;
+  }
+
+  const anyActive = required.some((part) => draft.parts[part]?.active);
+  if (
+    !anyActive &&
+    draft.passedParts.length === 0 &&
+    isTopicExamPassed(topicId)
+  ) {
+    return 100;
+  }
+
+  const total = required.reduce(
+    (sum, part) => sum + partPercent(draft, part),
+    0,
+  );
+  return Math.round(total / required.length);
+}
+
+export function emptyTopicExamDraft(): TopicExamDraft {
+  return emptyDraft();
 }
