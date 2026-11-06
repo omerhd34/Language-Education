@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
 import {
   AppSidebar,
@@ -9,41 +9,47 @@ import {
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
+import {
+  SIDEBAR_COOKIE_MAX_AGE,
+  SIDEBAR_COOKIE_NAME,
+} from "@/lib/sidebarPreference";
 import { useLogoutMutation, type AuthUser } from "@/store/api";
 import { clearCredentials } from "@/store/authSlice";
 
-const COLLAPSE_KEY = "pylmor-sidebar-collapsed";
+const LEGACY_COLLAPSE_KEY = "pylmor-sidebar-collapsed";
 
 type AppShellProps = {
   user: AuthUser;
+  sidebarOpen: boolean;
   children: React.ReactNode;
 };
 
-export function AppShell({ user, children }: AppShellProps) {
+export function AppShell({ user, sidebarOpen, children }: AppShellProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
-  const [open, setOpen] = useState(true);
 
   useEffect(() => {
     try {
-      if (window.localStorage.getItem(COLLAPSE_KEY) === "1") {
-        // eslint-disable-next-line react-hooks/set-state-in-effect -- kayıtlı daraltma tercihini ilk yüklemede uygula
-        setOpen(false);
+      const stored = window.localStorage.getItem(LEGACY_COLLAPSE_KEY);
+      if (stored === null) {
+        return;
       }
+
+      const hasCookie = document.cookie
+        .split("; ")
+        .some((part) => part.startsWith(`${SIDEBAR_COOKIE_NAME}=`));
+
+      if (!hasCookie) {
+        const open = stored === "1" ? "false" : "true";
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+      }
+
+      window.localStorage.removeItem(LEGACY_COLLAPSE_KEY);
     } catch {
-      // ignore
+      // Depolama kapalıysa tercih bir sonraki oturumda varsayılan kalır.
     }
   }, []);
-
-  function handleOpenChange(next: boolean) {
-    setOpen(next);
-    try {
-      window.localStorage.setItem(COLLAPSE_KEY, next ? "0" : "1");
-    } catch {
-      // ignore
-    }
-  }
 
   async function handleLogout() {
     try {
@@ -57,7 +63,7 @@ export function AppShell({ user, children }: AppShellProps) {
 
   return (
     <TooltipProvider>
-      <SidebarProvider open={open} onOpenChange={handleOpenChange}>
+      <SidebarProvider defaultOpen={sidebarOpen}>
         <AppSidebar
           user={user}
           isLoggingOut={isLoggingOut}

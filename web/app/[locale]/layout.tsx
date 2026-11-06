@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import {
   getMessages,
@@ -10,6 +11,11 @@ import { Suspense } from "react";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { routing } from "@/i18n/routing";
+import {
+  isSidebarOpenFromCookie,
+  SIDEBAR_COOKIE_NAME,
+} from "@/lib/sidebarPreference";
+import { parseSessionHint, SESSION_HINT_COOKIE } from "@/lib/sessionHint";
 import "../globals.css";
 
 const bodyFont = Manrope({
@@ -55,6 +61,13 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const messages = await getMessages();
+  const cookieStore = await cookies();
+  const initialUser = parseSessionHint(
+    cookieStore.get(SESSION_HINT_COOKIE)?.value,
+  );
+  const sidebarOpen = isSidebarOpenFromCookie(
+    cookieStore.get(SIDEBAR_COOKIE_NAME)?.value,
+  );
 
   return (
     <html
@@ -66,7 +79,9 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Suspense fallback={null}>
             <AppProviders>
-              <SiteChrome>{children}</SiteChrome>
+              <SiteChrome initialUser={initialUser} sidebarOpen={sidebarOpen}>
+                {children}
+              </SiteChrome>
             </AppProviders>
           </Suspense>
         </NextIntlClientProvider>

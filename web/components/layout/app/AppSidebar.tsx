@@ -112,13 +112,12 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
     const Icon = item.Icon;
     const active = isActive(item.href);
     const label = t(item.labelKey);
-    const tooltip = item.tooltipKey ? t(item.tooltipKey) : label;
 
     return (
       <SidebarMenuItem key={item.labelKey}>
         <SidebarMenuButton
           isActive={active}
-          tooltip={tooltip}
+          tooltip={label}
           className={menuButtonClassName}
           render={<Link href={item.href} />}
           onClick={(event) => handleNavClick(event, item.href)}
