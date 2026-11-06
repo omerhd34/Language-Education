@@ -50,6 +50,24 @@ function distractors(
   return picked;
 }
 
+export const VOCABULARY_QUIZ_QUESTION_COUNT = 15;
+
+export function generateMixedQuizItems(
+  words: VocabularyQuizWordInput[],
+): VocabularyQuizItem[] {
+  if (words.length === 0) {
+    return [];
+  }
+
+  const pool = [
+    ...generateQuizItemsByType(words, "multiple_choice"),
+    ...generateQuizItemsByType(words, "fill_blank"),
+    ...generateQuizItemsByType(words, "listening"),
+  ];
+
+  return shuffle(pool).slice(0, VOCABULARY_QUIZ_QUESTION_COUNT);
+}
+
 export function generateQuizItemsByType(
   words: VocabularyQuizWordInput[],
   type: VocabularyQuizType,

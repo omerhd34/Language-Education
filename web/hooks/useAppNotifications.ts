@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import {
+  dismissNotification,
   markAllNotificationsRead,
   markNotificationRead,
   NOTIFICATIONS_CHANGED_EVENT,
@@ -46,6 +47,10 @@ export function useAppNotifications() {
     setNotifications(markAllNotificationsRead());
   }
 
+  function dismiss(id: string) {
+    setNotifications(dismissNotification(id));
+  }
+
   return {
     notifications,
     unreadCount,
@@ -55,5 +60,6 @@ export function useAppNotifications() {
     toggleMenu,
     markRead,
     markAllRead,
+    dismiss,
   };
 }
