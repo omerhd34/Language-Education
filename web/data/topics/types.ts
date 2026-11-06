@@ -17,6 +17,7 @@ export type TopicLessonExamplesLayout = "list" | "columns";
 export type TopicLessonPart = {
   id: string;
   title: string;
+  shortTitle?: string;
   titleEn?: string;
   paragraphs: string[];
   examples?: TopicLessonExample[];
@@ -110,8 +111,9 @@ export type TopicExercise =
 
 export type TopicContent = {
   topicId: string;
-  /** Anlatım sayfasında ilerleme için gereken süre, dakika. Yazılmazsa 3 dakika kullanılır. */
   viewMinutes?: number;
+  examQuestionCount?: number;
+  examOptionCount?: number;
   lesson: TopicLesson;
   exercises: TopicExercise[];
   examExercises?: MultipleChoiceExercise[];
