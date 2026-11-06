@@ -11,16 +11,12 @@ import {
   CarouselItem,
   useCarousel,
 } from "@/components/ui/carousel";
-import type {
-  TopicLessonExample,
-  TopicLessonExampleHeaders,
-} from "@/data/topics/types";
+import type { TopicLessonExample } from "@/data/topics/types";
 import { cn } from "@/lib/utils";
 
 type LessonExampleCarouselProps = {
   title: string;
   examples: TopicLessonExample[];
-  headers?: TopicLessonExampleHeaders;
 };
 
 function stopCardToggle(event: { stopPropagation: () => void }) {
@@ -100,7 +96,7 @@ function LessonFlipCard({ example }: { example: TopicLessonExample }) {
   }, [flipped]);
 
   const hero = example.exampleEn ?? example.tr;
-  const caption = example.exampleTr ?? example.note;
+  const caption = example.exampleTr;
   const reading = example.exampleEn ? example.tr : null;
   const spelling = spellingLabel(example.note);
   const letters = spelling ? spellingLetters(spelling) : null;
@@ -147,13 +143,13 @@ function LessonFlipCard({ example }: { example: TopicLessonExample }) {
               <SpelledWord word={example.en} letters={letters} />
             </p>
             {reading ? (
-              <p className="text-sm font-medium tracking-wide text-brand-500 dark:text-brand-300">
+              <p className="text-sm leading-snug font-medium text-sky-600 dark:text-sky-400">
                 {reading}
               </p>
             ) : null}
-            {spelling && !reading ? (
-              <p className="text-sm font-semibold tracking-wide text-sky-600 dark:text-sky-400">
-                {spelling}
+            {example.note ? (
+              <p className="text-sm leading-snug font-medium text-sky-600 dark:text-sky-400">
+                {example.note}
               </p>
             ) : null}
           </div>
@@ -217,7 +213,6 @@ function ExampleCarouselControls() {
 export function LessonExampleCarousel({
   title,
   examples,
-  headers,
 }: LessonExampleCarouselProps) {
   return (
     <Carousel
@@ -230,13 +225,6 @@ export function LessonExampleCarousel({
           <h3 className="text-xs font-semibold tracking-wide text-brand-500 uppercase dark:text-brand-400">
             {title}
           </h3>
-          {headers ? (
-            <p className="mt-0.5 text-xs text-brand-400">
-              {headers.en}
-              <span aria-hidden> · </span>
-              {headers.tr}
-            </p>
-          ) : null}
         </div>
         <ExampleCarouselControls />
       </div>
