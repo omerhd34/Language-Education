@@ -1,5 +1,8 @@
 import { handleRouteError, jsonSuccess } from "@/lib/server/apiResponse";
-import { setRefreshCookie } from "@/lib/server/auth/cookies";
+import {
+  setRefreshCookie,
+  setSessionHintCookie,
+} from "@/lib/server/auth/cookies";
 import { loginUser } from "@/lib/server/auth/service";
 import { loginSchema } from "@/validators/auth.schema";
 
@@ -16,6 +19,7 @@ export async function POST(request: Request) {
     });
 
     setRefreshCookie(response, result.refreshToken);
+    setSessionHintCookie(response, result.user);
     return response;
   } catch (error) {
     return handleRouteError(error);

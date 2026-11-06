@@ -2,7 +2,10 @@ import {
   handleRouteError,
   jsonSuccess,
 } from "@/lib/server/apiResponse";
-import { setRefreshCookie } from "@/lib/server/auth/cookies";
+import {
+  setRefreshCookie,
+  setSessionHintCookie,
+} from "@/lib/server/auth/cookies";
 import { verifyEmail } from "@/lib/server/auth/service";
 import { verifyEmailSchema } from "@/validators/auth.schema";
 
@@ -19,6 +22,7 @@ export async function POST(request: Request) {
     });
 
     setRefreshCookie(response, result.refreshToken);
+    setSessionHintCookie(response, result.user);
     return response;
   } catch (error) {
     return handleRouteError(error);

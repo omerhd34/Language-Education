@@ -2,7 +2,10 @@ import {
   handleRouteError,
   jsonSuccess,
 } from "@/lib/server/apiResponse";
-import { clearRefreshCookie } from "@/lib/server/auth/cookies";
+import {
+  clearRefreshCookie,
+  clearSessionHintCookie,
+} from "@/lib/server/auth/cookies";
 import { getRefreshTokenFromRequest } from "@/lib/server/auth/request";
 import { logoutUser } from "@/lib/server/auth/service";
 import { refreshSchema } from "@/validators/auth.schema";
@@ -17,6 +20,7 @@ export async function POST(request: Request) {
 
     const response = jsonSuccess({ message: "Logged out" });
     clearRefreshCookie(response);
+    clearSessionHintCookie(response);
     return response;
   } catch (error) {
     return handleRouteError(error);
