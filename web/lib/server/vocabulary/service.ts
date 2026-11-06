@@ -26,6 +26,8 @@ export type VocabularyStatusPayload = {
   dailyLearnLimit: number;
   pendingStudyCount: number;
   pendingStudyWordIds: string[];
+  lastLearnSelectedAt: string | null;
+  learnUnlockedAt: string | null;
 };
 
 export type KnownVocabularyWord = {
@@ -50,12 +52,51 @@ export type StudiedTodayVocabularyWord = KnownVocabularyWord & {
 export type StudiedTodayVocabularyWordsPayload = {
   words: StudiedTodayVocabularyWord[];
   count: number;
+  cancellableCount: number;
 };
 
 type LearnQuotaState = {
   selectedCount: number;
   lockedUntil: Date | null;
+  lastSelectedAt: Date | null;
+  learnUnlockedAt: Date | null;
 };
+
+type LearnActivityRow = {
+  vocabularyLearnLastSelectedAt: Date | null;
+  vocabularyLearnLastUnlockedAt: Date | null;
+};
+
+async function attachLearnActivity(
+  userId: string,
+  activity: LearnActivityRow,
+  state: { selectedCount: number; lockedUntil: Date | null },
+): Promise<LearnQuotaState> {
+  const prisma = getPrisma();
+  let lastSelectedAt = activity.vocabularyLearnLastSelectedAt;
+
+  if (!lastSelectedAt) {
+    const latest = await prisma.userVocabularyWord.findFirst({
+      where: { userId, status: "LEARNING" },
+      orderBy: { statusSetAt: "desc" },
+      select: { statusSetAt: true },
+    });
+
+    if (latest) {
+      lastSelectedAt = latest.statusSetAt;
+      await prisma.user.update({
+        where: { id: userId },
+        data: { vocabularyLearnLastSelectedAt: lastSelectedAt },
+      });
+    }
+  }
+
+  return {
+    ...state,
+    lastSelectedAt,
+    learnUnlockedAt: activity.vocabularyLearnLastUnlockedAt,
+  };
+}
 
 async function getLearnQuotaState(userId: string): Promise<LearnQuotaState> {
   const prisma = getPrisma();
@@ -64,12 +105,19 @@ async function getLearnQuotaState(userId: string): Promise<LearnQuotaState> {
     select: {
       vocabularyLearnSelectedCount: true,
       vocabularyLearnLockedUntil: true,
+      vocabularyLearnLastSelectedAt: true,
+      vocabularyLearnLastUnlockedAt: true,
     },
   });
 
   if (!user) {
     throw new AppError("User not found", 404, "NOT_FOUND");
   }
+
+  const activity: LearnActivityRow = {
+    vocabularyLearnLastSelectedAt: user.vocabularyLearnLastSelectedAt,
+    vocabularyLearnLastUnlockedAt: user.vocabularyLearnLastUnlockedAt,
+  };
 
   if (BYPASS_LEARN_WORD_LOCK) {
     if (user.vocabularyLearnLockedUntil !== null) {
@@ -88,10 +136,10 @@ async function getLearnQuotaState(userId: string): Promise<LearnQuotaState> {
       },
     });
 
-    return {
+    return attachLearnActivity(userId, activity, {
       selectedCount: learningCount,
       lockedUntil: null,
-    };
+    });
   }
 
   const now = new Date();
@@ -103,19 +151,24 @@ async function getLearnQuotaState(userId: string): Promise<LearnQuotaState> {
       data: {
         vocabularyLearnSelectedCount: 0,
         vocabularyLearnLockedUntil: null,
+        vocabularyLearnLastUnlockedAt: lockedUntil,
       },
     });
 
-    return {
-      selectedCount: 0,
-      lockedUntil: null,
-    };
+    return attachLearnActivity(
+      userId,
+      {
+        ...activity,
+        vocabularyLearnLastUnlockedAt: lockedUntil,
+      },
+      { selectedCount: 0, lockedUntil: null },
+    );
   }
 
-  return {
+  return attachLearnActivity(userId, activity, {
     selectedCount: user.vocabularyLearnSelectedCount,
     lockedUntil,
-  };
+  });
 }
 
 function toStatusPayload(
@@ -132,6 +185,12 @@ function toStatusPayload(
     dailyLearnLimit: LEARN_WORD_PERIOD_LIMIT,
     pendingStudyCount: pendingStudyWordIds.length,
     pendingStudyWordIds,
+    lastLearnSelectedAt: quota.lastSelectedAt
+      ? quota.lastSelectedAt.toISOString()
+      : null,
+    learnUnlockedAt: quota.learnUnlockedAt
+      ? quota.learnUnlockedAt.toISOString()
+      : null,
   };
 }
 
@@ -231,7 +290,7 @@ export async function getStudiedTodayVocabularyWordsForUser(
   userId: string,
 ): Promise<StudiedTodayVocabularyWordsPayload> {
   if (ALLOW_EARLY_VOCABULARY_QUIZ) {
-    return { words: [], count: 0 };
+    return { words: [], count: 0, cancellableCount: 0 };
   }
 
   const prisma = getPrisma();
@@ -247,10 +306,14 @@ export async function getStudiedTodayVocabularyWordsForUser(
       wordId: true,
       statusSetAt: true,
       studyStartedAt: true,
+      passedMultipleChoice: true,
+      passedFillBlank: true,
+      passedListening: true,
     },
   });
 
   const words: StudiedTodayVocabularyWord[] = [];
+  let cancellableCount = 0;
   for (const row of rows) {
     const found = getVocabularyWordById(row.wordId);
     if (!found) {
@@ -274,11 +337,20 @@ export async function getStudiedTodayVocabularyWordsForUser(
         startedAt.getTime() + VOCABULARY_QUIZ_DUE_MS,
       ).toISOString(),
     });
+
+    if (
+      !row.passedMultipleChoice &&
+      !row.passedFillBlank &&
+      !row.passedListening
+    ) {
+      cancellableCount += 1;
+    }
   }
 
   return {
     words,
     count: words.length,
+    cancellableCount,
   };
 }
 
@@ -405,26 +477,68 @@ export async function startVocabularyStudyTimer(
 ): Promise<{ startedCount: number }> {
   const prisma = getPrisma();
   const now = new Date();
+  const startedCount = await prisma.$transaction(async (tx) => {
+    const openCycleCount = await tx.userVocabularyWord.count({
+      where: {
+        userId,
+        status: "LEARNING",
+        studyStartedAt: { not: null },
+      },
+    });
+
+    if (openCycleCount > 0) {
+      throw new AppError(
+        "The current study cycle must finish and be quizzed before a new timer",
+        400,
+        "STUDY_CYCLE_OPEN",
+      );
+    }
+
+    const result = await tx.userVocabularyWord.updateMany({
+      where: {
+        userId,
+        status: "LEARNING",
+        studyStartedAt: null,
+      },
+      data: {
+        studyStartedAt: now,
+      },
+    });
+
+    if (result.count === 0) {
+      throw new AppError(
+        "No words are waiting for the study timer",
+        400,
+        "NO_PENDING_STUDY_WORDS",
+      );
+    }
+
+    return result.count;
+  });
+
+  return { startedCount };
+}
+
+export async function cancelVocabularyStudyTimer(
+  userId: string,
+): Promise<{ cancelledCount: number }> {
+  const prisma = getPrisma();
+  const threshold = new Date(Date.now() - VOCABULARY_QUIZ_DUE_MS);
   const result = await prisma.userVocabularyWord.updateMany({
     where: {
       userId,
       status: "LEARNING",
-      studyStartedAt: null,
+      studyStartedAt: { gt: threshold },
+      passedMultipleChoice: false,
+      passedFillBlank: false,
+      passedListening: false,
     },
     data: {
-      studyStartedAt: now,
+      studyStartedAt: null,
     },
   });
 
-  if (result.count === 0) {
-    throw new AppError(
-      "No words are waiting for the study timer",
-      400,
-      "NO_PENDING_STUDY_WORDS",
-    );
-  }
-
-  return { startedCount: result.count };
+  return { cancelledCount: result.count };
 }
 
 async function consumeLearnSelection(userId: string): Promise<void> {
@@ -443,7 +557,16 @@ async function consumeLearnSelection(userId: string): Promise<void> {
     );
   }
 
+  const selectedAt = new Date();
+
   if (BYPASS_LEARN_WORD_LOCK) {
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        vocabularyLearnLastSelectedAt: selectedAt,
+        vocabularyLearnLastUnlockedAt: null,
+      },
+    });
     return;
   }
 
@@ -458,7 +581,7 @@ async function consumeLearnSelection(userId: string): Promise<void> {
   const nextCount = quota.selectedCount + 1;
   const lockedUntil =
     nextCount >= LEARN_WORD_PERIOD_LIMIT
-      ? new Date(Date.now() + LEARN_WORD_LOCK_MS)
+      ? new Date(selectedAt.getTime() + LEARN_WORD_LOCK_MS)
       : null;
 
   await prisma.user.update({
@@ -466,22 +589,35 @@ async function consumeLearnSelection(userId: string): Promise<void> {
     data: {
       vocabularyLearnSelectedCount: nextCount,
       vocabularyLearnLockedUntil: lockedUntil,
+      vocabularyLearnLastSelectedAt: selectedAt,
+      vocabularyLearnLastUnlockedAt: null,
     },
   });
 }
 
 async function releaseLearnSelectionIfUnlocked(userId: string): Promise<void> {
-  const prisma = getPrisma();
-  const quota = await getLearnQuotaState(userId);
+  await releaseLearnSelections(userId, 1);
+}
 
-  if (quota.lockedUntil || quota.selectedCount <= 0) {
+export async function releaseLearnSelections(
+  userId: string,
+  count: number,
+): Promise<void> {
+  if (count <= 0) {
     return;
   }
+
+  const prisma = getPrisma();
+  const quota = await getLearnQuotaState(userId);
+  const nextCount = Math.max(0, quota.selectedCount - count);
 
   await prisma.user.update({
     where: { id: userId },
     data: {
-      vocabularyLearnSelectedCount: quota.selectedCount - 1,
+      vocabularyLearnSelectedCount: nextCount,
+      ...(quota.lockedUntil && nextCount < LEARN_WORD_PERIOD_LIMIT
+        ? { vocabularyLearnLockedUntil: null }
+        : {}),
     },
   });
 }

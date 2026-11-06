@@ -19,6 +19,8 @@ async function resetVocabulary(userId: string): Promise<number> {
     data: {
       vocabularyLearnSelectedCount: 0,
       vocabularyLearnLockedUntil: null,
+      vocabularyLearnLastSelectedAt: null,
+      vocabularyLearnLastUnlockedAt: null,
     },
   });
 

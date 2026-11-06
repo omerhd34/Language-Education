@@ -2,6 +2,7 @@ import type { VocabularyWord } from "@/data/vocabulary";
 import { getVocabularyWordById, vocabularyCategories } from "@/data/vocabulary";
 import { AppError } from "@/lib/server/AppError";
 import { getPrisma } from "@/lib/server/prisma";
+import { releaseLearnSelections } from "@/lib/server/vocabulary/service";
 import {
   ALLOW_EARLY_VOCABULARY_QUIZ,
   VOCABULARY_QUIZ_DUE_MS,
@@ -110,10 +111,6 @@ function countRemainingByType(
     fill_blank: words.filter((word) => !word.passed.fill_blank).length,
     listening: words.filter((word) => !word.passed.listening).length,
   };
-}
-
-function isFullyPassed(passed: VocabularyQuizTypeProgress): boolean {
-  return passed.multiple_choice && passed.fill_blank && passed.listening;
 }
 
 export async function getVocabularyQuizForUser(
@@ -246,7 +243,6 @@ export async function answerVocabularyQuizQuestion(
   }
 
   const correct = isVocabularyQuizAnswerCorrect(found.word, answer);
-  const now = new Date();
   let passed = toPassed(existing);
   let newlyKnown = false;
   let status: "KNOWN" | "LEARNING" = "LEARNING";
@@ -257,26 +253,16 @@ export async function answerVocabularyQuizQuestion(
       [quizType]: true,
     };
 
-    newlyKnown = isFullyPassed(passed);
-    status = newlyKnown ? "KNOWN" : "LEARNING";
+    newlyKnown = false;
+    status = "LEARNING";
 
     await prisma.userVocabularyWord.update({
       where: { id: existing.id },
       data: {
         status,
-        statusSetAt: now,
         passedMultipleChoice: passed.multiple_choice,
         passedFillBlank: passed.fill_blank,
         passedListening: passed.listening,
-      },
-    });
-  } else {
-    await prisma.userVocabularyWord.update({
-      where: { id: existing.id },
-      data: {
-        status: "LEARNING",
-        statusSetAt: now,
-        studyStartedAt: now,
       },
     });
   }
@@ -291,4 +277,43 @@ export async function answerVocabularyQuizQuestion(
     newlyKnown,
     passed,
   };
+}
+
+export async function completeVocabularyQuiz(
+  userId: string,
+  wordIds: string[],
+): Promise<{ knownCount: number }> {
+  const uniqueIds = [...new Set(wordIds)];
+  if (uniqueIds.length === 0) {
+    return { knownCount: 0 };
+  }
+
+  const prisma = getPrisma();
+  const rows = await prisma.userVocabularyWord.findMany({
+    where: {
+      userId,
+      status: "LEARNING",
+      wordId: { in: uniqueIds },
+    },
+    select: { id: true },
+  });
+
+  if (rows.length === 0) {
+    return { knownCount: 0 };
+  }
+
+  const now = new Date();
+  await prisma.userVocabularyWord.updateMany({
+    where: { id: { in: rows.map((row) => row.id) } },
+    data: {
+      status: "KNOWN",
+      statusSetAt: now,
+      passedMultipleChoice: true,
+      passedFillBlank: true,
+      passedListening: true,
+    },
+  });
+  await releaseLearnSelections(userId, rows.length);
+
+  return { knownCount: rows.length };
 }

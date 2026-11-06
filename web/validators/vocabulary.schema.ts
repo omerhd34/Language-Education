@@ -22,3 +22,7 @@ export const vocabularyQuizAnswerSchema = z.object({
   answer: z.string().min(1).max(200),
   quizType: vocabularyQuizTypeSchema,
 });
+
+export const vocabularyQuizCompleteSchema = z.object({
+  wordIds: z.array(z.string().min(1).max(64)).min(1).max(100),
+});
