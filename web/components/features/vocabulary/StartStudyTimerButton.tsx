@@ -6,9 +6,22 @@ import { Timer } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
   useStartVocabularyStudyTimerMutation,
+  useStudiedTodayVocabularyWordsQuery,
   useVocabularyLearnQuotaQuery,
+  useVocabularyQuizQuery,
 } from "@/store/api";
 import { cn } from "@/lib/utils";
+
+export function useStudyCycleOpen(): { open: boolean; ready: boolean } {
+  const studied = useStudiedTodayVocabularyWordsQuery();
+  const quiz = useVocabularyQuizQuery();
+  const open = (studied.data?.count ?? 0) > 0 || (quiz.data?.dueCount ?? 0) > 0;
+
+  return {
+    open,
+    ready: studied.isSuccess && quiz.isSuccess,
+  };
+}
 
 type StartStudyTimerButtonProps = {
   className?: string;
@@ -21,11 +34,12 @@ export function StartStudyTimerButton({
 }: StartStudyTimerButtonProps) {
   const t = useTranslations("Dashboard");
   const { data } = useVocabularyLearnQuotaQuery();
+  const { open: cycleOpen, ready: cycleKnown } = useStudyCycleOpen();
   const [startTimer, { isLoading }] = useStartVocabularyStudyTimerMutation();
   const [hasError, setHasError] = useState(false);
   const pending = data?.pendingStudyCount ?? 0;
 
-  if (pending <= 0) {
+  if (pending <= 0 || !cycleKnown || cycleOpen) {
     return null;
   }
 
@@ -69,7 +83,9 @@ export function StudyTimerPendingNotice({
 }: StudyTimerPendingNoticeProps) {
   const t = useTranslations("Dashboard");
   const { data } = useVocabularyLearnQuotaQuery();
+  const { open: cycleOpen, ready: cycleKnown } = useStudyCycleOpen();
   const pending = data?.pendingStudyCount ?? 0;
+  const blocked = cycleKnown && cycleOpen;
 
   if (pending <= 0) {
     return null;
@@ -83,7 +99,9 @@ export function StudyTimerPendingNotice({
       )}
     >
       <p className="text-sm font-medium text-brand-800 dark:text-brand-200">
-        {t("studyTimerPendingHint", { count: pending })}
+        {blocked
+          ? t("studyTimerBlockedHint", { count: pending })
+          : t("studyTimerPendingHint", { count: pending })}
       </p>
       <StartStudyTimerButton />
     </div>

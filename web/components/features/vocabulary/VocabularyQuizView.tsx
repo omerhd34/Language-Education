@@ -1,26 +1,24 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowLeft, Volume2 } from "lucide-react";
 import {
   useAnswerVocabularyQuizMutation,
+  useCompleteVocabularyQuizMutation,
   useVocabularyQuizQuery,
   type VocabularyQuizWord,
 } from "@/store/api";
-import { VocabularyQuizTypePicker } from "@/components/features/vocabulary/VocabularyQuizTypePicker";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useCountdown } from "@/hooks/useCountdown";
 import { formatDurationHms } from "@/lib/formatDuration";
 import { speakText, stopSpeaking } from "@/lib/speakText";
 import {
-  countQuizTypes,
-  generateQuizItemsByType,
-  wordsForQuizType,
+  generateMixedQuizItems,
   type VocabularyQuizItem,
-  type VocabularyQuizType,
 } from "@/lib/vocabulary/generateQuizQuestions";
 import { writeLastVocabularyQuizResult } from "@/lib/vocabularyQuizResultStorage";
 import { cn } from "@/lib/utils";
@@ -30,10 +28,8 @@ export function VocabularyQuizView() {
   const { data, isLoading, isError, refetch } = useVocabularyQuizQuery();
   const [answerQuiz, { isLoading: isSubmitting }] =
     useAnswerVocabularyQuizMutation();
+  const [completeQuiz] = useCompleteVocabularyQuizMutation();
 
-  const [selectedType, setSelectedType] = useState<VocabularyQuizType | null>(
-    null,
-  );
   const [items, setItems] = useState<VocabularyQuizItem[]>([]);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
@@ -47,10 +43,7 @@ export function VocabularyQuizView() {
 
   const remainingMs = useCountdown(data?.nextDueAt);
   const words: VocabularyQuizWord[] = data?.words ?? [];
-  const typeCounts = useMemo(
-    () => data?.typeCounts ?? countQuizTypes(words),
-    [data?.typeCounts, words],
-  );
+  const wordKey = words.map((word) => word.id).join("|");
   const question = items[index];
 
   useEffect(() => {
@@ -58,36 +51,20 @@ export function VocabularyQuizView() {
   }, []);
 
   useEffect(() => {
+    if (index === 0) {
+      return;
+    }
     if (question?.type === "listening" && question.speakText && !checked) {
       speakText(question.speakText);
     }
-  }, [question, checked]);
+  }, [question, checked, index]);
 
-  function startType(type: VocabularyQuizType) {
-    const nextItems = generateQuizItemsByType(
-      wordsForQuizType(words, type),
-      type,
-    );
-    if (nextItems.length === 0) {
+  useEffect(() => {
+    if (!wordKey || finished) {
       return;
     }
-    setSelectedType(type);
-    setItems(nextItems);
-    setIndex(0);
-    setSelected(null);
-    setTextAnswer("");
-    setChecked(false);
-    setLastCorrect(null);
-    setLastNewlyKnown(false);
-    setExpected(null);
-    setCorrectCount(0);
-    setFinished(false);
-  }
 
-  function resetToTypes() {
-    stopSpeaking();
-    setSelectedType(null);
-    setItems([]);
+    setItems(generateMixedQuizItems(words));
     setIndex(0);
     setSelected(null);
     setTextAnswer("");
@@ -96,12 +73,10 @@ export function VocabularyQuizView() {
     setLastNewlyKnown(false);
     setExpected(null);
     setCorrectCount(0);
-    setFinished(false);
-    void refetch();
-  }
+  }, [wordKey, finished]);
 
   async function handleCheck() {
-    if (!question || checked || !selectedType) {
+    if (!question || checked) {
       return;
     }
 
@@ -114,7 +89,7 @@ export function VocabularyQuizView() {
       const result = await answerQuiz({
         wordId: question.wordId,
         answer,
-        quizType: selectedType,
+        quizType: question.type,
       }).unwrap();
 
       setChecked(true);
@@ -132,10 +107,18 @@ export function VocabularyQuizView() {
     }
   }
 
-  function handleNext() {
+  async function handleNext() {
     if (index >= items.length - 1) {
       const total = items.length;
       const score = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+      const wordIds = [...new Set(items.map((item) => item.wordId))];
+      if (wordIds.length > 0) {
+        try {
+          await completeQuiz({ wordIds }).unwrap();
+        } catch {
+          // Sonuç ekranı yine de açılır; kota yenilemesi sonraki istekte düzelir.
+        }
+      }
       writeLastVocabularyQuizResult({
         score,
         correct: correctCount,
@@ -184,16 +167,9 @@ export function VocabularyQuizView() {
           {t("quizFinishedHint")}
         </p>
         <div className="flex flex-wrap justify-center gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => {
-              resetToTypes();
-              void refetch();
-            }}
-          >
-            {t("quizBackToTypes")}
-          </Button>
+          <ButtonLink href="/panel/kelime/bugun-calisilan" variant="outline">
+            {t("quizBackToStudied")}
+          </ButtonLink>
           <ButtonLink
             href="/panel#ilerleme"
             onClick={() => {
@@ -207,7 +183,7 @@ export function VocabularyQuizView() {
     );
   }
 
-  const quizInProgress = selectedType !== null && totalQuestions > 0;
+  const quizInProgress = totalQuestions > 0;
 
   if (!quizInProgress && isLoading && words.length === 0) {
     return (
@@ -247,20 +223,12 @@ export function VocabularyQuizView() {
     );
   }
 
-  if (!selectedType) {
-    return (
-      <div className="space-y-4">
-        <ButtonLink href="/panel#ilerleme" variant="outline" size="sm">
-          <ArrowLeft className="size-4" aria-hidden />
-          {t("backToProgress")}
-        </ButtonLink>
-        <VocabularyQuizTypePicker counts={typeCounts} onSelect={startType} />
-      </div>
-    );
-  }
-
   if (!question) {
-    return null;
+    return (
+      <p className="text-sm text-brand-600 dark:text-brand-400">
+        {t("quizLoading")}
+      </p>
+    );
   }
 
   const canCheck =
@@ -271,15 +239,14 @@ export function VocabularyQuizView() {
   return (
     <div className="mx-auto max-w-2xl space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <Button
-          type="button"
+        <ButtonLink
+          href="/panel/kelime/bugun-calisilan"
           variant="outline"
           size="sm"
-          onClick={resetToTypes}
         >
           <ArrowLeft className="size-4" aria-hidden />
-          {t("quizBackToTypes")}
-        </Button>
+          {t("quizBackToStudied")}
+        </ButtonLink>
 
         <p className="text-sm text-brand-500 dark:text-brand-400">
           {t("quizProgress", {

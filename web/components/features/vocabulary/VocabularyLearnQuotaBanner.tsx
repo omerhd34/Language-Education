@@ -3,9 +3,11 @@
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import {
+  useStudiedTodayVocabularyWordsQuery,
   useVocabularyLearnQuotaQuery,
   useVocabularyQuizQuery,
 } from "@/store/api";
+import { ActiveStudyTimerNotice } from "@/components/features/vocabulary/CancelStudyTimerButton";
 import { StudyTimerPendingNotice } from "@/components/features/vocabulary/StartStudyTimerButton";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useCountdown } from "@/hooks/useCountdown";
@@ -26,11 +28,13 @@ export function VocabularyLearnQuotaBanner({
   const tDashboard = useTranslations("Dashboard");
   const { data, refetch } = useVocabularyLearnQuotaQuery();
   const { data: quiz } = useVocabularyQuizQuery();
+  const { data: studiedToday } = useStudiedTodayVocabularyWordsQuery();
 
   const lockedUntil = data?.lockedUntil ?? null;
   const remainingMs = useCountdown(lockedUntil);
   const quizReady = (quiz?.dueCount ?? 0) > 0;
   const pending = data?.pendingStudyCount ?? 0;
+  const cancellableCount = studiedToday?.cancellableCount ?? 0;
 
   useEffect(() => {
     if (lockedUntil && remainingMs === 0) {
@@ -38,12 +42,13 @@ export function VocabularyLearnQuotaBanner({
     }
   }, [lockedUntil, remainingMs, refetch]);
 
-  if (!quizReady && pending === 0) {
+  if (!quizReady && pending === 0 && cancellableCount === 0) {
     return null;
   }
 
   return (
     <div className={cn("space-y-3", className)}>
+      <ActiveStudyTimerNotice />
       <StudyTimerPendingNotice />
       {quizReady ? (
         <div className="flex min-h-12 items-center justify-between gap-3 rounded-2xl border border-brand-200/70 bg-brand-50/50 px-4 py-3 dark:border-brand-800/70 dark:bg-brand-900/40">
