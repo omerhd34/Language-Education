@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { PanelLoading } from "@/components/features/dashboard/PanelLoading";
+import { LearnMissedDayNotificationWatcher } from "@/components/features/dashboard/LearnMissedDayNotificationWatcher";
 import { QuizReadyNotificationWatcher } from "@/components/features/dashboard/QuizReadyNotificationWatcher";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useRouter } from "@/i18n/navigation";
@@ -43,6 +44,7 @@ export function PanelGate({ children }: PanelGateProps) {
   return (
     <>
       <QuizReadyNotificationWatcher />
+      <LearnMissedDayNotificationWatcher />
       {children}
     </>
   );

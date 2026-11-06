@@ -1,58 +1,61 @@
+/* eslint-disable react-hooks/purity */
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useVocabularyQuizQuery } from "@/store/api";
 import { useCountdown } from "@/hooks/useCountdown";
-import { upsertNotification } from "@/lib/notificationsStorage";
+import {
+  ensureNotification,
+  readNotifications,
+} from "@/lib/notificationsStorage";
+import { unseenQuizReadyWordIds } from "@/lib/quizReadyNotice";
 
 export function QuizReadyNotificationWatcher() {
   const t = useTranslations("Dashboard");
   const { data: quiz, refetch: refetchQuiz } = useVocabularyQuizQuery();
   const nextDueAt = quiz?.nextDueAt ?? null;
   const remainingMs = useCountdown(nextDueAt);
-  const handledSignatureRef = useRef<string | null>(null);
-
-  const dueSignature = useMemo(() => {
-    const words = quiz?.words ?? [];
-    if ((quiz?.dueCount ?? 0) <= 0 || words.length === 0) {
-      return null;
-    }
-    return words
-      .map((word) => word.id)
-      .sort()
-      .join("|");
-  }, [quiz?.dueCount, quiz?.words]);
+  const overdue =
+    Boolean(nextDueAt) &&
+    remainingMs <= 0 &&
+    Date.parse(nextDueAt ?? "") <= Date.now();
 
   useEffect(() => {
-    if (!nextDueAt || remainingMs > 0) {
+    if (!overdue) {
       return;
     }
+
     void refetchQuiz();
-  }, [nextDueAt, remainingMs, refetchQuiz]);
+    const id = window.setInterval(() => {
+      void refetchQuiz();
+    }, 5000);
+
+    return () => window.clearInterval(id);
+  }, [overdue, refetchQuiz]);
 
   useEffect(() => {
-    if (!dueSignature) {
+    const dueIds = (quiz?.words ?? []).map((word) => word.id);
+    if ((quiz?.dueCount ?? 0) <= 0 || dueIds.length === 0) {
       return;
     }
 
-    if (handledSignatureRef.current === dueSignature) {
+    const unseen = unseenQuizReadyWordIds(dueIds, readNotifications());
+    if (unseen.length === 0) {
       return;
     }
-    handledSignatureRef.current = dueSignature;
 
-    upsertNotification({
-      id: `quiz-ready-${dueSignature}`,
+    const signature = [...unseen].sort().join("|");
+    ensureNotification({
+      id: `quiz-ready-${signature}`,
       type: "quiz_ready",
       title: t("quizReadyNotificationTitle"),
-      body: t("quizReadyNotificationBody", {
-        count: quiz?.dueCount ?? 0,
-      }),
+      body: t("quizReadyNotificationBody", { count: unseen.length }),
       href: "/panel/kelime/sinav",
       createdAt: new Date().toISOString(),
       read: false,
     });
-  }, [dueSignature, quiz?.dueCount, t]);
+  }, [quiz?.dueCount, quiz?.words, t]);
 
   return null;
 }

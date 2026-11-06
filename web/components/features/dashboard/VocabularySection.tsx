@@ -31,7 +31,6 @@ import {
 } from "@/lib/vocabularyAccess";
 import {
   LEARN_WORD_PERIOD_LIMIT,
-  VOCABULARY_QUIZ_CYCLE_DAYS,
   VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
 } from "@/lib/vocabularyLimits";
 import { useKnownVocabularyWordsQuery } from "@/store/api";
@@ -67,11 +66,7 @@ export function VocabularySection() {
   }
 
   return (
-    <section
-      id="kelimeler"
-      aria-labelledby="vocabulary-heading"
-      className="space-y-4"
-    >
+    <section aria-labelledby="vocabulary-heading" className="space-y-4">
       <div>
         <h1
           id="vocabulary-heading"
@@ -83,7 +78,6 @@ export function VocabularySection() {
           {t("vocabularySubtitle", {
             limit: LEARN_WORD_PERIOD_LIMIT,
             window: ACTIVE_VOCABULARY_WINDOW,
-            quizDays: VOCABULARY_QUIZ_CYCLE_DAYS,
             quizTarget: VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
           })}
         </p>

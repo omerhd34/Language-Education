@@ -2,8 +2,9 @@
 
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { Bell } from "lucide-react";
+import { Bell, X } from "lucide-react";
 import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/Button";
 import { useAppNotifications } from "@/hooks/useAppNotifications";
 import { cn } from "@/lib/utils";
 
@@ -17,6 +18,7 @@ export function NotificationsMenu() {
     closeMenu,
     markRead,
     markAllRead,
+    dismiss,
   } = useAppNotifications();
   const rootRef = useRef<HTMLDivElement>(null);
 
@@ -46,37 +48,42 @@ export function NotificationsMenu() {
   }, [open, closeMenu]);
 
   return (
-    <div
-      ref={rootRef}
-      className="relative flex flex-col items-start"
-    >
+    <div ref={rootRef} className="relative flex h-full flex-col">
       <p className="dashboard-panel__label">
         <Bell className="size-3.5" aria-hidden />
         {t("notifications")}
       </p>
 
-      <span className="bar-badged mt-3">
-        <button
-          type="button"
-          className="relative inline-flex size-12 cursor-pointer items-center justify-center rounded-xl border border-border bg-surface-muted text-brand-800 transition-colors hover:bg-muted dark:bg-brand-900 dark:text-brand-100 dark:hover:bg-brand-800"
-          aria-label={t("notifications")}
-          aria-expanded={open}
-          aria-haspopup="dialog"
-          onClick={toggleMenu}
-        >
-          <Bell className="size-5" strokeWidth={1.75} aria-hidden />
-        </button>
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <span className="bar-badged">
+          <button
+            type="button"
+            className="relative inline-flex size-11 cursor-pointer items-center justify-center rounded-2xl border border-border bg-surface-muted text-brand-800 shadow-sm transition-colors hover:bg-muted dark:bg-white/5 dark:text-brand-100 dark:hover:bg-white/10"
+            aria-label={t("notifications")}
+            aria-expanded={open}
+            aria-haspopup="dialog"
+            onClick={toggleMenu}
+          >
+            <Bell className="size-5" strokeWidth={1.75} aria-hidden />
+          </button>
+          {unreadCount > 0 ? (
+            <>
+              <span className="bar-badge" aria-hidden="true">
+                {unreadCount}
+              </span>
+              <span className="sr-only">
+                {t("unreadNotifications", { count: unreadCount })}
+              </span>
+            </>
+          ) : null}
+        </span>
+
         {unreadCount > 0 ? (
-          <>
-            <span className="bar-badge" aria-hidden="true">
-              {unreadCount}
-            </span>
-            <span className="sr-only">
-              {t("unreadNotifications", { count: unreadCount })}
-            </span>
-          </>
+          <p className="mt-3 text-center text-xs leading-snug text-brand-600 dark:text-brand-400">
+            {t("unreadNotifications", { count: unreadCount })}
+          </p>
         ) : null}
-      </span>
+      </div>
 
       {open ? (
         <div
@@ -106,7 +113,7 @@ export function NotificationsMenu() {
           ) : (
             <ul className="max-h-72 space-y-2 overflow-y-auto">
               {notifications.map((item) => (
-                <li key={item.id}>
+                <li key={item.id} className="relative">
                   <Link
                     href={item.href}
                     onClick={() => {
@@ -114,7 +121,7 @@ export function NotificationsMenu() {
                       closeMenu();
                     }}
                     className={cn(
-                      "block rounded-xl border px-3 py-2 transition-colors",
+                      "block rounded-xl border py-2 pr-8 pl-3 transition-colors",
                       item.read
                         ? "border-border bg-transparent hover:bg-muted/60"
                         : "border-sky-500/30 bg-sky-500/10 hover:bg-sky-500/15",
@@ -127,6 +134,16 @@ export function NotificationsMenu() {
                       {item.body}
                     </p>
                   </Link>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-xs"
+                    className="absolute top-1.5 right-1.5 text-brand-600 hover:text-brand-950 dark:text-brand-300 dark:hover:text-brand-50"
+                    aria-label={t("notificationsDismiss")}
+                    onClick={() => dismiss(item.id)}
+                  >
+                    <X aria-hidden />
+                  </Button>
                 </li>
               ))}
             </ul>

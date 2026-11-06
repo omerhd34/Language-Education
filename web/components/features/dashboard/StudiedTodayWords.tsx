@@ -8,14 +8,22 @@ import type { StudiedTodayVocabularyWord } from "@/store/api";
 import { StudiedTodayWordRow } from "@/components/features/dashboard/StudiedTodayWordRow";
 import { cn } from "@/lib/utils";
 
+export type StudiedTodayListWord = Pick<
+  StudiedTodayVocabularyWord,
+  "id" | "en" | "tr" | "categoryId" | "categoryTitle"
+> & {
+  dueAt?: string;
+  examReady?: boolean;
+};
+
 type StudiedTodayWordsProps = {
-  words: StudiedTodayVocabularyWord[];
+  words: StudiedTodayListWord[];
 };
 
 type CategoryGroup = {
   categoryId: string;
   categoryTitle: string;
-  words: StudiedTodayVocabularyWord[];
+  words: StudiedTodayListWord[];
 };
 
 export function StudiedTodayWords({ words }: StudiedTodayWordsProps) {
