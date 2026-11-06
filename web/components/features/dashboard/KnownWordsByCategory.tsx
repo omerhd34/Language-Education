@@ -1,7 +1,6 @@
 "use client";
 
-/* eslint-disable react-hooks/set-state-in-effect */
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronDown } from "lucide-react";
 import type { KnownVocabularyWord } from "@/store/api";
@@ -41,15 +40,6 @@ export function KnownWordsByCategory({ words }: KnownWordsByCategoryProps) {
   }, [words]);
 
   const [openCategoryId, setOpenCategoryId] = useState<string | null>(null);
-
-  useEffect(() => {
-    setOpenCategoryId((current) => {
-      if (current && groups.some((group) => group.categoryId === current)) {
-        return current;
-      }
-      return groups[0]?.categoryId ?? null;
-    });
-  }, [groups]);
 
   return (
     <ul className="space-y-2" aria-label={t("knownWordsListAria")}>

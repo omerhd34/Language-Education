@@ -48,7 +48,7 @@ export function NotificationsMenu() {
   return (
     <div
       ref={rootRef}
-      className="relative flex flex-col items-start sm:items-end"
+      className="relative flex flex-col items-start"
     >
       <p className="dashboard-panel__label">
         <Bell className="size-3.5" aria-hidden />

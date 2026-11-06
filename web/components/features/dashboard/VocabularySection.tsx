@@ -105,7 +105,9 @@ export function VocabularySection() {
 
       {categories.length === 0 ? (
         <Alert>
-          <AlertTitle>{t("vocabularyLevelEmptyTitle", { level: selectedLevel })}</AlertTitle>
+          <AlertTitle>
+            {t("vocabularyLevelEmptyTitle", { level: selectedLevel })}
+          </AlertTitle>
           <AlertDescription>
             {t("vocabularyLevelEmpty", { level: selectedLevel })}
           </AlertDescription>
@@ -117,6 +119,7 @@ export function VocabularySection() {
               key={category.id}
               category={category}
               index={index + 1}
+              knownWordIds={knownWordIds}
               locked={
                 !levelUnlocked ||
                 !canAccessVocabularyCategory(category.id, knownWordIds)
@@ -145,9 +148,7 @@ export function VocabularySection() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="sm:justify-center">
-            <DialogClose
-              render={<Button className="w-full sm:w-auto" />}
-            >
+            <DialogClose render={<Button className="w-full sm:w-auto" />}>
               {t("vocabularyLevelLockedCta")}
             </DialogClose>
           </DialogFooter>

@@ -1,31 +1,67 @@
 "use client";
 
+import { useEffect, useMemo, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { ClipboardCheck } from "lucide-react";
 import {
   useKnownVocabularyWordsQuery,
+  useStudiedTodayVocabularyWordsQuery,
   useVocabularyQuizQuery,
 } from "@/store/api";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { KnownWordsByCategory } from "@/components/features/dashboard/KnownWordsByCategory";
-import { ProgressResetPanel } from "@/components/features/dashboard/ProgressResetPanel";
+import { StudiedTodayWords } from "@/components/features/dashboard/StudiedTodayWords";
+import { StudyTimerPendingNotice } from "@/components/features/vocabulary/StartStudyTimerButton";
 import { navigatePanelSection } from "@/hooks/usePanelHash";
-import { useCountdown } from "@/hooks/useCountdown";
-import { useLastVocabularyQuizResult } from "@/hooks/useLastVocabularyQuizResult";
-import { formatDurationHms } from "@/lib/formatDuration";
+import { VOCABULARY_QUIZ_CYCLE_DAYS } from "@/lib/vocabularyLimits";
 
 export function ProgressSection() {
   const t = useTranslations("Dashboard");
   const { data, isLoading, isError } = useKnownVocabularyWordsQuery();
   const {
-    data: quiz,
-    isLoading: quizLoading,
-    isError: quizError,
-  } = useVocabularyQuizQuery();
-  const lastQuizResult = useLastVocabularyQuizResult();
-  const remainingMs = useCountdown(quiz?.nextDueAt);
+    data: studied,
+    isLoading: studiedLoading,
+    isError: studiedError,
+    refetch: refetchStudied,
+  } = useStudiedTodayVocabularyWordsQuery();
+  const { data: quiz, refetch: refetchQuiz } = useVocabularyQuizQuery();
   const dueCount = quiz?.dueCount ?? 0;
+  const nextStudiedDueAt = useMemo(() => {
+    const words = studied?.words ?? [];
+    if (words.length === 0) {
+      return null;
+    }
+    return words.reduce(
+      (earliest, word) => (word.dueAt < earliest ? word.dueAt : earliest),
+      words[0]!.dueAt,
+    );
+  }, [studied?.words]);
+  const refreshedDueAtRef = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!nextStudiedDueAt) {
+      return;
+    }
+
+    const remaining = Math.max(0, Date.parse(nextStudiedDueAt) - Date.now());
+    if (remaining === 0) {
+      if (refreshedDueAtRef.current === nextStudiedDueAt) {
+        return;
+      }
+      refreshedDueAtRef.current = nextStudiedDueAt;
+      void refetchStudied();
+      void refetchQuiz();
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      refreshedDueAtRef.current = nextStudiedDueAt;
+      void refetchStudied();
+      void refetchQuiz();
+    }, remaining + 250);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [nextStudiedDueAt, refetchQuiz, refetchStudied]);
 
   return (
     <section
@@ -45,84 +81,71 @@ export function ProgressSection() {
         </p>
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <h2 className="font-display text-xl font-semibold tracking-tight text-brand-950 dark:text-brand-100">
-            {t("quizSectionTitle")}
-          </h2>
-          <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
-            {t("quizSectionSubtitle")}
+      {dueCount > 0 ? (
+        <article className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-sky-500/25 bg-sky-500/8 px-4 py-4 dark:border-sky-400/20 dark:bg-sky-400/10">
+          <p className="text-sm font-medium text-brand-800 dark:text-brand-200">
+            {t("quizCardReady", { count: dueCount })}
           </p>
+          <ButtonLink href="/panel/kelime/sinav" size="sm">
+            {t("quizCardCta")}
+          </ButtonLink>
+        </article>
+      ) : null}
+
+      <StudyTimerPendingNotice />
+
+      <div className="space-y-4">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <h2 className="font-display text-xl font-semibold tracking-tight text-brand-950 dark:text-brand-100">
+              {t("studiedTodayTitle")}
+            </h2>
+            <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
+              {t("studiedTodaySubtitle", { days: VOCABULARY_QUIZ_CYCLE_DAYS })}
+            </p>
+          </div>
+          {studied ? (
+            <p className="text-sm font-medium text-brand-700 dark:text-brand-300">
+              {t("studiedTodayCount", { count: studied.count })}
+            </p>
+          ) : null}
         </div>
 
-        {quizLoading ? (
+        {studiedLoading ? (
           <p className="text-sm text-brand-600 dark:text-brand-400">
-            {t("quizSectionLoading")}
+            {t("studiedTodayLoading")}
           </p>
         ) : null}
 
-        {quizError ? (
+        {studiedError ? (
           <p className="text-sm text-destructive" role="alert">
-            {t("quizSectionError")}
+            {t("studiedTodayError")}
           </p>
         ) : null}
 
-        {!quizLoading && !quizError ? (
-          <article className="rounded-2xl border border-sky-500/25 bg-sky-500/8 px-4 py-4 dark:border-sky-400/20 dark:bg-sky-400/10">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div className="min-w-0 space-y-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <ClipboardCheck
-                    className="size-4 text-sky-700 dark:text-sky-300"
-                    aria-hidden
-                  />
-                  <h3 className="font-display text-lg font-semibold text-brand-950 dark:text-brand-100">
-                    {t("quizCardTitle")}
-                  </h3>
-                </div>
-                {dueCount > 0 ? (
-                  <p className="text-sm text-brand-600 dark:text-brand-400">
-                    {t("quizCardReady", { count: dueCount })}
-                  </p>
-                ) : (
-                  <p className="text-sm text-brand-600 dark:text-brand-400">
-                    {t("quizCardWaiting")}
-                  </p>
-                )}
-                {dueCount === 0 && quiz?.nextDueAt && remainingMs > 0 ? (
-                  <p className="font-mono text-sm font-semibold tabular-nums text-amber-800 dark:text-amber-200">
-                    {t("quizCardCountdown", {
-                      time: formatDurationHms(remainingMs),
-                    })}
-                  </p>
-                ) : null}
-                {lastQuizResult ? (
-                  <p className="text-xs text-brand-500 dark:text-brand-400">
-                    {t("quizLastResultInline", {
-                      score: lastQuizResult.score,
-                      correct: lastQuizResult.correct,
-                      total: lastQuizResult.total,
-                    })}
-                  </p>
-                ) : null}
-              </div>
-
-              {dueCount > 0 ? (
-                <ButtonLink href="/panel/kelime/sinav" size="sm">
-                  {t("quizCardCta")}
-                </ButtonLink>
-              ) : (
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="outline"
-                  onClick={() => navigatePanelSection("kelimeler")}
-                >
-                  {t("knownWordsBrowseCta")}
-                </Button>
-              )}
+        {!studiedLoading &&
+        !studiedError &&
+        studied &&
+        studied.words.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-brand-300/80 px-4 py-8 text-center dark:border-brand-700">
+            <p className="text-sm text-brand-600 dark:text-brand-400">
+              {t("studiedTodayEmpty")}
+            </p>
+            <div className="mt-4 flex justify-center">
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                onClick={() => navigatePanelSection("kelimeler")}
+              >
+                {t("knownWordsBrowseCta")}
+              </Button>
             </div>
-          </article>
+          </div>
+        ) : null}
+
+        {studied && studied.words.length > 0 ? (
+          <StudiedTodayWords words={studied.words} />
         ) : null}
       </div>
 
@@ -177,8 +200,6 @@ export function ProgressSection() {
           <KnownWordsByCategory words={data.words} />
         ) : null}
       </div>
-
-      <ProgressResetPanel />
     </section>
   );
 }
