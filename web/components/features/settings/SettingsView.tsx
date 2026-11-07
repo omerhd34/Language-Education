@@ -2,7 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import { Gauge, Palette } from "lucide-react";
+import { ChangePasswordPanel } from "@/components/features/settings/ChangePasswordPanel";
 import { NotificationSettingsPanel } from "@/components/features/settings/NotificationSettingsPanel";
+import { ProfilePhotoSetting } from "@/components/features/settings/ProfilePhotoSetting";
 import { ProgressResetPanel } from "@/components/features/settings/ProgressResetPanel";
 import { SettingsSection } from "@/components/features/settings/SettingsSection";
 import { ThemeSetting } from "@/components/features/settings/ThemeSetting";
@@ -23,6 +25,8 @@ export function SettingsView() {
       </header>
 
       <div className="grid gap-5 lg:grid-cols-2 lg:items-start lg:gap-6">
+        <ProfilePhotoSetting />
+
         <SettingsSection
           titleId="settings-appearance"
           title={t("appearance")}
@@ -31,11 +35,11 @@ export function SettingsView() {
         >
           <ThemeSetting />
         </SettingsSection>
-
-        <NotificationSettingsPanel />
       </div>
 
       <div className="grid gap-5 lg:grid-cols-2 lg:items-start lg:gap-6">
+        <NotificationSettingsPanel />
+
         <SettingsSection
           titleId="settings-speech-rate"
           title={t("speechRateLabel")}
@@ -44,7 +48,10 @@ export function SettingsView() {
         >
           <SpeechRateControl />
         </SettingsSection>
+      </div>
 
+      <div className="grid gap-5 lg:grid-cols-2 lg:items-start lg:gap-6">
+        <ChangePasswordPanel />
         <ProgressResetPanel />
       </div>
     </div>
