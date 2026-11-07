@@ -31,8 +31,6 @@ export function DashboardStatsBar() {
   const { data: quota } = useVocabularyLearnQuotaQuery();
   const { data: quiz } = useVocabularyQuizQuery();
   const dueCount = quiz?.dueCount ?? 0;
-  const selected =
-    quota?.learningSelectedInPeriod ?? quota?.learningSelectedToday ?? 0;
   const pending = quota?.pendingStudyCount ?? 0;
   const learnLimit =
     quota?.learnLimit ?? quota?.dailyLearnLimit ?? LEARN_WORD_PERIOD_LIMIT;
@@ -43,14 +41,17 @@ export function DashboardStatsBar() {
     !BYPASS_LEARN_WORD_LOCK && Boolean(quota?.lockedUntil) && remainingMs > 0;
   const quotaPercent =
     learnLimit > 0
-      ? Math.min(100, Math.round((selected / learnLimit) * 100))
+      ? Math.min(100, Math.round((pending / learnLimit) * 100))
       : 0;
-  const quotaLabel = t("wordTimerQuota", { selected, limit: learnLimit });
+  const quotaLabel = t("wordTimerQuota", {
+    selected: pending,
+    limit: learnLimit,
+  });
 
   return (
     <section
       aria-label={t("statsAria")}
-      className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1.15fr)_minmax(0,1.05fr)]"
+      className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)]"
     >
       <QuickContinueCard />
       <LevelStatusCard />
@@ -62,14 +63,14 @@ export function DashboardStatsBar() {
             {t("wordTimer")}
           </p>
           <p className="font-display text-sm font-semibold text-brand-950 tabular-nums dark:text-brand-100">
-            {selected}
+            {pending}
             <span className="font-medium text-brand-400">/{learnLimit}</span>
           </p>
         </div>
         <div
           className="mt-3 h-2 overflow-hidden rounded-full bg-surface-muted dark:bg-white/10"
           role="progressbar"
-          aria-valuenow={selected}
+          aria-valuenow={pending}
           aria-valuemin={0}
           aria-valuemax={learnLimit}
           aria-label={quotaLabel}
@@ -77,11 +78,7 @@ export function DashboardStatsBar() {
           <div
             className={cn(
               "h-full rounded-full transition-[width] duration-300",
-              isLocked
-                ? "bg-amber-500"
-                : dueCount > 0
-                  ? "bg-emerald-500"
-                  : "bg-brand-800 dark:bg-brand-100",
+              isLocked ? "bg-amber-500" : "bg-brand-800 dark:bg-brand-100",
             )}
             style={{ width: `${quotaPercent}%` }}
           />
@@ -90,11 +87,6 @@ export function DashboardStatsBar() {
           {quotaLabel}
         </p>
         <div className="mt-1 space-y-1">
-          {pending > 0 ? (
-            <p className="text-xs text-brand-600 dark:text-brand-400">
-              {t("studyTimerPending", { count: pending })}
-            </p>
-          ) : null}
           {isLocked ? (
             <p className="font-mono text-xs font-semibold text-amber-800 tabular-nums dark:text-amber-200">
               {t("wordTimerRemaining", {
@@ -107,19 +99,8 @@ export function DashboardStatsBar() {
               {t("studyTimerBlockedShort")}
             </p>
           ) : null}
-          {dueCount > 0 ? (
-            <p className="text-xs font-medium text-emerald-800 dark:text-emerald-200">
-              {t("quizCardReady", { count: dueCount })}
-            </p>
-          ) : null}
         </div>
         <div className="mt-auto flex flex-wrap items-center gap-2 pt-3">
-          {dueCount > 0 ? (
-            <ButtonLink href="/panel/kelime/sinav" size="sm">
-              <ClipboardCheck className="size-3.5" aria-hidden />
-              {t("quizCardCta")}
-            </ButtonLink>
-          ) : null}
           <StartStudyTimerButton />
           <Button
             type="button"
@@ -137,6 +118,12 @@ export function DashboardStatsBar() {
             <BookOpen className="size-3.5" aria-hidden />
             {t("selectWord")}
           </Button>
+          {dueCount > 0 ? (
+            <ButtonLink href="/panel/kelime/sinav" size="sm">
+              <ClipboardCheck className="size-3.5" aria-hidden />
+              {t("quizCardCta")}
+            </ButtonLink>
+          ) : null}
         </div>
       </article>
     </section>
