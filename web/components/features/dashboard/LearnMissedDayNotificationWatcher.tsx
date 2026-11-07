@@ -3,15 +3,22 @@
 
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import { useCountdown } from "@/hooks/useCountdown";
-import { getLearnMissedDayNotice } from "@/lib/learnMissedDay";
+import { useNotificationPreferences } from "@/hooks/useNotificationPreferences";
+import { showBrowserNotification } from "@/lib/browserNotification";
+import {
+  getLearnMissedDayNotice,
+  markLearnMissedNotified,
+  wasLearnMissedNotifiedRecently,
+} from "@/lib/learnMissedDay";
 import { ensureNotification } from "@/lib/notificationsStorage";
 import { useVocabularyLearnQuotaQuery } from "@/store/api";
+import { useAuthStore } from "@/store/authStore";
 
 export function LearnMissedDayNotificationWatcher() {
   const t = useTranslations("Dashboard");
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
+  const { preferences } = useNotificationPreferences();
   const { data: quota, refetch } = useVocabularyLearnQuotaQuery();
   const lockedUntil = quota?.lockedUntil ?? null;
   const remainingMs = useCountdown(lockedUntil);
@@ -38,9 +45,18 @@ export function LearnMissedDayNotificationWatcher() {
       return;
     }
 
+    if (!preferences.learnMissedDay) {
+      return;
+    }
+
     const publish = () => {
+      const nowMs = Date.now();
+      if (wasLearnMissedNotifiedRecently(nowMs)) {
+        return;
+      }
+
       const notice = getLearnMissedDayNotice({
-        nowMs: Date.now(),
+        nowMs,
         lastSelectedAt: quota.lastLearnSelectedAt ?? null,
         learnUnlockedAt: quota.learnUnlockedAt ?? null,
         lockedUntil: quota.lockedUntil,
@@ -51,21 +67,26 @@ export function LearnMissedDayNotificationWatcher() {
         return;
       }
 
-      ensureNotification({
+      const notification = {
         id: notice.id,
-        type: "learn_missed_day",
+        type: "learn_missed_day" as const,
         title: t("learnMissedNotificationTitle"),
         body: t("learnMissedNotificationBody"),
         href: "/panel#kelimeler",
-        createdAt: new Date().toISOString(),
+        createdAt: new Date(nowMs).toISOString(),
         read: false,
-      });
+      };
+      const { created } = ensureNotification(notification);
+      if (created) {
+        markLearnMissedNotified(nowMs);
+        showBrowserNotification(notification);
+      }
     };
 
     publish();
     const id = window.setInterval(publish, 30_000);
     return () => window.clearInterval(id);
-  }, [quota, user, t]);
+  }, [quota, user, t, preferences.learnMissedDay]);
 
   return null;
 }
