@@ -14,6 +14,18 @@ const STORAGE_KEY = "pylmor-notifications";
 const DISMISSED_KEY = "pylmor-notifications-dismissed";
 export const NOTIFICATIONS_CHANGED_EVENT = "pylmor:notifications-changed";
 
+const NOTIFICATION_HREF_BY_TYPE: Record<AppNotificationType, string> = {
+  quiz_ready: "/panel/kelime/bugun-calisilan",
+  learn_missed_day: "/panel#kelimeler",
+};
+
+export function resolveNotificationHref(
+  type: AppNotificationType,
+  href?: string,
+): string {
+  return NOTIFICATION_HREF_BY_TYPE[type] ?? href ?? "/panel";
+}
+
 function canUseStorage(): boolean {
   return typeof window !== "undefined";
 }
@@ -23,6 +35,13 @@ function emitNotificationsChanged(): void {
     return;
   }
   window.dispatchEvent(new Event(NOTIFICATIONS_CHANGED_EVENT));
+}
+
+function normalizeNotification(item: AppNotification): AppNotification {
+  return {
+    ...item,
+    href: resolveNotificationHref(item.type, item.href),
+  };
 }
 
 export function readNotifications(): AppNotification[] {
@@ -39,7 +58,7 @@ export function readNotifications(): AppNotification[] {
     if (!Array.isArray(parsed)) {
       return [];
     }
-    return parsed.filter(isAppNotification);
+    return parsed.filter(isAppNotification).map(normalizeNotification);
   } catch {
     return [];
   }
@@ -96,39 +115,39 @@ function rememberDismissedId(id: string): void {
 
   const ids = readDismissedIds().filter((item) => item !== id);
   ids.push(id);
-  window.localStorage.setItem(
-    DISMISSED_KEY,
-    JSON.stringify(ids.slice(-200)),
-  );
+  window.localStorage.setItem(DISMISSED_KEY, JSON.stringify(ids.slice(-200)));
 }
 
-export function ensureNotification(
-  notification: AppNotification,
-): AppNotification[] {
+export function ensureNotification(notification: AppNotification): {
+  notifications: AppNotification[];
+  created: boolean;
+} {
+  const normalized = normalizeNotification(notification);
   const current = readNotifications();
   if (
-    current.some((item) => item.id === notification.id) ||
-    readDismissedIds().includes(notification.id)
+    current.some((item) => item.id === normalized.id) ||
+    readDismissedIds().includes(normalized.id)
   ) {
-    return current;
+    return { notifications: current, created: false };
   }
 
-  const next = [notification, ...current];
+  const next = [normalized, ...current];
   writeNotifications(next);
-  return next;
+  return { notifications: next, created: true };
 }
 
 export function upsertNotification(
   notification: AppNotification,
 ): AppNotification[] {
+  const normalized = normalizeNotification(notification);
   const current = readNotifications();
-  const index = current.findIndex((item) => item.id === notification.id);
+  const index = current.findIndex((item) => item.id === normalized.id);
   const next =
     index >= 0
       ? current.map((item, i) =>
-          i === index ? { ...item, ...notification } : item,
+          i === index ? { ...item, ...normalized } : item,
         )
-      : [notification, ...current];
+      : [normalized, ...current];
 
   writeNotifications(next);
   return next;
