@@ -2,6 +2,7 @@ import type { VocabularyWord } from "@/data/vocabulary";
 import { getVocabularyWordById, vocabularyCategories } from "@/data/vocabulary";
 import { AppError } from "@/lib/server/AppError";
 import { getPrisma } from "@/lib/server/prisma";
+import { recordStreakActivity } from "@/lib/server/streak/service";
 import { releaseLearnSelections } from "@/lib/server/vocabulary/service";
 import {
   ALLOW_EARLY_VOCABULARY_QUIZ,
@@ -314,6 +315,7 @@ export async function completeVocabularyQuiz(
     },
   });
   await releaseLearnSelections(userId, rows.length);
+  await recordStreakActivity(userId);
 
   return { knownCount: rows.length };
 }

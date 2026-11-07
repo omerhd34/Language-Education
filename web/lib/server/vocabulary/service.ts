@@ -4,6 +4,7 @@ import {
 } from "@/data/vocabulary";
 import { AppError } from "@/lib/server/AppError";
 import { getPrisma } from "@/lib/server/prisma";
+import { recordStreakActivity } from "@/lib/server/streak/service";
 import { canAccessVocabularyCategory } from "@/lib/vocabularyAccess";
 import {
   ALLOW_EARLY_VOCABULARY_QUIZ,
@@ -515,6 +516,8 @@ export async function startVocabularyStudyTimer(
 
     return result.count;
   });
+
+  await recordStreakActivity(userId);
 
   return { startedCount };
 }
