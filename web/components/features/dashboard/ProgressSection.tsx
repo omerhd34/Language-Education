@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { MyPointsSection } from "@/components/features/dashboard/MyPointsSection";
 
 export function ProgressSection() {
   const t = useTranslations("Dashboard");
@@ -22,6 +23,8 @@ export function ProgressSection() {
           {t("progressSubtitle")}
         </p>
       </div>
+
+      <MyPointsSection />
     </section>
   );
 }

@@ -1,12 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Award, Timer } from "lucide-react";
+import { BookOpen, ClipboardCheck, Timer } from "lucide-react";
 import {
   useVocabularyLearnQuotaQuery,
   useVocabularyQuizQuery,
 } from "@/store/api";
-import { NotificationsMenu } from "@/components/features/dashboard/NotificationsMenu";
+import { LevelStatusCard } from "@/components/features/dashboard/LevelStatusCard";
+import { QuickContinueCard } from "@/components/features/dashboard/QuickContinueCard";
 import {
   StartStudyTimerButton,
   useStudyCycleOpen,
@@ -49,40 +50,12 @@ export function DashboardStatsBar() {
   return (
     <section
       aria-label={t("statsAria")}
-      className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1.45fr)_minmax(8rem,5.5rem)]"
+      className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.05fr)_minmax(0,1.15fr)_minmax(0,1.05fr)]"
     >
-      <article className="dashboard-panel dashboard-panel--stat">
-        <p className="dashboard-panel__label">
-          <Award
-            className="size-3.5 text-brand-800 dark:text-brand-100"
-            aria-hidden
-          />
-          {t("myPoints")}
-        </p>
-        <dl className="mt-3 grid flex-1 grid-cols-3 gap-2">
-          {(
-            [
-              ["daily", t("daily")],
-              ["weekly", t("weekly")],
-              ["monthly", t("monthly")],
-            ] as const
-          ).map(([key, label]) => (
-            <div
-              key={key}
-              className="flex flex-col items-center justify-center rounded-xl bg-surface-muted px-1 py-3 dark:bg-white/5"
-            >
-              <dt className="order-2 mt-1 text-[11px] font-medium text-brand-600 dark:text-brand-400">
-                {label}
-              </dt>
-              <dd className="order-1 font-display text-2xl font-semibold tracking-tight text-brand-950 tabular-nums dark:text-brand-100">
-                0
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </article>
+      <QuickContinueCard />
+      <LevelStatusCard />
 
-      <article className="dashboard-panel dashboard-panel--stat">
+      <article className="dashboard-panel dashboard-panel--stat md:col-span-2 xl:col-span-1">
         <div className="flex items-start justify-between gap-3">
           <p className="dashboard-panel__label">
             <Timer className="size-3.5" aria-hidden />
@@ -134,10 +107,16 @@ export function DashboardStatsBar() {
               {t("studyTimerBlockedShort")}
             </p>
           ) : null}
+          {dueCount > 0 ? (
+            <p className="text-xs font-medium text-emerald-800 dark:text-emerald-200">
+              {t("quizCardReady", { count: dueCount })}
+            </p>
+          ) : null}
         </div>
         <div className="mt-auto flex flex-wrap items-center gap-2 pt-3">
           {dueCount > 0 ? (
             <ButtonLink href="/panel/kelime/sinav" size="sm">
+              <ClipboardCheck className="size-3.5" aria-hidden />
               {t("quizCardCta")}
             </ButtonLink>
           ) : null}
@@ -155,18 +134,10 @@ export function DashboardStatsBar() {
               router.push("/panel#kelimeler");
             }}
           >
+            <BookOpen className="size-3.5" aria-hidden />
             {t("selectWord")}
           </Button>
-          {dueCount > 0 ? (
-            <p className="text-xs font-medium text-emerald-800 dark:text-emerald-200">
-              {t("quizCardReady", { count: dueCount })}
-            </p>
-          ) : null}
         </div>
-      </article>
-
-      <article className="dashboard-panel dashboard-panel--stat">
-        <NotificationsMenu />
       </article>
     </section>
   );
