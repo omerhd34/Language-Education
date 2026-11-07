@@ -3,10 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useAppSelector } from "@/hooks/useAppSelector";
-import { useVerifyEmailMutation } from "@/store/api";
-import { setCredentials } from "@/store/authSlice";
+import { useAuthStore } from "@/store/authStore";
 
 type VerifyEmailClientProps = {
   token: string | null;
@@ -17,9 +14,9 @@ const startedTokens = new Set<string>();
 export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
   const t = useTranslations("Auth");
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const existingUser = useAppSelector((state) => state.auth.user);
-  const [verifyEmail, { isLoading }] = useVerifyEmailMutation();
+  const existingUser = useAuthStore((state) => state.user);
+  const verifyEmail = useAuthStore((state) => state.verifyEmail);
+  const isLoading = useAuthStore((state) => state.isVerifyingEmail);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
 
@@ -43,13 +40,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
 
     void (async () => {
       try {
-        const result = await verifyEmail({ token }).unwrap();
-        dispatch(
-          setCredentials({
-            user: result.user,
-            accessToken: result.accessToken,
-          }),
-        );
+        await verifyEmail({ token });
         setDone(true);
         router.replace("/panel");
       } catch {
@@ -57,7 +48,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
         setError(t("verifyInvalid"));
       }
     })();
-  }, [dispatch, existingUser, router, t, token, verifyEmail]);
+  }, [existingUser, router, t, token, verifyEmail]);
 
   if (error) {
     return (

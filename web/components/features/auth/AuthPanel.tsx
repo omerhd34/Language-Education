@@ -15,13 +15,11 @@ import {
 } from "lucide-react";
 import { AuthEmailField } from "@/components/features/auth/AuthEmailField";
 import { AuthFloatingField } from "@/components/features/auth/AuthFloatingField";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import { useRouter } from "@/i18n/navigation";
+import { getApiErrorCode } from "@/lib/apiClient";
 import { createLoginSchema, createRegisterSchema } from "@/lib/authValidation";
 import { cn } from "@/lib/utils";
-import { useLoginMutation, useRegisterMutation } from "@/store/api";
-import { setCredentials } from "@/store/authSlice";
+import { useAuthStore } from "@/store/authStore";
 
 export type AuthMode = "giris" | "kayit" | "sifre";
 
@@ -29,29 +27,16 @@ type AuthPanelProps = {
   initialMode?: AuthMode;
 };
 
-function getErrorCode(error: unknown): string | null {
-  if (
-    typeof error === "object" &&
-    error !== null &&
-    "data" in error &&
-    typeof (error as { data?: { error?: { code?: string } } }).data?.error
-      ?.code === "string"
-  ) {
-    return (error as { data: { error: { code: string } } }).data.error.code;
-  }
-
-  return null;
-}
-
 export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   const t = useTranslations("Auth");
   const tNav = useTranslations("Nav");
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.auth.status);
-  const authUser = useAppSelector((state) => state.auth.user);
-  const [login, { isLoading: isLoggingIn }] = useLoginMutation();
-  const [register, { isLoading: isRegistering }] = useRegisterMutation();
+  const authStatus = useAuthStore((state) => state.status);
+  const authUser = useAuthStore((state) => state.user);
+  const login = useAuthStore((state) => state.login);
+  const register = useAuthStore((state) => state.register);
+  const isLoggingIn = useAuthStore((state) => state.isLoggingIn);
+  const isRegistering = useAuthStore((state) => state.isRegistering);
 
   const [mode, setMode] = useState<AuthMode>(initialMode);
   const [name, setName] = useState("");
@@ -161,16 +146,10 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
         window.localStorage.removeItem("pylmor-remember-email");
       }
 
-      const result = await login(parsed.data).unwrap();
-      dispatch(
-        setCredentials({
-          user: result.user,
-          accessToken: result.accessToken,
-        }),
-      );
+      await login(parsed.data);
       router.push("/panel");
     } catch (error) {
-      if (getErrorCode(error) === "EMAIL_NOT_VERIFIED") {
+      if (getApiErrorCode(error) === "EMAIL_NOT_VERIFIED") {
         setFormError(t("errors.emailNotVerified"));
         return;
       }
@@ -210,10 +189,10 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
         password: parsed.data.password,
         ...(parsed.data.name ? { name: parsed.data.name } : {}),
       };
-      const result = await register(payload).unwrap();
+      const result = await register(payload);
       setSubmittedEmail(result.email);
     } catch (error) {
-      if (getErrorCode(error) === "EMAIL_EXISTS") {
+      if (getApiErrorCode(error) === "EMAIL_EXISTS") {
         setFormError(t("errors.emailExists"));
         return;
       }
@@ -340,7 +319,10 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
 
               <button
                 type="submit"
-                className={cn("btn ixir-split-btn", loginPressed && "is-pressed")}
+                className={cn(
+                  "btn ixir-split-btn",
+                  loginPressed && "is-pressed",
+                )}
                 disabled={isLoading}
                 onAnimationEnd={(event) => {
                   if (event.animationName === "ixirLoginPress") {

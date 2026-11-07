@@ -3,9 +3,9 @@
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { AppShell } from "@/components/layout/app/AppShell";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import type { SessionHint } from "@/lib/sessionHint";
-import type { AuthUser } from "@/store/api";
+import { useAuthStore } from "@/store/authStore";
+import type { AuthUser } from "@/types/api";
 
 type SiteChromeProps = {
   children: React.ReactNode;
@@ -32,8 +32,8 @@ export function SiteChrome({
   initialUser,
   sidebarOpen,
 }: SiteChromeProps) {
-  const user = useAppSelector((state) => state.auth.user);
-  const status = useAppSelector((state) => state.auth.status);
+  const user = useAuthStore((state) => state.user);
+  const status = useAuthStore((state) => state.status);
   const shellUser =
     status === "authenticated"
       ? user

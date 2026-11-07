@@ -2,14 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter } from "@/i18n/navigation";
-import { useAppSelector } from "@/hooks/useAppSelector";
+import { useAuthStore } from "@/store/authStore";
 
 type AuthHomeSwitchProps = {
   children: React.ReactNode;
 };
 
 export function AuthHomeSwitch({ children }: AuthHomeSwitchProps) {
-  const status = useAppSelector((state) => state.auth.status);
+  const status = useAuthStore((state) => state.status);
   const router = useRouter();
 
   useEffect(() => {

@@ -1,22 +1,21 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import { clearSessionHint, writeSessionHint } from "@/lib/sessionHint";
-import { useRefreshMutation } from "@/store/api";
-import { setAuthAnonymous, setCredentials } from "@/store/authSlice";
+import { useAuthStore } from "@/store/authStore";
+import { useVocabularyStore } from "@/store/vocabularyStore";
 
 type AuthSessionBootstrapProps = {
   children: React.ReactNode;
 };
 
 export function AuthSessionBootstrap({ children }: AuthSessionBootstrapProps) {
-  const dispatch = useAppDispatch();
-  const accessToken = useAppSelector((state) => state.auth.accessToken);
-  const status = useAppSelector((state) => state.auth.status);
-  const user = useAppSelector((state) => state.auth.user);
-  const [refresh] = useRefreshMutation();
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const status = useAuthStore((state) => state.status);
+  const user = useAuthStore((state) => state.user);
+  const refresh = useAuthStore((state) => state.refresh);
+  const setAnonymous = useAuthStore((state) => state.setAnonymous);
+  const clearVocabulary = useVocabularyStore((state) => state.clearAll);
   const started = useRef(false);
 
   useEffect(() => {
@@ -31,8 +30,9 @@ export function AuthSessionBootstrap({ children }: AuthSessionBootstrapProps) {
 
     if (status === "anonymous") {
       clearSessionHint();
+      clearVocabulary();
     }
-  }, [status, user]);
+  }, [clearVocabulary, status, user]);
 
   useEffect(() => {
     if (started.current || accessToken) {
@@ -42,18 +42,12 @@ export function AuthSessionBootstrap({ children }: AuthSessionBootstrapProps) {
 
     void (async () => {
       try {
-        const result = await refresh().unwrap();
-        dispatch(
-          setCredentials({
-            user: result.user,
-            accessToken: result.accessToken,
-          }),
-        );
+        await refresh();
       } catch {
-        dispatch(setAuthAnonymous());
+        setAnonymous();
       }
     })();
-  }, [accessToken, dispatch, refresh]);
+  }, [accessToken, refresh, setAnonymous]);
 
   return children;
 }

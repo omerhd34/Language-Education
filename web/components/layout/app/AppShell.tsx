@@ -8,13 +8,12 @@ import {
 } from "@/components/layout/app/AppSidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
 import {
   SIDEBAR_COOKIE_MAX_AGE,
   SIDEBAR_COOKIE_NAME,
 } from "@/lib/sidebarPreference";
-import { useLogoutMutation, type AuthUser } from "@/store/api";
-import { clearCredentials } from "@/store/authSlice";
+import { useAuthStore } from "@/store/authStore";
+import type { AuthUser } from "@/types/api";
 
 const LEGACY_COLLAPSE_KEY = "pylmor-sidebar-collapsed";
 
@@ -26,8 +25,8 @@ type AppShellProps = {
 
 export function AppShell({ user, sidebarOpen, children }: AppShellProps) {
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+  const logout = useAuthStore((state) => state.logout);
+  const isLoggingOut = useAuthStore((state) => state.isLoggingOut);
 
   useEffect(() => {
     try {
@@ -53,11 +52,10 @@ export function AppShell({ user, sidebarOpen, children }: AppShellProps) {
 
   async function handleLogout() {
     try {
-      await logout().unwrap();
+      await logout();
     } catch {
       // Yerel oturumu yine kapat.
     }
-    dispatch(clearCredentials());
     router.push("/");
   }
 

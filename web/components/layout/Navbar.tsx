@@ -9,27 +9,23 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { navLinks } from "@/components/layout/navLinks";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { useAppSelector } from "@/hooks/useAppSelector";
 import { getUserInitials } from "@/lib/userInitials";
-import { useLogoutMutation } from "@/store/api";
-import { clearCredentials } from "@/store/authSlice";
+import { useAuthStore } from "@/store/authStore";
 
 export function Navbar() {
   const t = useTranslations("Nav");
   const router = useRouter();
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
-  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const isLoggingOut = useAuthStore((state) => state.isLoggingOut);
   const [open, setOpen] = useState(false);
 
   async function handleLogout() {
     try {
-      await logout().unwrap();
+      await logout();
     } catch {
       // Cookie/sunucu temizliği başarısız olsa da yerel oturumu kapat.
     }
-    dispatch(clearCredentials());
     setOpen(false);
     router.push("/");
   }

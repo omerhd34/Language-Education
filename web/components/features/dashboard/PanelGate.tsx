@@ -7,7 +7,7 @@ import { LearnMissedDayNotificationWatcher } from "@/components/features/dashboa
 import { QuizReadyNotificationWatcher } from "@/components/features/dashboard/QuizReadyNotificationWatcher";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useRouter } from "@/i18n/navigation";
-import { useAppSelector } from "@/hooks/useAppSelector";
+import { useAuthStore } from "@/store/authStore";
 
 type PanelGateProps = {
   children: React.ReactNode;
@@ -15,8 +15,8 @@ type PanelGateProps = {
 
 export function PanelGate({ children }: PanelGateProps) {
   const t = useTranslations("Dashboard");
-  const user = useAppSelector((state) => state.auth.user);
-  const status = useAppSelector((state) => state.auth.status);
+  const user = useAuthStore((state) => state.user);
+  const status = useAuthStore((state) => state.status);
   const router = useRouter();
   const ready = status === "authenticated" && Boolean(user);
 

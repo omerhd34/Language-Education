@@ -6,12 +6,12 @@ import { HiChatBubbleLeftRight, HiEnvelope } from "react-icons/hi2";
 import { Link } from "@/i18n/navigation";
 import { Container } from "@/components/ui/Container";
 import { navLinks } from "@/components/layout/navLinks";
-import { useAppSelector } from "@/hooks/useAppSelector";
+import { useAuthStore } from "@/store/authStore";
 
 export function Footer() {
   const t = useTranslations("Footer");
   const tNav = useTranslations("Nav");
-  const user = useAppSelector((state) => state.auth.user);
+  const user = useAuthStore((state) => state.user);
   const [year, setYear] = useState<number | null>(null);
 
   useEffect(() => {
