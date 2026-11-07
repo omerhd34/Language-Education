@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
-import { Sun, Moon } from "lucide-react";
+import { Check, Moon, Sun } from "lucide-react";
 import { useSyncExternalStore } from "react";
 import { cn } from "@/lib/utils";
 
@@ -22,42 +22,64 @@ export function ThemeSetting() {
   const mounted = useIsMounted();
   const isDark = mounted && resolvedTheme === "dark";
 
+  const options = [
+    {
+      id: "light" as const,
+      selected: mounted && !isDark,
+      title: t("themeLight"),
+      description: t("themeLightHint"),
+      icon: <Sun className="size-3.5" aria-hidden />,
+    },
+    {
+      id: "dark" as const,
+      selected: isDark,
+      title: t("themeDark"),
+      description: t("themeDarkHint"),
+      icon: <Moon className="size-3.5" aria-hidden />,
+    },
+  ];
+
   return (
-    <div
-      className="flex flex-wrap gap-1.5"
-      role="group"
-      aria-label={t("appearance")}
-    >
-      <button
-        type="button"
-        aria-pressed={mounted && !isDark}
-        disabled={!mounted}
-        onClick={() => setTheme("light")}
-        className={cn(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60",
-          mounted && !isDark
-            ? "bg-sky-600 text-white dark:bg-sky-500 dark:text-sky-950"
-            : "bg-brand-100 text-brand-800 hover:bg-sky-500/15 hover:text-sky-800 dark:bg-brand-900 dark:text-brand-200 dark:hover:bg-sky-400/20 dark:hover:text-sky-100",
-        )}
-      >
-        <Sun className="size-3.5" aria-hidden />
-        {t("themeLight")}
-      </button>
-      <button
-        type="button"
-        aria-pressed={isDark}
-        disabled={!mounted}
-        onClick={() => setTheme("dark")}
-        className={cn(
-          "inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60",
-          isDark
-            ? "bg-sky-600 text-white dark:bg-sky-500 dark:text-sky-950"
-            : "bg-brand-100 text-brand-800 hover:bg-sky-500/15 hover:text-sky-800 dark:bg-brand-900 dark:text-brand-200 dark:hover:bg-sky-400/20 dark:hover:text-sky-100",
-        )}
-      >
-        <Moon className="size-3.5" aria-hidden />
-        {t("themeDark")}
-      </button>
-    </div>
+    <ul className="space-y-2" role="group" aria-label={t("appearance")}>
+      {options.map((option) => (
+        <li key={option.id}>
+          <button
+            type="button"
+            aria-pressed={option.selected}
+            disabled={!mounted}
+            onClick={() => setTheme(option.id)}
+            className={cn(
+              "flex w-full cursor-pointer items-center gap-3 rounded-xl border px-3.5 py-3 text-left transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 disabled:cursor-not-allowed disabled:opacity-60",
+              option.selected
+                ? "border-sky-500/45 bg-sky-500/5 dark:border-sky-400/40 dark:bg-sky-400/10"
+                : "border-border bg-background/80 hover:border-sky-500/45 hover:bg-sky-500/5 dark:bg-brand-950/40",
+            )}
+          >
+            <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">
+              {option.icon}
+            </span>
+            <span className="min-w-0 flex-1 space-y-0.5">
+              <span className="block text-sm font-medium text-brand-950 dark:text-brand-100">
+                {option.title}
+              </span>
+              <span className="block text-xs leading-snug text-brand-600 dark:text-brand-400">
+                {option.description}
+              </span>
+            </span>
+            <span
+              className={cn(
+                "inline-flex size-6 shrink-0 items-center justify-center rounded-full transition-colors",
+                option.selected
+                  ? "bg-sky-600 text-white dark:bg-sky-500 dark:text-sky-950"
+                  : "bg-brand-100 text-transparent dark:bg-brand-900",
+              )}
+              aria-hidden
+            >
+              <Check className="size-3.5" strokeWidth={2.5} />
+            </span>
+          </button>
+        </li>
+      ))}
+    </ul>
   );
 }
