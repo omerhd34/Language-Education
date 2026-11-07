@@ -13,10 +13,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  useCancelVocabularyStudyTimerMutation,
-  useStudiedTodayVocabularyWordsQuery,
-} from "@/store/api";
+import { useStudiedTodayVocabularyWordsQuery } from "@/store/api";
+import { useVocabularyStore } from "@/store/vocabularyStore";
 import { cn } from "@/lib/utils";
 
 let cancelRequest: Promise<unknown> | null = null;
@@ -32,7 +30,8 @@ export function CancelStudyTimerButton({
 }: CancelStudyTimerButtonProps) {
   const t = useTranslations("Dashboard");
   const { data } = useStudiedTodayVocabularyWordsQuery();
-  const [cancelTimer, { isLoading }] = useCancelVocabularyStudyTimerMutation();
+  const cancelTimer = useVocabularyStore((state) => state.cancelStudyTimer);
+  const isLoading = useVocabularyStore((state) => state.isCancellingTimer);
   const [open, setOpen] = useState(false);
   const [hasError, setHasError] = useState(false);
   const cancellableCount = data?.cancellableCount ?? 0;
@@ -53,7 +52,7 @@ export function CancelStudyTimerButton({
     }
 
     setHasError(false);
-    const request = cancelTimer().unwrap();
+    const request = cancelTimer();
     cancelRequest = request;
     try {
       await request;

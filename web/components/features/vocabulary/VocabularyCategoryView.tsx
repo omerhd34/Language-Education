@@ -75,7 +75,7 @@ export function VocabularyCategoryView({
     [words, categoryId],
   );
 
-  if (isLoading) {
+  if (isLoading && !knownWords) {
     return (
       <p className="text-sm text-brand-600 dark:text-brand-400">
         {t("statusLoading")}
@@ -83,7 +83,7 @@ export function VocabularyCategoryView({
     );
   }
 
-  if (isError) {
+  if (isError && !knownWords) {
     return (
       <p className="text-sm text-red-600 dark:text-red-400" role="alert">
         {t("statusError")}

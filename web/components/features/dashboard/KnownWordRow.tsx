@@ -4,8 +4,8 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { BookOpen, Check } from "lucide-react";
-import type { KnownVocabularyWord } from "@/store/api";
-import { useSetVocabularyWordStatusMutation } from "@/store/api";
+import type { KnownVocabularyWord } from "@/types/api";
+import { useVocabularyStore } from "@/store/vocabularyStore";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { useVocabularyLearnLimitReached } from "@/components/features/vocabulary/VocabularyLearnQuotaBanner";
@@ -21,7 +21,8 @@ const lockedButtonClassName =
 
 export function KnownWordRow({ word, compact = false }: KnownWordRowProps) {
   const t = useTranslations("Dashboard");
-  const [setStatus, { isLoading }] = useSetVocabularyWordStatusMutation();
+  const setStatus = useVocabularyStore((state) => state.setWordStatus);
+  const isLoading = useVocabularyStore((state) => state.isSettingWordStatus);
   const learnLimitReached = useVocabularyLearnLimitReached();
   const [mounted, setMounted] = useState(false);
 
@@ -41,7 +42,7 @@ export function KnownWordRow({ word, compact = false }: KnownWordRowProps) {
         categoryId: word.categoryId,
         wordId: word.id,
         status: "LEARNING",
-      }).unwrap();
+      });
     } catch {}
   }
 

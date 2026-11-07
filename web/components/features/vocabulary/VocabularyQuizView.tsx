@@ -5,14 +5,12 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowLeft, Volume2 } from "lucide-react";
-import {
-  useAnswerVocabularyQuizMutation,
-  useCompleteVocabularyQuizMutation,
-  useVocabularyQuizQuery,
-  type VocabularyQuizWord,
-} from "@/store/api";
+import { useVocabularyQuizQuery } from "@/store/api";
+import { useVocabularyStore } from "@/store/vocabularyStore";
+import type { VocabularyQuizWord } from "@/types/api";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { useCountdown } from "@/hooks/useCountdown";
 import { formatDurationHms } from "@/lib/formatDuration";
 import { speakText, stopSpeaking } from "@/lib/speakText";
@@ -26,9 +24,9 @@ import { cn } from "@/lib/utils";
 export function VocabularyQuizView() {
   const t = useTranslations("Vocabulary");
   const { data, isLoading, isError, refetch } = useVocabularyQuizQuery();
-  const [answerQuiz, { isLoading: isSubmitting }] =
-    useAnswerVocabularyQuizMutation();
-  const [completeQuiz] = useCompleteVocabularyQuizMutation();
+  const answerQuiz = useVocabularyStore((state) => state.answerQuiz);
+  const completeQuiz = useVocabularyStore((state) => state.completeQuiz);
+  const isSubmitting = useVocabularyStore((state) => state.isAnsweringQuiz);
 
   const [items, setItems] = useState<VocabularyQuizItem[]>([]);
   const [index, setIndex] = useState(0);
@@ -40,6 +38,7 @@ export function VocabularyQuizView() {
   const [expected, setExpected] = useState<string | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [resultOpen, setResultOpen] = useState(false);
 
   const remainingMs = useCountdown(data?.nextDueAt);
   const words: VocabularyQuizWord[] = data?.words ?? [];
@@ -72,6 +71,7 @@ export function VocabularyQuizView() {
     setLastCorrect(null);
     setLastNewlyKnown(false);
     setExpected(null);
+    setResultOpen(false);
     setCorrectCount(0);
   }, [wordKey, finished]);
 
@@ -90,12 +90,13 @@ export function VocabularyQuizView() {
         wordId: question.wordId,
         answer,
         quizType: question.type,
-      }).unwrap();
+      });
 
       setChecked(true);
       setLastCorrect(result.correct);
       setLastNewlyKnown(result.newlyKnown);
       setExpected(question.expectedDisplay);
+      setResultOpen(true);
       if (result.correct) {
         setCorrectCount((value) => value + 1);
       }
@@ -104,6 +105,7 @@ export function VocabularyQuizView() {
       setLastCorrect(false);
       setLastNewlyKnown(false);
       setExpected(question.expectedDisplay);
+      setResultOpen(true);
     }
   }
 
@@ -114,10 +116,8 @@ export function VocabularyQuizView() {
       const wordIds = [...new Set(items.map((item) => item.wordId))];
       if (wordIds.length > 0) {
         try {
-          await completeQuiz({ wordIds }).unwrap();
-        } catch {
-          // Sonuç ekranı yine de açılır; kota yenilemesi sonraki istekte düzelir.
-        }
+          await completeQuiz({ wordIds });
+        } catch {}
       }
       writeLastVocabularyQuizResult({
         score,
@@ -136,6 +136,7 @@ export function VocabularyQuizView() {
     setLastCorrect(null);
     setLastNewlyKnown(false);
     setExpected(null);
+    setResultOpen(false);
   }
 
   const totalQuestions = items.length;
@@ -256,27 +257,6 @@ export function VocabularyQuizView() {
         </p>
       </div>
 
-      {checked && (lastCorrect || question.inputMode === "text") ? (
-        <div
-          role="status"
-          aria-live="polite"
-          className={cn(
-            "rounded-2xl border px-4 py-3 text-sm font-medium",
-            lastCorrect
-              ? "border-emerald-500/35 bg-emerald-500/10 text-emerald-800 dark:text-emerald-200"
-              : "border-amber-500/35 bg-amber-500/10 text-amber-900 dark:text-amber-200",
-          )}
-        >
-          {lastCorrect
-            ? lastNewlyKnown
-              ? t("quizCorrectFeedback")
-              : t("quizCorrectPartialFeedback")
-            : t("quizWrongFeedbackWithAnswer", {
-                answer: expected ?? "",
-              })}
-        </div>
-      ) : null}
-
       <article className="dashboard-panel space-y-5">
         <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
           {question.prompt}
@@ -367,13 +347,44 @@ export function VocabularyQuizView() {
             >
               {t("quizCheck")}
             </Button>
-          ) : (
-            <Button type="button" onClick={handleNext}>
+          ) : !resultOpen ? (
+            <Button
+              type="button"
+              onClick={() => {
+                void handleNext();
+              }}
+            >
               {index >= items.length - 1 ? t("quizFinish") : t("quizNext")}
             </Button>
-          )}
+          ) : null}
         </div>
       </article>
+
+      <ExerciseResultDialog
+        open={checked && resultOpen && lastCorrect !== null}
+        variant={lastCorrect ? "correct" : "incorrect"}
+        title={
+          lastCorrect
+            ? lastNewlyKnown
+              ? t("quizCorrectFeedback")
+              : t("quizCorrectPartialFeedback")
+            : undefined
+        }
+        explanation={
+          lastCorrect
+            ? null
+            : t("quizWrongFeedbackWithAnswer", {
+                answer: expected ?? "",
+              })
+        }
+        onOpenChange={setResultOpen}
+        onContinue={() => {
+          void handleNext();
+        }}
+        continueLabel={
+          index >= items.length - 1 ? t("quizFinish") : t("quizNext")
+        }
+      />
     </div>
   );
 }

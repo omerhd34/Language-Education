@@ -49,26 +49,8 @@ export function DashboardStatsBar() {
   return (
     <section
       aria-label={t("statsAria")}
-      className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)_minmax(0,1.45fr)_minmax(11rem,12.5rem)]"
+      className="grid items-stretch gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.45fr)_minmax(0,1.45fr)_minmax(8rem,5.5rem)]"
     >
-      <article className="dashboard-panel dashboard-panel--stat">
-        <p className="dashboard-panel__label">
-          <span className="relative flex size-2" aria-hidden>
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-amber-400 opacity-70" />
-            <span className="relative inline-flex size-2 rounded-full bg-amber-500" />
-          </span>
-          {t("liveStats")}
-        </p>
-        <div className="mt-4">
-          <p className="text-xs font-medium text-brand-600 dark:text-brand-400">
-            {t("totalSolved")}
-          </p>
-          <p className="mt-1 font-display text-4xl font-semibold tracking-tight text-brand-950 tabular-nums dark:text-brand-100">
-            0
-          </p>
-        </div>
-      </article>
-
       <article className="dashboard-panel dashboard-panel--stat">
         <p className="dashboard-panel__label">
           <Award

@@ -3,17 +3,16 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { VocabularyWord } from "@/data/vocabulary";
-import {
-  useSetVocabularyWordStatusMutation,
-  useVocabularyStatusQuery,
-  type VocabularyWordStatusValue,
-} from "@/store/api";
+import { useVocabularyStatusQuery } from "@/store/api";
+import { useVocabularyStore } from "@/store/vocabularyStore";
+import type { VocabularyWordStatusValue } from "@/types/api";
 import { VocabularyWordCard } from "@/components/features/vocabulary/VocabularyWordCard";
 import {
   useVocabularyLearnLimitReached,
   VocabularyLearnQuotaBanner,
 } from "@/components/features/vocabulary/VocabularyLearnQuotaBanner";
 import { VocabularyWordJumpNav } from "@/components/features/vocabulary/VocabularyWordJumpNav";
+import { getApiErrorCode } from "@/lib/apiClient";
 import { vocabularyStatusActivityId } from "@/lib/vocabularyActivity";
 import { markVocabularyActivities } from "@/lib/vocabularyActivityStorage";
 import { LEARN_WORD_PERIOD_LIMIT } from "@/lib/vocabularyLimits";
@@ -22,20 +21,6 @@ type VocabularyWordListProps = {
   categoryId: string;
   words: VocabularyWord[];
 };
-
-function getApiErrorCode(error: unknown): string | undefined {
-  if (typeof error !== "object" || error === null || !("data" in error)) {
-    return undefined;
-  }
-
-  const data = (error as { data?: unknown }).data;
-  if (typeof data !== "object" || data === null || !("error" in data)) {
-    return undefined;
-  }
-
-  const apiError = (data as { error?: { code?: unknown } }).error;
-  return typeof apiError?.code === "string" ? apiError.code : undefined;
-}
 
 export function VocabularyWordList({
   categoryId,
@@ -48,7 +33,7 @@ export function VocabularyWordList({
   const { data, isLoading, isError } = useVocabularyStatusQuery({
     categoryId,
   });
-  const [setStatus] = useSetVocabularyWordStatusMutation();
+  const setStatus = useVocabularyStore((state) => state.setWordStatus);
   const learnLimitReached = useVocabularyLearnLimitReached();
   const learnLimit =
     data?.learnLimit ?? data?.dailyLearnLimit ?? LEARN_WORD_PERIOD_LIMIT;
@@ -77,14 +62,14 @@ export function VocabularyWordList({
     setPendingWordId(wordId);
 
     try {
-      await setStatus({ categoryId, wordId, status }).unwrap();
+      await setStatus({ categoryId, wordId, status });
       if (activity && activity !== "learn") {
         markVocabularyActivities(categoryId, [
           vocabularyStatusActivityId(wordId, activity),
         ]);
       }
     } catch (error) {
-      const code = getApiErrorCode(error);
+      const code = getApiErrorCode(error) ?? undefined;
       if (code === "LEARN_PERIOD_LOCKED" || code === "DAILY_LEARN_LIMIT") {
         setErrorMessage(t("learnPeriodLocked", { limit: learnLimit }));
       } else {

@@ -5,11 +5,11 @@ import { useTranslations } from "next-intl";
 import { Timer } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
-  useStartVocabularyStudyTimerMutation,
   useStudiedTodayVocabularyWordsQuery,
   useVocabularyLearnQuotaQuery,
   useVocabularyQuizQuery,
 } from "@/store/api";
+import { useVocabularyStore } from "@/store/vocabularyStore";
 import { cn } from "@/lib/utils";
 
 export function useStudyCycleOpen(): { open: boolean; ready: boolean } {
@@ -35,7 +35,8 @@ export function StartStudyTimerButton({
   const t = useTranslations("Dashboard");
   const { data } = useVocabularyLearnQuotaQuery();
   const { open: cycleOpen, ready: cycleKnown } = useStudyCycleOpen();
-  const [startTimer, { isLoading }] = useStartVocabularyStudyTimerMutation();
+  const startTimer = useVocabularyStore((state) => state.startStudyTimer);
+  const isLoading = useVocabularyStore((state) => state.isStartingTimer);
   const [hasError, setHasError] = useState(false);
   const pending = data?.pendingStudyCount ?? 0;
 
@@ -46,7 +47,7 @@ export function StartStudyTimerButton({
   async function handleStart() {
     setHasError(false);
     try {
-      await startTimer().unwrap();
+      await startTimer();
     } catch {
       setHasError(true);
     }
