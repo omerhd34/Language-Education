@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { LevelStatusCard } from "@/components/features/dashboard/LevelStatusCard";
 import { MyPointsSection } from "@/components/features/dashboard/MyPointsSection";
 
 export function ProgressSection() {
@@ -24,7 +25,10 @@ export function ProgressSection() {
         </p>
       </div>
 
-      <MyPointsSection />
+      <div className="grid items-stretch gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
+        <LevelStatusCard />
+        <MyPointsSection />
+      </div>
     </section>
   );
 }
