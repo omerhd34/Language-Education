@@ -4,6 +4,15 @@ export type AuthUser = {
   name: string | null;
   emailVerifiedAt: string | null;
   createdAt: string;
+  avatarUrl: string | null;
+};
+
+export type UpdateAvatarBody = {
+  dataUrl: string;
+};
+
+export type UpdateAvatarPayload = {
+  user: AuthUser;
 };
 
 export type AuthPayload = {
@@ -29,6 +38,15 @@ export type LoginBody = {
 
 export type VerifyEmailBody = {
   token: string;
+};
+
+export type ChangePasswordBody = {
+  currentPassword: string;
+  newPassword: string;
+};
+
+export type ChangePasswordPayload = {
+  message: string;
 };
 
 export type VocabularyWordStatusValue = "KNOWN" | "LEARNING";
@@ -142,4 +160,11 @@ export type ProgressResetPayload = {
   vocabularyDeleted: number;
   topicProgressDeleted: number;
   streakReset: boolean;
+};
+
+export type StreakPayload = {
+  currentStreak: number;
+  longestStreak: number;
+  activeToday: boolean;
+  lastActivityAt: string | null;
 };

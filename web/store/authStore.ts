@@ -5,9 +5,12 @@ import { apiRequest } from "@/lib/apiClient";
 import type {
   AuthPayload,
   AuthUser,
+  ChangePasswordBody,
+  ChangePasswordPayload,
   LoginBody,
   RegisterBody,
   RegisterPayload,
+  UpdateAvatarPayload,
   VerifyEmailBody,
 } from "@/types/api";
 
@@ -22,14 +25,20 @@ type AuthState = {
   isVerifyingEmail: boolean;
   isRefreshing: boolean;
   isLoggingOut: boolean;
+  isChangingPassword: boolean;
+  isUpdatingAvatar: boolean;
   setCredentials: (payload: { user: AuthUser; accessToken: string }) => void;
   clearCredentials: () => void;
   setAnonymous: () => void;
+  setUser: (user: AuthUser) => void;
   login: (body: LoginBody) => Promise<AuthPayload>;
   register: (body: RegisterBody) => Promise<RegisterPayload>;
   verifyEmail: (body: VerifyEmailBody) => Promise<AuthPayload>;
   refresh: () => Promise<AuthPayload>;
+  changePassword: (body: ChangePasswordBody) => Promise<ChangePasswordPayload>;
   logout: () => Promise<void>;
+  uploadAvatar: (dataUrl: string) => Promise<AuthUser>;
+  removeAvatar: () => Promise<AuthUser>;
 };
 
 export const useAuthStore = create<AuthState>((set, get) => ({
@@ -41,6 +50,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isVerifyingEmail: false,
   isRefreshing: false,
   isLoggingOut: false,
+  isChangingPassword: false,
+  isUpdatingAvatar: false,
 
   setCredentials: ({ user, accessToken }) => {
     set({
@@ -64,6 +75,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       accessToken: null,
       status: "anonymous",
     });
+  },
+
+  setUser: (user) => {
+    set({ user });
   },
 
   login: async (body) => {
@@ -129,6 +144,19 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     }
   },
 
+  changePassword: async (body) => {
+    set({ isChangingPassword: true });
+    try {
+      return await apiRequest<ChangePasswordPayload>("/auth/me/password", {
+        method: "POST",
+        body,
+        accessToken: get().accessToken,
+      });
+    } finally {
+      set({ isChangingPassword: false });
+    }
+  },
+
   logout: async () => {
     set({ isLoggingOut: true });
     try {
@@ -140,6 +168,35 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     } finally {
       get().clearCredentials();
       set({ isLoggingOut: false });
+    }
+  },
+
+  uploadAvatar: async (dataUrl) => {
+    set({ isUpdatingAvatar: true });
+    try {
+      const data = await apiRequest<UpdateAvatarPayload>("/auth/me/avatar", {
+        method: "PUT",
+        body: { dataUrl },
+        accessToken: get().accessToken,
+      });
+      set({ user: data.user });
+      return data.user;
+    } finally {
+      set({ isUpdatingAvatar: false });
+    }
+  },
+
+  removeAvatar: async () => {
+    set({ isUpdatingAvatar: true });
+    try {
+      const data = await apiRequest<UpdateAvatarPayload>("/auth/me/avatar", {
+        method: "DELETE",
+        accessToken: get().accessToken,
+      });
+      set({ user: data.user });
+      return data.user;
+    } finally {
+      set({ isUpdatingAvatar: false });
     }
   },
 }));

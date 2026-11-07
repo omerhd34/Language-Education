@@ -5,6 +5,8 @@ export type {
   RegisterBody,
   LoginBody,
   VerifyEmailBody,
+  ChangePasswordBody,
+  ChangePasswordPayload,
   VocabularyWordStatusValue,
   VocabularyStatusPayload,
   SetVocabularyWordStatusBody,

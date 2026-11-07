@@ -582,6 +582,10 @@ export const useVocabularyStore = create<VocabularyState>((set, get) => ({
       });
       get().invalidate(["all"]);
       void get().refetchInvalidated();
+      if (data.streakReset) {
+        const { useStreakStore } = await import("@/store/streakStore");
+        void useStreakStore.getState().fetchStreak({ force: true });
+      }
       return data;
     } finally {
       set({ isResettingProgress: false });
