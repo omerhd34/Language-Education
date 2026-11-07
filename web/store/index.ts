@@ -1,18 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { api } from "./api";
-import { authReducer } from "./authSlice";
-
-export function makeStore() {
-  return configureStore({
-    reducer: {
-      auth: authReducer,
-      [api.reducerPath]: api.reducer,
-    },
-    middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(api.middleware),
-  });
-}
-
-export type AppStore = ReturnType<typeof makeStore>;
-export type RootState = ReturnType<AppStore["getState"]>;
-export type AppDispatch = AppStore["dispatch"];
+export { useAuthStore, type AuthStatus } from "@/store/authStore";
+export {
+  useVocabularyStore,
+  type QueryEntry,
+  type QueryStatus,
+} from "@/store/vocabularyStore";
+export * from "@/store/api";
