@@ -240,7 +240,6 @@ export function buildCrosswordFromCandidates(
     }
   }
 
-  // Seçilen havuzdan kalanları (gerekirse kesişmesiz) yerleştir — hedef sayıya yaklaş.
   for (const candidate of unused) {
     if (placed.length >= target) {
       break;
