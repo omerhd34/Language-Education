@@ -3,18 +3,20 @@
 import type { MouseEvent } from "react";
 import { useTranslations } from "next-intl";
 import { LogOut, Settings } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
 import { Button } from "@/components/ui/Button";
 import {
   appNavLinks,
   type AppNavLink,
 } from "@/components/layout/app/appNavLinks";
 import { VocabularyNavItem } from "@/components/layout/app/VocabularyNavItem";
+import { NotificationsMenu } from "@/components/features/dashboard/NotificationsMenu";
+import { ProfileAvatar } from "@/components/features/profile/ProfileAvatar";
 import { Link, usePathname } from "@/i18n/navigation";
 import { navigatePanelSection, usePanelHash } from "@/hooks/usePanelHash";
+import { useProfileAvatarUpload } from "@/hooks/useProfileAvatarUpload";
 import { cn } from "@/lib/utils";
-import { getUserInitials } from "@/lib/userInitials";
 import type { AuthUser } from "@/store/api";
+import { useAuthStore } from "@/store/authStore";
 import {
   Sidebar,
   SidebarContent,
@@ -73,12 +75,15 @@ export function AppSidebarMobileBar() {
 export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
   const t = useTranslations("AppNav");
   const tNav = useTranslations("Nav");
+  const tSettings = useTranslations("Settings");
   const pathname = usePathname();
   const panelHash = usePanelHash();
   const { setOpenMobile, state } = useSidebar();
   const collapsed = state === "collapsed";
-  const initials = getUserInitials(user.name, user.email);
-  const displayName = user.name?.trim() || user.email;
+  const storeUser = useAuthStore((state) => state.user);
+  const resolvedUser = storeUser ?? user;
+  const displayName = resolvedUser.name?.trim() || resolvedUser.email;
+  const { pickFile, isUpdatingAvatar } = useProfileAvatarUpload();
 
   function isActive(href: string): boolean {
     const path = hrefPath(href);
@@ -172,20 +177,11 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
       </SidebarContent>
       <SidebarFooter className="p-4 group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:p-2">
         <SidebarSeparator className="mx-0 bg-white/8" />
-        <div className="flex items-center gap-3 px-1 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-          <Avatar className="size-9 rounded-full group-data-[collapsible=icon]:size-8">
-            <AvatarFallback className="rounded-full text-[0.65rem]">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
-          <div className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
-            <p className="truncate text-sm font-medium text-brand-100">
-              {displayName}
-            </p>
-            {user.name?.trim() ? (
-              <p className="truncate text-xs text-brand-400">{user.email}</p>
-            ) : null}
-          </div>
+        <div className="group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+          <NotificationsMenu
+            variant="sidebar"
+            triggerClassName="group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
+          />
         </div>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -201,6 +197,34 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <div className="mb-2 flex items-center gap-3 px-1 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+          <ProfileAvatar
+            name={resolvedUser.name}
+            email={resolvedUser.email}
+            avatarUrl={resolvedUser.avatarUrl}
+            className="size-9 group-data-[collapsible=icon]:size-8"
+            fallbackClassName="text-[0.65rem]"
+            editable
+            uploading={isUpdatingAvatar}
+            onPickFile={pickFile}
+            label={tSettings("profilePhotoChange")}
+          />
+          <Link
+            href="/panel/ayarlar"
+            onClick={() => setOpenMobile(false)}
+            className="min-w-0 flex-1 rounded-lg outline-none transition-colors hover:bg-brand-900/60 focus-visible:ring-2 focus-visible:ring-brand-400/40 group-data-[collapsible=icon]:hidden"
+            aria-label={t("settings")}
+          >
+            <p className="truncate text-sm font-medium text-brand-100">
+              {displayName}
+            </p>
+            {resolvedUser.name?.trim() ? (
+              <p className="truncate text-xs text-brand-400">
+                {resolvedUser.email}
+              </p>
+            ) : null}
+          </Link>
+        </div>
         <Button
           type="button"
           variant="outline"

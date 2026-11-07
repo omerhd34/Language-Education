@@ -4,12 +4,11 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { HiRectangleStack } from "react-icons/hi2";
 import { Link, useRouter } from "@/i18n/navigation";
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
+import { ProfileAvatar } from "@/components/features/profile/ProfileAvatar";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Container } from "@/components/ui/Container";
 import { UserMenu } from "@/components/layout/UserMenu";
 import { navLinks } from "@/components/layout/navLinks";
-import { getUserInitials } from "@/lib/userInitials";
 import { useAuthStore } from "@/store/authStore";
 
 export function Navbar() {
@@ -23,15 +22,12 @@ export function Navbar() {
   async function handleLogout() {
     try {
       await logout();
-    } catch {
-      // Cookie/sunucu temizliği başarısız olsa da yerel oturumu kapat.
-    }
+    } catch {}
     setOpen(false);
     router.push("/");
   }
 
   const accountLabel = user?.name?.trim() || user?.email || "";
-  const initials = user ? getUserInitials(user.name, user.email) : "";
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-brand-100/80 backdrop-blur-md dark:bg-brand-950/80">
@@ -123,11 +119,12 @@ export function Navbar() {
             ))}
             {user ? (
               <div className="flex items-center gap-3 px-1 py-2">
-                <Avatar className="size-9 rounded-full">
-                  <AvatarFallback className="rounded-full">
-                    {initials}
-                  </AvatarFallback>
-                </Avatar>
+                <ProfileAvatar
+                  name={user.name}
+                  email={user.email}
+                  avatarUrl={user.avatarUrl}
+                  className="size-9"
+                />
                 <div className="min-w-0">
                   <p className="truncate text-sm font-medium text-brand-950 dark:text-brand-100">
                     {accountLabel}

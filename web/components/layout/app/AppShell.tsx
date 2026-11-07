@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "@/i18n/navigation";
+import { Suspense, useEffect } from "react";
+import { ContinueActivityTracker } from "@/components/features/dashboard/ContinueActivityTracker";
 import {
   AppSidebar,
   AppSidebarMobileBar,
 } from "@/components/layout/app/AppSidebar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { useRouter } from "@/i18n/navigation";
 import {
   SIDEBAR_COOKIE_MAX_AGE,
   SIDEBAR_COOKIE_NAME,
@@ -45,17 +46,13 @@ export function AppShell({ user, sidebarOpen, children }: AppShellProps) {
       }
 
       window.localStorage.removeItem(LEGACY_COLLAPSE_KEY);
-    } catch {
-      // Depolama kapalıysa tercih bir sonraki oturumda varsayılan kalır.
-    }
+    } catch {}
   }, []);
 
   async function handleLogout() {
     try {
       await logout();
-    } catch {
-      // Yerel oturumu yine kapat.
-    }
+    } catch {}
     router.push("/");
   }
 
@@ -69,6 +66,9 @@ export function AppShell({ user, sidebarOpen, children }: AppShellProps) {
         />
         <SidebarInset>
           <AppSidebarMobileBar />
+          <Suspense fallback={null}>
+            <ContinueActivityTracker />
+          </Suspense>
           <div className="flex min-w-0 flex-1 flex-col">{children}</div>
         </SidebarInset>
       </SidebarProvider>

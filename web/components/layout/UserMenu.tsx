@@ -21,10 +21,11 @@ import {
   Sparkles,
   UserRound,
 } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/Avatar";
+import { ProfileAvatar } from "@/components/features/profile/ProfileAvatar";
 import { Link } from "@/i18n/navigation";
-import { getUserInitials } from "@/lib/userInitials";
+import { useProfileAvatarUpload } from "@/hooks/useProfileAvatarUpload";
 import type { AuthUser } from "@/store/api";
+import { useAuthStore } from "@/store/authStore";
 
 const ROW_SELECTOR = ".menu-item, .sign-out-row";
 const UNREAD_MESSAGES = 3;
@@ -45,15 +46,18 @@ type MenuLink = {
 
 export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
   const t = useTranslations("Nav");
+  const tSettings = useTranslations("Settings");
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const rootRef = useRef<HTMLDivElement>(null);
+  const storeUser = useAuthStore((state) => state.user);
+  const resolvedUser = storeUser ?? user;
+  const { pickFile, isUpdatingAvatar } = useProfileAvatarUpload();
   const navRef = useRef<HTMLElement>(null);
   const plateRef = useRef<HTMLDivElement>(null);
   const activeIndexRef = useRef(-1);
 
-  const displayName = user.name?.trim() || user.email;
-  const initials = getUserInitials(user.name, user.email);
+  const displayName = resolvedUser.name?.trim() || resolvedUser.email;
 
   const menuLinks: MenuLink[] = [
     {
@@ -236,11 +240,13 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
           onClick={() => setOpen((value) => !value)}
           onKeyDown={handleTriggerKeyDown}
         >
-          <Avatar className="size-8 rounded-full">
-            <AvatarFallback className="rounded-full text-[0.65rem]">
-              {initials}
-            </AvatarFallback>
-          </Avatar>
+          <ProfileAvatar
+            name={resolvedUser.name}
+            email={resolvedUser.email}
+            avatarUrl={resolvedUser.avatarUrl}
+            className="size-8"
+            fallbackClassName="text-[0.65rem]"
+          />
         </button>
       </div>
 
@@ -248,11 +254,17 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
         <div id={menuId} className="account-dropdown" role="presentation">
           <div className="account-dropdown__user">
             <div className="relative shrink-0">
-              <Avatar className="size-11 rounded-full">
-                <AvatarFallback className="rounded-full text-sm">
-                  {initials}
-                </AvatarFallback>
-              </Avatar>
+              <ProfileAvatar
+                name={resolvedUser.name}
+                email={resolvedUser.email}
+                avatarUrl={resolvedUser.avatarUrl}
+                className="size-11"
+                fallbackClassName="text-sm"
+                editable
+                uploading={isUpdatingAvatar}
+                onPickFile={pickFile}
+                label={tSettings("profilePhotoChange")}
+              />
               <span
                 className="absolute right-0 bottom-0 size-2.5 rounded-full bg-emerald-500 ring-2 ring-(--account-surface)"
                 aria-hidden
@@ -262,9 +274,9 @@ export function UserMenu({ user, isLoggingOut, onLogout }: UserMenuProps) {
               <p className="truncate text-sm font-semibold text-(--account-text)">
                 {displayName}
               </p>
-              {user.name?.trim() ? (
+              {resolvedUser.name?.trim() ? (
                 <p className="truncate text-xs text-(--account-text-dim)">
-                  {user.email}
+                  {resolvedUser.email}
                 </p>
               ) : null}
             </div>

@@ -24,6 +24,7 @@ function toAuthUser(user: AuthUser | SessionHint): AuthUser {
     name: user.name,
     emailVerifiedAt: null,
     createdAt: "",
+    avatarUrl: null,
   };
 }
 
