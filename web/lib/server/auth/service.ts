@@ -12,7 +12,9 @@ import { buildVerificationEmail, sendMail } from "@/lib/server/mail";
 import { getServerEnv } from "@/lib/server/env";
 import { hashPassword, verifyPassword } from "@/lib/server/password";
 import { getPrisma } from "@/lib/server/prisma";
+import { toPublicUser } from "@/lib/server/auth/publicUser";
 import type {
+  ChangePasswordInput,
   LoginInput,
   RegisterInput,
   VerifyEmailInput,
@@ -22,22 +24,6 @@ const VERIFICATION_TOKEN_TTL_MS = 24 * 60 * 60 * 1000;
 
 function hashToken(token: string): string {
   return createHash("sha256").update(token).digest("hex");
-}
-
-function toPublicUser(user: {
-  id: string;
-  email: string;
-  name: string | null;
-  emailVerifiedAt: Date | null;
-  createdAt: Date;
-}) {
-  return {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    emailVerifiedAt: user.emailVerifiedAt?.toISOString() ?? null,
-    createdAt: user.createdAt.toISOString(),
-  };
 }
 
 async function issueTokens(userId: string, email: string) {
@@ -171,6 +157,15 @@ export async function verifyEmail(input: VerifyEmailInput) {
       data: {
         emailVerifiedAt: new Date(),
       },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        emailVerifiedAt: true,
+        createdAt: true,
+        updatedAt: true,
+        avatarMimeType: true,
+      },
     });
 
     await tx.emailVerificationToken.deleteMany({
@@ -192,6 +187,16 @@ export async function loginUser(input: LoginInput) {
   const prisma = getPrisma();
   const user = await prisma.user.findUnique({
     where: { email: input.email.toLowerCase() },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      passwordHash: true,
+      emailVerifiedAt: true,
+      createdAt: true,
+      updatedAt: true,
+      avatarMimeType: true,
+    },
   });
 
   if (!user) {
@@ -249,7 +254,18 @@ export async function refreshSession(rawRefreshToken: string | undefined) {
 
   await prisma.refreshToken.delete({ where: { id: stored.id } });
 
-  const user = await prisma.user.findUnique({ where: { id: payload.sub } });
+  const user = await prisma.user.findUnique({
+    where: { id: payload.sub },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      emailVerifiedAt: true,
+      createdAt: true,
+      updatedAt: true,
+      avatarMimeType: true,
+    },
+  });
 
   if (!user || !user.emailVerifiedAt) {
     throw new AppError("User not found", 401, "UNAUTHORIZED");
@@ -284,6 +300,15 @@ export async function getCurrentUser(userId: string) {
   const prisma = getPrisma();
   const user = await prisma.user.findUnique({
     where: { id: userId },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      emailVerifiedAt: true,
+      createdAt: true,
+      updatedAt: true,
+      avatarMimeType: true,
+    },
   });
 
   if (!user || !user.emailVerifiedAt) {
@@ -291,4 +316,37 @@ export async function getCurrentUser(userId: string) {
   }
 
   return toPublicUser(user);
+}
+
+export async function changePassword(
+  userId: string,
+  input: ChangePasswordInput,
+) {
+  const prisma = getPrisma();
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+  });
+
+  if (!user || !user.emailVerifiedAt) {
+    throw new AppError("User not found", 404, "NOT_FOUND");
+  }
+
+  const valid = await verifyPassword(input.currentPassword, user.passwordHash);
+
+  if (!valid) {
+    throw new AppError(
+      "Current password is incorrect",
+      400,
+      "INVALID_CURRENT_PASSWORD",
+    );
+  }
+
+  const passwordHash = await hashPassword(input.newPassword);
+
+  await prisma.user.update({
+    where: { id: userId },
+    data: { passwordHash },
+  });
+
+  return { message: "Password updated" };
 }
