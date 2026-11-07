@@ -25,6 +25,29 @@ export function navigatePanelSection(section: string): void {
   window.dispatchEvent(new Event(PANEL_HASH_EVENT));
 }
 
+export function navigatePanelHref(href: string): boolean {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const hashIndex = href.indexOf("#");
+  if (hashIndex < 0) {
+    return false;
+  }
+
+  const path = href.slice(0, hashIndex) || "/panel";
+  const section = href.slice(hashIndex + 1);
+  const { pathname } = window.location;
+  const onPanel = pathname === "/panel" || pathname === "/";
+
+  if (path === "/panel" && onPanel) {
+    navigatePanelSection(section);
+    return true;
+  }
+
+  return false;
+}
+
 export function usePanelHash(): string {
   const [hash, setHash] = useState("");
 
