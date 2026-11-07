@@ -29,11 +29,11 @@ export function NotificationFeaturedAlert({
   }
 
   return (
-    <div className="rounded-2xl bg-brand-950 p-3.5 text-brand-50 shadow-sm dark:bg-brand-900">
+    <div className="rounded-2xl bg-brand-950 p-3.5 text-brand-100 shadow-sm dark:bg-brand-900">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="text-sm font-semibold tracking-tight">{item.title}</p>
-          <p className="mt-1 text-xs leading-snug text-brand-200/85">
+          <p className="mt-1 text-xs leading-snug text-brand-400">
             {item.body}
           </p>
         </div>

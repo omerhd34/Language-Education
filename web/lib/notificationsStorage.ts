@@ -108,14 +108,20 @@ function readDismissedIds(): string[] {
   }
 }
 
-function rememberDismissedId(id: string): void {
-  if (!canUseStorage()) {
+function rememberDismissedIds(idsToRemember: readonly string[]): void {
+  if (!canUseStorage() || idsToRemember.length === 0) {
     return;
   }
 
-  const ids = readDismissedIds().filter((item) => item !== id);
-  ids.push(id);
+  const ids = readDismissedIds().filter(
+    (item) => !idsToRemember.includes(item),
+  );
+  ids.push(...idsToRemember);
   window.localStorage.setItem(DISMISSED_KEY, JSON.stringify(ids.slice(-200)));
+}
+
+function rememberDismissedId(id: string): void {
+  rememberDismissedIds([id]);
 }
 
 export function ensureNotification(notification: AppNotification): {
@@ -158,6 +164,13 @@ export function dismissNotification(id: string): AppNotification[] {
   const next = readNotifications().filter((item) => item.id !== id);
   writeNotifications(next);
   return next;
+}
+
+export function dismissAllNotifications(): AppNotification[] {
+  const current = readNotifications();
+  rememberDismissedIds(current.map((item) => item.id));
+  writeNotifications([]);
+  return [];
 }
 
 export function markNotificationRead(id: string): AppNotification[] {

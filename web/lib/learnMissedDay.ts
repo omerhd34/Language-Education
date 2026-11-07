@@ -53,11 +53,9 @@ export function markLearnMissedNotified(atMs: number): void {
   window.localStorage.setItem(LAST_NOTIFIED_KEY, new Date(atMs).toISOString());
 }
 
-/** Son bildirimden bu yana 24 saat geçmediyse tekrar gönderme. */
 export function wasLearnMissedNotifiedRecently(nowMs: number): boolean {
   let last = getLastLearnMissedNotifiedAt();
 
-  // Eski kayıtlarda damga yoksa listedeki en yeni aynı tür bildirimi kullan.
   if (last == null) {
     for (const item of readNotifications()) {
       if (item.type !== "learn_missed_day") {
@@ -114,7 +112,6 @@ export function getLearnMissedDayNotice(
     return null;
   }
 
-  // Aynı kaçırılan dönem için tek id: bucket değişince (her 24 saatte) yeni id.
   const bucket = Math.floor(elapsed / LEARN_WORD_LOCK_MS);
   return {
     id: `learn-missed-${anchor}-${bucket}`,

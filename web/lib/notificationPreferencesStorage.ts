@@ -55,7 +55,6 @@ export function readNotificationPreferences(): NotificationPreferences {
     }
     const parsed: unknown = JSON.parse(raw);
     if (!isNotificationPreferences(parsed)) {
-      // Eski kayıtta learnMissedDays olabilir; bilinen alanları taşı.
       if (typeof parsed === "object" && parsed !== null) {
         const legacy = parsed as Record<string, unknown>;
         if (

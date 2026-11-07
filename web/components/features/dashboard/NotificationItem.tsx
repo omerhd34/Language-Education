@@ -85,7 +85,7 @@ export function NotificationItem({
         type="button"
         variant="ghost"
         size="icon-xs"
-        className="absolute top-1.5 right-1.5 text-brand-500 opacity-0 transition-opacity group-hover:opacity-100 hover:text-brand-950 focus-visible:opacity-100 dark:text-brand-400 dark:hover:text-brand-100"
+        className="absolute top-1.5 right-1.5 rounded-full border border-transparent text-brand-600 opacity-0 transition-colors group-hover:border-border group-hover:opacity-100 hover:border-destructive/40 hover:bg-transparent hover:text-destructive focus-visible:border-destructive/40 focus-visible:opacity-100 focus-visible:text-destructive dark:text-brand-400 dark:group-hover:border-white/20 dark:hover:border-red-300/50 dark:hover:text-red-300 dark:focus-visible:border-red-300/50 dark:focus-visible:text-red-300"
         aria-label={dismissLabel}
         onClick={onDismiss}
       >
