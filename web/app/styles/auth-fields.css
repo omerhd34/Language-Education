@@ -3,26 +3,64 @@
 }
 
 .field-error {
-  margin-top: 6px;
+  display: block;
+  margin-top: 8px;
+  padding: 8px 12px;
+  border: 1px solid color-mix(in srgb, var(--auth-error) 22%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--auth-error) 8%, white);
   color: var(--auth-error);
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 600;
   line-height: 1.35;
+  text-align: center;
+  box-shadow: 0 0 0 3px var(--auth-error-ring);
+}
+
+.auth-form-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0 0 14px;
+  padding: 11px 14px;
+  border: 1px solid color-mix(in srgb, var(--auth-error) 24%, transparent);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--auth-error) 8%, white);
+  color: var(--auth-error);
+  text-align: center;
+  box-shadow: 0 0 0 3px var(--auth-error-ring);
+}
+
+.auth-form-message p {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.auth-form-message.is-info {
+  border-color: color-mix(in srgb, var(--auth-accent) 28%, transparent);
+  background: color-mix(in srgb, var(--auth-accent) 8%, white);
+  color: var(--auth-ink-strong);
+  box-shadow: none;
 }
 
 .auth-shell .domain-checker,
 .split-form .domain-checker {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: block;
   width: 100%;
+  min-width: 0;
   min-height: 54px;
-  padding: 0 16px;
-  border: 1.5px solid var(--auth-field-border);
-  border-radius: 16px;
+  margin: 0;
+  padding: 0 18px;
+  border: 1px solid var(--auth-field-border);
+  border-radius: 999px;
   background: var(--auth-field-bg);
-  box-shadow: var(--auth-field-shadow);
+  box-shadow: none;
   transition:
     border-color 0.2s ease,
     box-shadow 0.22s ease,
@@ -32,22 +70,25 @@
 .auth-shell .domain-checker:hover,
 .split-form .domain-checker:hover {
   border-color: var(--auth-field-border-hover);
+  background: var(--auth-field-bg);
 }
 
 .auth-shell .domain-checker:focus-within,
 .split-form .domain-checker:focus-within {
   border-color: var(--auth-accent-soft);
   background: var(--auth-field-bg);
+  box-shadow: none;
 }
 
 .auth-shell .dc-input,
 .split-form .dc-input {
   position: relative;
   display: flex;
-  flex: 1 1 auto;
   align-items: center;
+  gap: 10px;
+  width: 100%;
   min-width: 0;
-  height: 100%;
+  min-height: 52px;
 }
 
 .auth-shell .dc-icon,
@@ -107,76 +148,107 @@
   -webkit-text-fill-color: transparent;
 }
 
-.auth-shell .dc-float .dc-label,
-.split-form .dc-float .dc-label {
-  position: absolute;
-  top: 50%;
-  left: 34px;
-  right: auto;
-  z-index: 1;
-  max-width: calc(100% - 42px);
+.auth-shell .domain-checker > .dc-notch,
+.split-form .domain-checker > .dc-notch {
+  display: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  border: 0;
   background: transparent;
-  color: var(--auth-muted-2);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.auth-shell .domain-checker:focus-within > .dc-notch,
+.auth-shell .domain-checker:has(.auth-field-input.is-filled) > .dc-notch,
+.auth-shell
+  .domain-checker:has(.auth-field-input:not(:placeholder-shown))
+  > .dc-notch,
+.split-form .domain-checker:focus-within > .dc-notch,
+.split-form .domain-checker:has(.auth-field-input.is-filled) > .dc-notch,
+.split-form
+  .domain-checker:has(.auth-field-input:not(:placeholder-shown))
+  > .dc-notch {
+  display: block;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  margin-left: 16px;
+  padding: 0 8px;
+  color: transparent;
+}
+
+.auth-shell .domain-checker > .dc-label,
+.split-form .domain-checker > .dc-label {
+  position: absolute;
+  top: calc(50% - 0.6em);
+  left: 52px;
+  z-index: 3;
+  max-width: calc(100% - 72px);
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  color: #8b95a5;
   font-size: 14.5px;
   font-weight: 400;
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;
   pointer-events: none;
-  cursor: text;
-  transform: translateY(-50%);
-  transform-origin: left center;
   transition:
-    top 0.2s ease,
-    left 0.2s ease,
-    transform 0.2s ease,
-    font-size 0.2s ease,
-    padding 0.2s ease,
-    background-color 0.2s ease,
-    color 0.2s ease;
+    top 0.22s ease,
+    left 0.22s ease,
+    padding 0.22s ease,
+    font-size 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease;
 }
 
-.auth-shell .dc-float .auth-field-input:focus ~ .dc-label,
-.auth-shell .dc-float .auth-field-input:not(:placeholder-shown) ~ .dc-label,
-.auth-shell .dc-float .auth-field-input:-webkit-autofill ~ .dc-label,
-.auth-shell .dc-float .auth-field-input.is-filled ~ .dc-label,
-.split-form .dc-float .auth-field-input:focus ~ .dc-label,
-.split-form .dc-float .auth-field-input:not(:placeholder-shown) ~ .dc-label,
-.split-form .dc-float .auth-field-input:-webkit-autofill ~ .dc-label,
-.split-form .dc-float .auth-field-input.is-filled ~ .dc-label {
-  top: -0.75px;
-  left: -2px;
-  max-width: calc(100% + 4px);
-  padding: 0 6px;
-  background: linear-gradient(
-    to bottom,
-    var(--auth-field-bg) 50%,
-    var(--label-bg, var(--auth-field-bg)) 50%
-  );
+.auth-shell .domain-checker:focus-within > .dc-label,
+.auth-shell .domain-checker:has(.auth-field-input.is-filled) > .dc-label,
+.auth-shell
+  .domain-checker:has(.auth-field-input:not(:placeholder-shown))
+  > .dc-label,
+.split-form .domain-checker:focus-within > .dc-label,
+.split-form .domain-checker:has(.auth-field-input.is-filled) > .dc-label,
+.split-form
+  .domain-checker:has(.auth-field-input:not(:placeholder-shown))
+  > .dc-label {
+  top: 0;
+  left: 16px;
+  max-width: calc(100% - 32px);
+  padding: 0 8px;
   font-size: 12px;
   font-weight: 500;
   line-height: 1.2;
-  letter-spacing: 0.02em;
   transform: translateY(-50%);
 }
 
-.auth-shell .dc-float .auth-field-input:focus ~ .dc-label,
-.split-form .dc-float .auth-field-input:focus ~ .dc-label {
+.auth-shell .domain-checker:focus-within > .dc-label,
+.split-form .domain-checker:focus-within > .dc-label {
   color: var(--auth-accent-soft);
 }
 
-.auth-shell .dc-float .auth-field-input:-webkit-autofill,
-.auth-shell .dc-float .auth-field-input:-webkit-autofill:hover,
-.auth-shell .dc-float .auth-field-input:-webkit-autofill:focus,
-.split-form .dc-float .auth-field-input:-webkit-autofill,
-.split-form .dc-float .auth-field-input:-webkit-autofill:hover,
-.split-form .dc-float .auth-field-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px var(--auth-field-bg) inset;
-  -webkit-text-fill-color: var(--auth-ink);
-  transition: background-color 5000s ease-in-out 0s;
+.auth-shell .auth-field-input:-webkit-autofill,
+.auth-shell .auth-field-input:-webkit-autofill:hover,
+.auth-shell .auth-field-input:-webkit-autofill:focus,
+.split-form .auth-field-input:-webkit-autofill,
+.split-form .auth-field-input:-webkit-autofill:hover,
+.split-form .auth-field-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: var(--auth-ink) !important;
+  caret-color: var(--auth-ink);
+  background-color: transparent !important;
+  background-image: none !important;
+  transition: background-color 99999s ease-out 0s !important;
+}
+
+.auth-shell .domain-checker:has(.auth-field-input:-webkit-autofill),
+.split-form .domain-checker:has(.auth-field-input:-webkit-autofill) {
+  background: transparent !important;
 }
 
 .auth-shell .field.has-error .domain-checker,
@@ -186,10 +258,9 @@
 .split-form .domain-checker.is-invalid,
 .split-form .domain-checker.has-error {
   border-color: var(--auth-error);
-  background-color: var(--auth-error-bg);
-  box-shadow:
-    0 0 0 4px var(--auth-error-ring),
-    0 8px 20px rgb(15 23 42 / 6%);
+  background: transparent;
+  background-color: transparent;
+  box-shadow: 0 0 0 3px var(--auth-error-ring);
 }
 
 .auth-shell .field.has-error .dc-icon,
@@ -206,53 +277,6 @@
 .split-form .domain-checker.is-invalid .dc-label,
 .split-form .domain-checker.has-error .dc-label {
   color: var(--auth-error);
-}
-
-.auth-shell .field.has-error .dc-float .auth-field-input:focus ~ .dc-label,
-.auth-shell
-  .field.has-error
-  .dc-float
-  .auth-field-input:not(:placeholder-shown)
-  ~ .dc-label,
-.auth-shell .field.has-error .dc-float .auth-field-input.is-filled ~ .dc-label,
-.auth-shell
-  .domain-checker.is-invalid
-  .dc-float
-  .auth-field-input:focus
-  ~ .dc-label,
-.auth-shell
-  .domain-checker.is-invalid
-  .dc-float
-  .auth-field-input:not(:placeholder-shown)
-  ~ .dc-label,
-.auth-shell
-  .domain-checker.is-invalid
-  .dc-float
-  .auth-field-input.is-filled
-  ~ .dc-label,
-.split-form .field.has-error .dc-float .auth-field-input:focus ~ .dc-label,
-.split-form
-  .field.has-error
-  .dc-float
-  .auth-field-input:not(:placeholder-shown)
-  ~ .dc-label,
-.split-form .field.has-error .dc-float .auth-field-input.is-filled ~ .dc-label,
-.split-form
-  .domain-checker.is-invalid
-  .dc-float
-  .auth-field-input:focus
-  ~ .dc-label,
-.split-form
-  .domain-checker.is-invalid
-  .dc-float
-  .auth-field-input:not(:placeholder-shown)
-  ~ .dc-label,
-.split-form
-  .domain-checker.is-invalid
-  .dc-float
-  .auth-field-input.is-filled
-  ~ .dc-label {
-  --label-bg: var(--auth-error-bg);
 }
 
 .remember {
@@ -293,7 +317,7 @@
   height: 20px;
   border: 2px solid var(--auth-field-border-hover);
   border-radius: 6px;
-  background: var(--auth-field-bg);
+  background: rgb(255 255 255 / 70%);
   transition:
     border-color 0.2s ease,
     background 0.2s ease;
@@ -537,19 +561,19 @@
     font-size: 15px;
   }
 
-  .dc-float .dc-label {
-    left: 30px;
+  .domain-checker > .dc-label {
+    left: 46px;
     font-size: 14px;
   }
 
-  .dc-float .auth-field-input:focus ~ .dc-label,
-  .dc-float .auth-field-input:not(:placeholder-shown) ~ .dc-label,
-  .dc-float .auth-field-input:-webkit-autofill ~ .dc-label,
-  .dc-float .auth-field-input.is-filled ~ .dc-label {
-    top: -0.75px;
-    left: -2px;
+  .domain-checker:focus-within > .dc-notch,
+  .domain-checker:has(.auth-field-input.is-filled) > .dc-notch,
+  .domain-checker:has(.auth-field-input:not(:placeholder-shown)) > .dc-notch,
+  .domain-checker:focus-within > .dc-label,
+  .domain-checker:has(.auth-field-input.is-filled) > .dc-label,
+  .domain-checker:has(.auth-field-input:not(:placeholder-shown)) > .dc-label {
+    left: 12px;
+    margin-left: 12px;
     font-size: 11.5px;
-    letter-spacing: 0.02em;
-    transform: translateY(-50%);
   }
 }

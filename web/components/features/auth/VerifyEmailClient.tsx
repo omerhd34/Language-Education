@@ -28,7 +28,6 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
 
   useEffect(() => {
     if (!token) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setError(t("verifyInvalid"));
       return;
     }
@@ -69,10 +68,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
   }
 
   return (
-    <p
-      className="page-subtitle mt-0"
-      aria-live="polite"
-    >
+    <p className="page-subtitle mt-0" aria-live="polite">
       {done
         ? t("verifySuccess")
         : isLoading || token

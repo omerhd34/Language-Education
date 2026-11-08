@@ -45,8 +45,8 @@
   height: 100%;
   overflow: hidden;
   border-radius: 28px;
-  background: var(--glass-solid);
-  box-shadow: var(--glass-panel-shadow-lg);
+  background: transparent;
+  box-shadow: none;
 }
 
 .auth-forms {
@@ -281,7 +281,7 @@
   }
 
   .auth-tab.is-active {
-    background: var(--auth-field-bg);
+    background: #fff;
     color: var(--auth-ink-strong);
     box-shadow: var(--auth-tab-shadow);
   }

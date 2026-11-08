@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import {
@@ -112,8 +111,14 @@ export function AuthEmailField({
       ref={containerRef}
       className={cn("field relative", error && "has-error")}
     >
-      <div className={cn("domain-checker", error && "is-invalid has-error")}>
-        <div className="dc-input dc-float">
+      <fieldset
+        className={cn("domain-checker", error && "is-invalid has-error")}
+      >
+        <legend className="dc-notch">{label}</legend>
+        <label htmlFor={inputId} className="dc-label">
+          {label}
+        </label>
+        <div className="dc-input">
           {startIcon ? (
             <span className="dc-icon" aria-hidden>
               {startIcon}
@@ -152,18 +157,15 @@ export function AuthEmailField({
             onFocus={() => setOpen(true)}
             onKeyDown={handleKeyDown}
           />
-          <label htmlFor={inputId} className="dc-label">
-            {label}
-          </label>
         </div>
-      </div>
+      </fieldset>
 
       {showSuggestions ? (
         <ul
           id={listboxId}
           role="listbox"
           aria-label={t("emailDomainSuggestions")}
-          className="absolute inset-x-0 z-20 mt-1 max-h-56 w-full overflow-auto rounded-2xl border border-auth-field-border bg-auth-field-bg py-1 shadow-lg"
+          className="absolute inset-x-0 z-20 mt-1 max-h-56 w-full overflow-auto rounded-2xl border border-auth-field-border bg-white/90 py-1 shadow-lg backdrop-blur-md"
         >
           {suggestions.map((suggestion, index) => {
             const isActive = index === activeIndex;

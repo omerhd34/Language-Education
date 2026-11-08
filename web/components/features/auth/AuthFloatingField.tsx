@@ -8,7 +8,7 @@ type AuthFloatingFieldProps = Omit<
   "className" | "id" | "placeholder"
 > & {
   label: string;
-  error?: string;
+  error?: string | boolean;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
 };
@@ -26,11 +26,19 @@ export function AuthFloatingField({
   const inputId = `${name ?? "field"}-${reactId}`;
   const filled =
     typeof value === "string" ? value.trim().length > 0 : Boolean(value);
+  const hasError = Boolean(error);
+  const errorMessage = typeof error === "string" ? error : null;
 
   return (
-    <div className={cn("field", error && "has-error")}>
-      <div className={cn("domain-checker", error && "is-invalid has-error")}>
-        <div className={cn("dc-input dc-float", endIcon && "password-wrap")}>
+    <div className={cn("field", hasError && "has-error")}>
+      <fieldset
+        className={cn("domain-checker", hasError && "is-invalid has-error")}
+      >
+        <legend className="dc-notch">{label}</legend>
+        <label htmlFor={inputId} className="dc-label">
+          {label}
+        </label>
+        <div className={cn("dc-input", endIcon && "password-wrap")}>
           {startIcon ? (
             <span className="dc-icon" aria-hidden>
               {startIcon}
@@ -42,23 +50,20 @@ export function AuthFloatingField({
             className={cn(
               "auth-field-input",
               filled && "is-filled",
-              error && "is-invalid",
+              hasError && "is-invalid",
             )}
             placeholder=" "
             value={value}
-            aria-invalid={Boolean(error)}
-            aria-describedby={error ? `${inputId}-error` : undefined}
+            aria-invalid={hasError}
+            aria-describedby={errorMessage ? `${inputId}-error` : undefined}
             {...props}
           />
-          <label htmlFor={inputId} className="dc-label">
-            {label}
-          </label>
           {endIcon}
         </div>
-      </div>
-      {error ? (
+      </fieldset>
+      {errorMessage ? (
         <p id={`${inputId}-error`} className="field-error" role="alert">
-          {error}
+          {errorMessage}
         </p>
       ) : null}
     </div>

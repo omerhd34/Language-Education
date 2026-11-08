@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -6,6 +5,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Lock, LogIn, Mail, User, UserPlus } from "lucide-react";
 import { AuthEmailField } from "@/components/features/auth/AuthEmailField";
 import { AuthFloatingField } from "@/components/features/auth/AuthFloatingField";
+import { AuthFormMessage } from "@/components/features/auth/AuthFormMessage";
 import { AuthOverlay } from "@/components/features/auth/AuthOverlay";
 import { AuthPasswordToggle } from "@/components/features/auth/AuthPasswordToggle";
 import { AuthRememberMe } from "@/components/features/auth/AuthRememberMe";
@@ -47,7 +47,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   const [fieldErrors, setFieldErrors] = useState<{
     name?: string;
     email?: string;
-    password?: string;
+    password?: string | boolean;
     confirmPassword?: string;
     terms?: string;
   }>({});
@@ -129,7 +129,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
       const flat = parsed.error.flatten().fieldErrors;
       setFieldErrors({
         email: flat.email?.[0],
-        password: flat.password?.[0],
+        password: flat.password?.[0] ? true : undefined,
       });
       return;
     }
@@ -146,8 +146,14 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
       await login(parsed.data);
       router.push("/panel");
     } catch (error) {
-      if (getApiErrorCode(error) === "EMAIL_NOT_VERIFIED") {
+      const code = getApiErrorCode(error);
+      if (code === "EMAIL_NOT_VERIFIED") {
         setFormError(t("errors.emailNotVerified"));
+        return;
+      }
+      if (code === "INVALID_CREDENTIALS") {
+        setFieldErrors({ password: true });
+        setFormError(t("errors.invalidCredentials"));
         return;
       }
       setFormError(t("errors.generic"));
@@ -166,9 +172,13 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
     const parsed = registerSchema.safeParse({ name, email, password });
     if (!parsed.success) {
       const flat = parsed.error.flatten().fieldErrors;
+      const passwordMessage = flat.password?.[0];
       setFieldErrors({
         email: flat.email?.[0],
-        password: flat.password?.[0],
+        password:
+          passwordMessage === t("errors.passwordRequired")
+            ? true
+            : passwordMessage,
       });
       return;
     }
@@ -220,7 +230,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
         mode === "sifre" && "is-reset",
       )}
     >
-      <div className="auth-split-card backdrop-blur-[20px] backdrop-saturate-200">
+      <div className="auth-split-card">
         <AuthTabs
           mode={mode}
           ariaLabel={t("loginTitle")}
@@ -278,9 +288,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               </div>
 
               {formError && mode === "giris" ? (
-                <p className="field-error" role="alert">
-                  {formError}
-                </p>
+                <AuthFormMessage>{formError}</AuthFormMessage>
               ) : null}
 
               <AuthSubmitButton
@@ -401,16 +409,12 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                     <span>{t("agreeTerms")}</span>
                   </label>
                   {fieldErrors.terms ? (
-                    <p className="field-error" role="alert">
-                      {fieldErrors.terms}
-                    </p>
+                    <AuthFormMessage>{fieldErrors.terms}</AuthFormMessage>
                   ) : null}
                 </div>
 
                 {formError && mode === "kayit" ? (
-                  <p className="field-error" role="alert">
-                    {formError}
-                  </p>
+                  <AuthFormMessage>{formError}</AuthFormMessage>
                 ) : null}
 
                 <AuthSubmitButton disabled={isLoading}>
@@ -442,9 +446,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               />
 
               {forgotNotice ? (
-                <p className="field-error text-brand-600" role="status">
-                  {forgotNotice}
-                </p>
+                <AuthFormMessage tone="info">{forgotNotice}</AuthFormMessage>
               ) : null}
 
               <AuthSubmitButton>{t("submitForgot")}</AuthSubmitButton>

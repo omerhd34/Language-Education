@@ -102,14 +102,14 @@
   --auth-muted-2: #8b93a3;
   --auth-muted-3: #9aa3b2;
   --auth-slate: #334155;
-  --auth-field-bg: #fff;
-  --auth-field-border: #e2e8f0;
-  --auth-field-border-hover: #cbd5e1;
-  --auth-field-shadow:
-    0 1px 2px rgb(15 23 42 / 4%), 0 4px 14px rgb(15 23 42 / 3%);
+  --auth-field-bg: transparent;
+  --auth-field-border: rgb(148 163 184 / 45%);
+  --auth-field-border-hover: rgb(148 163 184 / 65%);
+  --auth-field-shadow: none;
+  --auth-label-cutout: #e8eef8;
   --auth-error: #dc2626;
-  --auth-error-bg: #fff5f5;
-  --auth-error-ring: rgb(220 38 38 / 18%);
+  --auth-error-bg: transparent;
+  --auth-error-ring: rgb(220 38 38 / 16%);
   --auth-overlay-bg: #141c2d;
   --auth-overlay-btn-hover-ink: #0b2545;
   --auth-overlay-text: #fff;
