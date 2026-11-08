@@ -1,0 +1,555 @@
+.field {
+  margin-bottom: 14px;
+}
+
+.field-error {
+  margin-top: 6px;
+  color: var(--auth-error);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.auth-shell .domain-checker,
+.split-form .domain-checker {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 54px;
+  padding: 0 16px;
+  border: 1.5px solid var(--auth-field-border);
+  border-radius: 16px;
+  background: var(--auth-field-bg);
+  box-shadow: var(--auth-field-shadow);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.22s ease,
+    background-color 0.2s ease;
+}
+
+.auth-shell .domain-checker:hover,
+.split-form .domain-checker:hover {
+  border-color: var(--auth-field-border-hover);
+}
+
+.auth-shell .domain-checker:focus-within,
+.split-form .domain-checker:focus-within {
+  border-color: var(--auth-accent-soft);
+  background: var(--auth-field-bg);
+}
+
+.auth-shell .dc-input,
+.split-form .dc-input {
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+}
+
+.auth-shell .dc-icon,
+.split-form .dc-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 52px;
+  color: var(--auth-muted-3);
+  font-size: 17px;
+  pointer-events: none;
+  transition: color 0.2s ease;
+}
+
+.auth-shell .domain-checker:focus-within .dc-icon,
+.split-form .domain-checker:focus-within .dc-icon {
+  color: var(--auth-accent-soft);
+}
+
+.auth-shell .auth-field-input,
+.split-form .auth-field-input {
+  width: 100%;
+  height: 52px;
+  margin: 0;
+  padding: 0 8px 0 6px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--auth-ink);
+  -webkit-text-fill-color: var(--auth-ink);
+  font-family: inherit;
+  font-size: 15.5px;
+  font-weight: 500;
+  line-height: normal;
+  box-shadow: none;
+  outline: none;
+}
+
+.auth-shell .auth-field-input:focus,
+.auth-shell .auth-field-input.is-invalid,
+.split-form .auth-field-input:focus,
+.split-form .auth-field-input.is-invalid {
+  border: 0;
+  border-color: transparent;
+  border-radius: 0;
+  background: transparent;
+  background-color: transparent;
+  box-shadow: none;
+  outline: none;
+}
+
+.auth-shell .auth-field-input::placeholder,
+.split-form .auth-field-input::placeholder {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.auth-shell .dc-float .dc-label,
+.split-form .dc-float .dc-label {
+  position: absolute;
+  top: 50%;
+  left: 34px;
+  right: auto;
+  z-index: 1;
+  max-width: calc(100% - 42px);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+  color: var(--auth-muted-2);
+  font-size: 14.5px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+  cursor: text;
+  transform: translateY(-50%);
+  transform-origin: left center;
+  transition:
+    top 0.2s ease,
+    left 0.2s ease,
+    transform 0.2s ease,
+    font-size 0.2s ease,
+    padding 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.auth-shell .dc-float .auth-field-input:focus ~ .dc-label,
+.auth-shell .dc-float .auth-field-input:not(:placeholder-shown) ~ .dc-label,
+.auth-shell .dc-float .auth-field-input:-webkit-autofill ~ .dc-label,
+.auth-shell .dc-float .auth-field-input.is-filled ~ .dc-label,
+.split-form .dc-float .auth-field-input:focus ~ .dc-label,
+.split-form .dc-float .auth-field-input:not(:placeholder-shown) ~ .dc-label,
+.split-form .dc-float .auth-field-input:-webkit-autofill ~ .dc-label,
+.split-form .dc-float .auth-field-input.is-filled ~ .dc-label {
+  top: -0.75px;
+  left: -2px;
+  max-width: calc(100% + 4px);
+  padding: 0 6px;
+  background: linear-gradient(
+    to bottom,
+    var(--auth-field-bg) 50%,
+    var(--label-bg, var(--auth-field-bg)) 50%
+  );
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  transform: translateY(-50%);
+}
+
+.auth-shell .dc-float .auth-field-input:focus ~ .dc-label,
+.split-form .dc-float .auth-field-input:focus ~ .dc-label {
+  color: var(--auth-accent-soft);
+}
+
+.auth-shell .dc-float .auth-field-input:-webkit-autofill,
+.auth-shell .dc-float .auth-field-input:-webkit-autofill:hover,
+.auth-shell .dc-float .auth-field-input:-webkit-autofill:focus,
+.split-form .dc-float .auth-field-input:-webkit-autofill,
+.split-form .dc-float .auth-field-input:-webkit-autofill:hover,
+.split-form .dc-float .auth-field-input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px var(--auth-field-bg) inset;
+  -webkit-text-fill-color: var(--auth-ink);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.auth-shell .field.has-error .domain-checker,
+.auth-shell .domain-checker.is-invalid,
+.auth-shell .domain-checker.has-error,
+.split-form .field.has-error .domain-checker,
+.split-form .domain-checker.is-invalid,
+.split-form .domain-checker.has-error {
+  border-color: var(--auth-error);
+  background-color: var(--auth-error-bg);
+  box-shadow:
+    0 0 0 4px var(--auth-error-ring),
+    0 8px 20px rgb(15 23 42 / 6%);
+}
+
+.auth-shell .field.has-error .dc-icon,
+.auth-shell .domain-checker.is-invalid .dc-icon,
+.split-form .field.has-error .dc-icon,
+.split-form .domain-checker.is-invalid .dc-icon {
+  color: var(--auth-error);
+}
+
+.auth-shell .field.has-error .dc-label,
+.auth-shell .domain-checker.is-invalid .dc-label,
+.auth-shell .domain-checker.has-error .dc-label,
+.split-form .field.has-error .dc-label,
+.split-form .domain-checker.is-invalid .dc-label,
+.split-form .domain-checker.has-error .dc-label {
+  color: var(--auth-error);
+}
+
+.auth-shell .field.has-error .dc-float .auth-field-input:focus ~ .dc-label,
+.auth-shell
+  .field.has-error
+  .dc-float
+  .auth-field-input:not(:placeholder-shown)
+  ~ .dc-label,
+.auth-shell .field.has-error .dc-float .auth-field-input.is-filled ~ .dc-label,
+.auth-shell
+  .domain-checker.is-invalid
+  .dc-float
+  .auth-field-input:focus
+  ~ .dc-label,
+.auth-shell
+  .domain-checker.is-invalid
+  .dc-float
+  .auth-field-input:not(:placeholder-shown)
+  ~ .dc-label,
+.auth-shell
+  .domain-checker.is-invalid
+  .dc-float
+  .auth-field-input.is-filled
+  ~ .dc-label,
+.split-form .field.has-error .dc-float .auth-field-input:focus ~ .dc-label,
+.split-form
+  .field.has-error
+  .dc-float
+  .auth-field-input:not(:placeholder-shown)
+  ~ .dc-label,
+.split-form .field.has-error .dc-float .auth-field-input.is-filled ~ .dc-label,
+.split-form
+  .domain-checker.is-invalid
+  .dc-float
+  .auth-field-input:focus
+  ~ .dc-label,
+.split-form
+  .domain-checker.is-invalid
+  .dc-float
+  .auth-field-input:not(:placeholder-shown)
+  ~ .dc-label,
+.split-form
+  .domain-checker.is-invalid
+  .dc-float
+  .auth-field-input.is-filled
+  ~ .dc-label {
+  --label-bg: var(--auth-error-bg);
+}
+
+.remember {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--auth-field-border);
+  border-radius: 10px;
+  background: var(--auth-remember-bg);
+  color: var(--auth-slate);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.remember input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.remember-box {
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--auth-field-border-hover);
+  border-radius: 6px;
+  background: var(--auth-field-bg);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.remember-box::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 6px;
+  height: 10px;
+  border: 2px solid var(--auth-overlay-text);
+  border-top: 0;
+  border-left: 0;
+  opacity: 0;
+  transform: scale(0.6) rotate(45deg);
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+.remember-text {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.remember:hover {
+  border-color: var(--auth-accent-border-soft);
+}
+
+.remember:hover .remember-box {
+  border-color: var(--auth-accent);
+}
+
+.remember:has(input:checked) {
+  border-color: var(--auth-accent);
+  background: var(--auth-remember-checked-bg);
+}
+
+.remember input:checked + .remember-box {
+  border-color: var(--auth-accent);
+  background: var(--auth-accent);
+}
+
+.remember input:checked + .remember-box::after {
+  opacity: 1;
+  transform: scale(1) rotate(45deg);
+}
+
+.remember:has(input:focus-visible) {
+  box-shadow: 0 0 0 3px var(--auth-accent-ring);
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0 0 10px;
+  color: var(--auth-slate);
+  font-size: 13px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.check input,
+.agreements input[type="checkbox"] {
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+.check span {
+  flex: 1;
+}
+
+.check a {
+  color: var(--auth-accent);
+  font-weight: 600;
+}
+
+.agreements {
+  margin: 8px 0 16px;
+}
+
+.auth-shell .auth-submit,
+.split-form .auth-submit {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  clear: both;
+  float: none;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--auth-accent);
+  color: var(--auth-overlay-text);
+  font-size: 16px;
+  font-weight: 700;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.auth-shell .auth-submit:hover,
+.auth-shell .auth-submit:focus,
+.split-form .auth-submit:hover,
+.split-form .auth-submit:focus {
+  background: var(--auth-accent-hover);
+  color: var(--auth-overlay-text);
+}
+
+.login-form .auth-submit {
+  transition:
+    transform 120ms ease,
+    background-color 150ms ease;
+}
+
+.login-form .auth-submit:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.login-form .auth-submit.is-pressed {
+  animation: loginPress 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.login-form .auth-submit.is-pressed svg {
+  animation: loginIcon 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes loginPress {
+  0% {
+    transform: scale(1);
+  }
+
+  28% {
+    transform: scale(0.96);
+  }
+
+  62% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes loginIcon {
+  0% {
+    transform: translateX(0);
+  }
+
+  45% {
+    transform: translateX(6px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-form .auth-submit,
+  .login-form .auth-submit:active:not(:disabled),
+  .login-form .auth-submit.is-pressed,
+  .login-form .auth-submit.is-pressed svg {
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+}
+
+.reset-form .split-switch-link {
+  display: inline;
+  width: auto;
+  margin-top: 0;
+  text-align: center;
+}
+
+.password-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrap .auth-field-input {
+  padding-right: 44px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--auth-muted-3);
+  font-size: 15px;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.toggle-password:hover,
+.toggle-password:focus {
+  background: var(--auth-field-border);
+  color: var(--auth-ink-hover);
+  outline: none;
+}
+
+@media (max-width: 1024px) {
+  .domain-checker {
+    min-height: 50px;
+    padding: 0 12px;
+    border-radius: 14px;
+  }
+
+  .dc-input .auth-field-input {
+    height: 48px;
+    padding: 0 8px 0 6px;
+    font-size: 14px;
+    line-height: normal;
+  }
+
+  .dc-icon {
+    width: 24px;
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .dc-float .dc-label {
+    left: 30px;
+    font-size: 14px;
+  }
+
+  .dc-float .auth-field-input:focus ~ .dc-label,
+  .dc-float .auth-field-input:not(:placeholder-shown) ~ .dc-label,
+  .dc-float .auth-field-input:-webkit-autofill ~ .dc-label,
+  .dc-float .auth-field-input.is-filled ~ .dc-label {
+    top: -0.75px;
+    left: -2px;
+    font-size: 11.5px;
+    letter-spacing: 0.02em;
+    transform: translateY(-50%);
+  }
+}

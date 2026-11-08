@@ -1,0 +1,209 @@
+.auth-overlay {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 5;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.55s cubic-bezier(0.4, 0.05, 0.2, 1);
+}
+
+.auth-split.is-register .auth-overlay {
+  transform: translateX(-100%);
+}
+
+.auth-overlay-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--auth-overlay-bg);
+}
+
+.auth-overlay-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--auth-overlay-image) center / cover no-repeat;
+  opacity: 0.42;
+}
+
+.auth-overlay-panel {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 32px 28px;
+  color: var(--auth-overlay-text);
+  text-align: center;
+  transition:
+    opacity 0.35s ease,
+    transform 0.45s ease;
+}
+
+.auth-overlay-panel h2 {
+  margin: 0 0 12px;
+  color: var(--auth-overlay-text);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  text-shadow: 0 2px 16px rgb(0 0 0 / 40%);
+}
+
+.auth-overlay-panel p {
+  max-width: 380px;
+  margin: 0 0 28px;
+  color: var(--auth-overlay-text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+  text-shadow: 0 1px 10px rgb(0 0 0 / 35%);
+}
+
+.auth-overlay-left {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-20%);
+}
+
+.auth-overlay-right {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.auth-split.is-register .auth-overlay-left {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.auth-split.is-register .auth-overlay-right {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20%);
+}
+
+.auth-overlay-reset {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(20%);
+}
+
+.auth-split.is-reset .auth-overlay-left,
+.auth-split.is-reset .auth-overlay-right {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.auth-split.is-reset .auth-overlay-reset {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.overlay-logo-text {
+  display: inline-block;
+  margin: 0 auto 22px;
+  color: var(--auth-overlay-text);
+  font-family: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.overlay-btn {
+  display: inline-flex;
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: max-content;
+  min-width: max-content;
+  max-width: none;
+  height: 46px;
+  padding: 0 24px;
+  overflow: visible;
+  border: 2px solid var(--auth-overlay-text);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--auth-overlay-text);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.overlay-btn:hover,
+.overlay-btn:focus {
+  background: var(--auth-overlay-text);
+  color: var(--auth-overlay-btn-hover-ink);
+  text-decoration: none;
+  outline: none;
+}
+
+.overlay-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.overlay-forgot {
+  width: 100%;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--auth-overlay-line);
+}
+
+.overlay-forgot h2 {
+  margin: 0 0 12px;
+  color: var(--auth-overlay-text);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+.overlay-forgot p {
+  max-width: 320px;
+  margin: 0 auto 28px;
+}
+
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .auth-overlay-panel {
+    padding: 28px 22px;
+  }
+
+  .auth-overlay-panel h2,
+  .overlay-forgot h2 {
+    font-size: 24px;
+    white-space: normal;
+  }
+
+  .auth-overlay-panel p,
+  .overlay-forgot p {
+    margin-bottom: 20px;
+    font-size: 14px;
+  }
+
+  .overlay-forgot {
+    margin-top: 18px;
+    padding-top: 16px;
+  }
+
+  .overlay-actions {
+    flex-wrap: wrap;
+  }
+}
