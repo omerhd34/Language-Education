@@ -1,18 +1,18 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  BadgeCheck,
+  BookA,
   BookOpen,
-  Brain,
+  CalendarDays,
   ChartColumnIncreasing,
+  CircleCheck,
   ClipboardList,
   Headphones,
   Home,
   Info,
-  Layers,
   Library,
   Mic,
   PenLine,
-  Timer,
+  SpellCheck2,
 } from "lucide-react";
 
 export type AppNavLabelKey =
@@ -46,12 +46,12 @@ export const vocabularySubNav = [
   {
     href: "/panel/kelime/bugun-calisilan",
     labelKey: "vocabularyStudiedToday",
-    Icon: Timer,
+    Icon: CalendarDays,
   },
   {
     href: "/panel/kelime/bilinen",
     labelKey: "vocabularyKnown",
-    Icon: BadgeCheck,
+    Icon: CircleCheck,
   },
 ] as const satisfies readonly {
   href: string;
@@ -65,12 +65,12 @@ export const appNavLinks: AppNavLink[] = [
   {
     href: "/panel#dilbilgisi",
     labelKey: "topics",
-    Icon: Layers,
+    Icon: SpellCheck2,
   },
   {
     href: "/panel#kelimeler",
     labelKey: "vocabulary",
-    Icon: Brain,
+    Icon: BookA,
   },
   {
     href: "/panel#dinleme",

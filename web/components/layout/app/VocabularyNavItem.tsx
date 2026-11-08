@@ -2,7 +2,7 @@
 
 import type { MouseEvent } from "react";
 import { useTranslations } from "next-intl";
-import { Brain, ChevronRight } from "lucide-react";
+import { BookA, ChevronRight } from "lucide-react";
 import { vocabularySubNav } from "@/components/layout/app/appNavLinks";
 import { Link, usePathname } from "@/i18n/navigation";
 import { usePanelHash } from "@/hooks/usePanelHash";
@@ -59,7 +59,7 @@ export function VocabularyNavItem({ onNavigate }: VocabularyNavItemProps) {
             />
           }
         >
-          <Brain className="size-4" strokeWidth={1.75} aria-hidden />
+          <BookA className="size-4" strokeWidth={1.75} aria-hidden />
           <span className="min-w-0 flex-1 truncate">{t("vocabulary")}</span>
           <ChevronRight
             className="ml-auto size-4 text-brand-500 transition-transform duration-200 in-data-popup-open:translate-x-0.5 in-data-popup-open:text-brand-100 group-data-[collapsible=icon]:hidden"
