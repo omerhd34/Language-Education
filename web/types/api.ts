@@ -2,6 +2,7 @@ export type AuthUser = {
   id: string;
   email: string;
   name: string | null;
+  phone: string | null;
   emailVerifiedAt: string | null;
   createdAt: string;
   avatarUrl: string | null;
@@ -12,6 +13,16 @@ export type UpdateAvatarBody = {
 };
 
 export type UpdateAvatarPayload = {
+  user: AuthUser;
+};
+
+export type UpdateProfileBody = {
+  firstName: string;
+  lastName: string;
+  phone?: string;
+};
+
+export type UpdateProfilePayload = {
   user: AuthUser;
 };
 

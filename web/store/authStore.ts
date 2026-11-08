@@ -11,6 +11,8 @@ import type {
   RegisterBody,
   RegisterPayload,
   UpdateAvatarPayload,
+  UpdateProfileBody,
+  UpdateProfilePayload,
   VerifyEmailBody,
 } from "@/types/api";
 
@@ -27,6 +29,7 @@ type AuthState = {
   isLoggingOut: boolean;
   isChangingPassword: boolean;
   isUpdatingAvatar: boolean;
+  isUpdatingProfile: boolean;
   setCredentials: (payload: { user: AuthUser; accessToken: string }) => void;
   clearCredentials: () => void;
   setAnonymous: () => void;
@@ -36,6 +39,7 @@ type AuthState = {
   verifyEmail: (body: VerifyEmailBody) => Promise<AuthPayload>;
   refresh: () => Promise<AuthPayload>;
   changePassword: (body: ChangePasswordBody) => Promise<ChangePasswordPayload>;
+  updateProfile: (body: UpdateProfileBody) => Promise<AuthUser>;
   logout: () => Promise<void>;
   uploadAvatar: (dataUrl: string) => Promise<AuthUser>;
   removeAvatar: () => Promise<AuthUser>;
@@ -52,6 +56,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   isLoggingOut: false,
   isChangingPassword: false,
   isUpdatingAvatar: false,
+  isUpdatingProfile: false,
 
   setCredentials: ({ user, accessToken }) => {
     set({
@@ -154,6 +159,21 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       });
     } finally {
       set({ isChangingPassword: false });
+    }
+  },
+
+  updateProfile: async (body) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const data = await apiRequest<UpdateProfilePayload>("/auth/me", {
+        method: "PATCH",
+        body,
+        accessToken: get().accessToken,
+      });
+      set({ user: data.user });
+      return data.user;
+    } finally {
+      set({ isUpdatingProfile: false });
     }
   },
 
