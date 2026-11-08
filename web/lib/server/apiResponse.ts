@@ -59,6 +59,17 @@ export function handleRouteError(error: unknown): NextResponse {
     );
   }
 
-  console.error(error);
+  const causeChain: string[] = [];
+  let current: unknown = error;
+  for (let depth = 0; depth < 5 && current; depth += 1) {
+    if (current instanceof Error) {
+      causeChain.push(current.message);
+      current = current.cause;
+      continue;
+    }
+    break;
+  }
+  console.error("Unhandled route error:", causeChain.join(" | ") || error);
+
   return jsonError(500, "Internal server error", "INTERNAL_ERROR");
 }
