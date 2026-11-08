@@ -111,10 +111,12 @@ export function AuthEmailField({
       ref={containerRef}
       className={cn("field relative", error && "has-error")}
     >
-      <fieldset
-        className={cn("domain-checker", error && "is-invalid has-error")}
-      >
-        <legend className="dc-notch">{label}</legend>
+      <div className={cn("domain-checker", error && "is-invalid has-error")}>
+        <fieldset className="dc-outline" aria-hidden>
+          <legend>
+            <span>{label}</span>
+          </legend>
+        </fieldset>
         <label htmlFor={inputId} className="dc-label">
           {label}
         </label>
@@ -158,7 +160,7 @@ export function AuthEmailField({
             onKeyDown={handleKeyDown}
           />
         </div>
-      </fieldset>
+      </div>
 
       {showSuggestions ? (
         <ul

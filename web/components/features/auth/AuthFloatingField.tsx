@@ -31,10 +31,12 @@ export function AuthFloatingField({
 
   return (
     <div className={cn("field", hasError && "has-error")}>
-      <fieldset
-        className={cn("domain-checker", hasError && "is-invalid has-error")}
-      >
-        <legend className="dc-notch">{label}</legend>
+      <div className={cn("domain-checker", hasError && "is-invalid has-error")}>
+        <fieldset className="dc-outline" aria-hidden>
+          <legend>
+            <span>{label}</span>
+          </legend>
+        </fieldset>
         <label htmlFor={inputId} className="dc-label">
           {label}
         </label>
@@ -60,7 +62,7 @@ export function AuthFloatingField({
           />
           {endIcon}
         </div>
-      </fieldset>
+      </div>
       {errorMessage ? (
         <p id={`${inputId}-error`} className="field-error" role="alert">
           {errorMessage}
