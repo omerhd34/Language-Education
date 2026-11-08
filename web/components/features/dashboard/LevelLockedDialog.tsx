@@ -38,10 +38,7 @@ export function LevelLockedDialog({
             <Lock className="size-5" strokeWidth={1.75} />
           </span>
           <div className="space-y-2">
-            <DialogTitle
-              className="text-balance text-brand-950 dark:text-brand-100"
-              style={{ fontSize: 18, lineHeight: 1.35 }}
-            >
+            <DialogTitle className="text-balance text-[18px] leading-[1.35] text-brand-950 dark:text-brand-100">
               {title}
             </DialogTitle>
             {description ? (

@@ -286,10 +286,7 @@ export function PhoneField({
         data-invalid={Boolean(error) || undefined}
         data-disabled={disabled || undefined}
       >
-        <div
-          className="flex shrink-0 items-stretch"
-          style={{ borderRight: "1px solid var(--glass-line-2)" }}
-        >
+        <div className="flex shrink-0 items-stretch border-r border-(--glass-line-2)">
           <button
             ref={triggerRef}
             type="button"
