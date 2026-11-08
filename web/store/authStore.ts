@@ -185,6 +185,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         body: {},
         accessToken: get().accessToken,
       });
+    } catch {
     } finally {
       get().clearCredentials();
       set({ isLoggingOut: false });
