@@ -3,25 +3,22 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
-import {
-  Eye,
-  EyeOff,
-  KeyRound,
-  Lock,
-  LogIn,
-  Mail,
-  User,
-  UserPlus,
-} from "lucide-react";
+import { Lock, LogIn, Mail, User, UserPlus } from "lucide-react";
 import { AuthEmailField } from "@/components/features/auth/AuthEmailField";
 import { AuthFloatingField } from "@/components/features/auth/AuthFloatingField";
+import { AuthOverlay } from "@/components/features/auth/AuthOverlay";
+import { AuthPasswordToggle } from "@/components/features/auth/AuthPasswordToggle";
+import { AuthRememberMe } from "@/components/features/auth/AuthRememberMe";
+import { AuthSubmitButton } from "@/components/features/auth/AuthSubmitButton";
+import { AuthTabs } from "@/components/features/auth/AuthTabs";
+import type { AuthMode } from "@/components/features/auth/auth-types";
 import { useRouter } from "@/i18n/navigation";
 import { getApiErrorCode } from "@/lib/apiClient";
 import { createLoginSchema, createRegisterSchema } from "@/lib/authValidation";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/authStore";
 
-export type AuthMode = "giris" | "kayit" | "sifre";
+export type { AuthMode };
 
 type AuthPanelProps = {
   initialMode?: AuthMode;
@@ -213,24 +210,6 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
     setForgotNotice(t("forgotSoon"));
   }
 
-  function passwordToggle(show: boolean, onToggle: () => void) {
-    return (
-      <button
-        type="button"
-        className="toggle-password"
-        tabIndex={-1}
-        aria-label={show ? t("hidePassword") : t("showPassword")}
-        onClick={onToggle}
-      >
-        {show ? (
-          <EyeOff className="size-4" aria-hidden />
-        ) : (
-          <Eye className="size-4" aria-hidden />
-        )}
-      </button>
-    );
-  }
-
   const brand = tNav("brand");
 
   return (
@@ -242,24 +221,13 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
       )}
     >
       <div className="auth-split-card backdrop-blur-[20px] backdrop-saturate-200">
-        <nav className="auth-tabs" aria-label={t("loginTitle")}>
-          <button
-            type="button"
-            className={cn("auth-tab", mode === "giris" && "is-active")}
-            onClick={() => switchMode("giris")}
-          >
-            <LogIn className="size-4" aria-hidden />
-            {t("submitLogin")}
-          </button>
-          <button
-            type="button"
-            className={cn("auth-tab", mode === "kayit" && "is-active")}
-            onClick={() => switchMode("kayit")}
-          >
-            <UserPlus className="size-4" aria-hidden />
-            {t("submitRegister")}
-          </button>
-        </nav>
+        <AuthTabs
+          mode={mode}
+          ariaLabel={t("loginTitle")}
+          loginLabel={t("submitLogin")}
+          registerLabel={t("submitRegister")}
+          onSwitch={switchMode}
+        />
 
         <div className="auth-forms">
           <div className="auth-panel auth-panel-login">
@@ -291,23 +259,22 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                 onChange={(event) => setPassword(event.target.value)}
                 error={fieldErrors.password}
                 startIcon={<Lock className="size-4" aria-hidden />}
-                endIcon={passwordToggle(showPassword, () =>
-                  setShowPassword((value) => !value),
-                )}
+                endIcon={
+                  <AuthPasswordToggle
+                    show={showPassword}
+                    hideLabel={t("hidePassword")}
+                    showLabel={t("showPassword")}
+                    onToggle={() => setShowPassword((value) => !value)}
+                  />
+                }
               />
 
               <div className="split-meta">
-                <label className="remember" htmlFor="rememberme">
-                  <input
-                    type="checkbox"
-                    name="rememberme"
-                    id="rememberme"
-                    checked={rememberMe}
-                    onChange={(event) => setRememberMe(event.target.checked)}
-                  />
-                  <span className="remember-box" aria-hidden />
-                  <span className="remember-text">{t("rememberMe")}</span>
-                </label>
+                <AuthRememberMe
+                  checked={rememberMe}
+                  label={t("rememberMe")}
+                  onChange={setRememberMe}
+                />
               </div>
 
               {formError && mode === "giris" ? (
@@ -316,19 +283,14 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                 </p>
               ) : null}
 
-              <button
-                type="submit"
-                className={cn("btn split-btn", loginPressed && "is-pressed")}
+              <AuthSubmitButton
+                pressed={loginPressed}
                 disabled={isLoading}
-                onAnimationEnd={(event) => {
-                  if (event.animationName === "loginPress") {
-                    setLoginPressed(false);
-                  }
-                }}
+                onPressAnimationEnd={() => setLoginPressed(false)}
               >
                 <LogIn className="size-4" aria-hidden />
                 {t("submitLogin")}
-              </button>
+              </AuthSubmitButton>
 
               <div className="auth-mobile-links">
                 <button
@@ -349,14 +311,13 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                   <h1>{t("checkEmailTitle")}</h1>
                   <p>{t("checkEmailBody", { email: submittedEmail })}</p>
                 </div>
-                <button
+                <AuthSubmitButton
                   type="button"
-                  className="btn split-btn"
                   onClick={() => switchMode("giris")}
                 >
                   <LogIn className="size-4" aria-hidden />
                   {t("goLogin")}
-                </button>
+                </AuthSubmitButton>
               </div>
             ) : (
               <form
@@ -397,9 +358,14 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                     onChange={(event) => setPassword(event.target.value)}
                     error={fieldErrors.password}
                     startIcon={<Lock className="size-4" aria-hidden />}
-                    endIcon={passwordToggle(showPassword, () =>
-                      setShowPassword((value) => !value),
-                    )}
+                    endIcon={
+                      <AuthPasswordToggle
+                        show={showPassword}
+                        hideLabel={t("hidePassword")}
+                        showLabel={t("showPassword")}
+                        onToggle={() => setShowPassword((value) => !value)}
+                      />
+                    }
                   />
                   <AuthFloatingField
                     name="confirmPassword"
@@ -410,9 +376,16 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                     onChange={(event) => setConfirmPassword(event.target.value)}
                     error={fieldErrors.confirmPassword}
                     startIcon={<Lock className="size-4" aria-hidden />}
-                    endIcon={passwordToggle(showConfirmPassword, () =>
-                      setShowConfirmPassword((value) => !value),
-                    )}
+                    endIcon={
+                      <AuthPasswordToggle
+                        show={showConfirmPassword}
+                        hideLabel={t("hidePassword")}
+                        showLabel={t("showPassword")}
+                        onToggle={() =>
+                          setShowConfirmPassword((value) => !value)
+                        }
+                      />
+                    }
                   />
                 </div>
 
@@ -440,14 +413,10 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                   </p>
                 ) : null}
 
-                <button
-                  type="submit"
-                  className="btn split-btn"
-                  disabled={isLoading}
-                >
+                <AuthSubmitButton disabled={isLoading}>
                   <UserPlus className="size-4" aria-hidden />
                   {t("submitRegister")}
-                </button>
+                </AuthSubmitButton>
               </form>
             )}
           </div>
@@ -473,101 +442,33 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               />
 
               {forgotNotice ? (
-                <p
-                  className="field-error"
-                  role="status"
-                  style={{ color: "#536684" }}
-                >
+                <p className="field-error text-brand-600" role="status">
                   {forgotNotice}
                 </p>
               ) : null}
 
-              <button type="submit" className="btn split-btn">
-                {t("submitForgot")}
-              </button>
+              <AuthSubmitButton>{t("submitForgot")}</AuthSubmitButton>
             </form>
           </div>
         </div>
 
-        <div className="auth-overlay">
-          <div className="auth-overlay-bg" />
-
-          <div className="auth-overlay-panel auth-overlay-left">
-            <span className="overlay-logo-text">{brand}</span>
-            <h2>{t("promoHasAccountTitle")}</h2>
-            <p>{t("promoHasAccountBody")}</p>
-            <button
-              type="button"
-              className="overlay-btn"
-              onClick={() => switchMode("giris")}
-            >
-              <LogIn className="size-4" aria-hidden />
-              {t("promoLogin")}
-            </button>
-            <div className="overlay-forgot">
-              <h2>{t("promoForgotTitle")}</h2>
-              <p>{t("promoForgotBody")}</p>
-              <button
-                type="button"
-                className="overlay-btn"
-                onClick={() => switchMode("sifre")}
-              >
-                <KeyRound className="size-4" aria-hidden />
-                {t("promoForgot")}
-              </button>
-            </div>
-          </div>
-
-          <div className="auth-overlay-panel auth-overlay-right">
-            <span className="overlay-logo-text">{brand}</span>
-            <h2>{t("promoNoAccountTitle")}</h2>
-            <p>{t("promoNoAccountBody")}</p>
-            <button
-              type="button"
-              className="overlay-btn"
-              onClick={() => switchMode("kayit")}
-            >
-              <UserPlus className="size-4" aria-hidden />
-              {t("promoRegister")}
-            </button>
-            <div className="overlay-forgot">
-              <h2>{t("promoForgotTitle")}</h2>
-              <p>{t("promoForgotBody")}</p>
-              <button
-                type="button"
-                className="overlay-btn"
-                onClick={() => switchMode("sifre")}
-              >
-                <KeyRound className="size-4" aria-hidden />
-                {t("promoForgot")}
-              </button>
-            </div>
-          </div>
-
-          <div className="auth-overlay-panel auth-overlay-reset">
-            <span className="overlay-logo-text">{brand}</span>
-            <h2>{t("promoHaveAccountTitle")}</h2>
-            <p>{t("promoHaveAccountBody")}</p>
-            <div className="overlay-actions">
-              <button
-                type="button"
-                className="overlay-btn"
-                onClick={() => switchMode("giris")}
-              >
-                <LogIn className="size-4" aria-hidden />
-                {t("promoLogin")}
-              </button>
-              <button
-                type="button"
-                className="overlay-btn"
-                onClick={() => switchMode("kayit")}
-              >
-                <UserPlus className="size-4" aria-hidden />
-                {t("promoRegister")}
-              </button>
-            </div>
-          </div>
-        </div>
+        <AuthOverlay
+          brand={brand}
+          onSwitch={switchMode}
+          copy={{
+            promoHasAccountTitle: t("promoHasAccountTitle"),
+            promoHasAccountBody: t("promoHasAccountBody"),
+            promoLogin: t("promoLogin"),
+            promoForgotTitle: t("promoForgotTitle"),
+            promoForgotBody: t("promoForgotBody"),
+            promoForgot: t("promoForgot"),
+            promoNoAccountTitle: t("promoNoAccountTitle"),
+            promoNoAccountBody: t("promoNoAccountBody"),
+            promoRegister: t("promoRegister"),
+            promoHaveAccountTitle: t("promoHaveAccountTitle"),
+            promoHaveAccountBody: t("promoHaveAccountBody"),
+          }}
+        />
       </div>
     </div>
   );

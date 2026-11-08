@@ -110,8 +110,7 @@ export function AuthEmailField({
   return (
     <div
       ref={containerRef}
-      className={cn("field", error && "has-error")}
-      style={{ position: "relative" }}
+      className={cn("field relative", error && "has-error")}
     >
       <div className={cn("domain-checker", error && "is-invalid has-error")}>
         <div className="dc-input dc-float">
@@ -131,7 +130,7 @@ export function AuthEmailField({
             spellCheck={false}
             autoFocus={autoFocus}
             className={cn(
-              "form-control",
+              "auth-field-input",
               filled && "is-filled",
               error && "is-invalid",
             )}
@@ -164,8 +163,7 @@ export function AuthEmailField({
           id={listboxId}
           role="listbox"
           aria-label={t("emailDomainSuggestions")}
-          className="absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-2xl border border-[#e2e8f0] bg-white py-1 shadow-lg"
-          style={{ position: "absolute", left: 0, right: 0 }}
+          className="absolute inset-x-0 z-20 mt-1 max-h-56 w-full overflow-auto rounded-2xl border border-auth-field-border bg-auth-field-bg py-1 shadow-lg"
         >
           {suggestions.map((suggestion, index) => {
             const isActive = index === activeIndex;
@@ -179,8 +177,8 @@ export function AuthEmailField({
                   className={cn(
                     "flex w-full items-center gap-1 px-3 py-2.5 text-left text-sm transition-colors",
                     isActive
-                      ? "bg-[#386ce0]/10 text-[#1a1f2e]"
-                      : "text-[#334155] hover:bg-[#f1f5fb]",
+                      ? "bg-auth-accent-soft/10 text-auth-ink"
+                      : "text-auth-slate hover:bg-(--auth-remember-bg)",
                   )}
                   onMouseEnter={() => setActiveIndex(index)}
                   onMouseDown={(event) => {
@@ -188,8 +186,10 @@ export function AuthEmailField({
                     selectSuggestion(suggestion.email);
                   }}
                 >
-                  <span className="text-[#8b93a3]">{suggestion.localPart}</span>
-                  <span className="font-medium text-[#386ce0]">
+                  <span className="text-auth-muted-2">
+                    {suggestion.localPart}
+                  </span>
+                  <span className="font-medium text-auth-accent-soft">
                     @{suggestion.domain}
                   </span>
                 </button>

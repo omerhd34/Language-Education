@@ -40,7 +40,7 @@ export function AuthGlassField({
         className={cn(
           "relative flex h-11 items-center rounded-lg border transition-colors",
           isLight
-            ? "border-brand-100 bg-white focus-within:border-[#3d6fd8]/70 focus-within:ring-2 focus-within:ring-[#3d6fd8]/15"
+            ? "border-brand-100 bg-auth-field-bg focus-within:border-auth-accent/70 focus-within:ring-2 focus-within:ring-auth-accent/15"
             : "border-white/10 bg-black/35 focus-within:border-sky-400/50 focus-within:ring-2 focus-within:ring-sky-400/20",
           error &&
             (isLight

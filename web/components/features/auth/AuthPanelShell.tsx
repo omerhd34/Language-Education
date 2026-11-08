@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-import "./auth-panel.css";
 
 type AuthPanelShellProps = {
   children: ReactNode;

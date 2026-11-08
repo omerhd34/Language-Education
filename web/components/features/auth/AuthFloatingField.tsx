@@ -40,7 +40,7 @@ export function AuthFloatingField({
             id={inputId}
             name={name}
             className={cn(
-              "form-control",
+              "auth-field-input",
               filled && "is-filled",
               error && "is-invalid",
             )}
