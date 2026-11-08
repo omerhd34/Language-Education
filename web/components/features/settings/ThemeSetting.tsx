@@ -27,14 +27,12 @@ export function ThemeSetting() {
       id: "light" as const,
       selected: mounted && !isDark,
       title: t("themeLight"),
-      description: t("themeLightHint"),
       icon: <Sun className="size-3.5" aria-hidden />,
     },
     {
       id: "dark" as const,
       selected: isDark,
       title: t("themeDark"),
-      description: t("themeDarkHint"),
       icon: <Moon className="size-3.5" aria-hidden />,
     },
   ];
@@ -58,13 +56,8 @@ export function ThemeSetting() {
             <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">
               {option.icon}
             </span>
-            <span className="min-w-0 flex-1 space-y-0.5">
-              <span className="block text-sm font-medium text-brand-950 dark:text-brand-100">
-                {option.title}
-              </span>
-              <span className="block text-xs leading-snug text-brand-600 dark:text-brand-400">
-                {option.description}
-              </span>
+            <span className="min-w-0 flex-1 text-sm font-medium text-brand-950 dark:text-brand-100">
+              {option.title}
             </span>
             <span
               className={cn(

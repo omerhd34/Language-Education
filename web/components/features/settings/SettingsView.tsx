@@ -4,9 +4,10 @@ import { useTranslations } from "next-intl";
 import { Gauge, Palette } from "lucide-react";
 import { ChangePasswordPanel } from "@/components/features/settings/ChangePasswordPanel";
 import { NotificationSettingsPanel } from "@/components/features/settings/NotificationSettingsPanel";
-import { ProfilePhotoSetting } from "@/components/features/settings/ProfilePhotoSetting";
+import { ProfileSetting } from "@/components/features/settings/ProfileSetting";
 import { ProgressResetPanel } from "@/components/features/settings/ProgressResetPanel";
 import { SettingsSection } from "@/components/features/settings/SettingsSection";
+import { LocaleSetting } from "@/components/features/settings/LocaleSetting";
 import { ThemeSetting } from "@/components/features/settings/ThemeSetting";
 import { SpeechRateControl } from "@/components/features/vocabulary/SpeechRateControl";
 
@@ -14,7 +15,7 @@ export function SettingsView() {
   const t = useTranslations("Settings");
 
   return (
-    <div className="mx-auto w-full max-w-5xl space-y-6 p-4 sm:space-y-8 sm:p-6 lg:p-8">
+    <div className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:space-y-8 sm:p-6 lg:p-8">
       <header className="space-y-2 border-b border-border pb-6">
         <h1 className="font-display text-3xl font-semibold tracking-tight text-brand-950 dark:text-brand-100">
           {t("title")}
@@ -25,7 +26,7 @@ export function SettingsView() {
       </header>
 
       <div className="grid gap-5 lg:grid-cols-2 lg:items-start lg:gap-6">
-        <ProfilePhotoSetting />
+        <ProfileSetting />
 
         <SettingsSection
           titleId="settings-appearance"
@@ -33,7 +34,10 @@ export function SettingsView() {
           description={t("appearanceHint")}
           icon={<Palette className="size-5" aria-hidden />}
         >
-          <ThemeSetting />
+          <div className="space-y-5">
+            <ThemeSetting />
+            <LocaleSetting />
+          </div>
         </SettingsSection>
       </div>
 
