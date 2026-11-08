@@ -266,13 +266,17 @@ export async function logoutUser(rawRefreshToken: string | undefined) {
   const prisma = getPrisma();
   const hashed = hashToken(rawRefreshToken);
 
-  await prisma.refreshToken.deleteMany({
-    where: {
-      token: {
-        endsWith: hashed,
+  try {
+    await prisma.refreshToken.deleteMany({
+      where: {
+        token: {
+          endsWith: hashed,
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    console.error("Failed to revoke refresh token during logout:", error);
+  }
 }
 
 export async function getCurrentUser(userId: string) {

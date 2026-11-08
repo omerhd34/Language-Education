@@ -1,7 +1,4 @@
-import {
-  handleRouteError,
-  jsonSuccess,
-} from "@/lib/server/apiResponse";
+import { handleRouteError, jsonSuccess } from "@/lib/server/apiResponse";
 import {
   clearRefreshCookie,
   clearSessionHintCookie,
@@ -16,13 +13,20 @@ export async function POST(request: Request) {
     const input = refreshSchema.parse(body);
     const refreshToken = await getRefreshTokenFromRequest(input.refreshToken);
 
-    await logoutUser(refreshToken);
+    try {
+      await logoutUser(refreshToken);
+    } catch (error) {
+      console.error("Logout token revocation failed:", error);
+    }
 
     const response = jsonSuccess({ message: "Logged out" });
     clearRefreshCookie(response);
     clearSessionHintCookie(response);
     return response;
   } catch (error) {
-    return handleRouteError(error);
+    const response = handleRouteError(error);
+    clearRefreshCookie(response);
+    clearSessionHintCookie(response);
+    return response;
   }
 }

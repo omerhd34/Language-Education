@@ -4,13 +4,14 @@ import {
   setSessionHintCookie,
 } from "@/lib/server/auth/cookies";
 import { loginUser } from "@/lib/server/auth/service";
+import { withPrisma } from "@/lib/server/prisma";
 import { loginSchema } from "@/validators/auth.schema";
 
 export async function POST(request: Request) {
   try {
     const body: unknown = await request.json();
     const input = loginSchema.parse(body);
-    const result = await loginUser(input);
+    const result = await withPrisma(() => loginUser(input));
 
     const response = jsonSuccess({
       user: result.user,

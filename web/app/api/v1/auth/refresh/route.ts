@@ -5,6 +5,7 @@ import {
 } from "@/lib/server/auth/cookies";
 import { getRefreshTokenFromRequest } from "@/lib/server/auth/request";
 import { refreshSession } from "@/lib/server/auth/service";
+import { withPrisma } from "@/lib/server/prisma";
 import { refreshSchema } from "@/validators/auth.schema";
 
 export async function POST(request: Request) {
@@ -12,7 +13,7 @@ export async function POST(request: Request) {
     const body: unknown = await request.json().catch(() => ({}));
     const input = refreshSchema.parse(body);
     const refreshToken = await getRefreshTokenFromRequest(input.refreshToken);
-    const result = await refreshSession(refreshToken);
+    const result = await withPrisma(() => refreshSession(refreshToken));
 
     const response = jsonSuccess({
       user: result.user,
