@@ -242,7 +242,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
       )}
       id="ixirAuthSplit"
     >
-      <div className="ixir-auth-split-card">
+      <div className="ixir-auth-split-card backdrop-blur-[20px] backdrop-saturate-200">
         <nav className="ixir-auth-tabs" aria-label={t("loginTitle")}>
           <button
             type="button"

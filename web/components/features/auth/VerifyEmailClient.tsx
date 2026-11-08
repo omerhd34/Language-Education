@@ -56,7 +56,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
         <p className="text-sm text-red-600 dark:text-red-400" role="alert">
           {error}
         </p>
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           <Link
             href="/panelLogin"
             className="font-medium text-brand-800 underline-offset-2 hover:underline dark:text-brand-400"
@@ -70,7 +70,7 @@ export function VerifyEmailClient({ token }: VerifyEmailClientProps) {
 
   return (
     <p
-      className="text-sm text-brand-600 dark:text-brand-400"
+      className="page-subtitle mt-0"
       aria-live="polite"
     >
       {done

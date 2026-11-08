@@ -17,7 +17,7 @@ export function LandingAnnouncements() {
         <div className="max-w-3xl space-y-3">
           <h2
             id="announcements-heading"
-            className="font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-3xl dark:text-brand-100"
+            className="page-title"
           >
             {t("title")}
           </h2>

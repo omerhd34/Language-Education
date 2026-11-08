@@ -16,7 +16,7 @@ export function EducationStep({ index, title, body }: EducationStepProps) {
         {stepLabel}
       </span>
       <div className="max-w-2xl space-y-2">
-        <h3 className="font-display text-xl font-semibold tracking-tight text-brand-950 dark:text-brand-100">
+        <h3 className="section-title">
           {title}
         </h3>
         <p className="text-sm leading-6 text-brand-600 sm:text-base sm:leading-7 dark:text-brand-400">
