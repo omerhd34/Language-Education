@@ -36,7 +36,7 @@ export async function TopicLessonView({ lesson }: TopicLessonViewProps) {
             <div className="space-y-1">
               <h2
                 id={`heading-${section.subtopicId}`}
-                className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100"
+                className="section-title"
               >
                 {section.title}
               </h2>

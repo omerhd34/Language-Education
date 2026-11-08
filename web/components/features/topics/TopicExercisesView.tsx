@@ -472,7 +472,7 @@ export function TopicExercisesView({
   if (isExam && level) {
     if (levelExamCrosswords === null || levelExamFillBlanks === null) {
       return (
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("levelExamIntro")}
         </p>
       );
@@ -480,7 +480,7 @@ export function TopicExercisesView({
 
     if (levelExamCrosswords.length === 0 || levelExamFillBlanks.length === 0) {
       return (
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("noExamQuestions")}
         </p>
       );
@@ -492,10 +492,10 @@ export function TopicExercisesView({
           className="dashboard-panel mx-auto max-w-lg space-y-3 border-emerald-500/40 bg-emerald-500/10 text-center"
           role="status"
         >
-          <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
+          <h2 className="section-title">
             {t("examPassedTitle")}
           </h2>
-          <p className="text-sm text-brand-600 dark:text-brand-400">
+          <p className="page-subtitle mt-0">
             {nextLevel
               ? t("examPassedBody", { nextLevel })
               : t("examPassedBodyFinal")}
@@ -510,7 +510,7 @@ export function TopicExercisesView({
     if (!levelExamSelected) {
       return (
         <div className="space-y-4">
-          <p className="text-sm text-brand-600 dark:text-brand-400">
+          <p className="page-subtitle mt-0">
             {t("levelExamIntro")}
           </p>
           <ExerciseTypePicker
@@ -557,10 +557,10 @@ export function TopicExercisesView({
             className="dashboard-panel space-y-3 border-amber-500/40 bg-amber-500/10 text-center"
             role="status"
           >
-            <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
+            <h2 className="section-title">
               {t("levelExamPartFailedTitle")}
             </h2>
-            <p className="text-sm text-brand-600 dark:text-brand-400">
+            <p className="page-subtitle mt-0">
               {t("levelExamPartFailedBody")}
             </p>
             <div className="flex flex-wrap justify-center gap-2">
@@ -585,10 +585,10 @@ export function TopicExercisesView({
             className="dashboard-panel space-y-3 border-emerald-500/40 bg-emerald-500/10 text-center"
             role="status"
           >
-            <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
+            <h2 className="section-title">
               {t("levelExamPartPassedTitle")}
             </h2>
-            <p className="text-sm text-brand-600 dark:text-brand-400">
+            <p className="page-subtitle mt-0">
               {t("levelExamPartPassedBody")}
             </p>
             <Button type="button" size="sm" onClick={backToLevelExamPicker}>
@@ -642,7 +642,7 @@ export function TopicExercisesView({
 
   if (exercises.length === 0) {
     return (
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("noExercises")}
       </p>
     );

@@ -276,7 +276,7 @@ export function CrosswordExerciseView({
 
   if (!exercise || !solution) {
     return (
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("noExercisesForType")}
       </p>
     );
@@ -381,10 +381,10 @@ export function CrosswordExerciseView({
   if (finished) {
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
+        <h2 className="page-title">
           {t("crosswordComplete")}
         </h2>
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("finishedScore", {
             correct: solvedCount,
             total: exercises.length,

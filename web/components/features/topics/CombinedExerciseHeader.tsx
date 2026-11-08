@@ -39,7 +39,7 @@ export function CombinedExerciseHeader({
       </div>
 
       <div className="space-y-2">
-        <h1 className="font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-3xl dark:text-brand-100">
+        <h1 className="page-title">
           {t("combinedExerciseTitle")}
         </h1>
         <p className="max-w-3xl text-sm text-brand-600 dark:text-brand-400">

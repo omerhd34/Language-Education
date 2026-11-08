@@ -67,7 +67,7 @@ export function TopicPageHeader({
       </div>
 
       <div className="space-y-1">
-        <h1 className="font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-3xl dark:text-brand-100">
+        <h1 className="page-title">
           {title}
         </h1>
         {englishTitle ? (

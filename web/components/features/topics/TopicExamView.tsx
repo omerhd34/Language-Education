@@ -182,7 +182,7 @@ export function TopicExamView({
 
   if (multipleChoice.length === 0 && fillBlanks.length === 0) {
     return (
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("noExamQuestions")}
       </p>
     );
@@ -234,7 +234,7 @@ export function TopicExamView({
             <AlertDescription>{t("topicExamPassedBody")}</AlertDescription>
           </Alert>
         ) : (
-          <p className="text-sm text-brand-600 dark:text-brand-400">
+          <p className="page-subtitle mt-0">
             {t("topicExamIntro")}
           </p>
         )}
@@ -284,7 +284,7 @@ export function TopicExamView({
           {t("quizBackToParts")}
         </Button>
       ) : (
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("quizSingleIntro")}
         </p>
       )}
