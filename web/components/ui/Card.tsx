@@ -6,7 +6,7 @@ function Card({ className, ...props }: ComponentProps<"div">) {
     <div
       data-slot="card"
       className={cn(
-        "flex flex-col gap-4 rounded-2xl border border-border bg-surface/90 p-6 text-card-foreground shadow-sm dark:bg-brand-900/90",
+        "glass-panel flex flex-col gap-4 rounded-[20px] p-6 text-card-foreground",
         className,
       )}
       {...props}
@@ -28,10 +28,7 @@ function CardTitle({ className, ...props }: ComponentProps<"h3">) {
   return (
     <h3
       data-slot="card-title"
-      className={cn(
-        "font-display text-xl font-semibold tracking-tight text-brand-950 dark:text-brand-100",
-        className,
-      )}
+      className={cn("section-title", className)}
       {...props}
     />
   );

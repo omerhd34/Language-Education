@@ -11,8 +11,12 @@ export function ButtonLink({
   className,
   variant,
   size,
+  style,
   ...props
 }: ButtonLinkProps) {
+  const fixedFontSize =
+    size === "xs" ? undefined : ({ fontSize: 15 } as const);
+
   return (
     <Link
       className={cn(
@@ -20,6 +24,7 @@ export function ButtonLink({
         "cursor-pointer",
         className,
       )}
+      style={{ ...fixedFontSize, ...style }}
       {...props}
     />
   );
