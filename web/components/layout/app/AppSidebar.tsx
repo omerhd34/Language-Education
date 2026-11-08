@@ -203,6 +203,7 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
               name={resolvedUser.name}
               email={resolvedUser.email}
               avatarUrl={resolvedUser.avatarUrl}
+              shape="rounded"
               className="size-9 group-data-[collapsible=icon]:size-8"
               fallbackClassName="text-[0.65rem]"
               editable
