@@ -174,7 +174,7 @@ export function PhoneField({
                     type="search"
                     value={query}
                     placeholder={t("profilePhoneCountrySearch")}
-                    className="h-9 w-full rounded-lg border border-brand-300/80 bg-surface pr-3 pl-8 text-sm text-brand-950 outline-none placeholder:text-brand-500 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-brand-600 dark:bg-brand-900 dark:text-brand-100"
+                    className="h-9 w-full rounded-lg border border-brand-300/80 bg-surface pr-3 pl-8 text-sm text-brand-950 outline-none placeholder:text-brand-500 focus:border-sky-500 focus:ring-2 focus:ring-sky-500/20 dark:border-brand-600 dark:bg-brand-900 dark:text-brand-100 [&::-webkit-search-cancel-button]:cursor-pointer"
                     onChange={(event) => {
                       setQuery(event.target.value);
                     }}
