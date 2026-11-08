@@ -1,0 +1,179 @@
+.account-trigger-group {
+  @apply inline-flex items-center gap-0.5 overflow-hidden rounded-2xl px-2 py-1.5 backdrop-blur-[20px] backdrop-saturate-200;
+  background: var(--glass);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 0 0 0 1px var(--glass-edge-2),
+    0 0 0 1px var(--glass-line);
+}
+
+.account-icon-btn {
+  @apply inline-flex size-8.5 cursor-pointer items-center justify-center rounded-[10px] transition-[background-color,color] duration-150;
+  color: var(--account-icon);
+}
+
+.account-icon-btn:hover {
+  background: color-mix(in srgb, var(--account-icon) 8%, transparent);
+  color: var(--account-text);
+}
+
+.account-icon-btn:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ring;
+}
+
+.profile-trigger {
+  @apply ml-0.5 inline-flex cursor-pointer rounded-full outline-none;
+}
+
+.profile-trigger:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ring;
+}
+
+.bar-badged {
+  @apply relative inline-flex;
+}
+
+.bar-badge {
+  @apply pointer-events-none absolute top-0.5 right-0.5 z-1 inline-flex h-3.75 min-w-3.75 items-center justify-center overflow-hidden rounded-full px-1 font-bold text-white;
+  background: var(--account-accent);
+  font-family:
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 9px;
+  line-height: 1;
+  letter-spacing: 0;
+  box-shadow: 0 0 0 1.5px var(--account-surface);
+  animation: badge-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 300ms both;
+}
+
+@keyframes badge-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.account-dropdown {
+  @apply absolute top-[calc(100%+10px)] right-0 z-50 w-[min(300px,calc(100vw-1.5rem))] rounded-2xl p-3 backdrop-blur-[20px] backdrop-saturate-200;
+  background: var(--glass-solid);
+  color: var(--account-text);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge),
+    inset 0 0 0 1px var(--glass-edge-2),
+    0 0 0 1px var(--glass-line),
+    var(--glass-shadow-lg);
+}
+
+.account-dropdown__user {
+  @apply flex items-center gap-3 px-1.5 pt-1 pb-3;
+}
+
+.account-dropdown__nav {
+  @apply relative flex flex-col gap-0.5;
+}
+
+.account-dropdown__divider {
+  @apply mx-1 my-2 border-t;
+  border-color: var(--account-hairline);
+}
+
+.dm-plate {
+  @apply pointer-events-none absolute inset-0 top-0 left-0 z-0 rounded-lg opacity-0 transition-[transform,width,height,opacity] duration-240;
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dark .dm-plate {
+  background: color-mix(in srgb, var(--account-accent) 14%, transparent);
+}
+
+.dm-plate.on {
+  @apply opacity-100;
+}
+
+.menu-item,
+.sign-out-row {
+  @apply relative z-1 flex min-h-9.5 w-full cursor-pointer items-center gap-2.5 rounded-lg border-0 bg-transparent px-2.5 py-2 text-left text-sm leading-tight no-underline outline-none;
+  color: var(--account-text);
+}
+
+.menu-item:focus-visible,
+.sign-out-row:focus-visible {
+  box-shadow: inset 0 0 0 2px
+    color-mix(in srgb, var(--account-accent) 45%, transparent);
+}
+
+.menu-item__icon {
+  @apply size-4 shrink-0;
+  stroke: currentColor;
+  color: var(--account-text-dim);
+  transition:
+    color 300ms ease-out var(--dm-ink-delay, 0ms),
+    stroke 300ms ease-out var(--dm-ink-delay, 0ms);
+}
+
+.menu-item__label {
+  @apply min-w-0 flex-1;
+  transition: color 300ms ease-out var(--dm-ink-delay, 0ms);
+}
+
+.menu-item.is-active .menu-item__icon,
+.sign-out-row.is-active .menu-item__icon {
+  color: var(--account-accent);
+  stroke: var(--account-accent);
+}
+
+.menu-item__shortcut {
+  @apply ml-auto inline-flex gap-0.5;
+}
+
+.menu-item__key {
+  @apply inline-grid h-5 min-w-5 place-items-center rounded px-1.5 text-[11px] font-medium;
+  font-family: inherit;
+  color: var(--account-text-dim);
+  background: color-mix(in srgb, var(--account-text) 6%, transparent);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in srgb, var(--account-text) 12%, transparent);
+  transition: color 300ms ease-out var(--dm-ink-delay, 0ms);
+}
+
+.menu-item.is-active .menu-item__key {
+  color: var(--account-text);
+}
+
+.dark .menu-item__key {
+  background: rgb(255 255 255 / 6%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 8%);
+}
+
+.menu-item__new {
+  @apply ml-auto inline-flex items-center gap-1.5 text-[11px] font-semibold;
+  color: var(--account-text-dim);
+}
+
+.menu-item__new-dot {
+  @apply size-1.5 rounded-full bg-emerald-500;
+}
+
+.sign-out-row {
+  color: var(--account-text-dim);
+}
+
+.sign-out-row:disabled {
+  @apply cursor-not-allowed opacity-60;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-plate {
+    transition: opacity 120ms linear;
+  }
+
+  .bar-badge {
+    animation: none;
+  }
+}

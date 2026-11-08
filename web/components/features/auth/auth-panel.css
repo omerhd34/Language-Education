@@ -4,7 +4,7 @@
   --ixir-auth-pad: 40px;
   --ixir-auth-shell: calc(100dvh - var(--ixir-auth-header));
   --ixir-auth-hero: calc(var(--ixir-auth-shell) - (var(--ixir-auth-pad) * 2));
-  background: #eef1f5;
+  background: transparent;
   min-height: var(--ixir-auth-shell);
   padding: var(--ixir-auth-pad) 24px;
   box-sizing: border-box;
@@ -33,7 +33,7 @@
 }
 .ixir-overlay-logo-text {
   display: inline-block;
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
   font-size: 2rem;
   font-weight: 600;
   color: #fff;
@@ -65,9 +65,13 @@
   width: 100%;
   min-height: 100% !important;
   height: 100% !important;
-  background: #fff;
+  background: var(--glass-solid, rgba(253, 250, 248, 0.78));
   border-radius: 28px;
-  box-shadow: 0 18px 50px rgba(36, 41, 53, 0.12);
+  box-shadow:
+    inset 0 1px 0 var(--glass-edge, rgba(255, 255, 255, 0.95)),
+    inset 0 0 0 1px var(--glass-edge-2, rgba(255, 255, 255, 0.35)),
+    0 0 0 1px var(--glass-line, rgba(17, 21, 34, 0.09)),
+    var(--glass-shadow-lg, 0 18px 50px rgba(36, 41, 53, 0.12));
   overflow: hidden;
 }
 
@@ -1454,7 +1458,9 @@
 }
 
 .ixir-login-form .ixir-split-btn {
-  transition: transform 120ms ease, background-color 150ms ease;
+  transition:
+    transform 120ms ease,
+    background-color 150ms ease;
 }
 
 .ixir-login-form .ixir-split-btn:active:not(:disabled) {

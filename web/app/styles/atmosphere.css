@@ -1,0 +1,41 @@
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, transparent 38%, var(--band) 50%, transparent 62%),
+    radial-gradient(
+      circle 40vmax at 4% 6%,
+      var(--orb-1),
+      var(--orb-1) 22%,
+      transparent 64%
+    ),
+    radial-gradient(
+      circle 30vmax at 96% 8%,
+      var(--orb-2),
+      var(--orb-2) 20%,
+      transparent 62%
+    ),
+    radial-gradient(
+      circle 42vmax at 94% 98%,
+      var(--orb-3),
+      var(--orb-3) 24%,
+      transparent 64%
+    ),
+    radial-gradient(
+      circle 28vmax at 26% 98%,
+      var(--orb-4),
+      var(--orb-4) 22%,
+      transparent 62%
+    ),
+    radial-gradient(
+      circle 20vmax at 60% 30%,
+      var(--orb-5),
+      var(--orb-5) 16%,
+      transparent 68%
+    ),
+    radial-gradient(circle 16vmax at 40% 62%, var(--orb-6), transparent 70%),
+    var(--wash);
+}

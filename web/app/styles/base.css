@@ -1,0 +1,28 @@
+html {
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  letter-spacing: -0.01em;
+  font-feature-settings:
+    "ss01" on,
+    "cv11" on;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-transparent text-foreground;
+  }
+
+  html {
+    @apply bg-transparent font-sans;
+  }
+}
