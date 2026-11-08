@@ -8,7 +8,6 @@
   },
   "Nav": {
     "home": "Ana sayfa",
-    "about": "Hakkımızda",
     "benefits": "Kazanımlar",
     "packages": "Paketler",
     "sss": "SSS",
@@ -54,7 +53,6 @@
     "reading": "Okuma",
     "exercises": "Alıştırma",
     "progress": "İlerleme",
-    "info": "Hakkımızda",
     "settings": "Ayarlar",
     "collapseSidebar": "Kenar çubuğunu daralt",
     "expandSidebar": "Kenar çubuğunu genişlet"
@@ -64,7 +62,7 @@
     "description": "Profil, görünüm, bildirim, okuma, şifre ve öğrenim ilerlemesini buradan yönet.",
     "profile": "Profil",
     "profileHint": "İsimi, soyisimini ve profil fotoğrafını buradan yönet.",
-    "profilePhotoSpec": "Kare fotoğraf önerilir. (256×256 px, JPEG/PNG/WebP)",
+    "profilePhotoSpec": "Kare fotoğraf önerilir. (256×256 px)",
     "profileFirstName": "İsim",
     "profileLastName": "Soyisim",
     "profileEmail": "E-posta",
@@ -296,7 +294,7 @@
     "learnMissedNotificationBody": "Yeni kelime seçmeden bir gün geçti. Çalışmaya devam etmek için kelime seç.",
     "topicsTitle": "Dilbilgisi",
     "topicsSubtitle": "Seviyene uygun konulara buradan ulaş. Her seviyenin sonunda sınav vardır; sınavı geçince bir üst seviye açılır.",
-    "topicLabel": "{index}. Konu",
+    "topicLabel": "{index}. KONU",
     "topicProgressAria": "Konu ilerlemesi %{progress}",
     "noSubtopics": "Alt konu henüz eklenmedi.",
     "summary": "Özet",
@@ -324,13 +322,14 @@
     "topicsLevelLockedCta": "Anladım",
     "levelLockedHint": "{level} konularını açmak için önce {requiredLevel} seviyesinin sınavını geçmelisin.",
     "vocabularyTitle": "Kelime Bilgisi",
-    "vocabularySubtitle": "Kelimeleri A1–C2 seviyelerine göre çalış. Bir üst seviyeye geçmek için önceki seviyeyi tamamlamalısın. Öğrenme seçimi tüm seviyelerde toplam {limit} kelime ile sınırlıdır. Aynı seviyede aynı anda {window} bölüm açık; açık olanlardan birini bitirince sıradaki açılır. Süreyi başlattığın kelimeler 30 saniye sonra sınava gelir (tam seçimle {quizTarget} kelime).",
+    "vocabularySubtitle": "Kelimeleri A1–C2 seviyelerine göre çalış. Bir üst seviyeye geçmek için önceki seviyeyi tamamlamalısın. Öğrenme seçimi tüm seviyelerde toplam {limit} kelime ile sınırlıdır.",
+    "vocabularySubtitleDetail": "Aynı seviyede aynı anda {window} bölüm açık; açık olanlardan birini bitirince sıradaki açılır. Süreyi başlattığın kelimeler 30 saniye sonra sınava gelir (tam seçimle {quizTarget} kelime).",
     "vocabularyLevelLockedTitle": "{level} seviyesi kilitli",
     "vocabularyLevelLockedHint": "{level} kelimelerini açmak için önce {requiredLevel} seviyesini tamamlamalısın.",
     "vocabularyLevelLockedCta": "Anladım",
     "vocabularyLevelEmptyTitle": "{level} yakında",
     "vocabularyLevelEmpty": "{level} kelime seti henüz hazır değil.",
-    "vocabularyCategoryLabel": "{index}. Bölüm",
+    "vocabularyCategoryLabel": "{index}. BÖLÜM",
     "vocabularyProgress": "%{progress}",
     "vocabularyProgressAria": "Bölüm ilerlemesi %{progress}",
     "vocabularyOpenCategory": "Kelimeleri gör",
@@ -393,7 +392,7 @@
     "title": "Kelimeler",
     "documentTitle": "Pylmor - {title}",
     "backToVocabulary": "Kelimelere dön",
-    "categoryLabel": "{index}. Bölüm",
+    "categoryLabel": "{index}. BÖLÜM",
     "categoryLockedTitle": "{index}. Bölüm kilitli",
     "categoryLockedBody": "Aynı seviyede aynı anda en fazla {window} bölüm açık. Açık bölümlerden birini tamamlayınca sıradaki açılır.",
     "levelLockedTitle": "{level} seviyesi kilitli",
@@ -477,7 +476,7 @@
   },
   "Topic": {
     "backToTopics": "Konulara dön",
-    "topicLabel": "{index}. Konu",
+    "topicLabel": "{index}. KONU",
     "examLabel": "Sınav",
     "combinedExerciseLabel": "{index}. Alıştırma",
     "combinedExerciseTitle": "Alıştırma",
@@ -658,10 +657,6 @@
     }
   },
   "Pages": {
-    "about": {
-      "title": "Hakkımızda",
-      "description": "Pylmor, dil öğrenmeyi sade ve sürdürülebilir hale getirmek için tasarlandı. Adım adım dersler, yapay zeka destekli alıştırmalar, kelime çalışması ve ilerleme takibiyle kendi hızında ilerlersin."
-    },
     "benefits": {
       "title": "Kazanımlar",
       "description": "Düzenli pratik, yapay zeka destekli alıştırmalar, seviyene uygun içerik ve net hedeflerle kelime dağarcığını güçlendir, gramerini netleştir ve güvenle iletişim kur."
