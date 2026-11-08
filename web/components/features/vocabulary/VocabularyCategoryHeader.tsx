@@ -34,7 +34,7 @@ export function VocabularyCategoryHeader({
       </div>
 
       <div className="space-y-1">
-        <h1 className="font-display text-2xl font-semibold tracking-tight text-brand-950 sm:text-3xl dark:text-brand-100">
+        <h1 className="page-title">
           {title}
         </h1>
         {secondaryTitle ? (
@@ -42,7 +42,7 @@ export function VocabularyCategoryHeader({
             {secondaryTitle}
           </p>
         ) : null}
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("wordCount", { count: wordCount })}
         </p>
       </div>

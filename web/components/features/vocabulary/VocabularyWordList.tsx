@@ -82,7 +82,7 @@ export function VocabularyWordList({
 
   if (words.length === 0) {
     return (
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("emptyWords")}
       </p>
     );
@@ -94,7 +94,7 @@ export function VocabularyWordList({
       <VocabularyWordJumpNav words={words} />
 
       {isLoading ? (
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("statusLoading")}
         </p>
       ) : null}

@@ -51,10 +51,10 @@ export function VocabularyQuizTypePicker({
   return (
     <div className="w-full space-y-4">
       <div className="space-y-1">
-        <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
+        <h2 className="section-title">
           {t("quizChooseTypeTitle")}
         </h2>
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("quizChooseTypeSubtitle")}
         </p>
       </div>

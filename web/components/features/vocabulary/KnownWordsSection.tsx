@@ -14,11 +14,11 @@ export function KnownWordsSection() {
         <div>
           <h1
             id="known-words-heading"
-            className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
+            className="page-title"
           >
             {t("knownWordsTitle")}
           </h1>
-          <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
+          <p className="page-subtitle">
             {t("knownWordsSubtitle")}
           </p>
         </div>
@@ -30,7 +30,7 @@ export function KnownWordsSection() {
       </div>
 
       {isLoading ? (
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("knownWordsLoading")}
         </p>
       ) : null}
@@ -43,7 +43,7 @@ export function KnownWordsSection() {
 
       {!isLoading && !isError && data && data.words.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-brand-300/80 px-4 py-8 text-center dark:border-brand-700">
-          <p className="text-sm text-brand-600 dark:text-brand-400">
+          <p className="page-subtitle mt-0">
             {t("knownWordsEmpty")}
           </p>
         </div>

@@ -25,12 +25,12 @@ export function VocabularyCategoryLocked({
       <span className="mx-auto inline-flex size-12 items-center justify-center rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300">
         <Lock className="size-5" aria-hidden />
       </span>
-      <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
+      <h2 className="section-title">
         {reason === "level" && level
           ? t("levelLockedTitle", { level })
           : t("categoryLockedTitle", { index })}
       </h2>
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {reason === "level" && requiredLevel && level
           ? t("levelLockedBody", { level, requiredLevel })
           : t("categoryLockedBody", { window: ACTIVE_VOCABULARY_WINDOW })}

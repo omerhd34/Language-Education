@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { ClipboardCheck } from "lucide-react";
 import {
   useStudiedTodayVocabularyWordsQuery,
   useVocabularyLearnQuotaQuery,
@@ -56,6 +57,7 @@ export function VocabularyLearnQuotaBanner({
             {tDashboard("quizCardReady", { count: quiz?.dueCount ?? 0 })}
           </p>
           <ButtonLink href="/panel/kelime/sinav" size="sm">
+            <ClipboardCheck className="size-3.5" aria-hidden />
             {t("startQuizEarly")}
           </ButtonLink>
         </div>

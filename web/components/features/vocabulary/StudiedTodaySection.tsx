@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { useTranslations } from "next-intl";
+import { ClipboardCheck } from "lucide-react";
 import {
   StudiedTodayWords,
   type StudiedTodayListWord,
@@ -120,15 +121,10 @@ export function StudiedTodaySection() {
     <section aria-labelledby="studied-today-heading" className="space-y-4">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div>
-          <h1
-            id="studied-today-heading"
-            className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
-          >
+          <h1 id="studied-today-heading" className="page-title">
             {t("studiedTodayTitle")}
           </h1>
-          <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
-            {t("studiedTodaySubtitle")}
-          </p>
+          <p className="page-subtitle">{t("studiedTodaySubtitle")}</p>
         </div>
         {studied ? (
           <div className="flex flex-col items-start gap-2 sm:items-end">
@@ -152,6 +148,7 @@ export function StudiedTodaySection() {
             <div className="flex flex-wrap items-center gap-2">
               {dueCount > 0 ? (
                 <ButtonLink href="/panel/kelime/sinav" size="sm">
+                  <ClipboardCheck className="size-3.5" aria-hidden />
                   {t("quizCardCta")}
                 </ButtonLink>
               ) : null}
@@ -162,9 +159,7 @@ export function StudiedTodaySection() {
       </div>
 
       {isLoading ? (
-        <p className="text-sm text-brand-600 dark:text-brand-400">
-          {t("studiedTodayLoading")}
-        </p>
+        <p className="page-subtitle mt-0">{t("studiedTodayLoading")}</p>
       ) : null}
 
       {isError ? (
@@ -177,9 +172,7 @@ export function StudiedTodaySection() {
 
       {!isLoading && !isError && studied && visibleWords.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-brand-300/80 px-4 py-8 text-center dark:border-brand-700">
-          <p className="text-sm text-brand-600 dark:text-brand-400">
-            {t("studiedTodayEmpty")}
-          </p>
+          <p className="page-subtitle mt-0">{t("studiedTodayEmpty")}</p>
           <ButtonLink href="/panel#kelimeler" size="sm" className="mt-4">
             {t("studiedTodayAddWords")}
           </ButtonLink>

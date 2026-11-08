@@ -146,7 +146,7 @@ export function VocabularyQuizView() {
   if (finished && totalQuestions > 0) {
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-5 text-center">
-        <h2 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
+        <h2 className="page-title">
           {t("quizFinishedTitle")}
         </h2>
         <p
@@ -158,13 +158,13 @@ export function VocabularyQuizView() {
             / 100
           </span>
         </p>
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("quizFinishedScoreDetail", {
             correct: correctCount,
             total: totalQuestions,
           })}
         </p>
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("quizFinishedHint")}
         </p>
         <div className="flex flex-wrap justify-center gap-2">
@@ -188,7 +188,7 @@ export function VocabularyQuizView() {
 
   if (!quizInProgress && isLoading && words.length === 0) {
     return (
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("quizLoading")}
       </p>
     );
@@ -205,10 +205,10 @@ export function VocabularyQuizView() {
   if (!quizInProgress && words.length === 0) {
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="font-display text-2xl font-semibold text-brand-950 dark:text-brand-100">
+        <h2 className="page-title">
           {t("quizEmptyTitle")}
         </h2>
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("quizEmptyBody")}
         </p>
         {data?.nextDueAt && remainingMs > 0 ? (
@@ -226,7 +226,7 @@ export function VocabularyQuizView() {
 
   if (!question) {
     return (
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("quizLoading")}
       </p>
     );
@@ -258,7 +258,7 @@ export function VocabularyQuizView() {
       </div>
 
       <article className="dashboard-panel space-y-5">
-        <h2 className="font-display text-xl font-semibold text-brand-950 dark:text-brand-100">
+        <h2 className="section-title">
           {question.prompt}
         </h2>
 

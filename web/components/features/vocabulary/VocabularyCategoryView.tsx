@@ -77,7 +77,7 @@ export function VocabularyCategoryView({
 
   if (isLoading && !knownWords) {
     return (
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("statusLoading")}
       </p>
     );
