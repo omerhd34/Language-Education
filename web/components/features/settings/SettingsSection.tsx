@@ -24,25 +24,25 @@ export function SettingsSection({
     <section
       id={id}
       className={cn(
-        "dashboard-panel dashboard-panel--stat space-y-5 p-5 sm:space-y-6 sm:p-6",
+        "dashboard-panel dashboard-panel--stat space-y-2 p-5 sm:p-6",
         className,
       )}
       aria-labelledby={titleId}
     >
-      <header className="space-y-2">
+      <header className="space-y-1">
         <h2
           id={titleId}
-          className="inline-flex items-center gap-2 text-base font-semibold tracking-tight text-brand-950 dark:text-brand-100"
+          className="section-title inline-flex items-center gap-2"
         >
           {icon ? (
-            <span className="inline-flex size-10 items-center justify-center rounded-xl bg-sky-500/10 text-sky-700 dark:bg-sky-400/15 dark:text-sky-300">
+            <span className="inline-flex size-8 items-center justify-center rounded-lg bg-(--glass-2) text-sky-700 shadow-[inset_0_0_0_1px_var(--glass-line)] dark:text-sky-300 [&_svg]:size-4">
               {icon}
             </span>
           ) : null}
           {title}
         </h2>
         {description ? (
-          <div className="space-y-1.5 text-sm text-brand-600 dark:text-brand-400">
+          <div className="space-y-1 text-sm leading-relaxed text-brand-600 dark:text-brand-400">
             {typeof description === "string" ? (
               <p>{description}</p>
             ) : (

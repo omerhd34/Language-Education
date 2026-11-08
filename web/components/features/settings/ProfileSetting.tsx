@@ -182,14 +182,14 @@ export function ProfileSetting() {
       title={t("profile")}
       description={
         <>
-          <p>{t("profileHint")}</p>
-          <p>{t("profilePhotoSpec")}</p>
+          <span>{t("profileHint")}</span>
+          <span> {t("profilePhotoSpec")}</span>
         </>
       }
       icon={<UserRound className="size-5" aria-hidden />}
     >
-      <form className="space-y-5" onSubmit={handleSubmit} noValidate>
-        <div className="grid gap-3 sm:grid-cols-2">
+      <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+        <div className="grid items-start gap-3 sm:grid-cols-2">
           <Input
             name="firstName"
             type="text"
@@ -214,7 +214,7 @@ export function ProfileSetting() {
               setLastName(event.target.value);
             }}
           />
-          <div className="space-y-1.5">
+          <div className="flex flex-col gap-1.5">
             <Input
               name="email"
               type="email"
