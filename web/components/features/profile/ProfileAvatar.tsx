@@ -10,8 +10,10 @@ type ProfileAvatarProps = {
   name: string | null;
   email: string;
   avatarUrl: string | null;
+  previewSrc?: string | null;
   className?: string;
   fallbackClassName?: string;
+  shape?: "circle" | "rounded";
   editable?: boolean;
   uploading?: boolean;
   onPickFile?: (file: File) => void;
@@ -22,20 +24,32 @@ export function ProfileAvatar({
   name,
   email,
   avatarUrl,
+  previewSrc,
   className,
   fallbackClassName,
+  shape = "circle",
   editable = false,
   uploading = false,
   onPickFile,
   label,
 }: ProfileAvatarProps) {
-  const src = useAuthAvatarSrc(avatarUrl);
+  const remoteSrc = useAuthAvatarSrc(
+    previewSrc === undefined ? avatarUrl : null,
+  );
+  const src = previewSrc === undefined ? remoteSrc : previewSrc;
   const initials = getUserInitials(name, email);
+  const radiusClass = shape === "rounded" ? "rounded-xl" : "rounded-full";
 
   const avatar = (
-    <Avatar className={cn("rounded-full", className)}>
-      {src ? <AvatarImage src={src} alt="" className="rounded-full" /> : null}
-      <AvatarFallback className={cn("rounded-full", fallbackClassName)}>
+    <Avatar className={cn("overflow-hidden", radiusClass, className)}>
+      {src ? (
+        <AvatarImage
+          src={src}
+          alt=""
+          className={cn("size-full", radiusClass)}
+        />
+      ) : null}
+      <AvatarFallback className={cn(radiusClass, fallbackClassName)}>
         {initials}
       </AvatarFallback>
     </Avatar>
@@ -48,14 +62,30 @@ export function ProfileAvatar({
   return (
     <label
       className={cn(
-        "group/avatar relative inline-flex cursor-pointer rounded-full focus-within:outline-none focus-within:ring-2 focus-within:ring-sky-500/60",
+        "group/avatar relative inline-flex shrink-0 cursor-pointer overflow-hidden focus-within:outline-none focus-within:ring-2 focus-within:ring-sky-500/60",
+        radiusClass,
+        className,
         uploading && "pointer-events-none opacity-70",
       )}
     >
       <span className="sr-only">{label}</span>
-      {avatar}
+      <Avatar className={cn("size-full overflow-hidden", radiusClass)}>
+        {src ? (
+          <AvatarImage
+            src={src}
+            alt=""
+            className={cn("size-full", radiusClass)}
+          />
+        ) : null}
+        <AvatarFallback className={cn(radiusClass, fallbackClassName)}>
+          {initials}
+        </AvatarFallback>
+      </Avatar>
       <span
-        className="absolute inset-0 flex items-center justify-center rounded-full bg-black/45 text-white opacity-0 transition-opacity group-hover/avatar:opacity-100 group-focus-within/avatar:opacity-100"
+        className={cn(
+          "absolute inset-0 flex items-center justify-center bg-black/45 text-white opacity-0 transition-opacity group-hover/avatar:opacity-100 group-focus-within/avatar:opacity-100",
+          radiusClass,
+        )}
         aria-hidden
       >
         <Camera className="size-4" strokeWidth={1.75} />
