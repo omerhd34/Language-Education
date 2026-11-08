@@ -58,7 +58,10 @@ export function AppShell({ user, sidebarOpen, children }: AppShellProps) {
 
   return (
     <TooltipProvider>
-      <SidebarProvider defaultOpen={sidebarOpen}>
+      <SidebarProvider
+        defaultOpen={sidebarOpen}
+        className="min-h-svh bg-transparent"
+      >
         <AppSidebar
           user={user}
           isLoggingOut={isLoggingOut}

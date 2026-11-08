@@ -20,13 +20,13 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="mt-auto border-t border-border bg-linear-to-b from-surface to-brand-100 dark:from-brand-950 dark:to-brand-950">
+    <footer className="mt-auto border-t border-(--glass-line) bg-(--glass) backdrop-blur-[20px] backdrop-saturate-200">
       <Container size={user ? "app" : "page"} className="py-14 sm:py-16">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div className="max-w-sm space-y-4">
             <Link
               href="/"
-              className="inline-block font-display text-2xl font-semibold tracking-tight text-brand-800 transition-transform duration-200 hover:scale-105 dark:text-brand-400"
+              className="inline-block font-display text-xl font-semibold tracking-tight text-brand-800 transition-transform duration-200 hover:scale-105 dark:text-brand-400"
             >
               {tNav("brand")}
             </Link>

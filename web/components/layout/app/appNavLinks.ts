@@ -8,7 +8,6 @@ import {
   ClipboardList,
   Headphones,
   Home,
-  Info,
   Library,
   Mic,
   PenLine,
@@ -28,8 +27,7 @@ export type AppNavLabelKey =
   | "speaking"
   | "reading"
   | "exercises"
-  | "progress"
-  | "info";
+  | "progress";
 
 export type AppNavLink = {
   href: string;
@@ -97,5 +95,4 @@ export const appNavLinks: AppNavLink[] = [
     labelKey: "progress",
     Icon: ChartColumnIncreasing,
   },
-  { href: "/hakkimizda", labelKey: "info", Icon: Info },
 ];

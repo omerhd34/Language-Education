@@ -30,7 +30,7 @@ export function Navbar() {
   const accountLabel = user?.name?.trim() || user?.email || "";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-brand-100/80 backdrop-blur-md dark:bg-brand-950/80">
+    <header className="glass-panel sticky top-0 z-40 rounded-none border-0">
       <Container
         size={user ? "app" : "page"}
         className="grid h-16 grid-cols-[1fr_auto] items-center gap-4 md:grid-cols-[1fr_auto_1fr]"
@@ -38,7 +38,7 @@ export function Navbar() {
         <div className="justify-self-start">
           <Link
             href="/"
-            className="inline-block font-display text-3xl font-semibold tracking-tight text-brand-800 transition-transform duration-200 hover:scale-110 dark:text-brand-400"
+            className="inline-block font-display text-2xl font-semibold tracking-tight text-brand-800 transition-transform duration-200 hover:scale-110 dark:text-brand-400"
           >
             {t("brand")}
           </Link>
@@ -54,7 +54,7 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="inline-flex items-center gap-1.5 text-sm font-medium text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
+                className="inline-flex items-center gap-1.5 text-base font-medium text-brand-600 transition-colors hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-100"
               >
                 <Icon className="size-4 shrink-0" aria-hidden />
                 {t(item.labelKey)}
