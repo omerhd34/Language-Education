@@ -23,6 +23,15 @@
     0 1px 1px rgb(17 21 34 / 4%), 0 14px 34px -20px rgb(17 21 34 / 28%);
   --glass-shadow-lg:
     0 2px 6px rgb(17 21 34 / 6%), 0 30px 70px -26px rgb(17 21 34 / 35%);
+  --glass-inset:
+    inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-edge-2),
+    0 0 0 1px var(--glass-line);
+  --glass-panel-shadow: var(--glass-inset), var(--glass-shadow);
+  --glass-panel-shadow-lg: var(--glass-inset), var(--glass-shadow-lg);
+  --glass-btn-drop: 0 2px 6px -3px rgb(17 21 34 / 14%);
+  --glass-btn-shadow: var(--glass-inset), var(--glass-btn-drop);
+  --glass-input-inset:
+    inset 0 1px 0 var(--glass-edge), inset 0 0 0 1px var(--glass-line-2);
   --wash: linear-gradient(
     160deg,
     #e8eef8 0%,
@@ -80,6 +89,37 @@
   --account-text-dim: var(--brand-600);
   --account-hairline: var(--glass-line);
   --account-icon: var(--brand-800);
+
+  --auth-accent: #396cdf;
+  --auth-accent-hover: #2f5bc4;
+  --auth-accent-soft: #386ce0;
+  --auth-accent-ring: rgb(57 108 223 / 18%);
+  --auth-accent-border-soft: #c5d4f5;
+  --auth-ink: #1a1f2e;
+  --auth-ink-strong: #1e293b;
+  --auth-ink-hover: #0f172a;
+  --auth-muted: #64748b;
+  --auth-muted-2: #8b93a3;
+  --auth-muted-3: #9aa3b2;
+  --auth-slate: #334155;
+  --auth-field-bg: #fff;
+  --auth-field-border: #e2e8f0;
+  --auth-field-border-hover: #cbd5e1;
+  --auth-field-shadow:
+    0 1px 2px rgb(15 23 42 / 4%), 0 4px 14px rgb(15 23 42 / 3%);
+  --auth-error: #dc2626;
+  --auth-error-bg: #fff5f5;
+  --auth-error-ring: rgb(220 38 38 / 18%);
+  --auth-overlay-bg: #141c2d;
+  --auth-overlay-btn-hover-ink: #0b2545;
+  --auth-overlay-text: #fff;
+  --auth-overlay-text-muted: rgb(255 255 255 / 92%);
+  --auth-overlay-line: rgb(255 255 255 / 18%);
+  --auth-overlay-image: url("https://ixirdev.com.tr/templates/ixirdev/img/login.webp");
+  --auth-remember-bg: #f1f5fb;
+  --auth-remember-checked-bg: #eef3ff;
+  --auth-tabs-bg: #eef2f7;
+  --auth-tab-shadow: 0 4px 12px rgb(36 41 53 / 8%);
 }
 
 .dark {
@@ -97,6 +137,7 @@
     0 1px 1px rgb(0 0 0 / 30%), 0 16px 36px -18px rgb(0 0 0 / 70%);
   --glass-shadow-lg:
     0 2px 6px rgb(0 0 0 / 40%), 0 34px 80px -26px rgb(0 0 0 / 85%);
+  --glass-btn-drop: 0 2px 6px -3px rgb(0 0 0 / 30%);
   --wash: linear-gradient(
     160deg,
     #121722 0%,
@@ -174,6 +215,20 @@
   --color-brand-600: var(--brand-600);
   --color-brand-400: var(--brand-400);
   --color-brand-100: var(--brand-100);
+
+  --color-auth-accent: var(--auth-accent);
+  --color-auth-accent-hover: var(--auth-accent-hover);
+  --color-auth-accent-soft: var(--auth-accent-soft);
+  --color-auth-ink: var(--auth-ink);
+  --color-auth-ink-strong: var(--auth-ink-strong);
+  --color-auth-muted: var(--auth-muted);
+  --color-auth-muted-2: var(--auth-muted-2);
+  --color-auth-muted-3: var(--auth-muted-3);
+  --color-auth-slate: var(--auth-slate);
+  --color-auth-field-bg: var(--auth-field-bg);
+  --color-auth-field-border: var(--auth-field-border);
+  --color-auth-error: var(--auth-error);
+  --color-auth-error-bg: var(--auth-error-bg);
 
   --font-sans: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;

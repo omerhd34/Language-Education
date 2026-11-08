@@ -1,9 +1,8 @@
 .page-shell {
-  @apply mx-auto w-full max-w-7xl space-y-5 px-4 pt-0 pb-4 sm:space-y-6 sm:px-6 sm:pb-6 lg:px-7 lg:pb-7;
-  margin-top: 0;
+  @apply mx-auto mt-0 w-full max-w-7xl space-y-5 px-4 pt-0 pb-4 sm:space-y-6 sm:px-6 sm:pb-6 lg:px-7 lg:pb-7;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .page-shell {
     @apply pt-4;
   }
@@ -14,8 +13,7 @@
 }
 
 .page-subtitle {
-  @apply mt-1 w-full text-sm leading-relaxed text-brand-600 dark:text-brand-400;
-  max-width: none;
+  @apply mt-1 w-full max-w-none text-sm leading-relaxed text-brand-600 dark:text-brand-400;
 }
 
 .section-title {
