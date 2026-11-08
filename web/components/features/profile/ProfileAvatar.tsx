@@ -48,14 +48,14 @@ export function ProfileAvatar({
   return (
     <label
       className={cn(
-        "group relative inline-flex cursor-pointer rounded-full focus-within:outline-none focus-within:ring-2 focus-within:ring-sky-500/60",
+        "group/avatar relative inline-flex cursor-pointer rounded-full focus-within:outline-none focus-within:ring-2 focus-within:ring-sky-500/60",
         uploading && "pointer-events-none opacity-70",
       )}
     >
       <span className="sr-only">{label}</span>
       {avatar}
       <span
-        className="absolute inset-0 flex items-center justify-center rounded-full bg-black/45 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+        className="absolute inset-0 flex items-center justify-center rounded-full bg-black/45 text-white opacity-0 transition-opacity group-hover/avatar:opacity-100 group-focus-within/avatar:opacity-100"
         aria-hidden
       >
         <Camera className="size-4" strokeWidth={1.75} />
