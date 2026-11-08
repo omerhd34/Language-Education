@@ -1,5 +1,5 @@
 import { AppError } from "@/lib/server/AppError";
-import { toPublicUser } from "@/lib/server/auth/publicUser";
+import { publicUserSelect, toPublicUser } from "@/lib/server/auth/publicUser";
 import { getPrisma } from "@/lib/server/prisma";
 
 const ALLOWED_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -91,15 +91,7 @@ export async function updateUserAvatar(userId: string, dataUrl: string) {
       avatarData: new Uint8Array(buffer),
       avatarMimeType: mimeType,
     },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      emailVerifiedAt: true,
-      createdAt: true,
-      updatedAt: true,
-      avatarMimeType: true,
-    },
+    select: publicUserSelect,
   });
 
   return toPublicUser(user);
@@ -123,15 +115,7 @@ export async function deleteUserAvatar(userId: string) {
       avatarData: null,
       avatarMimeType: null,
     },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      emailVerifiedAt: true,
-      createdAt: true,
-      updatedAt: true,
-      avatarMimeType: true,
-    },
+    select: publicUserSelect,
   });
 
   return toPublicUser(user);

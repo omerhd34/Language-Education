@@ -12,11 +12,12 @@ import { buildVerificationEmail, sendMail } from "@/lib/server/mail";
 import { getServerEnv } from "@/lib/server/env";
 import { hashPassword, verifyPassword } from "@/lib/server/password";
 import { getPrisma } from "@/lib/server/prisma";
-import { toPublicUser } from "@/lib/server/auth/publicUser";
+import { publicUserSelect, toPublicUser } from "@/lib/server/auth/publicUser";
 import type {
   ChangePasswordInput,
   LoginInput,
   RegisterInput,
+  UpdateProfileInput,
   VerifyEmailInput,
 } from "@/validators/auth.schema";
 
@@ -157,15 +158,7 @@ export async function verifyEmail(input: VerifyEmailInput) {
       data: {
         emailVerifiedAt: new Date(),
       },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        emailVerifiedAt: true,
-        createdAt: true,
-        updatedAt: true,
-        avatarMimeType: true,
-      },
+      select: publicUserSelect,
     });
 
     await tx.emailVerificationToken.deleteMany({
@@ -188,14 +181,8 @@ export async function loginUser(input: LoginInput) {
   const user = await prisma.user.findUnique({
     where: { email: input.email.toLowerCase() },
     select: {
-      id: true,
-      email: true,
-      name: true,
+      ...publicUserSelect,
       passwordHash: true,
-      emailVerifiedAt: true,
-      createdAt: true,
-      updatedAt: true,
-      avatarMimeType: true,
     },
   });
 
@@ -256,15 +243,7 @@ export async function refreshSession(rawRefreshToken: string | undefined) {
 
   const user = await prisma.user.findUnique({
     where: { id: payload.sub },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      emailVerifiedAt: true,
-      createdAt: true,
-      updatedAt: true,
-      avatarMimeType: true,
-    },
+    select: publicUserSelect,
   });
 
   if (!user || !user.emailVerifiedAt) {
@@ -300,20 +279,35 @@ export async function getCurrentUser(userId: string) {
   const prisma = getPrisma();
   const user = await prisma.user.findUnique({
     where: { id: userId },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-      emailVerifiedAt: true,
-      createdAt: true,
-      updatedAt: true,
-      avatarMimeType: true,
-    },
+    select: publicUserSelect,
   });
 
   if (!user || !user.emailVerifiedAt) {
     throw new AppError("User not found", 404, "NOT_FOUND");
   }
+
+  return toPublicUser(user);
+}
+
+export async function updateProfile(userId: string, input: UpdateProfileInput) {
+  const prisma = getPrisma();
+  const existing = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { id: true, emailVerifiedAt: true },
+  });
+
+  if (!existing || !existing.emailVerifiedAt) {
+    throw new AppError("User not found", 404, "NOT_FOUND");
+  }
+
+  const name = `${input.firstName} ${input.lastName}`.trim();
+  const phone = input.phone?.trim() ? input.phone.trim() : null;
+
+  const user = await prisma.user.update({
+    where: { id: userId },
+    data: { name, phone },
+    select: publicUserSelect,
+  });
 
   return toPublicUser(user);
 }

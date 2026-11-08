@@ -37,9 +37,26 @@ export const changePasswordSchema = z
     message: "New password must be different from current password",
   });
 
+export const updateProfileSchema = z.object({
+  firstName: z.string().trim().min(1).max(80),
+  lastName: z
+    .string()
+    .trim()
+    .min(1)
+    .max(50)
+    .regex(/^\S+$/, "Last name must be a single word"),
+  phone: z
+    .string()
+    .trim()
+    .max(32)
+    .regex(/^$|^[+][\d]{1,4}\s[\d\s()-]{6,20}$/, "Invalid phone number")
+    .optional(),
+});
+
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RefreshInput = z.infer<typeof refreshSchema>;
 export type VerifyEmailInput = z.infer<typeof verifyEmailSchema>;
 export type UpdateAvatarInput = z.infer<typeof updateAvatarSchema>;
 export type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;
