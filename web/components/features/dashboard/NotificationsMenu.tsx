@@ -198,9 +198,11 @@ export function NotificationsMenu({
           size={isSidebar ? "default" : "icon"}
           className={cn(
             isSidebar
-              ? "h-auto w-full justify-start gap-2 rounded-xl px-3 py-2.5 font-medium text-brand-400 hover:bg-brand-900 hover:text-brand-100"
+              ? "h-auto w-full justify-start gap-2 rounded-xl px-3 py-2.5 font-medium text-brand-400 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
               : "size-11 text-brand-800 shadow-none hover:bg-transparent hover:text-brand-950 dark:text-brand-400 dark:hover:bg-transparent dark:hover:text-brand-100 [&_svg:not([class*='size-'])]:size-5",
-            open && isSidebar && "bg-brand-900 text-brand-100",
+            open &&
+              isSidebar &&
+              "bg-sidebar-accent text-sidebar-accent-foreground",
             triggerClassName,
           )}
           aria-label={t("notifications")}
