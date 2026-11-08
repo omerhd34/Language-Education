@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/Card";
 import type { DashboardTopic } from "@/data/dashboardTopics";
 import { useLevelExamPercent } from "@/hooks/useLevelExamPercent";
-import { getCefrLevelBadgeClass, getNextLevel } from "@/lib/topicAccess";
+import { getNextLevel } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";
 
 type LevelExamCardProps = {
@@ -35,7 +35,7 @@ export function LevelExamCard({
   return (
     <Card
       className={cn(
-        "h-full border-red-500/40 bg-red-50/90 transition-opacity dark:border-red-400/35 dark:bg-red-950/45",
+        "h-full bg-red-100/90! shadow-[inset_0_1px_0_rgb(255_255_255/70%),inset_0_0_0_1px_rgb(248_113_113/34%),0_0_0_1px_rgb(220_38_38/14%),var(--glass-shadow)]! transition-opacity dark:bg-red-950/55!",
         locked && "opacity-70",
       )}
     >
@@ -43,19 +43,10 @@ export function LevelExamCard({
         <div className="flex flex-wrap items-center gap-2">
           <Badge
             variant="outline"
-            className="gap-1 border-transparent bg-red-600 text-white uppercase dark:bg-red-500 dark:text-white"
+            className="gap-1 border-transparent bg-red-500/20 text-red-900 uppercase dark:bg-red-400/20 dark:text-red-200"
           >
             <GraduationCap className="size-3" aria-hidden />
             {t("examLabel")}
-          </Badge>
-          <Badge
-            variant="outline"
-            className={cn(
-              "border-transparent uppercase",
-              getCefrLevelBadgeClass(topic.level),
-            )}
-          >
-            {topic.level}
           </Badge>
           {passed ? (
             <Badge

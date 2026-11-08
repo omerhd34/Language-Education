@@ -45,11 +45,11 @@ export function MyPointsSection() {
         <div className="min-w-0">
           <h2
             id="my-points-heading"
-            className="font-display text-xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
+            className="section-title"
           >
             {t("myPoints")}
           </h2>
-          <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
+          <p className="page-subtitle">
             {t("myPointsSubtitle")}
           </p>
         </div>

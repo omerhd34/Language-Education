@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/Card";
 import type { CombinedExercise } from "@/data/combinedExercises";
 import { useCombinedExerciseProgress } from "@/hooks/useCombinedExerciseProgress";
-import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";
 
 type CombinedExerciseCardProps = {
@@ -32,7 +31,7 @@ export function CombinedExerciseCard({
   return (
     <Card
       className={cn(
-        "h-full border-amber-400/45 bg-amber-100/90 transition-opacity dark:border-amber-500/35 dark:bg-amber-950/55",
+        "h-full bg-amber-100/90! shadow-[inset_0_1px_0_rgb(255_255_255/70%),inset_0_0_0_1px_rgb(251_191_36/38%),0_0_0_1px_rgb(217_119_6/14%),var(--glass-shadow)]! transition-opacity dark:bg-amber-950/55!",
         locked && "opacity-70",
       )}
     >
@@ -44,15 +43,6 @@ export function CombinedExerciseCard({
           >
             <Layers className="size-3" aria-hidden />
             {t("combinedExerciseLabel", { index: combined.index })}
-          </Badge>
-          <Badge
-            variant="outline"
-            className={cn(
-              "border-transparent uppercase",
-              getCefrLevelBadgeClass(combined.level),
-            )}
-          >
-            {combined.level}
           </Badge>
           {locked ? (
             <Badge

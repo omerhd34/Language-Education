@@ -198,7 +198,7 @@ export function NotificationsMenu({
           size={isSidebar ? "default" : "icon"}
           className={cn(
             isSidebar
-              ? "h-auto w-full justify-start gap-2 rounded-xl px-3 py-2.5 font-medium text-brand-400 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              ? "h-auto w-full justify-start gap-2 rounded-[13px] px-2.5 py-2 text-base font-medium text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-foreground group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0"
               : "size-11 text-brand-800 shadow-none hover:bg-transparent hover:text-brand-950 dark:text-brand-400 dark:hover:bg-transparent dark:hover:text-brand-100 [&_svg:not([class*='size-'])]:size-5",
             open &&
               isSidebar &&
@@ -239,9 +239,9 @@ export function NotificationsMenu({
           role="dialog"
           aria-label={t("notifications")}
           className={cn(
-            "z-40 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border border-border bg-background text-brand-950 shadow-xl dark:bg-brand-950 dark:text-brand-100",
+            "glass-panel z-40 w-[min(22rem,calc(100vw-2rem))] overflow-hidden rounded-2xl text-foreground",
             isSidebar
-              ? "absolute bottom-0 left-full ml-2"
+              ? "absolute bottom-0 left-full ml-4"
               : "absolute top-[calc(100%+0.5rem)] right-0",
           )}
         >

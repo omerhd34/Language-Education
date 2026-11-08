@@ -58,11 +58,11 @@ export function DashboardStatsBar() {
 
       <article className="dashboard-panel dashboard-panel--stat md:col-span-2 xl:col-span-1">
         <div className="flex items-start justify-between gap-3">
-          <p className="dashboard-panel__label">
-            <Timer className="size-3.5" aria-hidden />
+          <p className="dashboard-panel__label text-base">
+            <Timer className="size-4" aria-hidden />
             {t("wordTimer")}
           </p>
-          <p className="font-display text-sm font-semibold text-brand-950 tabular-nums dark:text-brand-100">
+          <p className="font-display text-2xl font-semibold text-brand-950 tabular-nums dark:text-brand-100">
             {pending}
             <span className="font-medium text-brand-400">/{learnLimit}</span>
           </p>

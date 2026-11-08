@@ -2,21 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
-import { Lock } from "lucide-react";
 import { CombinedExerciseCard } from "@/components/features/dashboard/CombinedExerciseCard";
 import { LevelExamCard } from "@/components/features/dashboard/LevelExamCard";
+import { LevelLockedDialog } from "@/components/features/dashboard/LevelLockedDialog";
 import { TopicCard } from "@/components/features/dashboard/TopicCard";
 import { TopicLevelFilter } from "@/components/features/dashboard/TopicLevelFilter";
-import { Button } from "@/components/ui/Button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { buildTopicGridItems } from "@/data/combinedExercises";
 import { dashboardTopics, type CefrLevel } from "@/data/dashboardTopics";
 import { usePassedLevelExams } from "@/hooks/usePassedLevelExams";
@@ -59,15 +49,10 @@ export function TopicsSection() {
       className="space-y-4"
     >
       <div>
-        <h1
-          id="topics-heading"
-          className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
-        >
+        <h1 id="topics-heading" className="page-title">
           {t("topicsTitle")}
         </h1>
-        <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
-          {t("topicsSubtitle")}
-        </p>
+        <p className="page-subtitle max-w-none">{t("topicsSubtitle")}</p>
       </div>
 
       <TopicLevelFilter
@@ -116,31 +101,20 @@ export function TopicsSection() {
         })}
       </div>
 
-      <Dialog open={lockDialogOpen} onOpenChange={setLockDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader className="items-center text-center sm:items-center sm:text-center">
-            <span className="mx-auto mb-1 flex size-12 items-center justify-center rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300">
-              <Lock className="size-5" aria-hidden />
-            </span>
-            <DialogTitle>
-              {t("topicsLevelLockedTitle", { level: selectedLevel })}
-            </DialogTitle>
-            <DialogDescription>
-              {requiredLevel
-                ? t("levelLockedHint", {
-                    level: selectedLevel,
-                    requiredLevel,
-                  })
-                : null}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="sm:justify-center">
-            <DialogClose render={<Button className="w-full sm:w-auto" />}>
-              {t("topicsLevelLockedCta")}
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <LevelLockedDialog
+        open={lockDialogOpen}
+        onOpenChange={setLockDialogOpen}
+        title={t("topicsLevelLockedTitle", { level: selectedLevel })}
+        description={
+          requiredLevel
+            ? t("levelLockedHint", {
+                level: selectedLevel,
+                requiredLevel,
+              })
+            : null
+        }
+        ctaLabel={t("topicsLevelLockedCta")}
+      />
     </section>
   );
 }

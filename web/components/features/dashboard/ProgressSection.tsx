@@ -16,11 +16,11 @@ export function ProgressSection() {
       <div>
         <h1
           id="progress-heading"
-          className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
+          className="page-title"
         >
           {t("progressTitle")}
         </h1>
-        <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle">
           {t("progressSubtitle")}
         </p>
       </div>

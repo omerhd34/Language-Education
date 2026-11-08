@@ -64,7 +64,7 @@ export function VocabularyCategoryCard({
         }}
       />
 
-      <Card className="relative h-full border-0 bg-surface shadow-sm dark:bg-brand-900">
+      <Card className="relative h-full">
         <CardHeader>
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">

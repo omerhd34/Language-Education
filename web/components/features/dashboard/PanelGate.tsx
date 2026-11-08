@@ -33,7 +33,7 @@ export function PanelGate({ children }: PanelGateProps) {
   if (!ready) {
     return (
       <div className="mx-auto flex min-h-[50vh] max-w-md flex-col items-center justify-center gap-4 p-6 text-center">
-        <p className="text-sm text-brand-600 dark:text-brand-400">
+        <p className="page-subtitle mt-0">
           {t("loginRequired")}
         </p>
         <ButtonLink href="/panelLogin">{t("goLogin")}</ButtonLink>

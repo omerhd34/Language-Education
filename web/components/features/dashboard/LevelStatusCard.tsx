@@ -26,8 +26,8 @@ export function LevelStatusCard() {
 
   return (
     <article className="dashboard-panel dashboard-panel--stat">
-      <p className="dashboard-panel__label">
-        <GraduationCap className="size-3.5" aria-hidden />
+      <p className="dashboard-panel__label text-base">
+        <GraduationCap className="size-4" aria-hidden />
         {t("levelStatus")}
       </p>
 

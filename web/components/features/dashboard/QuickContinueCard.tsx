@@ -54,11 +54,11 @@ function ContinueActivityRow({
     <li>
       <Link
         href={activity.href}
-        className="group flex min-w-0 items-center gap-3 rounded-xl px-1 py-1.5 transition-colors hover:bg-surface-muted/80 focus-visible:bg-surface-muted/80 focus-visible:outline-none dark:hover:bg-white/5 dark:focus-visible:bg-white/5"
+        className="group flex min-w-0 items-center gap-3 rounded-xl px-1 py-1.5 transition-colors hover:bg-(--glass-btn) focus-visible:bg-(--glass-btn) focus-visible:outline-none"
         aria-label={`${goLabel}: ${display.title}`}
       >
         <span
-          className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-surface-muted text-brand-800 transition-colors group-hover:bg-sky-500/15 group-hover:text-sky-700 dark:bg-white/5 dark:text-brand-100 dark:group-hover:bg-sky-400/20 dark:group-hover:text-sky-200"
+          className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-(--glass-btn) text-brand-800 shadow-[inset_0_0_0_1px_var(--glass-line)] transition-colors group-hover:bg-(--glass-btn-hover) group-hover:text-sky-700 dark:text-brand-100 dark:group-hover:text-sky-200"
           aria-hidden
         >
           <Icon className="size-4" strokeWidth={1.75} />
@@ -100,8 +100,8 @@ export function QuickContinueCard() {
 
   return (
     <article className="dashboard-panel dashboard-panel--stat">
-      <p className="dashboard-panel__label">
-        <Play className="size-3.5" aria-hidden />
+      <p className="dashboard-panel__label text-base">
+        <Play className="size-4" aria-hidden />
         {t("quickContinue")}
       </p>
 

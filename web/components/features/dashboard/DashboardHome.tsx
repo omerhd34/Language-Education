@@ -34,7 +34,7 @@ export function DashboardHome() {
   const section = hash.replace(/^#/, "");
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:p-6 lg:p-8">
+    <div className="page-shell">
       <DashboardStatsBar />
       {section === "dilbilgisi" ? <TopicsSection /> : null}
       {section === "kelimeler" ? <VocabularySection /> : null}
@@ -46,11 +46,11 @@ export function DashboardHome() {
         <section className="space-y-2" aria-labelledby="section-soon-heading">
           <h1
             id="section-soon-heading"
-            className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
+            className="page-title"
           >
             {t("sectionSoonTitle")}
           </h1>
-          <p className="text-sm text-brand-600 dark:text-brand-400">
+          <p className="page-subtitle mt-0">
             {t("sectionSoonBody")}
           </p>
         </section>

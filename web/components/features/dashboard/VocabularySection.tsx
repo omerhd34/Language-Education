@@ -2,21 +2,11 @@
 
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Lock } from "lucide-react";
+import { LevelLockedDialog } from "@/components/features/dashboard/LevelLockedDialog";
 import { TopicLevelFilter } from "@/components/features/dashboard/TopicLevelFilter";
 import { VocabularyCategoryCard } from "@/components/features/dashboard/VocabularyCategoryCard";
 import { VocabularyLearnQuotaBanner } from "@/components/features/vocabulary/VocabularyLearnQuotaBanner";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/Button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import {
   VOCABULARY_LEVEL_ORDER,
   getVocabularyCategoriesByLevel,
@@ -68,19 +58,22 @@ export function VocabularySection() {
   return (
     <section aria-labelledby="vocabulary-heading" className="space-y-4">
       <div>
-        <h1
-          id="vocabulary-heading"
-          className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
-        >
+        <h1 id="vocabulary-heading" className="page-title">
           {t("vocabularyTitle")}
         </h1>
-        <p className="mt-1 text-sm text-brand-600 dark:text-brand-400">
-          {t("vocabularySubtitle", {
-            limit: LEARN_WORD_PERIOD_LIMIT,
-            window: ACTIVE_VOCABULARY_WINDOW,
-            quizTarget: VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
-          })}
-        </p>
+        <div className="page-subtitle max-w-none space-y-1">
+          <p>
+            {t("vocabularySubtitle", {
+              limit: LEARN_WORD_PERIOD_LIMIT,
+            })}
+          </p>
+          <p>
+            {t("vocabularySubtitleDetail", {
+              window: ACTIVE_VOCABULARY_WINDOW,
+              quizTarget: VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
+            })}
+          </p>
+        </div>
       </div>
 
       <TopicLevelFilter
@@ -123,31 +116,20 @@ export function VocabularySection() {
         </div>
       )}
 
-      <Dialog open={lockDialogOpen} onOpenChange={setLockDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader className="items-center text-center sm:items-center sm:text-center">
-            <span className="mx-auto mb-1 flex size-12 items-center justify-center rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-300">
-              <Lock className="size-5" aria-hidden />
-            </span>
-            <DialogTitle>
-              {t("vocabularyLevelLockedTitle", { level: selectedLevel })}
-            </DialogTitle>
-            <DialogDescription>
-              {requiredLevel
-                ? t("vocabularyLevelLockedHint", {
-                    level: selectedLevel,
-                    requiredLevel,
-                  })
-                : null}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="sm:justify-center">
-            <DialogClose render={<Button className="w-full sm:w-auto" />}>
-              {t("vocabularyLevelLockedCta")}
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <LevelLockedDialog
+        open={lockDialogOpen}
+        onOpenChange={setLockDialogOpen}
+        title={t("vocabularyLevelLockedTitle", { level: selectedLevel })}
+        description={
+          requiredLevel
+            ? t("vocabularyLevelLockedHint", {
+                level: selectedLevel,
+                requiredLevel,
+              })
+            : null
+        }
+        ctaLabel={t("vocabularyLevelLockedCta")}
+      />
     </section>
   );
 }

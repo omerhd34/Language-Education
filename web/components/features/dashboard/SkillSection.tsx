@@ -34,11 +34,11 @@ export function SkillSection({ skill }: SkillSectionProps) {
     >
       <h1
         id={headingId}
-        className="font-display text-2xl font-semibold tracking-tight text-brand-950 dark:text-brand-100"
+        className="page-title"
       >
         {t(SKILL_TITLE_KEYS[skill])}
       </h1>
-      <p className="text-sm text-brand-600 dark:text-brand-400">
+      <p className="page-subtitle mt-0">
         {t("skillSectionSubtitle")}
       </p>
     </section>

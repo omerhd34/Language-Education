@@ -15,7 +15,6 @@ import {
 import type { DashboardTopic } from "@/data/dashboardTopics";
 import { useTopicProgress } from "@/hooks/useTopicProgress";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
-import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";
 
 type TopicCardProps = {
@@ -61,19 +60,10 @@ export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
         }}
       />
 
-      <Card className="relative h-full border-0 bg-surface shadow-sm dark:bg-brand-900">
+      <Card className="relative h-full">
         <CardHeader>
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{t("topicLabel", { index })}</Badge>
-            <Badge
-              variant="outline"
-              className={cn(
-                "border-transparent uppercase",
-                getCefrLevelBadgeClass(topic.level),
-              )}
-            >
-              {topic.level}
-            </Badge>
             {locked ? (
               <Badge
                 variant="outline"
