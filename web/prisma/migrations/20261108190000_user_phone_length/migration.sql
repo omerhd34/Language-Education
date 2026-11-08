@@ -1,0 +1,1 @@
+ALTER TABLE `User` MODIFY `phone` VARCHAR(32) NULL;
