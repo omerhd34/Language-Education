@@ -28,18 +28,11 @@ export function AuthFloatingField({
     typeof value === "string" ? value.trim().length > 0 : Boolean(value);
 
   return (
-    <div className={cn("ixir-field", error && "has-error")}>
-      <div
-        className={cn("ixir-domain-checker", error && "is-invalid has-error")}
-      >
-        <div
-          className={cn(
-            "ixir-dc-input ixir-dc-float",
-            endIcon && "ixir-password-wrap",
-          )}
-        >
+    <div className={cn("field", error && "has-error")}>
+      <div className={cn("domain-checker", error && "is-invalid has-error")}>
+        <div className={cn("dc-input dc-float", endIcon && "password-wrap")}>
           {startIcon ? (
-            <span className="ixir-dc-icon" aria-hidden>
+            <span className="dc-icon" aria-hidden>
               {startIcon}
             </span>
           ) : null}
@@ -57,14 +50,14 @@ export function AuthFloatingField({
             aria-describedby={error ? `${inputId}-error` : undefined}
             {...props}
           />
-          <label htmlFor={inputId} className="ixir-dc-label">
+          <label htmlFor={inputId} className="dc-label">
             {label}
           </label>
           {endIcon}
         </div>
       </div>
       {error ? (
-        <p id={`${inputId}-error`} className="ixir-field-error" role="alert">
+        <p id={`${inputId}-error`} className="field-error" role="alert">
           {error}
         </p>
       ) : null}

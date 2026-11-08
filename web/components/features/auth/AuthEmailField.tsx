@@ -110,15 +110,13 @@ export function AuthEmailField({
   return (
     <div
       ref={containerRef}
-      className={cn("ixir-field", error && "has-error")}
+      className={cn("field", error && "has-error")}
       style={{ position: "relative" }}
     >
-      <div
-        className={cn("ixir-domain-checker", error && "is-invalid has-error")}
-      >
-        <div className="ixir-dc-input ixir-dc-float">
+      <div className={cn("domain-checker", error && "is-invalid has-error")}>
+        <div className="dc-input dc-float">
           {startIcon ? (
-            <span className="ixir-dc-icon" aria-hidden>
+            <span className="dc-icon" aria-hidden>
               {startIcon}
             </span>
           ) : null}
@@ -155,7 +153,7 @@ export function AuthEmailField({
             onFocus={() => setOpen(true)}
             onKeyDown={handleKeyDown}
           />
-          <label htmlFor={inputId} className="ixir-dc-label">
+          <label htmlFor={inputId} className="dc-label">
             {label}
           </label>
         </div>
@@ -202,7 +200,7 @@ export function AuthEmailField({
       ) : null}
 
       {error ? (
-        <p id={`${inputId}-error`} className="ixir-field-error" role="alert">
+        <p id={`${inputId}-error`} className="field-error" role="alert">
           {error}
         </p>
       ) : null}

@@ -217,7 +217,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
     return (
       <button
         type="button"
-        className="ixir-toggle-password"
+        className="toggle-password"
         tabIndex={-1}
         aria-label={show ? t("hidePassword") : t("showPassword")}
         onClick={onToggle}
@@ -236,17 +236,16 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
   return (
     <div
       className={cn(
-        "ixir-auth-split",
+        "auth-split",
         mode === "kayit" && "is-register",
         mode === "sifre" && "is-reset",
       )}
-      id="ixirAuthSplit"
     >
-      <div className="ixir-auth-split-card backdrop-blur-[20px] backdrop-saturate-200">
-        <nav className="ixir-auth-tabs" aria-label={t("loginTitle")}>
+      <div className="auth-split-card backdrop-blur-[20px] backdrop-saturate-200">
+        <nav className="auth-tabs" aria-label={t("loginTitle")}>
           <button
             type="button"
-            className={cn("ixir-auth-tab", mode === "giris" && "is-active")}
+            className={cn("auth-tab", mode === "giris" && "is-active")}
             onClick={() => switchMode("giris")}
           >
             <LogIn className="size-4" aria-hidden />
@@ -254,7 +253,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
           </button>
           <button
             type="button"
-            className={cn("ixir-auth-tab", mode === "kayit" && "is-active")}
+            className={cn("auth-tab", mode === "kayit" && "is-active")}
             onClick={() => switchMode("kayit")}
           >
             <UserPlus className="size-4" aria-hidden />
@@ -262,14 +261,14 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
           </button>
         </nav>
 
-        <div className="ixir-auth-forms">
-          <div className="ixir-auth-panel ixir-auth-panel-login">
+        <div className="auth-forms">
+          <div className="auth-panel auth-panel-login">
             <form
-              className="ixir-split-form ixir-login-form"
+              className="split-form login-form"
               onSubmit={onLoginSubmit}
               noValidate
             >
-              <div className="ixir-split-form-head">
+              <div className="split-form-head">
                 <h1>{t("loginTitle")}</h1>
               </div>
 
@@ -297,8 +296,8 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                 )}
               />
 
-              <div className="ixir-split-meta">
-                <label className="ixir-remember" htmlFor="rememberme">
+              <div className="split-meta">
+                <label className="remember" htmlFor="rememberme">
                   <input
                     type="checkbox"
                     name="rememberme"
@@ -306,26 +305,23 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                     checked={rememberMe}
                     onChange={(event) => setRememberMe(event.target.checked)}
                   />
-                  <span className="ixir-remember-box" aria-hidden />
-                  <span className="ixir-remember-text">{t("rememberMe")}</span>
+                  <span className="remember-box" aria-hidden />
+                  <span className="remember-text">{t("rememberMe")}</span>
                 </label>
               </div>
 
               {formError && mode === "giris" ? (
-                <p className="ixir-field-error" role="alert">
+                <p className="field-error" role="alert">
                   {formError}
                 </p>
               ) : null}
 
               <button
                 type="submit"
-                className={cn(
-                  "btn ixir-split-btn",
-                  loginPressed && "is-pressed",
-                )}
+                className={cn("btn split-btn", loginPressed && "is-pressed")}
                 disabled={isLoading}
                 onAnimationEnd={(event) => {
-                  if (event.animationName === "ixirLoginPress") {
+                  if (event.animationName === "loginPress") {
                     setLoginPressed(false);
                   }
                 }}
@@ -334,10 +330,10 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                 {t("submitLogin")}
               </button>
 
-              <div className="ixir-auth-mobile-links">
+              <div className="auth-mobile-links">
                 <button
                   type="button"
-                  className="ixir-split-switch-link"
+                  className="split-switch-link"
                   onClick={() => switchMode("sifre")}
                 >
                   {t("promoForgotTitle")}
@@ -346,16 +342,16 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
             </form>
           </div>
 
-          <div className="ixir-auth-panel ixir-auth-panel-register">
+          <div className="auth-panel auth-panel-register">
             {submittedEmail ? (
-              <div className="ixir-split-form" role="status">
-                <div className="ixir-split-form-head">
+              <div className="split-form" role="status">
+                <div className="split-form-head">
                   <h1>{t("checkEmailTitle")}</h1>
                   <p>{t("checkEmailBody", { email: submittedEmail })}</p>
                 </div>
                 <button
                   type="button"
-                  className="btn ixir-split-btn"
+                  className="btn split-btn"
                   onClick={() => switchMode("giris")}
                 >
                   <LogIn className="size-4" aria-hidden />
@@ -364,11 +360,11 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               </div>
             ) : (
               <form
-                className="ixir-split-form ixir-register-form"
+                className="split-form register-form"
                 onSubmit={onRegisterSubmit}
                 noValidate
               >
-                <div className="ixir-split-form-head">
+                <div className="split-form-head">
                   <h1>{t("registerTitle")}</h1>
                 </div>
 
@@ -391,7 +387,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                   startIcon={<Mail className="size-4" aria-hidden />}
                 />
 
-                <div className="ixir-field-row">
+                <div className="field-row">
                   <AuthFloatingField
                     name="password"
                     type={showPassword ? "text" : "password"}
@@ -420,8 +416,8 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                   />
                 </div>
 
-                <div className="ixir-agreements">
-                  <label className="ixir-check">
+                <div className="agreements">
+                  <label className="check">
                     <input
                       type="checkbox"
                       checked={acceptedTerms}
@@ -432,21 +428,21 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                     <span>{t("agreeTerms")}</span>
                   </label>
                   {fieldErrors.terms ? (
-                    <p className="ixir-field-error" role="alert">
+                    <p className="field-error" role="alert">
                       {fieldErrors.terms}
                     </p>
                   ) : null}
                 </div>
 
                 {formError && mode === "kayit" ? (
-                  <p className="ixir-field-error" role="alert">
+                  <p className="field-error" role="alert">
                     {formError}
                   </p>
                 ) : null}
 
                 <button
                   type="submit"
-                  className="btn ixir-split-btn"
+                  className="btn split-btn"
                   disabled={isLoading}
                 >
                   <UserPlus className="size-4" aria-hidden />
@@ -456,13 +452,13 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
             )}
           </div>
 
-          <div className="ixir-auth-panel ixir-auth-panel-reset">
+          <div className="auth-panel auth-panel-reset">
             <form
-              className="ixir-split-form ixir-reset-form"
+              className="split-form reset-form"
               onSubmit={onForgotSubmit}
               noValidate
             >
-              <div className="ixir-split-form-head">
+              <div className="split-form-head">
                 <h1>{t("forgotTitle")}</h1>
                 <p>{t("forgotSubtitle")}</p>
               </div>
@@ -478,7 +474,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
 
               {forgotNotice ? (
                 <p
-                  className="ixir-field-error"
+                  className="field-error"
                   role="status"
                   style={{ color: "#536684" }}
                 >
@@ -486,34 +482,34 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
                 </p>
               ) : null}
 
-              <button type="submit" className="btn ixir-split-btn">
+              <button type="submit" className="btn split-btn">
                 {t("submitForgot")}
               </button>
             </form>
           </div>
         </div>
 
-        <div className="ixir-auth-overlay">
-          <div className="ixir-auth-overlay-bg" />
+        <div className="auth-overlay">
+          <div className="auth-overlay-bg" />
 
-          <div className="ixir-auth-overlay-panel ixir-auth-overlay-left">
-            <span className="ixir-overlay-logo-text">{brand}</span>
+          <div className="auth-overlay-panel auth-overlay-left">
+            <span className="overlay-logo-text">{brand}</span>
             <h2>{t("promoHasAccountTitle")}</h2>
             <p>{t("promoHasAccountBody")}</p>
             <button
               type="button"
-              className="ixir-overlay-btn"
+              className="overlay-btn"
               onClick={() => switchMode("giris")}
             >
               <LogIn className="size-4" aria-hidden />
               {t("promoLogin")}
             </button>
-            <div className="ixir-overlay-forgot">
+            <div className="overlay-forgot">
               <h2>{t("promoForgotTitle")}</h2>
               <p>{t("promoForgotBody")}</p>
               <button
                 type="button"
-                className="ixir-overlay-btn"
+                className="overlay-btn"
                 onClick={() => switchMode("sifre")}
               >
                 <KeyRound className="size-4" aria-hidden />
@@ -522,24 +518,24 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
             </div>
           </div>
 
-          <div className="ixir-auth-overlay-panel ixir-auth-overlay-right">
-            <span className="ixir-overlay-logo-text">{brand}</span>
+          <div className="auth-overlay-panel auth-overlay-right">
+            <span className="overlay-logo-text">{brand}</span>
             <h2>{t("promoNoAccountTitle")}</h2>
             <p>{t("promoNoAccountBody")}</p>
             <button
               type="button"
-              className="ixir-overlay-btn"
+              className="overlay-btn"
               onClick={() => switchMode("kayit")}
             >
               <UserPlus className="size-4" aria-hidden />
               {t("promoRegister")}
             </button>
-            <div className="ixir-overlay-forgot">
+            <div className="overlay-forgot">
               <h2>{t("promoForgotTitle")}</h2>
               <p>{t("promoForgotBody")}</p>
               <button
                 type="button"
-                className="ixir-overlay-btn"
+                className="overlay-btn"
                 onClick={() => switchMode("sifre")}
               >
                 <KeyRound className="size-4" aria-hidden />
@@ -548,14 +544,14 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
             </div>
           </div>
 
-          <div className="ixir-auth-overlay-panel ixir-auth-overlay-reset">
-            <span className="ixir-overlay-logo-text">{brand}</span>
+          <div className="auth-overlay-panel auth-overlay-reset">
+            <span className="overlay-logo-text">{brand}</span>
             <h2>{t("promoHaveAccountTitle")}</h2>
             <p>{t("promoHaveAccountBody")}</p>
-            <div className="ixir-overlay-actions">
+            <div className="overlay-actions">
               <button
                 type="button"
-                className="ixir-overlay-btn"
+                className="overlay-btn"
                 onClick={() => switchMode("giris")}
               >
                 <LogIn className="size-4" aria-hidden />
@@ -563,7 +559,7 @@ export function AuthPanel({ initialMode = "giris" }: AuthPanelProps) {
               </button>
               <button
                 type="button"
-                className="ixir-overlay-btn"
+                className="overlay-btn"
                 onClick={() => switchMode("kayit")}
               >
                 <UserPlus className="size-4" aria-hidden />
