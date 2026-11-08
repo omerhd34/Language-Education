@@ -28,7 +28,6 @@ const CEFR_LEVEL_SLUG: Record<CefrLevel, string> = {
   C2: "c2",
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getCombinedInterval(level: CefrLevel): number {
   return 3;
 }

@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -146,9 +144,7 @@ export function VocabularyQuizView() {
   if (finished && totalQuestions > 0) {
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-5 text-center">
-        <h2 className="page-title">
-          {t("quizFinishedTitle")}
-        </h2>
+        <h2 className="page-title">{t("quizFinishedTitle")}</h2>
         <p
           className="font-display text-5xl font-semibold tabular-nums tracking-tight text-brand-950 dark:text-brand-100"
           aria-label={t("quizFinishedScorePercent", { score: scorePercent })}
@@ -164,9 +160,7 @@ export function VocabularyQuizView() {
             total: totalQuestions,
           })}
         </p>
-        <p className="page-subtitle mt-0">
-          {t("quizFinishedHint")}
-        </p>
+        <p className="page-subtitle mt-0">{t("quizFinishedHint")}</p>
         <div className="flex flex-wrap justify-center gap-2">
           <ButtonLink href="/panel/kelime/bugun-calisilan" variant="outline">
             {t("quizBackToStudied")}
@@ -187,11 +181,7 @@ export function VocabularyQuizView() {
   const quizInProgress = totalQuestions > 0;
 
   if (!quizInProgress && isLoading && words.length === 0) {
-    return (
-      <p className="page-subtitle mt-0">
-        {t("quizLoading")}
-      </p>
-    );
+    return <p className="page-subtitle mt-0">{t("quizLoading")}</p>;
   }
 
   if (!quizInProgress && isError && words.length === 0) {
@@ -205,12 +195,8 @@ export function VocabularyQuizView() {
   if (!quizInProgress && words.length === 0) {
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">
-          {t("quizEmptyTitle")}
-        </h2>
-        <p className="page-subtitle mt-0">
-          {t("quizEmptyBody")}
-        </p>
+        <h2 className="page-title">{t("quizEmptyTitle")}</h2>
+        <p className="page-subtitle mt-0">{t("quizEmptyBody")}</p>
         {data?.nextDueAt && remainingMs > 0 ? (
           <p className="font-mono text-sm font-semibold tabular-nums text-amber-800 dark:text-amber-200">
             {t("quizNextDue", { time: formatDurationHms(remainingMs) })}
@@ -225,11 +211,7 @@ export function VocabularyQuizView() {
   }
 
   if (!question) {
-    return (
-      <p className="page-subtitle mt-0">
-        {t("quizLoading")}
-      </p>
-    );
+    return <p className="page-subtitle mt-0">{t("quizLoading")}</p>;
   }
 
   const canCheck =
@@ -258,9 +240,7 @@ export function VocabularyQuizView() {
       </div>
 
       <article className="dashboard-panel space-y-5">
-        <h2 className="section-title">
-          {question.prompt}
-        </h2>
+        <h2 className="section-title">{question.prompt}</h2>
 
         {question.type === "listening" && question.speakText ? (
           <Button

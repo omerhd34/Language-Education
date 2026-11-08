@@ -292,7 +292,6 @@ export function generateCrosswordExercise(
     return null;
   }
 
-  // Trim empty borders.
   let minRow = size;
   let maxRow = 0;
   let minCol = size;

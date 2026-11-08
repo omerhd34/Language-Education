@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -181,11 +180,7 @@ export function TopicExamView({
   }
 
   if (multipleChoice.length === 0 && fillBlanks.length === 0) {
-    return (
-      <p className="page-subtitle mt-0">
-        {t("noExamQuestions")}
-      </p>
-    );
+    return <p className="page-subtitle mt-0">{t("noExamQuestions")}</p>;
   }
 
   function handleComplete(
@@ -234,9 +229,7 @@ export function TopicExamView({
             <AlertDescription>{t("topicExamPassedBody")}</AlertDescription>
           </Alert>
         ) : (
-          <p className="page-subtitle mt-0">
-            {t("topicExamIntro")}
-          </p>
+          <p className="page-subtitle mt-0">{t("topicExamIntro")}</p>
         )}
         <ExerciseTypePicker
           counts={{
@@ -284,9 +277,7 @@ export function TopicExamView({
           {t("quizBackToParts")}
         </Button>
       ) : (
-        <p className="page-subtitle mt-0">
-          {t("quizSingleIntro")}
-        </p>
+        <p className="page-subtitle mt-0">{t("quizSingleIntro")}</p>
       )}
 
       {partOutcome === "failed" ? (

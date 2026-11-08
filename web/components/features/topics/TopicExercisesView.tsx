@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -471,19 +469,11 @@ export function TopicExercisesView({
 
   if (isExam && level) {
     if (levelExamCrosswords === null || levelExamFillBlanks === null) {
-      return (
-        <p className="page-subtitle mt-0">
-          {t("levelExamIntro")}
-        </p>
-      );
+      return <p className="page-subtitle mt-0">{t("levelExamIntro")}</p>;
     }
 
     if (levelExamCrosswords.length === 0 || levelExamFillBlanks.length === 0) {
-      return (
-        <p className="page-subtitle mt-0">
-          {t("noExamQuestions")}
-        </p>
-      );
+      return <p className="page-subtitle mt-0">{t("noExamQuestions")}</p>;
     }
 
     if (levelExamPassed) {
@@ -492,9 +482,7 @@ export function TopicExercisesView({
           className="dashboard-panel mx-auto max-w-lg space-y-3 border-emerald-500/40 bg-emerald-500/10 text-center"
           role="status"
         >
-          <h2 className="section-title">
-            {t("examPassedTitle")}
-          </h2>
+          <h2 className="section-title">{t("examPassedTitle")}</h2>
           <p className="page-subtitle mt-0">
             {nextLevel
               ? t("examPassedBody", { nextLevel })
@@ -510,9 +498,7 @@ export function TopicExercisesView({
     if (!levelExamSelected) {
       return (
         <div className="space-y-4">
-          <p className="page-subtitle mt-0">
-            {t("levelExamIntro")}
-          </p>
+          <p className="page-subtitle mt-0">{t("levelExamIntro")}</p>
           <ExerciseTypePicker
             counts={levelExamCounts}
             completedTypes={passedLevelParts}
@@ -557,12 +543,8 @@ export function TopicExercisesView({
             className="dashboard-panel space-y-3 border-amber-500/40 bg-amber-500/10 text-center"
             role="status"
           >
-            <h2 className="section-title">
-              {t("levelExamPartFailedTitle")}
-            </h2>
-            <p className="page-subtitle mt-0">
-              {t("levelExamPartFailedBody")}
-            </p>
+            <h2 className="section-title">{t("levelExamPartFailedTitle")}</h2>
+            <p className="page-subtitle mt-0">{t("levelExamPartFailedBody")}</p>
             <div className="flex flex-wrap justify-center gap-2">
               <Button type="button" size="sm" onClick={retryCurrentLevelPart}>
                 <RotateCcw className="size-4" aria-hidden />
@@ -585,12 +567,8 @@ export function TopicExercisesView({
             className="dashboard-panel space-y-3 border-emerald-500/40 bg-emerald-500/10 text-center"
             role="status"
           >
-            <h2 className="section-title">
-              {t("levelExamPartPassedTitle")}
-            </h2>
-            <p className="page-subtitle mt-0">
-              {t("levelExamPartPassedBody")}
-            </p>
+            <h2 className="section-title">{t("levelExamPartPassedTitle")}</h2>
+            <p className="page-subtitle mt-0">{t("levelExamPartPassedBody")}</p>
             <Button type="button" size="sm" onClick={backToLevelExamPicker}>
               {t("backToTypes")}
             </Button>
@@ -641,11 +619,7 @@ export function TopicExercisesView({
   }
 
   if (exercises.length === 0) {
-    return (
-      <p className="page-subtitle mt-0">
-        {t("noExercises")}
-      </p>
-    );
+    return <p className="page-subtitle mt-0">{t("noExercises")}</p>;
   }
 
   if (!isExam && selectionKey && !sessionReady) {

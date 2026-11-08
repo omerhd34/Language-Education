@@ -113,15 +113,11 @@ export async function resetPrisma(): Promise<void> {
 
     try {
       await client?.$disconnect();
-    } catch {
-      // Ignore disconnect errors from a dead pool.
-    }
+    } catch {}
 
     try {
       await pool?.end();
-    } catch {
-      // Ignore shutdown errors from a dead pool.
-    }
+    } catch {}
   })();
 
   try {

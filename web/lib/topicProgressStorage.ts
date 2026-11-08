@@ -66,7 +66,6 @@ function writeAll(map: TopicProgressMap): void {
 }
 
 function normalizeRecord(record: TopicProgressRecord): TopicProgressRecord {
-  // Legacy: lesson was marked instantly without the 3-minute requirement.
   if (record.lessonViewed && record.lessonViewMs === undefined) {
     return {
       ...record,

@@ -5,7 +5,6 @@ type BrandMarkProps = {
   title?: string;
 };
 
-/** Pylmor mark — geometric “P” glyph for light/dark glass surfaces. */
 export function BrandMark({ className, title }: BrandMarkProps) {
   const label = title?.trim();
 

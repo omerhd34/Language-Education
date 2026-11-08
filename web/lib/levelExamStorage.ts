@@ -36,16 +36,12 @@ export function parsePassedLevelExams(
   const candidates = [raw];
   try {
     candidates.push(decodeURIComponent(raw));
-  } catch {
-    // keep original only
-  }
+  } catch {}
 
   for (const candidate of candidates) {
     try {
       return normalizeLevels(JSON.parse(candidate));
-    } catch {
-      // try next
-    }
+    } catch {}
   }
 
   return [];
@@ -96,9 +92,7 @@ export function readPassedLevelExams(): CefrLevel[] {
     if (raw !== null) {
       return parsePassedLevelExams(raw);
     }
-  } catch {
-    // fall through to cookie
-  }
+  } catch {}
 
   return readFromCookie();
 }

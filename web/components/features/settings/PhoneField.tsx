@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/role-supports-aria-props */
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import {

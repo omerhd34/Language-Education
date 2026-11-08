@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -275,11 +274,7 @@ export function CrosswordExerciseView({
   }
 
   if (!exercise || !solution) {
-    return (
-      <p className="page-subtitle mt-0">
-        {t("noExercisesForType")}
-      </p>
-    );
+    return <p className="page-subtitle mt-0">{t("noExercisesForType")}</p>;
   }
 
   const clues = [...exercise.clues].sort((a, b) => a.number - b.number);
@@ -381,9 +376,7 @@ export function CrosswordExerciseView({
   if (finished) {
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">
-          {t("crosswordComplete")}
-        </h2>
+        <h2 className="page-title">{t("crosswordComplete")}</h2>
         <p className="page-subtitle mt-0">
           {t("finishedScore", {
             correct: solvedCount,
