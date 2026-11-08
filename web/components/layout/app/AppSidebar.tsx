@@ -66,7 +66,7 @@ export function AppSidebarMobileBar() {
       </Link>
       <SidebarTrigger
         aria-label={openMobile ? tNav("closeMenu") : tNav("openMenu")}
-        className="border border-white/10 text-brand-100"
+        className="border border-white/10 text-brand-100 hover:bg-sidebar-accent hover:text-brand-100"
       />
     </div>
   );
@@ -151,7 +151,7 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
           <SidebarTrigger
             aria-label={collapsed ? t("expandSidebar") : t("collapseSidebar")}
             title={collapsed ? t("expandSidebar") : t("collapseSidebar")}
-            className="border border-white/10 text-brand-100 hover:bg-brand-900"
+            className="border border-white/10 text-brand-100 hover:bg-sidebar-accent hover:text-brand-100"
           />
         </div>
       </SidebarHeader>
@@ -197,33 +197,35 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
-        <div className="mb-2 flex items-center gap-3 px-1 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
-          <ProfileAvatar
-            name={resolvedUser.name}
-            email={resolvedUser.email}
-            avatarUrl={resolvedUser.avatarUrl}
-            className="size-9 group-data-[collapsible=icon]:size-8"
-            fallbackClassName="text-[0.65rem]"
-            editable
-            uploading={isUpdatingAvatar}
-            onPickFile={pickFile}
-            label={tSettings("profilePhotoChange")}
-          />
-          <Link
-            href="/panel/ayarlar"
-            onClick={() => setOpenMobile(false)}
-            className="min-w-0 flex-1 rounded-lg outline-none transition-colors hover:bg-brand-900/60 focus-visible:ring-2 focus-visible:ring-brand-400/40 group-data-[collapsible=icon]:hidden"
-            aria-label={t("settings")}
-          >
-            <p className="truncate text-sm font-medium text-brand-100">
-              {displayName}
-            </p>
-            {resolvedUser.name?.trim() ? (
-              <p className="truncate text-xs text-brand-400">
-                {resolvedUser.email}
+        <div className="mb-2 group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:justify-center">
+          <div className="flex min-w-0 flex-1 items-center gap-3 rounded-lg px-3 py-1.5 transition-colors hover:bg-sidebar-accent group-data-[collapsible=icon]:flex-none group-data-[collapsible=icon]:p-0 group-data-[collapsible=icon]:hover:bg-transparent">
+            <ProfileAvatar
+              name={resolvedUser.name}
+              email={resolvedUser.email}
+              avatarUrl={resolvedUser.avatarUrl}
+              className="size-9 group-data-[collapsible=icon]:size-8"
+              fallbackClassName="text-[0.65rem]"
+              editable
+              uploading={isUpdatingAvatar}
+              onPickFile={pickFile}
+              label={tSettings("profilePhotoChange")}
+            />
+            <Link
+              href="/panel/ayarlar"
+              onClick={() => setOpenMobile(false)}
+              className="min-w-0 flex-1 rounded-md outline-none focus-visible:ring-2 focus-visible:ring-brand-400/40 group-data-[collapsible=icon]:hidden"
+              aria-label={t("settings")}
+            >
+              <p className="truncate text-sm font-medium text-brand-100">
+                {displayName}
               </p>
-            ) : null}
-          </Link>
+              {resolvedUser.name?.trim() ? (
+                <p className="truncate text-xs text-brand-400">
+                  {resolvedUser.email}
+                </p>
+              ) : null}
+            </Link>
+          </div>
         </div>
         <Button
           type="button"
