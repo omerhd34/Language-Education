@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { DashboardStatsBar } from "@/components/features/dashboard/DashboardStatsBar";
 import { ProgressSection } from "@/components/features/dashboard/ProgressSection";
+import { ReadingSection } from "@/components/features/dashboard/ReadingSection";
 import { SkillSection } from "@/components/features/dashboard/SkillSection";
 import { TopicsSection } from "@/components/features/dashboard/TopicsSection";
 import { VocabularySection } from "@/components/features/dashboard/VocabularySection";
@@ -38,21 +39,17 @@ export function DashboardHome() {
       <DashboardStatsBar />
       {section === "dilbilgisi" ? <TopicsSection /> : null}
       {section === "kelimeler" ? <VocabularySection /> : null}
-      {isSkillHash(section) ? (
+      {section === "okuma" ? <ReadingSection /> : null}
+      {isSkillHash(section) && section !== "okuma" ? (
         <SkillSection skill={SKILL_BY_HASH[section]} />
       ) : null}
       {section === "ilerleme" ? <ProgressSection /> : null}
       {section !== "" && !READY_SECTIONS.has(section) ? (
         <section className="space-y-2" aria-labelledby="section-soon-heading">
-          <h1
-            id="section-soon-heading"
-            className="page-title"
-          >
+          <h1 id="section-soon-heading" className="page-title">
             {t("sectionSoonTitle")}
           </h1>
-          <p className="page-subtitle mt-0">
-            {t("sectionSoonBody")}
-          </p>
+          <p className="page-subtitle mt-0">{t("sectionSoonBody")}</p>
         </section>
       ) : null}
     </div>

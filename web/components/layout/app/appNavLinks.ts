@@ -71,6 +71,11 @@ export const appNavLinks: AppNavLink[] = [
     Icon: BookA,
   },
   {
+    href: "/panel#okuma",
+    labelKey: "reading",
+    Icon: BookOpen,
+  },
+  {
     href: "/panel#dinleme",
     labelKey: "listening",
     Icon: Headphones,
@@ -85,11 +90,7 @@ export const appNavLinks: AppNavLink[] = [
     labelKey: "speaking",
     Icon: Mic,
   },
-  {
-    href: "/panel#okuma",
-    labelKey: "reading",
-    Icon: BookOpen,
-  },
+
   {
     href: "/panel#ilerleme",
     labelKey: "progress",
