@@ -10,6 +10,7 @@ import { SettingsSection } from "@/components/features/settings/SettingsSection"
 import { LocaleSetting } from "@/components/features/settings/LocaleSetting";
 import { ThemeSetting } from "@/components/features/settings/ThemeSetting";
 import { SpeechRateControl } from "@/components/features/vocabulary/SpeechRateControl";
+import { SpeechVoiceControl } from "@/components/features/vocabulary/SpeechVoiceControl";
 
 export function SettingsView() {
   const t = useTranslations("Settings");
@@ -41,12 +42,15 @@ export function SettingsView() {
         <NotificationSettingsPanel />
 
         <SettingsSection
-          titleId="settings-speech-rate"
-          title={t("speechRateLabel")}
-          description={t("speechRateHint")}
+          titleId="settings-speech"
+          title={t("speechSettingsTitle")}
+          description={t("speechSettingsHint")}
           icon={<Gauge className="size-5" aria-hidden />}
         >
-          <SpeechRateControl />
+          <div className="space-y-6">
+            <SpeechVoiceControl />
+            <SpeechRateControl />
+          </div>
         </SettingsSection>
       </div>
 
