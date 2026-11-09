@@ -2,35 +2,59 @@
 
 import { useTranslations } from "next-intl";
 import {
+  BookA,
   BookOpen,
   ChevronRight,
   ClipboardCheck,
+  Headphones,
   Layers3,
+  Mic,
   PencilLine,
+  PenLine,
   Play,
+  SpellCheck2,
 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { useContinueActivities } from "@/hooks/useContinueActivity";
-import { navigatePanelSection } from "@/hooks/usePanelHash";
+import {
+  navigatePanelHref,
+  navigatePanelSection,
+} from "@/hooks/usePanelHash";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { resolveContinueActivityDisplay } from "@/lib/resolveContinueActivity";
-import type {
-  ContinueActivity,
-  ContinueActivityKind,
-} from "@/lib/continueActivityStorage";
+import type { ContinueActivity } from "@/lib/continueActivityStorage";
 
-function kindIcon(kind: ContinueActivityKind) {
-  switch (kind) {
+function kindIcon(activity: ContinueActivity) {
+  switch (activity.kind) {
     case "vocabulary_quiz":
     case "topic_exam":
       return ClipboardCheck;
     case "vocabulary_exercises":
     case "topic_exercises":
     case "combined_exercise":
+    case "reading_exercises":
       return PencilLine;
     case "vocabulary_category":
       return Layers3;
+    case "reading_text":
+      return BookOpen;
+    case "skill_hub":
+      switch (activity.skill) {
+        case "listening":
+          return Headphones;
+        case "writing":
+          return PenLine;
+        case "speaking":
+          return Mic;
+        case "topics":
+          return SpellCheck2;
+        case "vocabulary":
+          return BookA;
+        case "reading":
+        default:
+          return BookOpen;
+      }
     case "topic_lesson":
     default:
       return BookOpen;
@@ -47,7 +71,7 @@ function ContinueActivityRow({
   labels: Parameters<typeof resolveContinueActivityDisplay>[1];
 }) {
   const display = resolveContinueActivityDisplay(activity, labels);
-  const Icon = kindIcon(activity.kind);
+  const Icon = kindIcon(activity);
 
   return (
     <li>
@@ -55,6 +79,11 @@ function ContinueActivityRow({
         href={activity.href}
         className="group flex min-w-0 items-center gap-3 rounded-xl px-1 py-1.5 transition-colors hover:bg-(--glass-btn) focus-visible:bg-(--glass-btn) focus-visible:outline-none"
         aria-label={`${goLabel}: ${display.title}`}
+        onClick={(event) => {
+          if (navigatePanelHref(activity.href)) {
+            event.preventDefault();
+          }
+        }}
       >
         <span
           className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-(--glass-btn) text-brand-800 shadow-[inset_0_0_0_1px_var(--glass-line)] transition-colors group-hover:bg-(--glass-btn-hover) group-hover:text-sky-700 dark:text-brand-100 dark:group-hover:text-sky-200"
@@ -81,6 +110,7 @@ function ContinueActivityRow({
 
 export function QuickContinueCard() {
   const t = useTranslations("Dashboard");
+  const tNav = useTranslations("AppNav");
   const activities = useContinueActivities();
   const pathname = usePathname();
   const router = useRouter();
@@ -94,6 +124,15 @@ export function QuickContinueCard() {
     topicExam: t("quickContinueKindTopicExam"),
     exam: t("quickContinueKindExam"),
     combinedExercise: t("quickContinueKindCombined"),
+    readingText: t("quickContinueKindReadingText"),
+    readingExercises: t("quickContinueKindReadingExercises"),
+    sectionKind: t("quickContinueKindSection"),
+    skillReading: tNav("reading"),
+    skillListening: tNav("listening"),
+    skillWriting: tNav("writing"),
+    skillSpeaking: tNav("speaking"),
+    skillTopics: tNav("topics"),
+    skillVocabulary: tNav("vocabulary"),
     fallbackTitle: t("quickContinueFallback"),
   };
 

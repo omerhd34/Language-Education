@@ -5,7 +5,18 @@ export type ContinueActivityKind =
   | "topic_lesson"
   | "topic_exercises"
   | "topic_exam"
-  | "combined_exercise";
+  | "combined_exercise"
+  | "reading_text"
+  | "reading_exercises"
+  | "skill_hub";
+
+export type ContinueActivitySkill =
+  | "reading"
+  | "listening"
+  | "writing"
+  | "speaking"
+  | "topics"
+  | "vocabulary";
 
 export type ContinueActivity = {
   kind: ContinueActivityKind;
@@ -13,6 +24,8 @@ export type ContinueActivity = {
   topicId?: string;
   categoryId?: string;
   combinedId?: string;
+  readingId?: string;
+  skill?: ContinueActivitySkill;
   updatedAt: string;
 };
 
@@ -20,6 +33,28 @@ const STORAGE_KEY = "pylmor-continue-activity";
 export const CONTINUE_ACTIVITY_CHANGED_EVENT =
   "pylmor:continue-activity-changed";
 export const CONTINUE_ACTIVITY_LIMIT = 2;
+
+const CONTINUE_ACTIVITY_KINDS: readonly ContinueActivityKind[] = [
+  "vocabulary_category",
+  "vocabulary_exercises",
+  "vocabulary_quiz",
+  "topic_lesson",
+  "topic_exercises",
+  "topic_exam",
+  "combined_exercise",
+  "reading_text",
+  "reading_exercises",
+  "skill_hub",
+];
+
+const CONTINUE_ACTIVITY_SKILLS: readonly ContinueActivitySkill[] = [
+  "reading",
+  "listening",
+  "writing",
+  "speaking",
+  "topics",
+  "vocabulary",
+];
 
 function canUseStorage(): boolean {
   return typeof window !== "undefined";
@@ -34,22 +69,64 @@ function emitChanged(): void {
 
 function isContinueActivityKind(value: unknown): value is ContinueActivityKind {
   return (
-    value === "vocabulary_category" ||
-    value === "vocabulary_exercises" ||
-    value === "vocabulary_quiz" ||
-    value === "topic_lesson" ||
-    value === "topic_exercises" ||
-    value === "topic_exam" ||
-    value === "combined_exercise"
+    typeof value === "string" &&
+    (CONTINUE_ACTIVITY_KINDS as readonly string[]).includes(value)
   );
+}
+
+function isContinueActivitySkill(
+  value: unknown,
+): value is ContinueActivitySkill {
+  return (
+    typeof value === "string" &&
+    (CONTINUE_ACTIVITY_SKILLS as readonly string[]).includes(value)
+  );
+}
+
+export function activitySkill(
+  activity: Pick<ContinueActivity, "kind" | "skill">,
+): ContinueActivitySkill | null {
+  if (activity.kind === "skill_hub") {
+    return activity.skill ?? null;
+  }
+
+  switch (activity.kind) {
+    case "vocabulary_category":
+    case "vocabulary_exercises":
+    case "vocabulary_quiz":
+      return "vocabulary";
+    case "topic_lesson":
+    case "topic_exercises":
+    case "topic_exam":
+    case "combined_exercise":
+      return "topics";
+    case "reading_text":
+    case "reading_exercises":
+      return "reading";
+  }
 }
 
 export function continueActivitySectionKey(
   activity: Pick<
     ContinueActivity,
-    "kind" | "href" | "topicId" | "categoryId" | "combinedId"
+    | "kind"
+    | "href"
+    | "topicId"
+    | "categoryId"
+    | "combinedId"
+    | "readingId"
+    | "skill"
   >,
 ): string {
+  if (activity.kind === "skill_hub" && activity.skill) {
+    return `skill:${activity.skill}`;
+  }
+  if (
+    activity.readingId &&
+    (activity.kind === "reading_text" || activity.kind === "reading_exercises")
+  ) {
+    return `reading:${activity.readingId}`;
+  }
   if (
     activity.categoryId &&
     (activity.kind === "vocabulary_category" ||
@@ -102,6 +179,16 @@ function normalizeActivity(value: unknown): ContinueActivity | null {
   }
   if (typeof record.combinedId === "string" && record.combinedId.length > 0) {
     activity.combinedId = record.combinedId;
+  }
+  if (typeof record.readingId === "string" && record.readingId.length > 0) {
+    activity.readingId = record.readingId;
+  }
+  if (isContinueActivitySkill(record.skill)) {
+    activity.skill = record.skill;
+  }
+
+  if (kind === "skill_hub" && !activity.skill) {
+    return null;
   }
 
   return activity;
@@ -180,6 +267,29 @@ export function writeContinueActivity(
   activity: Omit<ContinueActivity, "updatedAt">,
 ): ContinueActivity[] {
   const current = readContinueActivities();
+
+  if (activity.kind === "skill_hub") {
+    const skill = activity.skill;
+    if (skill) {
+      const relatedIndex = current.findIndex(
+        (item) => item.kind !== "skill_hub" && activitySkill(item) === skill,
+      );
+      if (relatedIndex >= 0) {
+        if (relatedIndex === 0) {
+          return current;
+        }
+        const related = current[relatedIndex];
+        const rest = current.filter((_, index) => index !== relatedIndex);
+        const next = dedupeBySection([
+          { ...related, updatedAt: new Date().toISOString() },
+          ...rest,
+        ]);
+        writeAll(next);
+        return next;
+      }
+    }
+  }
+
   const nextItem: ContinueActivity = {
     ...activity,
     updatedAt: new Date().toISOString(),
@@ -194,7 +304,20 @@ export function writeContinueActivity(
     return current;
   }
 
-  const rest = current.filter((item) => !sameSection(item, activity));
+  const skill = activitySkill(activity);
+  const rest = current.filter((item) => {
+    if (sameSection(item, activity)) {
+      return false;
+    }
+    if (
+      item.kind === "skill_hub" &&
+      activity.kind !== "skill_hub" &&
+      item.skill === skill
+    ) {
+      return false;
+    }
+    return true;
+  });
   const next = dedupeBySection([nextItem, ...rest]);
   writeAll(next);
   return next;

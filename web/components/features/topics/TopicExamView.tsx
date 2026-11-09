@@ -228,9 +228,7 @@ export function TopicExamView({
             <AlertTitle>{t("topicExamPassedTitle")}</AlertTitle>
             <AlertDescription>{t("topicExamPassedBody")}</AlertDescription>
           </Alert>
-        ) : (
-          <p className="page-subtitle mt-0">{t("topicExamIntro")}</p>
-        )}
+        ) : null}
         <ExerciseTypePicker
           counts={{
             multiple_choice: multipleChoice.length,

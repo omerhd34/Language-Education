@@ -1,10 +1,13 @@
 import { getCombinedExerciseById } from "@/data/combinedExercises";
 import { getDashboardTopicById } from "@/data/dashboardTopics";
+import { getReadingSectionById } from "@/data/readings";
 import { getVocabularyCategoryById } from "@/data/vocabulary";
 import type {
   ContinueActivity,
   ContinueActivityKind,
+  ContinueActivitySkill,
 } from "@/lib/continueActivityStorage";
+import { READING_SECTION_ANCHORS } from "@/lib/readingSectionTab";
 
 const VOCABULARY_STATIC_SEGMENTS = new Set([
   "sinav",
@@ -12,9 +15,67 @@ const VOCABULARY_STATIC_SEGMENTS = new Set([
   "bilinen",
 ]);
 
+const PANEL_HUB_BY_HASH: Record<string, ContinueActivitySkill> = {
+  dilbilgisi: "topics",
+  kelimeler: "vocabulary",
+  okuma: "reading",
+  dinleme: "listening",
+  yazma: "writing",
+  konusma: "speaking",
+};
+
+const PANEL_HASH_BY_SKILL: Record<ContinueActivitySkill, string> = {
+  topics: "dilbilgisi",
+  vocabulary: "kelimeler",
+  reading: "okuma",
+  listening: "dinleme",
+  writing: "yazma",
+  speaking: "konusma",
+};
+
+function hashIdFrom(hash: string): string {
+  return hash.replace(/^#/, "");
+}
+
+function isReadingPractice(hash: string, search: string): boolean {
+  const hashId = hashIdFrom(hash);
+  if (
+    hashId === READING_SECTION_ANCHORS.practice ||
+    hashId === "reading-sinav"
+  ) {
+    return true;
+  }
+
+  const params = new URLSearchParams(
+    search.startsWith("?") ? search.slice(1) : search,
+  );
+  const tab = params.get("tab");
+  return tab === "practice" || tab === "exam";
+}
+
+function parseReadingActivity(
+  sectionId: string,
+  hash: string,
+  search: string,
+): Omit<ContinueActivity, "updatedAt"> | null {
+  if (!getReadingSectionById(sectionId)) {
+    return null;
+  }
+
+  const isPractice = isReadingPractice(hash, search);
+  return {
+    kind: isPractice ? "reading_exercises" : "reading_text",
+    href: isPractice
+      ? `/panel/okuma/${sectionId}#${READING_SECTION_ANCHORS.practice}`
+      : `/panel/okuma/${sectionId}`,
+    readingId: sectionId,
+  };
+}
+
 export function parseContinueActivityFromPath(
   pathname: string,
   search = "",
+  hash = "",
 ): Omit<ContinueActivity, "updatedAt"> | null {
   const path = pathname.replace(/\/+$/, "") || "/";
 
@@ -75,6 +136,33 @@ export function parseContinueActivityFromPath(
     };
   }
 
+  const readingNestedMatch = path.match(
+    /^\/panel\/okuma\/([^/]+)\/(metin|alistirmalar|sinav)$/,
+  );
+  if (readingNestedMatch) {
+    const nestedHash =
+      readingNestedMatch[2] === "metin"
+        ? ""
+        : `#${READING_SECTION_ANCHORS.practice}`;
+    return parseReadingActivity(readingNestedMatch[1], nestedHash, "");
+  }
+
+  const readingMatch = path.match(/^\/panel\/okuma\/([^/]+)$/);
+  if (readingMatch) {
+    return parseReadingActivity(readingMatch[1], hash, search);
+  }
+
+  if (path === "/panel" || path === "/") {
+    const skill = PANEL_HUB_BY_HASH[hashIdFrom(hash)];
+    if (skill) {
+      return {
+        kind: "skill_hub",
+        href: `/panel#${PANEL_HASH_BY_SKILL[skill]}`,
+        skill,
+      };
+    }
+  }
+
   return null;
 }
 
@@ -92,8 +180,39 @@ type ContinueActivityLabels = {
   topicExam: string;
   exam: string;
   combinedExercise: string;
+  readingText: string;
+  readingExercises: string;
+  sectionKind: string;
+  skillReading: string;
+  skillListening: string;
+  skillWriting: string;
+  skillSpeaking: string;
+  skillTopics: string;
+  skillVocabulary: string;
   fallbackTitle: string;
 };
+
+function skillHubTitle(
+  skill: ContinueActivitySkill | undefined,
+  labels: ContinueActivityLabels,
+): string {
+  switch (skill) {
+    case "reading":
+      return labels.skillReading;
+    case "listening":
+      return labels.skillListening;
+    case "writing":
+      return labels.skillWriting;
+    case "speaking":
+      return labels.skillSpeaking;
+    case "topics":
+      return labels.skillTopics;
+    case "vocabulary":
+      return labels.skillVocabulary;
+    default:
+      return labels.fallbackTitle;
+  }
+}
 
 export function resolveContinueActivityDisplay(
   activity: ContinueActivity,
@@ -146,5 +265,23 @@ export function resolveContinueActivityDisplay(
         kindLabel: labels.combinedExercise,
       };
     }
+    case "reading_text":
+    case "reading_exercises": {
+      const section = activity.readingId
+        ? getReadingSectionById(activity.readingId)
+        : null;
+      return {
+        title: section?.title ?? labels.fallbackTitle,
+        kindLabel:
+          activity.kind === "reading_exercises"
+            ? labels.readingExercises
+            : labels.readingText,
+      };
+    }
+    case "skill_hub":
+      return {
+        title: skillHubTitle(activity.skill, labels),
+        kindLabel: labels.sectionKind,
+      };
   }
 }

@@ -1,3 +1,5 @@
+export const instant = false;
+
 import { cookies } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
