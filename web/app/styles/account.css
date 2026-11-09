@@ -30,6 +30,35 @@
   @apply relative inline-flex;
 }
 
+.bar-badged.is-nav .bar-badge {
+  top: 50%;
+  right: 0.5rem;
+  margin-top: -0.75rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  padding-inline: 0;
+  font-size: 0.75rem;
+}
+
+.bar-badged.is-nav .bar-badge.is-wide {
+  min-width: 2.15rem;
+  padding-inline: 0.45rem;
+}
+
+.group[data-collapsible="icon"] .bar-badged.is-nav .bar-badge {
+  top: 0;
+  right: 0;
+  margin-top: 0;
+  height: 1.125rem;
+  min-width: 1.125rem;
+  font-size: 0.625rem;
+}
+
+.group[data-collapsible="icon"] .bar-badged.is-nav .bar-badge.is-wide {
+  min-width: 1.6rem;
+  padding-inline: 0.28rem;
+}
+
 .bar-badge {
   @apply pointer-events-none absolute top-0.5 right-0.5 z-1 inline-flex h-3.75 min-w-3.75 items-center justify-center overflow-hidden rounded-full px-1 font-bold text-white;
   background: var(--account-accent);
@@ -38,10 +67,16 @@
     -apple-system,
     sans-serif;
   font-size: 9px;
+  font-variant-numeric: tabular-nums;
   line-height: 1;
   letter-spacing: 0;
+  white-space: nowrap;
   box-shadow: 0 0 0 1.5px var(--account-surface);
   animation: badge-in 420ms cubic-bezier(0.34, 1.56, 0.64, 1) 300ms both;
+}
+
+.bar-badge.is-wide {
+  padding-inline: 0.3rem;
 }
 
 @keyframes badge-in {

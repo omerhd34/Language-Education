@@ -191,7 +191,7 @@ export function NotificationsMenu({
           : "flex h-full flex-col items-center justify-center",
       )}
     >
-      <span className={cn("bar-badged", isSidebar && "w-full")}>
+      <span className={cn("bar-badged", isSidebar && "is-nav w-full")}>
         <Button
           type="button"
           variant="ghost"
@@ -224,8 +224,11 @@ export function NotificationsMenu({
         </Button>
         {unreadCount > 0 ? (
           <>
-            <span className="bar-badge" aria-hidden="true">
-              {unreadCount}
+            <span
+              className={cn("bar-badge", unreadCount > 9 && "is-wide")}
+              aria-hidden="true"
+            >
+              {unreadCount > 99 ? "99+" : unreadCount}
             </span>
             <span className="sr-only">
               {t("unreadNotifications", { count: unreadCount })}
@@ -251,8 +254,8 @@ export function NotificationsMenu({
                 {t("notifications")}
               </p>
               {unreadCount > 0 ? (
-                <span className="inline-flex min-w-5 items-center justify-center rounded-full bg-orange-500 px-1.5 py-0.5 text-[0.65rem] font-bold text-white">
-                  {unreadCount}
+                <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-orange-500 px-1.5 text-[0.7rem] font-bold tabular-nums text-white">
+                  {unreadCount > 99 ? "99+" : unreadCount}
                 </span>
               ) : null}
             </div>
