@@ -32,15 +32,12 @@ export function SkillSection({ skill }: SkillSectionProps) {
       aria-labelledby={headingId}
       className="space-y-2"
     >
-      <h1
-        id={headingId}
-        className="page-title"
-      >
-        {t(SKILL_TITLE_KEYS[skill])}
-      </h1>
-      <p className="page-subtitle mt-0">
-        {t("skillSectionSubtitle")}
-      </p>
+      <div>
+        <h1 id={headingId} className="page-title">
+          {t(SKILL_TITLE_KEYS[skill])}
+        </h1>
+        <p className="page-subtitle mt-0">{t("skillSectionSubtitle")}</p>
+      </div>
     </section>
   );
 }

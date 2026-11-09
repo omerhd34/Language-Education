@@ -1,3 +1,4 @@
+export const instant = false;
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { DashboardStatsBar } from "@/components/features/dashboard/DashboardStatsBar";
 import { KnownWordsSection } from "@/components/features/vocabulary/KnownWordsSection";
@@ -20,7 +21,7 @@ export default async function KnownWordsPage({ params }: PageProps) {
   setRequestLocale(locale);
 
   return (
-    <div className="mx-auto w-full max-w-7xl space-y-6 p-4 sm:p-6 lg:p-8">
+    <div className="page-shell">
       <DashboardStatsBar />
       <KnownWordsSection />
     </div>

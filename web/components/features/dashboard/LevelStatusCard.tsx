@@ -7,21 +7,31 @@ import { useLevelStatus } from "@/hooks/useLevelStatus";
 import { navigatePanelSection } from "@/hooks/usePanelHash";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
+import { DashboardStatProgressBar } from "@/components/features/dashboard/DashboardStatProgressBar";
 import { cn } from "@/lib/utils";
+
+const CTA_LABEL: Record<
+  ReturnType<typeof useLevelStatus>["ctaSection"],
+  "levelStatusCtaGrammar" | "levelStatusCtaVocabulary" | "levelStatusCtaReading"
+> = {
+  dilbilgisi: "levelStatusCtaGrammar",
+  kelimeler: "levelStatusCtaVocabulary",
+  okuma: "levelStatusCtaReading",
+};
 
 export function LevelStatusCard() {
   const t = useTranslations("Dashboard");
-  const { level, percent, complete } = useLevelStatus();
+  const { level, percent, complete, ctaSection } = useLevelStatus();
   const pathname = usePathname();
   const router = useRouter();
 
-  function goToTopics() {
+  function goToSection() {
     const onPanel = pathname === "/panel" || pathname === "/";
     if (onPanel) {
-      navigatePanelSection("dilbilgisi");
+      navigatePanelSection(ctaSection);
       return;
     }
-    router.push("/panel#dilbilgisi");
+    router.push(`/panel#${ctaSection}`);
   }
 
   return (
@@ -45,19 +55,11 @@ export function LevelStatusCard() {
         </p>
       </div>
 
-      <div
-        className="mt-3 h-2 overflow-hidden rounded-full bg-surface-muted dark:bg-white/10"
-        role="progressbar"
-        aria-valuenow={percent}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label={t("levelStatusProgressAria", { level, percent })}
-      >
-        <div
-          className="h-full rounded-full bg-sky-500 transition-[width] duration-300 dark:bg-sky-400"
-          style={{ width: `${percent}%` }}
-        />
-      </div>
+      <DashboardStatProgressBar
+        value={percent}
+        max={100}
+        ariaLabel={t("levelStatusProgressAria", { level, percent })}
+      />
 
       <p className="mt-2 text-xs text-brand-600 dark:text-brand-400">
         {complete
@@ -66,8 +68,8 @@ export function LevelStatusCard() {
       </p>
 
       <div className="mt-auto pt-3">
-        <Button type="button" size="sm" variant="outline" onClick={goToTopics}>
-          {t("levelStatusCta")}
+        <Button type="button" size="sm" variant="outline" onClick={goToSection}>
+          {t(CTA_LABEL[ctaSection])}
           <ChevronRight className="size-3.5" aria-hidden />
         </Button>
       </div>

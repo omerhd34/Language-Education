@@ -95,7 +95,10 @@ export function StudyTimerPendingNotice({
   return (
     <div
       className={cn(
-        "flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-amber-500/25 bg-amber-500/10 px-4 py-4 dark:border-amber-400/20 dark:bg-amber-400/10",
+        "flex min-h-12 flex-wrap items-center justify-between gap-3 rounded-2xl px-4",
+        blocked
+          ? "border border-amber-500/25 bg-amber-500/10 py-4 dark:border-amber-400/20 dark:bg-amber-400/10"
+          : "border border-brand-200/70 bg-brand-50/50 py-3 dark:border-brand-800/70 dark:bg-brand-900/40",
         className,
       )}
     >
@@ -104,7 +107,7 @@ export function StudyTimerPendingNotice({
           ? t("studyTimerBlockedHint", { count: pending })
           : t("studyTimerPendingHint", { count: pending })}
       </p>
-      <StartStudyTimerButton />
+      {blocked ? null : <StartStudyTimerButton className="shrink-0" />}
     </div>
   );
 }

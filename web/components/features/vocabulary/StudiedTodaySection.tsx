@@ -7,9 +7,10 @@ import {
   StudiedTodayWords,
   type StudiedTodayListWord,
 } from "@/components/features/dashboard/StudiedTodayWords";
-import { CancelStudyTimerButton } from "@/components/features/vocabulary/CancelStudyTimerButton";
+import { ActiveStudyTimerNotice } from "@/components/features/vocabulary/CancelStudyTimerButton";
 import { StudyTimerPendingNotice } from "@/components/features/vocabulary/StartStudyTimerButton";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { cn } from "@/lib/utils";
 import { getVocabularyWordById } from "@/data/vocabulary";
 import {
   useStudiedTodayVocabularyWordsQuery,
@@ -117,46 +118,56 @@ export function StudiedTodaySection() {
     return () => window.clearTimeout(timeoutId);
   }, [nextStudiedDueAt, refetchQuiz, refetchStudied]);
 
+  const showPendingCard = pendingWords.length > 0;
+  const showQuizCard = dueCount > 0;
+  const showStatusRow = studied && (showPendingCard || showQuizCard);
+  const bothInRow = showPendingCard && showQuizCard;
+  const rowChildWidth = cn(
+    "min-w-0",
+    bothInRow ? "min-w-0 flex-1 basis-0" : "w-full flex-1",
+  );
+
   return (
     <section aria-labelledby="studied-today-heading" className="space-y-4">
-      <div className="flex flex-wrap items-end justify-between gap-2">
-        <div>
-          <h1 id="studied-today-heading" className="page-title">
-            {t("studiedTodayTitle")}
-          </h1>
-          <p className="page-subtitle">{t("studiedTodaySubtitle")}</p>
-        </div>
-        {studied ? (
-          <div className="flex flex-col items-start gap-2 sm:items-end">
-            {dueCount > 0 ? (
-              <p className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
-                {t("quizCardReady", { count: dueCount })}
-              </p>
+      <div>
+        <h1 id="studied-today-heading" className="page-title">
+          {t("studiedTodayTitle")}
+        </h1>
+        <p className="page-subtitle">{t("studiedTodaySubtitle")}</p>
+      </div>
+
+      {showStatusRow ? (
+        <div className="space-y-3">
+          <ActiveStudyTimerNotice />
+          <div className="flex flex-row items-stretch gap-3">
+            {showPendingCard ? (
+              <StudyTimerPendingNotice className={rowChildWidth} />
             ) : null}
-            {studied.count > 0 ? (
-              <p className="text-sm font-medium text-brand-700 dark:text-brand-300">
-                {t("studiedTodayCount", { count: studied.count })}
-              </p>
-            ) : null}
-            {pendingWords.length > 0 ? (
-              <p className="text-sm font-medium text-brand-700 dark:text-brand-300">
-                {t("studiedTodayPendingCount", {
-                  count: pendingWords.length,
-                })}
-              </p>
-            ) : null}
-            <div className="flex flex-wrap items-center gap-2">
-              {dueCount > 0 ? (
-                <ButtonLink href="/panel/kelime/sinav" size="sm">
+            {showQuizCard ? (
+              <div
+                className={cn(
+                  "flex min-h-12 flex-wrap items-center justify-between gap-3 rounded-2xl border border-brand-200/70 bg-brand-50/50 px-4 py-3 dark:border-brand-800/70 dark:bg-brand-900/40",
+                  rowChildWidth,
+                )}
+              >
+                <p className="text-sm font-medium text-brand-800 dark:text-brand-200">
+                  {t("quizCardReady", { count: dueCount })}
+                </p>
+                <ButtonLink
+                  href="/panel/kelime/sinav"
+                  size="sm"
+                  className="shrink-0"
+                >
                   <ClipboardCheck className="size-3.5" aria-hidden />
                   {t("quizCardCta")}
                 </ButtonLink>
-              ) : null}
-              <CancelStudyTimerButton />
-            </div>
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
+        </div>
+      ) : (
+        <ActiveStudyTimerNotice />
+      )}
 
       {isLoading ? (
         <p className="page-subtitle mt-0">{t("studiedTodayLoading")}</p>
@@ -167,8 +178,6 @@ export function StudiedTodaySection() {
           {t("studiedTodayError")}
         </p>
       ) : null}
-
-      <StudyTimerPendingNotice />
 
       {!isLoading && !isError && studied && visibleWords.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-brand-300/80 px-4 py-8 text-center dark:border-brand-700">

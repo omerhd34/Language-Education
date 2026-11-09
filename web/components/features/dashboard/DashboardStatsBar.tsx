@@ -6,6 +6,7 @@ import {
   useVocabularyLearnQuotaQuery,
   useVocabularyQuizQuery,
 } from "@/store/api";
+import { DashboardStatProgressBar } from "@/components/features/dashboard/DashboardStatProgressBar";
 import { LevelStatusCard } from "@/components/features/dashboard/LevelStatusCard";
 import { QuickContinueCard } from "@/components/features/dashboard/QuickContinueCard";
 import {
@@ -18,7 +19,6 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { navigatePanelSection } from "@/hooks/usePanelHash";
 import { useCountdown } from "@/hooks/useCountdown";
 import { formatDurationHms } from "@/lib/formatDuration";
-import { cn } from "@/lib/utils";
 import {
   BYPASS_LEARN_WORD_LOCK,
   LEARN_WORD_PERIOD_LIMIT,
@@ -39,10 +39,6 @@ export function DashboardStatsBar() {
   const startBlocked = cycleKnown && cycleOpen && pending > 0;
   const isLocked =
     !BYPASS_LEARN_WORD_LOCK && Boolean(quota?.lockedUntil) && remainingMs > 0;
-  const quotaPercent =
-    learnLimit > 0
-      ? Math.min(100, Math.round((pending / learnLimit) * 100))
-      : 0;
   const quotaLabel = t("wordTimerQuota", {
     selected: pending,
     limit: learnLimit,
@@ -67,22 +63,12 @@ export function DashboardStatsBar() {
             <span className="font-medium text-brand-400">/{learnLimit}</span>
           </p>
         </div>
-        <div
-          className="mt-3 h-2 overflow-hidden rounded-full bg-surface-muted dark:bg-white/10"
-          role="progressbar"
-          aria-valuenow={pending}
-          aria-valuemin={0}
-          aria-valuemax={learnLimit}
-          aria-label={quotaLabel}
-        >
-          <div
-            className={cn(
-              "h-full rounded-full transition-[width] duration-300",
-              isLocked ? "bg-amber-500" : "bg-brand-800 dark:bg-brand-100",
-            )}
-            style={{ width: `${quotaPercent}%` }}
-          />
-        </div>
+        <DashboardStatProgressBar
+          value={pending}
+          max={learnLimit}
+          ariaLabel={quotaLabel}
+          fillVariant={isLocked ? "warning" : "default"}
+        />
         <p className="mt-2 text-sm font-medium text-brand-950 dark:text-brand-100">
           {quotaLabel}
         </p>

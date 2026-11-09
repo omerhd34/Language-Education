@@ -14,15 +14,10 @@ export function ProgressSection() {
       className="space-y-8"
     >
       <div>
-        <h1
-          id="progress-heading"
-          className="page-title"
-        >
+        <h1 id="progress-heading" className="page-title">
           {t("progressTitle")}
         </h1>
-        <p className="page-subtitle">
-          {t("progressSubtitle")}
-        </p>
+        <p className="page-subtitle">{t("progressSubtitle")}</p>
       </div>
 
       <div className="grid items-stretch gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">

@@ -72,8 +72,10 @@ export function VocabularyNavItem({ onNavigate }: VocabularyNavItemProps) {
                   isActive={itemActive}
                   size="sm"
                   className={cn(
-                    "h-7 gap-2 rounded-md px-2 text-sm font-medium text-sidebar-foreground/55 hover:bg-transparent hover:text-sidebar-foreground",
+                    "group/sub-link h-7 gap-2 rounded-md px-2 text-sm font-medium text-sidebar-foreground/55",
+                    "hover:bg-transparent hover:text-sky-600 dark:hover:text-sky-300",
                     "data-active:bg-transparent data-active:font-semibold data-active:text-sky-600 dark:data-active:text-sky-300",
+                    "data-active:hover:bg-transparent",
                   )}
                   render={<Link href={item.href} />}
                   aria-current={itemActive ? "page" : undefined}
@@ -83,6 +85,8 @@ export function VocabularyNavItem({ onNavigate }: VocabularyNavItemProps) {
                     className={cn(
                       "size-1.5 shrink-0 rounded-full bg-sidebar-foreground/30 transition-colors",
                       itemActive && "bg-sky-500 dark:bg-sky-300",
+                      !itemActive &&
+                        "group-hover/sub-link:bg-sky-500 dark:group-hover/sub-link:bg-sky-300",
                     )}
                     aria-hidden
                   />

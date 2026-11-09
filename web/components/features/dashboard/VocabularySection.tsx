@@ -14,15 +14,10 @@ import {
 } from "@/data/vocabulary";
 import type { CefrLevel } from "@/data/dashboardTopics";
 import {
-  ACTIVE_VOCABULARY_WINDOW,
   canAccessVocabularyCategory,
   canAccessVocabularyLevel,
   getRequiredVocabularyLevelToUnlock,
 } from "@/lib/vocabularyAccess";
-import {
-  LEARN_WORD_PERIOD_LIMIT,
-  VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
-} from "@/lib/vocabularyLimits";
 import { useKnownVocabularyWordsQuery } from "@/store/api";
 
 export function VocabularySection() {
@@ -61,19 +56,7 @@ export function VocabularySection() {
         <h1 id="vocabulary-heading" className="page-title">
           {t("vocabularyTitle")}
         </h1>
-        <div className="page-subtitle max-w-none space-y-1">
-          <p>
-            {t("vocabularySubtitle", {
-              limit: LEARN_WORD_PERIOD_LIMIT,
-            })}
-          </p>
-          <p>
-            {t("vocabularySubtitleDetail", {
-              window: ACTIVE_VOCABULARY_WINDOW,
-              quizTarget: VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
-            })}
-          </p>
-        </div>
+        <p className="page-subtitle max-w-none">{t("vocabularySubtitle")}</p>
       </div>
 
       <TopicLevelFilter
