@@ -1,6 +1,7 @@
 import {
   getSpeechVoiceGender,
   pickEnglishSpeechVoice,
+  type SpeechVoiceGender,
 } from "@/lib/speechVoiceGender";
 
 export {
@@ -63,6 +64,11 @@ export function setSpeechRate(rate: number): void {
 export type SpeakTextCallbacks = {
   onEnd?: () => void;
   onCancel?: () => void;
+};
+
+export type SpeakDialogueLine = {
+  text: string;
+  gender?: SpeechVoiceGender;
 };
 
 let speakSession = 0;
@@ -132,18 +138,24 @@ function splitSpeakChunks(text: string): string[] {
   return chunks;
 }
 
-function pickVoice(
+function pickVoiceForGender(
   voices: SpeechSynthesisVoice[],
+  gender: SpeechVoiceGender,
 ): SpeechSynthesisVoice | null {
   return (
-    pickEnglishSpeechVoice(voices, getSpeechVoiceGender()) ??
+    pickEnglishSpeechVoice(voices, gender) ??
     voices.find((voice) => voice.lang.toLowerCase().startsWith("en")) ??
     null
   );
 }
 
-function speakChunks(
-  chunks: string[],
+type SpeakSequenceItem = {
+  chunks: string[];
+  gender: SpeechVoiceGender;
+};
+
+function speakChunkSequence(
+  items: SpeakSequenceItem[],
   lang: string,
   rate: number,
   voices: SpeechSynthesisVoice[],
@@ -151,24 +163,32 @@ function speakChunks(
   onEnd?: () => void,
 ): void {
   const synth = window.speechSynthesis;
-  let index = 0;
+  let itemIndex = 0;
+  let chunkIndex = 0;
 
   const speakNext = () => {
     if (session !== speakSession) {
       return;
     }
-    if (index >= chunks.length) {
+    if (itemIndex >= items.length) {
       clearKeepAlive();
       activeOnCancel = null;
       onEnd?.();
       return;
     }
-    const chunk = chunks[index] ?? "";
-    index += 1;
+    const item = items[itemIndex];
+    if (!item || chunkIndex >= item.chunks.length) {
+      itemIndex += 1;
+      chunkIndex = 0;
+      speakNext();
+      return;
+    }
+    const chunk = item.chunks[chunkIndex] ?? "";
+    chunkIndex += 1;
     const utterance = new SpeechSynthesisUtterance(chunk);
     utterance.lang = lang;
     utterance.rate = rate;
-    utterance.voice = pickVoice(voices);
+    utterance.voice = pickVoiceForGender(voices, item.gender);
     utterance.onend = () => {
       if (session !== speakSession) {
         return;
@@ -192,10 +212,28 @@ function speakChunks(
   speakNext();
 }
 
-export function speakText(
-  text: string,
-  lang = "en-US",
-  rate?: number,
+function buildSpeakSequenceItems(
+  lines: SpeakDialogueLine[],
+): SpeakSequenceItem[] {
+  const defaultGender = getSpeechVoiceGender();
+  const items: SpeakSequenceItem[] = [];
+  for (const line of lines) {
+    const chunks = splitSpeakChunks(line.text);
+    if (chunks.length === 0) {
+      continue;
+    }
+    items.push({
+      chunks,
+      gender: line.gender ?? defaultGender,
+    });
+  }
+  return items;
+}
+
+function startSpeechSequence(
+  items: SpeakSequenceItem[],
+  lang: string,
+  rate: number | undefined,
   callbacks?: SpeakTextCallbacks,
 ): void {
   if (typeof window === "undefined") {
@@ -211,8 +249,7 @@ export function speakText(
   const session = speakSession;
   activeOnCancel = callbacks?.onCancel ?? null;
 
-  const chunks = splitSpeakChunks(text);
-  if (chunks.length === 0) {
+  if (items.length === 0) {
     activeOnCancel = null;
     callbacks?.onEnd?.();
     return;
@@ -225,7 +262,14 @@ export function speakText(
     if (session !== speakSession) {
       return;
     }
-    speakChunks(chunks, lang, resolvedRate, voices, session, callbacks?.onEnd);
+    speakChunkSequence(
+      items,
+      lang,
+      resolvedRate,
+      voices,
+      session,
+      callbacks?.onEnd,
+    );
   };
 
   const voices = synth.getVoices();
@@ -241,6 +285,29 @@ export function speakText(
     },
     { once: true },
   );
+}
+
+export function speakText(
+  text: string,
+  lang = "en-US",
+  rate?: number,
+  callbacks?: SpeakTextCallbacks,
+): void {
+  startSpeechSequence(
+    buildSpeakSequenceItems([{ text }]),
+    lang,
+    rate,
+    callbacks,
+  );
+}
+
+export function speakDialogue(
+  lines: SpeakDialogueLine[],
+  lang = "en-US",
+  rate?: number,
+  callbacks?: SpeakTextCallbacks,
+): void {
+  startSpeechSequence(buildSpeakSequenceItems(lines), lang, rate, callbacks);
 }
 
 export function stopSpeaking(): void {
