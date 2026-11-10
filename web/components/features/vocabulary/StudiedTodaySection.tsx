@@ -154,7 +154,7 @@ export function StudiedTodaySection() {
                   {t("quizCardReady", { count: dueCount })}
                 </p>
                 <ButtonLink
-                  href="/panel/kelime/sinav"
+                  href="/panel/vocabulary/exam"
                   size="sm"
                   className="shrink-0"
                 >
@@ -182,7 +182,7 @@ export function StudiedTodaySection() {
       {!isLoading && !isError && studied && visibleWords.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-brand-300/80 px-4 py-8 text-center dark:border-brand-700">
           <p className="page-subtitle mt-0">{t("studiedTodayEmpty")}</p>
-          <ButtonLink href="/panel#kelimeler" size="sm" className="mt-4">
+          <ButtonLink href="/panel#vocabulary" size="sm" className="mt-4">
             {t("studiedTodayAddWords")}
           </ButtonLink>
         </div>

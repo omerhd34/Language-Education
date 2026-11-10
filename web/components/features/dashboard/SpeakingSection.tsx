@@ -47,7 +47,7 @@ export function SpeakingSection() {
 
   return (
     <section
-      id="konusma"
+      id="speaking"
       aria-labelledby="speaking-heading"
       className="space-y-4"
     >
@@ -64,9 +64,7 @@ export function SpeakingSection() {
         value={selectedLevel}
         onChange={handleLevelChange}
         levels={SPEAKING_LEVEL_ORDER}
-        isUnlocked={(level) =>
-          isSpeakingLevelUnlocked(level as SpeakingLevel)
-        }
+        isUnlocked={(level) => isSpeakingLevelUnlocked(level as SpeakingLevel)}
       />
 
       {sections.length === 0 ? (

@@ -15,6 +15,7 @@ import {
 import type { ListeningSection } from "@/data/listenings/types";
 import { useListeningSectionPercent } from "@/hooks/useListeningProgress";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
+import { LISTENING_SECTION_ANCHORS } from "@/lib/listeningSectionTab";
 import { cn } from "@/lib/utils";
 
 type ListeningSectionCardProps = {
@@ -121,7 +122,7 @@ export function ListeningSectionCard({
           ) : (
             <>
               <ButtonLink
-                href={`/panel/dinleme/${section.id}`}
+                href={`/panel/listening/${section.id}`}
                 size="sm"
                 className="min-w-0 flex-1 px-2"
               >
@@ -129,7 +130,7 @@ export function ListeningSectionCard({
                 <span className="truncate">{tListening("openAudio")}</span>
               </ButtonLink>
               <ButtonLink
-                href={`/panel/dinleme/${section.id}#listening-alistirma`}
+                href={`/panel/listening/${section.id}#${LISTENING_SECTION_ANCHORS.practice}`}
                 size="sm"
                 variant="outline"
                 className="min-w-0 flex-1 px-2"

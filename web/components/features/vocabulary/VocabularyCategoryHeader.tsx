@@ -25,7 +25,7 @@ export function VocabularyCategoryHeader({
   return (
     <header className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center gap-3">
-        <ButtonLink href="/panel#kelimeler" variant="outline" size="sm">
+        <ButtonLink href="/panel#vocabulary" variant="outline" size="sm">
           <ArrowLeft className="size-4" aria-hidden />
           {t("backToVocabulary")}
         </ButtonLink>
@@ -34,9 +34,7 @@ export function VocabularyCategoryHeader({
       </div>
 
       <div className="space-y-1">
-        <h1 className="page-title">
-          {title}
-        </h1>
+        <h1 className="page-title">{title}</h1>
         {secondaryTitle ? (
           <p className="text-base font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
             {secondaryTitle}

@@ -39,15 +39,15 @@ export function TopicPageHeader({
   const t = useTranslations("Topic");
   const englishTitle = getDistinctSecondaryTitle(title, titleEng);
 
-  const lessonHref = `/panel/konular/${topicId}/anlatim`;
-  const exercisesHref = `/panel/konular/${topicId}/alistirmalar`;
-  const examHref = `/panel/konular/${topicId}/sinav`;
+  const lessonHref = `/panel/grammer/${topicId}/lesson`;
+  const exercisesHref = `/panel/grammer/${topicId}/exercises`;
+  const examHref = `/panel/grammer/${topicId}/exam`;
   const showSectionNav = activeTab === "lesson" && sections.length > 0;
   const showTopicExamTab = !isExam;
 
   return (
     <header className="space-y-4">
-      <ButtonLink href="/panel#dilbilgisi" variant="outline" size="sm">
+      <ButtonLink href="/panel#grammer" variant="outline" size="sm">
         <ArrowLeft className="size-4" aria-hidden />
         {t("backToTopics")}
       </ButtonLink>
@@ -67,9 +67,7 @@ export function TopicPageHeader({
       </div>
 
       <div className="space-y-1">
-        <h1 className="page-title">
-          {title}
-        </h1>
+        <h1 className="page-title">{title}</h1>
         {englishTitle ? (
           <p className="text-base font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
             {englishTitle}

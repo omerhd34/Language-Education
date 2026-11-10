@@ -29,7 +29,7 @@ export function ListeningPageHeader({
 
   return (
     <header className="space-y-4">
-      <ButtonLink href="/panel#dinleme" variant="outline" size="sm">
+      <ButtonLink href="/panel#listening" variant="outline" size="sm">
         <ArrowLeft className="size-4" aria-hidden />
         {t("backToListening")}
       </ButtonLink>

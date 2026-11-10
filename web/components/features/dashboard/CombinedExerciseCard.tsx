@@ -79,7 +79,7 @@ export function CombinedExerciseCard({
           </Button>
         ) : (
           <ButtonLink
-            href={`/panel/konular/birlesik/${combined.id}`}
+            href={`/panel/grammer/combined/${combined.id}`}
             size="sm"
             className="w-full"
           >

@@ -92,7 +92,7 @@ export function LevelExamCard({
           </Button>
         ) : (
           <ButtonLink
-            href={`/panel/konular/${topic.id}/alistirmalar`}
+            href={`/panel/grammer/${topic.id}/exercises`}
             size="sm"
             className="w-full"
           >

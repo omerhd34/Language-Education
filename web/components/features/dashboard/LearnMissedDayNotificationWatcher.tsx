@@ -71,7 +71,7 @@ export function LearnMissedDayNotificationWatcher() {
         type: "learn_missed_day" as const,
         title: t("learnMissedNotificationTitle"),
         body: t("learnMissedNotificationBody"),
-        href: "/panel#kelimeler",
+        href: "/panel#vocabulary",
         createdAt: new Date(nowMs).toISOString(),
         read: false,
       };

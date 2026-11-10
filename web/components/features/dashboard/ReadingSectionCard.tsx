@@ -15,6 +15,7 @@ import {
 import type { ReadingSection } from "@/data/readings/types";
 import { useReadingSectionPercent } from "@/hooks/useReadingProgress";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
+import { READING_SECTION_ANCHORS } from "@/lib/readingSectionTab";
 import { cn } from "@/lib/utils";
 
 type ReadingSectionCardProps = {
@@ -121,7 +122,7 @@ export function ReadingSectionCard({
           ) : (
             <>
               <ButtonLink
-                href={`/panel/okuma/${section.id}`}
+                href={`/panel/reading/${section.id}`}
                 size="sm"
                 className="min-w-0 flex-1 px-2"
               >
@@ -129,7 +130,7 @@ export function ReadingSectionCard({
                 <span className="truncate">{tReading("openText")}</span>
               </ButtonLink>
               <ButtonLink
-                href={`/panel/okuma/${section.id}#reading-alistirma`}
+                href={`/panel/reading/${section.id}#${READING_SECTION_ANCHORS.practice}`}
                 size="sm"
                 variant="outline"
                 className="min-w-0 flex-1 px-2"

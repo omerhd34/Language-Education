@@ -23,7 +23,7 @@ export async function ReadingLevelLocked({
       <p className="page-subtitle mt-0">
         {t("levelLockedHint", { level, requiredLevel })}
       </p>
-      <ButtonLink href="/panel#okuma" variant="outline">
+      <ButtonLink href="/panel#reading" variant="outline">
         {t("backToReading")}
       </ButtonLink>
     </div>

@@ -80,7 +80,7 @@ export function StudiedTodayWordRow({
         ) : null}
       </div>
       <ButtonLink
-        href={`/panel/kelime/${word.categoryId}`}
+        href={`/panel/vocabulary/${word.categoryId}`}
         size="sm"
         variant="outline"
       >

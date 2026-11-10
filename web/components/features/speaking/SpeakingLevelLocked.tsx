@@ -23,7 +23,7 @@ export async function SpeakingLevelLocked({
       <p className="page-subtitle mt-0">
         {t("levelLockedHint", { level, requiredLevel })}
       </p>
-      <ButtonLink href="/panel#konusma" variant="outline">
+      <ButtonLink href="/panel#speaking" variant="outline">
         {t("backToSpeaking")}
       </ButtonLink>
     </div>

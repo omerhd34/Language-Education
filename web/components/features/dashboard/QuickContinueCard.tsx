@@ -182,7 +182,7 @@ export function QuickContinueCard() {
                   navigatePanelSection("kelimeler");
                   return;
                 }
-                router.push("/panel#kelimeler");
+                router.push("/panel#vocabulary");
               }}
             >
               {t("quickContinueExplore")}

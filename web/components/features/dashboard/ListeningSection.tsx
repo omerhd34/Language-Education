@@ -47,7 +47,7 @@ export function ListeningSection() {
 
   return (
     <section
-      id="dinleme"
+      id="listening"
       aria-labelledby="listening-heading"
       className="space-y-4"
     >

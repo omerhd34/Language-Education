@@ -46,7 +46,7 @@ export function ReadingSection() {
   }
 
   return (
-    <section id="okuma" aria-labelledby="reading-heading" className="space-y-4">
+    <section id="read" aria-labelledby="reading-heading" className="space-y-4">
       <div>
         <h1 id="reading-heading" className="page-title">
           {t("skillReadingTitle")}

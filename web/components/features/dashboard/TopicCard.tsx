@@ -112,7 +112,7 @@ export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
           ) : (
             <>
               <ButtonLink
-                href={`/panel/konular/${topic.id}/anlatim`}
+                href={`/panel/grammer/${topic.id}/lesson`}
                 variant="outline"
                 size="sm"
               >
@@ -120,14 +120,14 @@ export function TopicCard({ topic, index, locked = false }: TopicCardProps) {
                 {t("lesson")}
               </ButtonLink>
               <ButtonLink
-                href={`/panel/konular/${topic.id}/alistirmalar`}
+                href={`/panel/grammer/${topic.id}/exercises`}
                 variant="outline"
                 size="sm"
               >
                 <PencilLine aria-hidden />
                 {t("exercises")}
               </ButtonLink>
-              <ButtonLink href={`/panel/konular/${topic.id}/sinav`} size="sm">
+              <ButtonLink href={`/panel/grammer/${topic.id}/exam`} size="sm">
                 <ClipboardCheck aria-hidden />
                 {t("topicExam")}
               </ButtonLink>

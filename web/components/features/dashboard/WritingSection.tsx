@@ -46,7 +46,11 @@ export function WritingSection() {
   }
 
   return (
-    <section id="yazma" aria-labelledby="writing-heading" className="space-y-4">
+    <section
+      id="writing"
+      aria-labelledby="writing-heading"
+      className="space-y-4"
+    >
       <div>
         <h1 id="writing-heading" className="page-title">
           {t("skillWritingTitle")}

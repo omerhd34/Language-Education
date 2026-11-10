@@ -18,7 +18,7 @@ export function CombinedExerciseHeader({
 
   return (
     <header className="space-y-4">
-      <ButtonLink href="/panel#dilbilgisi" variant="outline" size="sm">
+      <ButtonLink href="/panel#grammer" variant="outline" size="sm">
         <ArrowLeft className="size-4" aria-hidden />
         {t("backToTopics")}
       </ButtonLink>
@@ -39,9 +39,7 @@ export function CombinedExerciseHeader({
       </div>
 
       <div className="space-y-2">
-        <h1 className="page-title">
-          {t("combinedExerciseTitle")}
-        </h1>
+        <h1 className="page-title">{t("combinedExerciseTitle")}</h1>
         <p className="max-w-3xl text-sm text-brand-600 dark:text-brand-400">
           {t("combinedExerciseSubtitle", {
             count: combined.topics.length,

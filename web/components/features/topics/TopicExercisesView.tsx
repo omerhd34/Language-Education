@@ -488,7 +488,7 @@ export function TopicExercisesView({
               ? t("examPassedBody", { nextLevel })
               : t("examPassedBodyFinal")}
           </p>
-          <ButtonLink href="/panel#dilbilgisi" size="sm">
+          <ButtonLink href="/panel#grammer" size="sm">
             {t("examBackToTopics")}
           </ButtonLink>
         </div>

@@ -45,8 +45,8 @@ export function VocabularyCategoryView({
 
     router.replace(
       next === "exercises"
-        ? `/panel/kelime/${categoryId}?tab=exercises`
-        : `/panel/kelime/${categoryId}`,
+        ? `/panel/vocabulary/${categoryId}?tab=exercises`
+        : `/panel/vocabulary/${categoryId}`,
       { scroll: false },
     );
   }

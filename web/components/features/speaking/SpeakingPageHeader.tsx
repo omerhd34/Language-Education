@@ -29,7 +29,7 @@ export function SpeakingPageHeader({
 
   return (
     <header className="space-y-4">
-      <ButtonLink href="/panel#konusma" variant="outline" size="sm">
+      <ButtonLink href="/panel#speaking" variant="outline" size="sm">
         <ArrowLeft className="size-4" aria-hidden />
         {t("backToSpeaking")}
       </ButtonLink>

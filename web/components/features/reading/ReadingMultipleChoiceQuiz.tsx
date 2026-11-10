@@ -23,9 +23,10 @@ import { Separator } from "@/components/ui/separator";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import type { ReadingMultipleChoiceQuestion } from "@/data/readings/types";
 import { scrollToReadingSection } from "@/lib/readingSectionTab";
+import { SECTION_PRACTICE_PASS_PERCENT } from "@/lib/sectionPracticePassPercent";
 import { cn } from "@/lib/utils";
 
-const PRACTICE_PASS_PERCENT = 50;
+const PRACTICE_PASS_PERCENT = SECTION_PRACTICE_PASS_PERCENT;
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"] as const;
 
 type QuestionSlot = {

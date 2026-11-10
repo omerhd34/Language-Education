@@ -164,11 +164,11 @@ export function VocabularyQuizView() {
         </p>
         <p className="page-subtitle mt-0">{t("quizFinishedHint")}</p>
         <div className="flex flex-wrap justify-center gap-2">
-          <ButtonLink href="/panel/kelime/bugun-calisilan" variant="outline">
+          <ButtonLink href="/panel/vocabulary/today-worked" variant="outline">
             {t("quizBackToStudied")}
           </ButtonLink>
           <ButtonLink
-            href="/panel#ilerleme"
+            href="/panel#progress"
             onClick={() => {
               void refetch();
             }}
@@ -204,7 +204,7 @@ export function VocabularyQuizView() {
             {t("quizNextDue", { time: formatDurationHms(remainingMs) })}
           </p>
         ) : null}
-        <ButtonLink href="/panel#ilerleme" variant="outline">
+        <ButtonLink href="/panel#progress" variant="outline">
           <ArrowLeft className="size-4" aria-hidden />
           {t("backToProgress")}
         </ButtonLink>
@@ -225,7 +225,7 @@ export function VocabularyQuizView() {
     <div className="mx-auto max-w-2xl space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <ButtonLink
-          href="/panel/kelime/bugun-calisilan"
+          href="/panel/vocabulary/today-worked"
           variant="outline"
           size="sm"
         >

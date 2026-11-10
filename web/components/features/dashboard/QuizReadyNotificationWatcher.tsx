@@ -57,7 +57,7 @@ export function QuizReadyNotificationWatcher() {
       type: "quiz_ready" as const,
       title: t("quizReadyNotificationTitle"),
       body: t("quizReadyNotificationBody", { count: unseen.length }),
-      href: "/panel/kelime/bugun-calisilan",
+      href: "/panel/vocabulary/today-worked",
       createdAt: new Date().toISOString(),
       read: false,
     };

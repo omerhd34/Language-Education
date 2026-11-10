@@ -6,12 +6,13 @@ import { useListeningSectionStatus } from "@/hooks/useListeningProgress";
 import { tryMarkListeningLevelPassed } from "@/lib/listeningAccess";
 import { getListeningSpeakText } from "@/lib/listeningContent";
 import { markListeningPracticeDone } from "@/lib/listeningProgressStorage";
+import { SECTION_PRACTICE_PASS_PERCENT } from "@/lib/sectionPracticePassPercent";
 
 type ListeningExercisesViewProps = {
   section: ListeningSection;
 };
 
-const PRACTICE_PASS_PERCENT = 50;
+const PRACTICE_PASS_PERCENT = SECTION_PRACTICE_PASS_PERCENT;
 
 export function ListeningExercisesView({
   section,

@@ -29,7 +29,7 @@ export function WritingPageHeader({
 
   return (
     <header className="space-y-4">
-      <ButtonLink href="/panel#yazma" variant="outline" size="sm">
+      <ButtonLink href="/panel#writing" variant="outline" size="sm">
         <ArrowLeft className="size-4" aria-hidden />
         {t("backToWriting")}
       </ButtonLink>

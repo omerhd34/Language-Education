@@ -31,9 +31,10 @@ import type {
 } from "@/data/listenings/types";
 import { scrollToListeningSection } from "@/lib/listeningSectionTab";
 import { speakText, stopSpeaking } from "@/lib/speakText";
+import { SECTION_PRACTICE_PASS_PERCENT } from "@/lib/sectionPracticePassPercent";
 import { cn } from "@/lib/utils";
 
-const PRACTICE_PASS_PERCENT = 50;
+const PRACTICE_PASS_PERCENT = SECTION_PRACTICE_PASS_PERCENT;
 const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F"] as const;
 
 type ClipSlot = { selected: number; revealed: boolean };

@@ -16,9 +16,10 @@ import {
   flattenReadingExerciseBlock,
   type FlatReadingExercise,
 } from "@/lib/reading/flattenReadingExercises";
+import { SECTION_PRACTICE_PASS_PERCENT } from "@/lib/sectionPracticePassPercent";
 import { cn } from "@/lib/utils";
 
-const PASS_PERCENT = 75;
+const PASS_PERCENT = SECTION_PRACTICE_PASS_PERCENT;
 
 type ReadingExercisePanelProps = {
   block: ReadingExerciseBlock;

@@ -452,7 +452,7 @@ export const SpeakingChatThread = forwardRef<
                     "max-w-[min(100%,28rem)] rounded-2xl px-3 py-2 text-[16px] leading-snug shadow-sm",
                     outgoing
                       ? "bg-[#d9fdd3] text-[#111b21] dark:bg-emerald-900/55 dark:text-emerald-50"
-                      : "bg-white text-[#111b21] dark:bg-brand-900/80 dark:text-brand-50",
+                      : "bg-white text-[#111b21] dark:bg-[#1f2c3a] dark:text-[#e9edef]",
                   )}
                 >
                   <p className="whitespace-pre-wrap">{message.text}</p>

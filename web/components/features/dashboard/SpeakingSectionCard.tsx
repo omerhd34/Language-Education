@@ -126,7 +126,7 @@ export function SpeakingSectionCard({
           ) : (
             <>
               <ButtonLink
-                href={`/panel/konusma/${section.id}`}
+                href={`/panel/speaking/${section.id}`}
                 size="sm"
                 className="min-w-0 flex-1 px-2"
               >
@@ -134,7 +134,7 @@ export function SpeakingSectionCard({
                 <span className="truncate">{tSpeaking("openModel")}</span>
               </ButtonLink>
               <ButtonLink
-                href={`/panel/konusma/${section.id}?tab=practice`}
+                href={`/panel/speaking/${section.id}?tab=practice`}
                 size="sm"
                 variant="outline"
                 className="min-w-0 flex-1 px-2"

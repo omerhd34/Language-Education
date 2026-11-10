@@ -15,6 +15,7 @@ import {
 import type { WritingSection } from "@/data/writings/types";
 import { useWritingSectionPercent } from "@/hooks/useWritingProgress";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
+import { WRITING_SECTION_ANCHORS } from "@/lib/writingSectionTab";
 import { cn } from "@/lib/utils";
 
 type WritingSectionCardProps = {
@@ -126,7 +127,7 @@ export function WritingSectionCard({
           ) : (
             <>
               <ButtonLink
-                href={`/panel/yazma/${section.id}`}
+                href={`/panel/writing/${section.id}`}
                 size="sm"
                 className="min-w-0 flex-1 px-2"
               >
@@ -134,7 +135,7 @@ export function WritingSectionCard({
                 <span className="truncate">{tWriting("openModel")}</span>
               </ButtonLink>
               <ButtonLink
-                href={`/panel/yazma/${section.id}#writing-alistirma`}
+                href={`/panel/writing/${section.id}#${WRITING_SECTION_ANCHORS.practice}`}
                 size="sm"
                 variant="outline"
                 className="min-w-0 flex-1 px-2"
