@@ -233,7 +233,7 @@
     "weekly": "Haftalık",
     "monthly": "Aylık",
     "levelStatus": "Seviye durumu",
-    "levelStatusHint": "{level} seviyesindeki dilbilgisi, kelime ve okuma ilerlemen.",
+    "levelStatusHint": "{level} seviyesindeki tüm beceri ilerlemenin ortalaması.",
     "levelStatusComplete": "{level} seviyesi tamamlandı.",
     "levelStatusProgressAria": "{level} seviye ilerlemesi %{percent}",
     "levelStatusCta": "Dilbilgisine git",
