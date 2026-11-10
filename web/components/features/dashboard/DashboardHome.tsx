@@ -5,6 +5,7 @@ import { DashboardStatsBar } from "@/components/features/dashboard/DashboardStat
 import { ProgressSection } from "@/components/features/dashboard/ProgressSection";
 import { ListeningSection } from "@/components/features/dashboard/ListeningSection";
 import { ReadingSection } from "@/components/features/dashboard/ReadingSection";
+import { WritingSection } from "@/components/features/dashboard/WritingSection";
 import { SkillSection } from "@/components/features/dashboard/SkillSection";
 import { TopicsSection } from "@/components/features/dashboard/TopicsSection";
 import { VocabularySection } from "@/components/features/dashboard/VocabularySection";
@@ -42,7 +43,11 @@ export function DashboardHome() {
       {section === "kelimeler" ? <VocabularySection /> : null}
       {section === "okuma" ? <ReadingSection /> : null}
       {section === "dinleme" ? <ListeningSection /> : null}
-      {isSkillHash(section) && section !== "okuma" && section !== "dinleme" ? (
+      {section === "yazma" ? <WritingSection /> : null}
+      {isSkillHash(section) &&
+      section !== "okuma" &&
+      section !== "dinleme" &&
+      section !== "yazma" ? (
         <SkillSection skill={SKILL_BY_HASH[section]} />
       ) : null}
       {section === "ilerleme" ? <ProgressSection /> : null}
