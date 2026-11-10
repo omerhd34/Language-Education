@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { DashboardStatsBar } from "@/components/features/dashboard/DashboardStatsBar";
 import { ProgressSection } from "@/components/features/dashboard/ProgressSection";
+import { ListeningSection } from "@/components/features/dashboard/ListeningSection";
 import { ReadingSection } from "@/components/features/dashboard/ReadingSection";
 import { SkillSection } from "@/components/features/dashboard/SkillSection";
 import { TopicsSection } from "@/components/features/dashboard/TopicsSection";
@@ -40,7 +41,8 @@ export function DashboardHome() {
       {section === "dilbilgisi" ? <TopicsSection /> : null}
       {section === "kelimeler" ? <VocabularySection /> : null}
       {section === "okuma" ? <ReadingSection /> : null}
-      {isSkillHash(section) && section !== "okuma" ? (
+      {section === "dinleme" ? <ListeningSection /> : null}
+      {isSkillHash(section) && section !== "okuma" && section !== "dinleme" ? (
         <SkillSection skill={SKILL_BY_HASH[section]} />
       ) : null}
       {section === "ilerleme" ? <ProgressSection /> : null}
