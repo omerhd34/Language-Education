@@ -64,8 +64,8 @@ export function VocabularyCategoryCard({
         }}
       />
 
-      <Card className="relative h-full">
-        <CardHeader>
+      <Card className="relative h-full gap-2">
+        <CardHeader className="pb-0">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="secondary">
@@ -96,7 +96,7 @@ export function VocabularyCategoryCard({
           </div>
         </CardHeader>
 
-        <CardFooter className="flex-col gap-2 pt-2 sm:flex-row">
+        <CardFooter className="mt-0 flex-col gap-2 sm:flex-row">
           {locked ? (
             <>
               <Button

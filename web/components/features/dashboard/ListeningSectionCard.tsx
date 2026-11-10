@@ -63,8 +63,8 @@ export function ListeningSectionCard({
         }}
       />
 
-      <Card className="relative h-full">
-        <CardHeader>
+      <Card className="relative h-full gap-2">
+        <CardHeader className="pb-0">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
               <Badge variant="secondary">
@@ -95,7 +95,7 @@ export function ListeningSectionCard({
           </div>
         </CardHeader>
 
-        <CardFooter className="flex flex-row gap-2 pt-2">
+        <CardFooter className="mt-0 flex flex-row gap-2">
           {locked ? (
             <>
               <Button
