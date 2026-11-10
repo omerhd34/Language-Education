@@ -10,10 +10,10 @@ const SKILL_TITLE_KEYS = {
 } as const;
 
 const SKILL_SECTION_IDS = {
-  listening: "dinleme",
-  writing: "yazma",
-  speaking: "konusma",
-  reading: "okuma",
+  listening: "listening",
+  writing: "writing",
+  speaking: "speaking",
+  reading: "reading",
 } as const;
 
 export type SkillSectionId = keyof typeof SKILL_TITLE_KEYS;

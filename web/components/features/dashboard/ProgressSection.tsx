@@ -9,7 +9,7 @@ export function ProgressSection() {
 
   return (
     <section
-      id="ilerleme"
+      id="progress"
       aria-labelledby="progress-heading"
       className="space-y-8"
     >

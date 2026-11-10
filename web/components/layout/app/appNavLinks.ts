@@ -37,17 +37,17 @@ export type AppNavLink = {
 
 export const vocabularySubNav = [
   {
-    href: "/panel#kelimeler",
+    href: "/panel#vocabulary",
     labelKey: "vocabularyWords",
     Icon: Library,
   },
   {
-    href: "/panel/kelime/bugun-calisilan",
+    href: "/panel/vocabulary/today-worked",
     labelKey: "vocabularyStudiedToday",
     Icon: CalendarDays,
   },
   {
-    href: "/panel/kelime/bilinen",
+    href: "/panel/vocabulary/known-words",
     labelKey: "vocabularyKnown",
     Icon: CircleCheck,
   },
@@ -59,40 +59,40 @@ export const vocabularySubNav = [
 
 export const appNavLinks: AppNavLink[] = [
   { href: "/panel", labelKey: "home", Icon: Home },
-  { href: "/panel#genel", labelKey: "overview", Icon: ClipboardList },
+  { href: "/panel#general", labelKey: "overview", Icon: ClipboardList },
   {
-    href: "/panel#dilbilgisi",
+    href: "/panel#grammer",
     labelKey: "topics",
     Icon: SpellCheck2,
   },
   {
-    href: "/panel#kelimeler",
+    href: "/panel#vocabulary",
     labelKey: "vocabulary",
     Icon: BookA,
   },
   {
-    href: "/panel#okuma",
+    href: "/panel#reading",
     labelKey: "reading",
     Icon: BookOpen,
   },
   {
-    href: "/panel#dinleme",
+    href: "/panel#listening",
     labelKey: "listening",
     Icon: Headphones,
   },
   {
-    href: "/panel#yazma",
+    href: "/panel#writing",
     labelKey: "writing",
     Icon: PenLine,
   },
   {
-    href: "/panel#konusma",
+    href: "/panel#speaking",
     labelKey: "speaking",
     Icon: Mic,
   },
 
   {
-    href: "/panel#ilerleme",
+    href: "/panel#progress",
     labelKey: "progress",
     Icon: ChartColumnIncreasing,
   },

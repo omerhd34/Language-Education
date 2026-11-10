@@ -13,10 +13,10 @@ import { VocabularySection } from "@/components/features/dashboard/VocabularySec
 import { usePanelHash } from "@/hooks/usePanelHash";
 
 const SKILL_BY_HASH = {
-  dinleme: "listening",
-  yazma: "writing",
-  konusma: "speaking",
-  okuma: "reading",
+  listening: "listening",
+  writing: "writing",
+  speaking: "speaking",
+  reading: "reading",
 } as const;
 
 type SkillHash = keyof typeof SKILL_BY_HASH;
@@ -26,9 +26,9 @@ function isSkillHash(section: string): section is SkillHash {
 }
 
 const READY_SECTIONS = new Set<string>([
-  "dilbilgisi",
-  "kelimeler",
-  "ilerleme",
+  "grammer",
+  "vocabulary",
+  "progress",
   ...Object.keys(SKILL_BY_HASH),
 ]);
 
@@ -40,20 +40,20 @@ export function DashboardHome() {
   return (
     <div className="page-shell">
       <DashboardStatsBar />
-      {section === "dilbilgisi" ? <TopicsSection /> : null}
-      {section === "kelimeler" ? <VocabularySection /> : null}
-      {section === "okuma" ? <ReadingSection /> : null}
-      {section === "dinleme" ? <ListeningSection /> : null}
-      {section === "yazma" ? <WritingSection /> : null}
-      {section === "konusma" ? <SpeakingSection /> : null}
+      {section === "grammer" ? <TopicsSection /> : null}
+      {section === "vocabulary" ? <VocabularySection /> : null}
+      {section === "reading" ? <ReadingSection /> : null}
+      {section === "listening" ? <ListeningSection /> : null}
+      {section === "writing" ? <WritingSection /> : null}
+      {section === "speaking" ? <SpeakingSection /> : null}
       {isSkillHash(section) &&
-      section !== "okuma" &&
-      section !== "dinleme" &&
-      section !== "yazma" &&
-      section !== "konusma" ? (
+      section !== "reading" &&
+      section !== "listening" &&
+      section !== "writing" &&
+      section !== "speaking" ? (
         <SkillSection skill={SKILL_BY_HASH[section]} />
       ) : null}
-      {section === "ilerleme" ? <ProgressSection /> : null}
+      {section === "progress" ? <ProgressSection /> : null}
       {section !== "" && !READY_SECTIONS.has(section) ? (
         <section className="space-y-2" aria-labelledby="section-soon-heading">
           <h1 id="section-soon-heading" className="page-title">

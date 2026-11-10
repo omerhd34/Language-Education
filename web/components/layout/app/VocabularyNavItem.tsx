@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
-const PARENT_HREF = "/panel#kelimeler";
+const PARENT_HREF = "/panel#vocabulary";
 
 const menuButtonClassName =
   "h-auto rounded-[13px] px-2.5 py-2 text-base font-medium text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-foreground data-active:bg-sidebar-accent data-active:text-sidebar-foreground";
@@ -42,7 +42,7 @@ export function VocabularyNavItem({ onNavigate }: VocabularyNavItemProps) {
   const pathname = usePathname();
   const panelHash = usePanelHash();
   const sectionActive =
-    pathname.startsWith("/panel/kelime/") ||
+    pathname.startsWith("/panel/vocabulary/") ||
     vocabularySubNav.some((item) =>
       isSubNavActive(pathname, panelHash, item.href),
     );
