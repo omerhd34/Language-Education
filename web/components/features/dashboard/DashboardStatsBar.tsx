@@ -6,6 +6,7 @@ import {
   useVocabularyLearnQuotaQuery,
   useVocabularyQuizQuery,
 } from "@/store/api";
+import { DashboardStatPanelHeader } from "@/components/features/dashboard/DashboardStatPanelHeader";
 import { DashboardStatProgressBar } from "@/components/features/dashboard/DashboardStatProgressBar";
 import { LevelStatusCard } from "@/components/features/dashboard/LevelStatusCard";
 import { QuickContinueCard } from "@/components/features/dashboard/QuickContinueCard";
@@ -53,26 +54,27 @@ export function DashboardStatsBar() {
       <LevelStatusCard />
 
       <article className="dashboard-panel dashboard-panel--stat md:col-span-2 xl:col-span-1">
-        <div className="flex items-start justify-between gap-3">
+        <DashboardStatPanelHeader>
           <p className="dashboard-panel__label text-base">
             <Timer className="size-4" aria-hidden />
             {t("wordTimer")}
           </p>
-          <p className="font-display text-2xl font-semibold text-brand-950 tabular-nums dark:text-brand-100">
-            {pending}
-            <span className="font-medium text-brand-400">/{learnLimit}</span>
-          </p>
-        </div>
+        </DashboardStatPanelHeader>
         <DashboardStatProgressBar
           value={pending}
           max={learnLimit}
           ariaLabel={quotaLabel}
           fillVariant={isLocked ? "warning" : "default"}
+          inlineEndLabel={
+            <>
+              {pending}
+              <span className="font-medium text-brand-700 dark:text-brand-300">
+                /{learnLimit}
+              </span>
+            </>
+          }
         />
-        <p className="mt-2 text-sm font-medium text-brand-950 dark:text-brand-100">
-          {quotaLabel}
-        </p>
-        <div className="mt-1 space-y-1">
+        <div className="mt-2 space-y-1">
           {isLocked ? (
             <p className="font-mono text-xs font-semibold text-amber-800 tabular-nums dark:text-amber-200">
               {t("wordTimerRemaining", {
@@ -95,17 +97,17 @@ export function DashboardStatsBar() {
             onClick={() => {
               const onPanel = pathname === "/panel" || pathname === "/";
               if (onPanel) {
-                navigatePanelSection("kelimeler");
+                navigatePanelSection("words");
                 return;
               }
-              router.push("/panel#kelimeler");
+              router.push("/panel#vocabulary");
             }}
           >
             <BookOpen className="size-3.5" aria-hidden />
             {t("selectWord")}
           </Button>
           {dueCount > 0 ? (
-            <ButtonLink href="/panel/kelime/sinav" size="sm">
+            <ButtonLink href="/panel/vocabulary/exam" size="sm">
               <ClipboardCheck className="size-3.5" aria-hidden />
               {t("quizCardCta")}
             </ButtonLink>

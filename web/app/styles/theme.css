@@ -4,9 +4,14 @@
   --brand-950: #111522;
   --brand-900: #1e263b;
   --brand-800: #303d59;
+  --brand-700: #3f4f6e;
   --brand-600: #536684;
+  --brand-500: #657892;
   --brand-400: #98a9c4;
+  --brand-300: #b0bfd4;
+  --brand-200: #c8d4e4;
   --brand-100: #dce3ef;
+  --brand-50: #f0f4fa;
 
   --glass: rgb(255 255 255 / 20%);
   --glass-2: rgb(255 255 255 / 34%);
@@ -212,9 +217,14 @@
   --color-brand-950: var(--brand-950);
   --color-brand-900: var(--brand-900);
   --color-brand-800: var(--brand-800);
+  --color-brand-700: var(--brand-700);
   --color-brand-600: var(--brand-600);
+  --color-brand-500: var(--brand-500);
   --color-brand-400: var(--brand-400);
+  --color-brand-300: var(--brand-300);
+  --color-brand-200: var(--brand-200);
   --color-brand-100: var(--brand-100);
+  --color-brand-50: var(--brand-50);
 
   --color-auth-accent: var(--auth-accent);
   --color-auth-accent-hover: var(--auth-accent-hover);

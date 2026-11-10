@@ -5,8 +5,12 @@ import {
   type VocabularyLevel,
 } from "@/data/vocabulary";
 import { computeLevelExamPercent } from "@/lib/levelExamProgressStorage";
+import { getListeningSectionsByLevel } from "@/lib/listeningContent";
+import { listeningSectionPercent } from "@/lib/listeningProgressStorage";
 import { getReadingSectionsByLevel } from "@/lib/readingContent";
 import { readingSectionPercent } from "@/lib/readingProgressStorage";
+import { getSpeakingSectionsByLevel } from "@/lib/speakingContent";
+import { speakingSectionPercent } from "@/lib/speakingProgressStorage";
 import { computeDisplayedTopicProgress } from "@/lib/topicCardProgress";
 import {
   canAccessLevel,
@@ -14,15 +18,14 @@ import {
   isLevelComplete,
   isLevelExamPassed,
 } from "@/lib/topicAccess";
+import { getWritingSectionsByLevel } from "@/lib/writingContent";
+import { writingSectionPercent } from "@/lib/writingProgressStorage";
 import { vocabularySectionPercent } from "@/lib/vocabularySectionProgress";
-
-export type LevelStatusCtaSection = "dilbilgisi" | "kelimeler" | "okuma";
 
 export type LevelStatus = {
   level: CefrLevel;
   percent: number;
   complete: boolean;
-  ctaSection: LevelStatusCtaSection;
 };
 
 function averagePercents(values: number[]): number {
@@ -33,18 +36,17 @@ function averagePercents(values: number[]): number {
   return Math.min(100, Math.max(0, Math.round(total / values.length)));
 }
 
-function asVocabularyLevel(level: CefrLevel): VocabularyLevel | null {
+type CefrSkillLevel = ReadingLevel;
+
+function asCefrSkillLevel(level: CefrLevel): CefrSkillLevel | null {
   if (level === "Başlangıç") {
     return null;
   }
   return level;
 }
 
-function asReadingLevel(level: CefrLevel): ReadingLevel | null {
-  if (level === "Başlangıç") {
-    return null;
-  }
-  return level;
+function asVocabularyLevel(level: CefrLevel): VocabularyLevel | null {
+  return asCefrSkillLevel(level);
 }
 
 function grammarPercents(
@@ -77,13 +79,50 @@ function vocabularyPercents(
 }
 
 function readingPercents(level: CefrLevel): number[] {
-  const readingLevel = asReadingLevel(level);
+  const readingLevel = asCefrSkillLevel(level);
   if (!readingLevel) {
     return [];
   }
   return getReadingSectionsByLevel(readingLevel).map((section) =>
     readingSectionPercent(section.id),
   );
+}
+
+function listeningPercents(level: CefrLevel): number[] {
+  const skillLevel = asCefrSkillLevel(level);
+  if (!skillLevel) {
+    return [];
+  }
+  return getListeningSectionsByLevel(skillLevel).map((section) =>
+    listeningSectionPercent(section.id),
+  );
+}
+
+function writingPercents(level: CefrLevel): number[] {
+  const skillLevel = asCefrSkillLevel(level);
+  if (!skillLevel) {
+    return [];
+  }
+  return getWritingSectionsByLevel(skillLevel).map((section) =>
+    writingSectionPercent(section.id),
+  );
+}
+
+function speakingPercents(level: CefrLevel): number[] {
+  const skillLevel = asCefrSkillLevel(level);
+  if (!skillLevel) {
+    return [];
+  }
+  return getSpeakingSectionsByLevel(skillLevel).map((section) =>
+    speakingSectionPercent(section.id),
+  );
+}
+
+function skillBandAverage(parts: number[]): number | null {
+  if (parts.length === 0) {
+    return null;
+  }
+  return averagePercents(parts);
 }
 
 export function getActiveCefrLevel(
@@ -110,34 +149,14 @@ export function computeLevelCompletionPercent(
     grammarPercents(level, passedExams),
     vocabularyPercents(level, knownWordIds),
     readingPercents(level),
+    listeningPercents(level),
+    writingPercents(level),
+    speakingPercents(level),
   ]
-    .filter((parts) => parts.length > 0)
-    .map((parts) => averagePercents(parts));
+    .map((parts) => skillBandAverage(parts))
+    .filter((value): value is number => value !== null);
 
   return averagePercents(skillPercents);
-}
-
-export function getLevelStatusCtaSection(
-  level: CefrLevel,
-  passedExams: readonly CefrLevel[] = [],
-  knownWordIds: ReadonlySet<string> = new Set(),
-): LevelStatusCtaSection {
-  const grammar = grammarPercents(level, passedExams);
-  if (grammar.length > 0 && averagePercents(grammar) < 100) {
-    return "dilbilgisi";
-  }
-
-  const vocabulary = vocabularyPercents(level, knownWordIds);
-  if (vocabulary.length > 0 && averagePercents(vocabulary) < 100) {
-    return "kelimeler";
-  }
-
-  const reading = readingPercents(level);
-  if (reading.length > 0 && averagePercents(reading) < 100) {
-    return "okuma";
-  }
-
-  return "dilbilgisi";
 }
 
 export function getLevelStatus(
@@ -154,6 +173,5 @@ export function getLevelStatus(
     level,
     percent,
     complete: percent >= 100,
-    ctaSection: getLevelStatusCtaSection(level, passedExams, knownWordIds),
   };
 }
