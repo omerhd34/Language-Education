@@ -13,7 +13,11 @@ export type ExerciseHintFallbackKey =
   | "vocabularyQuizFill"
   | "topicExam"
   | "speaking"
-  | "writing";
+  | "writing"
+  | "writingCategorize"
+  | "writingMultipleChoice"
+  | "writingResponse"
+  | "writingWordOrder";
 
 export function vocabularyQuizHintKey(type: string): ExerciseHintFallbackKey {
   switch (type) {
