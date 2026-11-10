@@ -87,6 +87,24 @@ function cellKey(row: number, col: number) {
   return `${row}-${col}`;
 }
 
+function normalizeCrosswordCellInput(value: string): string {
+  const chars = [...value];
+  const last = chars.at(-1);
+  if (!last) {
+    return "";
+  }
+
+  if (/[a-zA-Z]/.test(last)) {
+    return last.toUpperCase();
+  }
+
+  if (last === "ı" || last === "İ") {
+    return "I";
+  }
+
+  return "";
+}
+
 function stepCell(
   row: number,
   col: number,
@@ -113,6 +131,16 @@ function isClueFullyTyped(
   values: Record<string, string>,
 ): boolean {
   return getClueCellKeys(clue).every((key) => (values[key] ?? "").length > 0);
+}
+
+function isClueAnswerCorrect(
+  clue: CrosswordExercise["clues"][number],
+  values: Record<string, string>,
+): boolean {
+  const answer = clue.answer.toUpperCase();
+  return getClueCellKeys(clue).every(
+    (key, index) => (values[key] ?? "").toUpperCase() === answer[index],
+  );
 }
 
 function isGridCorrect(
@@ -314,7 +342,19 @@ export function CrosswordExerciseView({
     }
   }
 
-  function resolveDirection(cell: GridCell, current: CrosswordDirection) {
+  function resolveDirection(
+    cell: GridCell,
+    current: CrosswordDirection,
+    cellClues: CrosswordExercise["clues"],
+  ) {
+    const throughDirections = new Set(cellClues.map((clue) => clue.direction));
+    if (throughDirections.has(current)) {
+      return current;
+    }
+    if (throughDirections.size === 1 && cellClues[0]) {
+      return cellClues[0].direction;
+    }
+
     const startDirections = cell.starts.map((start) => start.direction);
     if (startDirections.includes(current)) {
       return current;
@@ -419,7 +459,7 @@ export function CrosswordExerciseView({
             className="mx-auto grid w-fit gap-0.5 sm:gap-1"
             style={{
               gridTemplateColumns: `repeat(${exercise.cols}, minmax(0, 1fr))`,
-              width: `min(100%, ${Math.min(exercise.cols * 2.75, 52)}rem)`,
+              width: `min(100%, ${Math.min(exercise.cols * 2.75, exercise.cols >= 14 ? 64 : 52)}rem)`,
             }}
             role="group"
             aria-label={t("typeCrossword")}
@@ -439,13 +479,21 @@ export function CrosswordExerciseView({
                 const key = cellKey(row, col);
                 const typed = (values[key] ?? "").toUpperCase();
                 const relatedClues = cluesByCell.get(key) ?? [];
-                const wordComplete = relatedClues.some((clue) =>
+                const typedClues = relatedClues.filter((clue) =>
                   isClueFullyTyped(clue, values),
                 );
+                const clueHasError = typedClues.some(
+                  (clue) => !isClueAnswerCorrect(clue, values),
+                );
+                const allTypedCluesCorrect =
+                  typedClues.length > 0 &&
+                  typedClues.every((clue) => isClueAnswerCorrect(clue, values));
                 const showCorrect =
-                  wordComplete && typed.length > 0 && typed === cell.letter;
+                  allTypedCluesCorrect &&
+                  typed.length > 0 &&
+                  typed === cell.letter;
                 const showWrong =
-                  wordComplete && typed.length > 0 && typed !== cell.letter;
+                  typedClues.length > 0 && clueHasError && typed.length > 0;
                 const showEmpty = checked && typed.length === 0;
 
                 return (
@@ -488,14 +536,17 @@ export function CrosswordExerciseView({
                       aria-label={`${row + 1},${col + 1}`}
                       onFocus={() => {
                         setDirection(
-                          resolveDirection(cell, directionRef.current),
+                          resolveDirection(
+                            cell,
+                            directionRef.current,
+                            cluesByCell.get(key) ?? [],
+                          ),
                         );
                       }}
                       onChange={(event) => {
-                        const next = event.target.value
-                          .replace(/[^a-zA-Z]/g, "")
-                          .slice(-1)
-                          .toUpperCase();
+                        const next = normalizeCrosswordCellInput(
+                          event.target.value,
+                        );
                         setChecked(false);
                         setValues((prev) => ({ ...prev, [key]: next }));
                         if (next) {

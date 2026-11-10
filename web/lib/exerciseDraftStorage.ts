@@ -19,11 +19,18 @@ export type CrosswordDraft = {
   values: Record<string, string>;
 };
 
+export type LinearVerbRowSlot = {
+  v2Selected: number | null;
+  v3Selected: number | null;
+};
+
 export type LinearSlot = {
   selected: number | null;
   answer: string;
   englishSelected: number | null;
   turkishSelected: number | null;
+  v2Selected: number | null;
+  verbRows?: LinearVerbRowSlot[];
   checked: boolean;
 };
 
@@ -72,7 +79,10 @@ function sanitizeValues(value: unknown): Record<string, string> {
     if (!/^\d+-\d+$/.test(key) || typeof cell !== "string") {
       continue;
     }
-    const letter = cell.replace(/[^a-zA-Z]/g, "").slice(0, 1).toUpperCase();
+    const letter = cell
+      .replace(/[^a-zA-Z]/g, "")
+      .slice(0, 1)
+      .toUpperCase();
     if (letter) {
       result[key] = letter;
     }
@@ -85,6 +95,32 @@ function isNullableIndex(value: unknown): value is number | null {
     value === null ||
     (typeof value === "number" && Number.isInteger(value) && value >= 0)
   );
+}
+
+function sanitizeVerbRowSlots(value: unknown): LinearVerbRowSlot[] | undefined {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+
+  const rows: LinearVerbRowSlot[] = [];
+  for (const item of value) {
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      return undefined;
+    }
+    const row = item as Record<string, unknown>;
+    if (
+      !isNullableIndex(row.v2Selected ?? null) ||
+      !isNullableIndex(row.v3Selected ?? null)
+    ) {
+      return undefined;
+    }
+    rows.push({
+      v2Selected: isNullableIndex(row.v2Selected) ? row.v2Selected : null,
+      v3Selected: isNullableIndex(row.v3Selected) ? row.v3Selected : null,
+    });
+  }
+
+  return rows;
 }
 
 function normalizeLinearSession(value: unknown): LinearSessionDraft | null {
@@ -110,7 +146,11 @@ function normalizeLinearSession(value: unknown): LinearSessionDraft | null {
 
   const slots: LinearSlot[] = [];
   for (const slotValue of item.slots) {
-    if (!slotValue || typeof slotValue !== "object" || Array.isArray(slotValue)) {
+    if (
+      !slotValue ||
+      typeof slotValue !== "object" ||
+      Array.isArray(slotValue)
+    ) {
       return null;
     }
     const slot = slotValue as Record<string, unknown>;
@@ -121,6 +161,7 @@ function normalizeLinearSession(value: unknown): LinearSessionDraft | null {
       !isNullableIndex(slot.selected ?? null) ||
       !isNullableIndex(slot.englishSelected ?? null) ||
       !isNullableIndex(slot.turkishSelected ?? null) ||
+      !isNullableIndex(slot.v2Selected ?? null) ||
       (slot.answer !== undefined && typeof slot.answer !== "string")
     ) {
       return null;
@@ -134,6 +175,8 @@ function normalizeLinearSession(value: unknown): LinearSessionDraft | null {
       turkishSelected: isNullableIndex(slot.turkishSelected)
         ? slot.turkishSelected
         : null,
+      v2Selected: isNullableIndex(slot.v2Selected) ? slot.v2Selected : null,
+      verbRows: sanitizeVerbRowSlots(slot.verbRows),
       checked: slot.checked,
     });
   }
@@ -299,9 +342,7 @@ export function clearCrosswordDraft(key: string): void {
   writeStore(store);
 }
 
-export function readSelectedExerciseType(
-  topicId: string,
-): ExerciseType | null {
+export function readSelectedExerciseType(topicId: string): ExerciseType | null {
   return readStore().selectedTypes[topicId] ?? null;
 }
 
@@ -331,7 +372,10 @@ export function readLinearSession(key: string): LinearSessionDraft | null {
   return readStore().sessions[key] ?? null;
 }
 
-export function writeLinearSession(key: string, draft: LinearSessionDraft): void {
+export function writeLinearSession(
+  key: string,
+  draft: LinearSessionDraft,
+): void {
   const store = readStore();
   const next = normalizeLinearSession(draft);
   if (!next) {

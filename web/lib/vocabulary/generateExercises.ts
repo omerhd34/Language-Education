@@ -187,10 +187,23 @@ function placeWord(
   }
 }
 
+export type CrosswordGenerateOptions = {
+  maxWords?: number;
+  minGridSize?: number;
+  maxGridSize?: number;
+  gridPadding?: number;
+};
+
 export function generateCrosswordExercise(
   words: VocabularyWord[],
   categoryId: string,
+  options?: CrosswordGenerateOptions,
 ): CrosswordExercise | null {
+  const maxWords = options?.maxWords ?? 8;
+  const minGridSize = options?.minGridSize ?? 10;
+  const maxGridSize = options?.maxGridSize ?? 16;
+  const gridPadding = options?.gridPadding ?? 4;
+
   const candidates = words
     .map((word) => ({
       word,
@@ -198,15 +211,18 @@ export function generateCrosswordExercise(
     }))
     .filter((item) => item.answer.length >= 3)
     .sort((a, b) => b.answer.length - a.answer.length)
-    .slice(0, 8);
+    .slice(0, maxWords);
 
   if (candidates.length < 3) {
     return null;
   }
 
   const size = Math.min(
-    16,
-    Math.max(10, Math.max(...candidates.map((item) => item.answer.length)) + 4),
+    maxGridSize,
+    Math.max(
+      minGridSize,
+      Math.max(...candidates.map((item) => item.answer.length)) + gridPadding,
+    ),
   );
   const grid: Array<Array<string | null>> = Array.from({ length: size }, () =>
     Array.from({ length: size }, () => null),

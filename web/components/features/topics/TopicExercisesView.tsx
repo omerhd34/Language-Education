@@ -46,6 +46,7 @@ import {
   readSelectedExerciseType,
   writeLinearSession,
   writeSelectedExerciseType,
+  type LinearSessionDraft,
   type LinearSlot,
 } from "@/lib/exerciseDraftStorage";
 import {
@@ -53,7 +54,6 @@ import {
   crosswordDraftKey,
 } from "@/lib/exerciseTypeProgress";
 import { getNextLevel } from "@/lib/topicAccess";
-import { VOCABULARY_EXERCISE_SHARE } from "@/lib/vocabularySectionProgress";
 
 type TopicExercisesViewProps = {
   topicId?: string;
@@ -61,6 +61,8 @@ type TopicExercisesViewProps = {
   exercises: TopicExercise[];
   isExam?: boolean;
   level?: CefrLevel;
+  showHints?: boolean;
+  onExerciseSessionStart?: (type?: ExerciseType) => void;
 };
 
 type LinearSessionInput = {
@@ -72,6 +74,11 @@ type LinearSessionInput = {
     answer?: string;
     englishSelected?: number | null;
     turkishSelected?: number | null;
+    v2Selected?: number | null;
+    verbRows?: Array<{
+      v2Selected: number | null;
+      v3Selected: number | null;
+    }>;
     checked: boolean;
   }>;
 };
@@ -79,12 +86,28 @@ type LinearSessionInput = {
 type ExamPartScore = { correct: number; total: number };
 type LevelExamPartOutcome = "passed" | "failed";
 
+function linearSessionProgressPercent(saved: LinearSessionDraft): number {
+  const checked = saved.slots.filter((slot) => slot.checked).length;
+  if (saved.total <= 0) {
+    return 0;
+  }
+  return Math.round((checked / saved.total) * 100);
+}
+
+const PRACTICE_TYPES_WITH_RANDOM_SET: ExerciseType[] = [
+  "multiple_choice",
+  "fill_blank",
+  "listening",
+];
+
 function toLinearSlots(session: LinearSessionInput): LinearSlot[] {
   return session.slots.map((slot) => ({
     selected: slot.selected ?? null,
     answer: slot.answer ?? "",
     englishSelected: slot.englishSelected ?? null,
     turkishSelected: slot.turkishSelected ?? null,
+    v2Selected: slot.v2Selected ?? null,
+    verbRows: slot.verbRows,
     checked: slot.checked,
   }));
 }
@@ -95,6 +118,8 @@ export function TopicExercisesView({
   exercises,
   isExam = false,
   level,
+  showHints = true,
+  onExerciseSessionStart,
 }: TopicExercisesViewProps) {
   const t = useTranslations("Topic");
   const selectionKey = progressKey ?? topicId ?? null;
@@ -205,36 +230,20 @@ export function TopicExercisesView({
     writeSelectedExerciseType(selectionKey, selectedType);
   }, [isExam, selectedType, selectionKey, sessionReady]);
 
-  const exerciseShare = selectionKey?.startsWith("vocabulary:")
-    ? VOCABULARY_EXERCISE_SHARE
-    : 100;
-
   const typeProgress = useMemo(() => {
     if (!progressReady) {
       return undefined;
     }
 
-    const raw = computeExerciseTypeProgress({
+    return computeExerciseTypeProgress({
       topicId,
       progressKey: selectionKey ?? undefined,
       exercises,
       completedTypes,
     });
-
-    if (exerciseShare === 100) {
-      return raw;
-    }
-
-    const scaled: Partial<Record<ExerciseType, number>> = {};
-    for (const type of Object.keys(raw) as ExerciseType[]) {
-      const value = raw[type] ?? 0;
-      scaled[type] = Math.round((value / 100) * exerciseShare);
-    }
-    return scaled;
   }, [
     completedTypes,
     draftVersion,
-    exerciseShare,
     exercises,
     progressReady,
     selectionKey,
@@ -447,10 +456,31 @@ export function TopicExercisesView({
     }
   }
 
+  function beginExerciseSession(type: ExerciseType) {
+    if (
+      PRACTICE_TYPES_WITH_RANDOM_SET.includes(type) &&
+      onExerciseSessionStart &&
+      selectionKey
+    ) {
+      const total = exercises.filter((item) => item.type === type).length;
+      const saved = readLinearSession(`${selectionKey}:${type}`);
+      const compatibleSave = saved && saved.slots.length === total;
+      const progress = compatibleSave ? linearSessionProgressPercent(saved) : 0;
+      const shouldPickNewSet = !compatibleSave || progress === 0;
+      if (shouldPickNewSet) {
+        onExerciseSessionStart(type);
+        clearLinearSession(`${selectionKey}:${type}`);
+        setSessionNonce((value) => value + 1);
+      }
+    }
+    setSelectedType(type);
+  }
+
   function handleSessionRestart() {
     if (topicId && selectedType) {
       unmarkTopicExerciseTypeCompleted(topicId, selectedType);
     }
+    onExerciseSessionStart?.(selectedType ?? undefined);
     if (selectionKey && selectedType) {
       clearLinearSession(`${selectionKey}:${selectedType}`);
       if (selectedType === "crossword") {
@@ -632,8 +662,7 @@ export function TopicExercisesView({
         counts={counts}
         completedTypes={completedTypes}
         progressPercents={typeProgress}
-        completeAt={exerciseShare}
-        onSelect={setSelectedType}
+        onSelect={beginExerciseSession}
       />
     );
   }
@@ -676,7 +705,7 @@ export function TopicExercisesView({
             selected: slot.selected,
             checked: slot.checked,
           }))}
-          progressShare={exerciseShare}
+          showHint={showHints}
           onSessionChange={(session) =>
             persistPracticeSession("multiple_choice", session)
           }
@@ -694,7 +723,7 @@ export function TopicExercisesView({
             answer: slot.answer,
             checked: slot.checked,
           }))}
-          progressShare={exerciseShare}
+          showHint={showHints}
           onSessionChange={(session) =>
             persistPracticeSession("fill_blank", session)
           }
@@ -708,7 +737,6 @@ export function TopicExercisesView({
           key={`cw-${sessionNonce}`}
           exercises={filtered as CrosswordExercise[]}
           draftKey={crosswordDraftKey(topicId, filtered as CrosswordExercise[])}
-          progressShare={exerciseShare}
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
         />
@@ -722,9 +750,10 @@ export function TopicExercisesView({
           initialSlots={savedListening?.slots.map((slot) => ({
             englishSelected: slot.englishSelected,
             turkishSelected: slot.turkishSelected,
+            v2Selected: slot.v2Selected,
+            verbRows: slot.verbRows,
             checked: slot.checked,
           }))}
-          progressShare={exerciseShare}
           onSessionChange={(session) =>
             persistPracticeSession("listening", session)
           }

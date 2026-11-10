@@ -9,15 +9,28 @@ type CheckedAnswer = {
 type UseExerciseNavigationOptions<T extends CheckedAnswer> = {
   length: number;
   createSlot: () => T;
+  buildAllSlots?: () => T[];
   initialIndex?: number;
   initialSlots?: T[];
 };
 
 export type ExerciseAdvanceLabel = "next" | "seeResult" | "goToUnanswered";
 
+function defaultSlots<T extends CheckedAnswer>(
+  length: number,
+  createSlot: () => T,
+  buildAllSlots?: () => T[],
+): T[] {
+  if (buildAllSlots) {
+    return buildAllSlots();
+  }
+  return Array.from({ length }, () => createSlot());
+}
+
 export function useExerciseNavigation<T extends CheckedAnswer>({
   length,
   createSlot,
+  buildAllSlots,
   initialIndex = 0,
   initialSlots,
 }: UseExerciseNavigationOptions<T>) {
@@ -27,7 +40,7 @@ export function useExerciseNavigation<T extends CheckedAnswer>({
   const [slots, setSlots] = useState<T[]>(() =>
     initialSlots && initialSlots.length === length
       ? initialSlots
-      : Array.from({ length }, () => createSlot()),
+      : defaultSlots(length, createSlot, buildAllSlots),
   );
   const [finished, setFinished] = useState(false);
   const [resultOpen, setResultOpen] = useState(false);
@@ -88,7 +101,7 @@ export function useExerciseNavigation<T extends CheckedAnswer>({
 
   function resetSession() {
     setIndex(0);
-    setSlots(Array.from({ length }, () => createSlot()));
+    setSlots(defaultSlots(length, createSlot, buildAllSlots));
     setFinished(false);
     setResultOpen(false);
   }

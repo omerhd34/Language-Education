@@ -29,6 +29,7 @@ type FillBlankExercisesProps = {
     total: number;
     slots: BlankSlot[];
   }) => void;
+  showHint?: boolean;
 };
 
 type BlankSlot = {
@@ -71,6 +72,7 @@ export function FillBlankExercises({
   initialSlots,
   progressShare = 100,
   onSessionChange,
+  showHint = true,
 }: FillBlankExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
@@ -183,7 +185,8 @@ export function FillBlankExercises({
         <ExerciseQuestionHeader
           title={exercise.prompt}
           hint={exercise.hint}
-          fallbackKey="topicFillBlank"
+          fallbackKey={showHint ? "topicFillBlank" : undefined}
+          showHint={showHint}
         />
 
         <form className="space-y-4" onSubmit={handleCheck}>
