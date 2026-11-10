@@ -1,5 +1,6 @@
 import { getCombinedExerciseById } from "@/data/combinedExercises";
 import { getDashboardTopicById } from "@/data/dashboardTopics";
+import { getListeningSectionById } from "@/data/listenings";
 import { getReadingSectionById } from "@/data/readings";
 import { getVocabularyCategoryById } from "@/data/vocabulary";
 import type {
@@ -7,6 +8,7 @@ import type {
   ContinueActivityKind,
   ContinueActivitySkill,
 } from "@/lib/continueActivityStorage";
+import { LISTENING_SECTION_ANCHORS } from "@/lib/listeningSectionTab";
 import { READING_SECTION_ANCHORS } from "@/lib/readingSectionTab";
 
 const VOCABULARY_STATIC_SEGMENTS = new Set([
@@ -152,6 +154,23 @@ export function parseContinueActivityFromPath(
     return parseReadingActivity(readingMatch[1], hash, search);
   }
 
+  const listeningMatch = path.match(/^\/panel\/dinleme\/([^/]+)$/);
+  if (listeningMatch) {
+    const sectionId = listeningMatch[1];
+    if (!getListeningSectionById(sectionId)) {
+      return null;
+    }
+    const hashId = hash.replace(/^#/, "");
+    const isPractice = hashId === LISTENING_SECTION_ANCHORS.practice;
+    return {
+      kind: isPractice ? "listening_exercises" : "listening_audio",
+      href: isPractice
+        ? `/panel/dinleme/${sectionId}#${LISTENING_SECTION_ANCHORS.practice}`
+        : `/panel/dinleme/${sectionId}`,
+      listeningId: sectionId,
+    };
+  }
+
   if (path === "/panel" || path === "/") {
     const skill = PANEL_HUB_BY_HASH[hashIdFrom(hash)];
     if (skill) {
@@ -182,6 +201,8 @@ type ContinueActivityLabels = {
   combinedExercise: string;
   readingText: string;
   readingExercises: string;
+  listeningAudio: string;
+  listeningExercises: string;
   sectionKind: string;
   skillReading: string;
   skillListening: string;
@@ -276,6 +297,19 @@ export function resolveContinueActivityDisplay(
           activity.kind === "reading_exercises"
             ? labels.readingExercises
             : labels.readingText,
+      };
+    }
+    case "listening_audio":
+    case "listening_exercises": {
+      const section = activity.listeningId
+        ? getListeningSectionById(activity.listeningId)
+        : null;
+      return {
+        title: section?.title ?? labels.fallbackTitle,
+        kindLabel:
+          activity.kind === "listening_exercises"
+            ? labels.listeningExercises
+            : labels.listeningAudio,
       };
     }
     case "skill_hub":

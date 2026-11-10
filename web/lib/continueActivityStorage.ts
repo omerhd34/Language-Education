@@ -8,6 +8,8 @@ export type ContinueActivityKind =
   | "combined_exercise"
   | "reading_text"
   | "reading_exercises"
+  | "listening_audio"
+  | "listening_exercises"
   | "skill_hub";
 
 export type ContinueActivitySkill =
@@ -25,6 +27,7 @@ export type ContinueActivity = {
   categoryId?: string;
   combinedId?: string;
   readingId?: string;
+  listeningId?: string;
   skill?: ContinueActivitySkill;
   updatedAt: string;
 };
@@ -44,6 +47,8 @@ const CONTINUE_ACTIVITY_KINDS: readonly ContinueActivityKind[] = [
   "combined_exercise",
   "reading_text",
   "reading_exercises",
+  "listening_audio",
+  "listening_exercises",
   "skill_hub",
 ];
 
@@ -103,6 +108,9 @@ export function activitySkill(
     case "reading_text":
     case "reading_exercises":
       return "reading";
+    case "listening_audio":
+    case "listening_exercises":
+      return "listening";
   }
 }
 
@@ -115,6 +123,7 @@ export function continueActivitySectionKey(
     | "categoryId"
     | "combinedId"
     | "readingId"
+    | "listeningId"
     | "skill"
   >,
 ): string {
@@ -126,6 +135,13 @@ export function continueActivitySectionKey(
     (activity.kind === "reading_text" || activity.kind === "reading_exercises")
   ) {
     return `reading:${activity.readingId}`;
+  }
+  if (
+    activity.listeningId &&
+    (activity.kind === "listening_audio" ||
+      activity.kind === "listening_exercises")
+  ) {
+    return `listening:${activity.listeningId}`;
   }
   if (
     activity.categoryId &&
@@ -182,6 +198,9 @@ function normalizeActivity(value: unknown): ContinueActivity | null {
   }
   if (typeof record.readingId === "string" && record.readingId.length > 0) {
     activity.readingId = record.readingId;
+  }
+  if (typeof record.listeningId === "string" && record.listeningId.length > 0) {
+    activity.listeningId = record.listeningId;
   }
   if (isContinueActivitySkill(record.skill)) {
     activity.skill = record.skill;

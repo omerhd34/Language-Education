@@ -17,10 +17,7 @@ import {
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { useContinueActivities } from "@/hooks/useContinueActivity";
-import {
-  navigatePanelHref,
-  navigatePanelSection,
-} from "@/hooks/usePanelHash";
+import { navigatePanelHref, navigatePanelSection } from "@/hooks/usePanelHash";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { resolveContinueActivityDisplay } from "@/lib/resolveContinueActivity";
 import type { ContinueActivity } from "@/lib/continueActivityStorage";
@@ -34,11 +31,14 @@ function kindIcon(activity: ContinueActivity) {
     case "topic_exercises":
     case "combined_exercise":
     case "reading_exercises":
+    case "listening_exercises":
       return PencilLine;
     case "vocabulary_category":
       return Layers3;
     case "reading_text":
       return BookOpen;
+    case "listening_audio":
+      return Headphones;
     case "skill_hub":
       switch (activity.skill) {
         case "listening":
@@ -126,6 +126,8 @@ export function QuickContinueCard() {
     combinedExercise: t("quickContinueKindCombined"),
     readingText: t("quickContinueKindReadingText"),
     readingExercises: t("quickContinueKindReadingExercises"),
+    listeningAudio: t("quickContinueKindListeningAudio"),
+    listeningExercises: t("quickContinueKindListeningExercises"),
     sectionKind: t("quickContinueKindSection"),
     skillReading: tNav("reading"),
     skillListening: tNav("listening"),
