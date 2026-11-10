@@ -2,6 +2,7 @@ import { getCombinedExerciseById } from "@/data/combinedExercises";
 import { getDashboardTopicById } from "@/data/dashboardTopics";
 import { getListeningSectionById } from "@/data/listenings";
 import { getReadingSectionById } from "@/data/readings";
+import { getWritingSectionById } from "@/data/writings";
 import { getVocabularyCategoryById } from "@/data/vocabulary";
 import type {
   ContinueActivity,
@@ -10,6 +11,7 @@ import type {
 } from "@/lib/continueActivityStorage";
 import { LISTENING_SECTION_ANCHORS } from "@/lib/listeningSectionTab";
 import { READING_SECTION_ANCHORS } from "@/lib/readingSectionTab";
+import { WRITING_SECTION_ANCHORS } from "@/lib/writingSectionTab";
 
 const VOCABULARY_STATIC_SEGMENTS = new Set([
   "sinav",
@@ -171,6 +173,23 @@ export function parseContinueActivityFromPath(
     };
   }
 
+  const writingMatch = path.match(/^\/panel\/yazma\/([^/]+)$/);
+  if (writingMatch) {
+    const sectionId = writingMatch[1];
+    if (!getWritingSectionById(sectionId)) {
+      return null;
+    }
+    const hashId = hash.replace(/^#/, "");
+    const isPractice = hashId === WRITING_SECTION_ANCHORS.practice;
+    return {
+      kind: isPractice ? "writing_exercises" : "writing_model",
+      href: isPractice
+        ? `/panel/yazma/${sectionId}#${WRITING_SECTION_ANCHORS.practice}`
+        : `/panel/yazma/${sectionId}`,
+      writingId: sectionId,
+    };
+  }
+
   if (path === "/panel" || path === "/") {
     const skill = PANEL_HUB_BY_HASH[hashIdFrom(hash)];
     if (skill) {
@@ -203,6 +222,8 @@ type ContinueActivityLabels = {
   readingExercises: string;
   listeningAudio: string;
   listeningExercises: string;
+  writingModel: string;
+  writingExercises: string;
   sectionKind: string;
   skillReading: string;
   skillListening: string;
@@ -310,6 +331,19 @@ export function resolveContinueActivityDisplay(
           activity.kind === "listening_exercises"
             ? labels.listeningExercises
             : labels.listeningAudio,
+      };
+    }
+    case "writing_model":
+    case "writing_exercises": {
+      const section = activity.writingId
+        ? getWritingSectionById(activity.writingId)
+        : null;
+      return {
+        title: section?.title ?? labels.fallbackTitle,
+        kindLabel:
+          activity.kind === "writing_exercises"
+            ? labels.writingExercises
+            : labels.writingModel,
       };
     }
     case "skill_hub":
