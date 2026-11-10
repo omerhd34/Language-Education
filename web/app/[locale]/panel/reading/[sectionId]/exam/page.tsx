@@ -9,7 +9,7 @@ type PageProps = {
 export default async function ReadingExamRedirectPage({ params }: PageProps) {
   const { locale, sectionId } = await params;
   redirect({
-    href: `/panel/okuma/${sectionId}#reading-alistirma`,
+    href: `/panel/reading/${sectionId}#reading-exercise`,
     locale,
   });
 }

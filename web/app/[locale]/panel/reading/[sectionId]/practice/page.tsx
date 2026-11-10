@@ -6,10 +6,12 @@ type PageProps = {
   params: Promise<{ locale: string; sectionId: string }>;
 };
 
-export default async function ReadingTextRedirectPage({ params }: PageProps) {
+export default async function ReadingPracticeRedirectPage({
+  params,
+}: PageProps) {
   const { locale, sectionId } = await params;
   redirect({
-    href: `/panel/okuma/${sectionId}`,
+    href: `/panel/reading/${sectionId}#reading-exercise`,
     locale,
   });
 }

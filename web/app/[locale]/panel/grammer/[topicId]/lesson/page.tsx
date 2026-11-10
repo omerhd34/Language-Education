@@ -44,7 +44,7 @@ export default async function TopicLessonPage({ params }: PageProps) {
 
   if (topic.isExam) {
     redirect({
-      href: `/panel/konular/${topicId}/alistirmalar`,
+      href: `/panel/grammer/${topicId}/exercises`,
       locale,
     });
   }
