@@ -24,10 +24,10 @@ import { ExerciseQuestionHeader } from "@/components/features/exercises/Exercise
 import type { ReadingMultipleChoiceQuestion } from "@/data/readings/types";
 import { scrollToReadingSection } from "@/lib/readingSectionTab";
 import { SECTION_PRACTICE_PASS_PERCENT } from "@/lib/sectionPracticePassPercent";
+import { InstantMultipleChoiceOptions } from "@/components/features/exercises/InstantMultipleChoiceOptions";
 import { cn } from "@/lib/utils";
 
 const PRACTICE_PASS_PERCENT = SECTION_PRACTICE_PASS_PERCENT;
-const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"] as const;
 
 type QuestionSlot = {
   selected: number;
@@ -43,10 +43,6 @@ type ReadingMultipleChoiceQuizProps = {
   messageNamespace?: SkillQuizNamespace;
   scrollToAudio?: () => void;
 };
-
-function optionLetter(index: number): string {
-  return OPTION_LETTERS[index] ?? String(index + 1);
-}
 
 function scoreFromSlots(
   questions: ReadingMultipleChoiceQuestion[],
@@ -272,67 +268,15 @@ function ReadingChoiceQuestion({
         headingId={headingId}
       />
 
-      <div
-        className="grid gap-2 sm:grid-cols-2"
-        role="radiogroup"
-        aria-labelledby={headingId}
-        aria-label={t("optionsAria")}
-      >
-        {question.options.map((option, optionIndex) => {
-          const isSelected = selected === optionIndex;
-          const isCorrect = optionIndex === question.correctIndex;
-          const showCorrect = revealed && isCorrect;
-          const showWrong = revealed && isSelected && !isCorrect;
-
-          return (
-            <button
-              key={`${question.id}-${optionIndex}`}
-              type="button"
-              role="radio"
-              aria-checked={isSelected}
-              aria-label={`${optionLetter(optionIndex)}. ${option}`}
-              disabled={revealed}
-              onClick={() => onSelect(optionIndex)}
-              className={cn(
-                "flex w-full min-h-12 cursor-pointer items-center gap-3 rounded-full border px-3 py-2.5 text-left text-sm transition-colors duration-200",
-                "disabled:cursor-default",
-                showCorrect &&
-                  "reading-quiz-pop border-emerald-500/50 bg-emerald-500/10 text-emerald-900 motion-safe:animate-[reading-option-pop_0.45s_ease-out] dark:text-emerald-100",
-                showWrong &&
-                  "reading-quiz-shake border-red-500/40 bg-red-500/10 text-red-900 motion-safe:animate-[reading-option-shake_0.45s_ease-in-out] dark:text-red-100",
-                revealed &&
-                  showCorrect &&
-                  !isSelected &&
-                  "motion-safe:animate-[reading-option-pop_0.45s_ease-out_0.12s_both]",
-                !revealed &&
-                  !isSelected &&
-                  "border-border bg-background/60 text-brand-800 hover:border-brand-400 dark:bg-brand-950/30 dark:text-brand-200",
-              )}
-            >
-              <span
-                className={cn(
-                  "inline-flex size-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold",
-                  showCorrect && "bg-emerald-600 text-white",
-                  showWrong && "bg-red-800 text-white",
-                  (showCorrect || showWrong) &&
-                    "reading-quiz-icon-pop motion-safe:animate-[reading-icon-pop_0.35s_ease-out]",
-                  !revealed &&
-                    "bg-(--glass-2) text-brand-600 dark:text-brand-300",
-                )}
-              >
-                {showCorrect ? (
-                  <Check className="size-3.5" strokeWidth={3} aria-hidden />
-                ) : showWrong ? (
-                  <X className="size-3.5" strokeWidth={3} aria-hidden />
-                ) : (
-                  optionLetter(optionIndex)
-                )}
-              </span>
-              <span className="min-w-0 flex-1 leading-snug">{option}</span>
-            </button>
-          );
-        })}
-      </div>
+      <InstantMultipleChoiceOptions
+        options={question.options}
+        correctIndex={question.correctIndex}
+        selected={selected}
+        revealed={revealed}
+        onSelect={onSelect}
+        labelledBy={headingId}
+        optionsAriaLabel={t("optionsAria")}
+      />
     </div>
   );
 }

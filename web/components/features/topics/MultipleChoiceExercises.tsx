@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
+import { InstantMultipleChoiceOptions } from "@/components/features/exercises/InstantMultipleChoiceOptions";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
@@ -34,6 +35,7 @@ type MultipleChoiceExercisesProps = {
     total: number;
     slots: ChoiceSlot[];
   }) => void;
+  showHint?: boolean;
 };
 
 function createChoiceSlot(): ChoiceSlot {
@@ -61,6 +63,7 @@ export function MultipleChoiceExercises({
   initialSlots,
   progressShare = 100,
   onSessionChange,
+  showHint = true,
 }: MultipleChoiceExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
@@ -114,6 +117,8 @@ export function MultipleChoiceExercises({
     return null;
   }
 
+  const promptId = `${exercise.id}-prompt`;
+
   const isCorrect =
     current.checked && current.selected === exercise.correctIndex;
   const canRestart = index > 0;
@@ -142,12 +147,11 @@ export function MultipleChoiceExercises({
     );
   }
 
-  function handleCheck() {
-    if (current.selected === null || current.checked) {
+  function handleOptionSelect(optionIndex: number) {
+    if (current.checked) {
       return;
     }
-    updateCurrent({ checked: true });
-    setResultOpen(true);
+    updateCurrent({ selected: optionIndex, checked: true });
   }
 
   function handleNext() {
@@ -179,61 +183,24 @@ export function MultipleChoiceExercises({
         <ExerciseQuestionHeader
           title={exercise.prompt}
           hint={exercise.hint}
-          fallbackKey="topicMultipleChoice"
+          fallbackKey={showHint ? "topicMultipleChoice" : undefined}
+          showHint={showHint}
+          headingId={promptId}
         />
 
-        <ul
-          className={cn(
-            "grid gap-2",
-            exercise.options.length >= 6 ? "sm:grid-cols-2" : "grid-cols-1",
-          )}
-          role="listbox"
-          aria-label={t("optionsAria")}
-        >
-          {exercise.options.map((option, optionIndex) => {
-            const isSelected = current.selected === optionIndex;
-            const showCorrect =
-              current.checked && optionIndex === exercise.correctIndex;
-            const showWrong =
-              current.checked &&
-              isSelected &&
-              optionIndex !== exercise.correctIndex;
-
-            return (
-              <li key={`${optionIndex}-${option}`}>
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={isSelected}
-                  disabled={current.checked}
-                  onClick={() => updateCurrent({ selected: optionIndex })}
-                  className={cn(
-                    "w-full cursor-pointer rounded-xl border px-4 py-3 text-left text-sm transition-colors",
-                    "disabled:cursor-default",
-                    showCorrect &&
-                      "border-emerald-500/60 bg-emerald-500/10 text-emerald-800 dark:text-emerald-200",
-                    showWrong &&
-                      "border-red-500/60 bg-red-500/10 text-red-800 dark:text-red-200",
-                    !showCorrect &&
-                      !showWrong &&
-                      isSelected &&
-                      "border-sky-500 bg-sky-500/10 text-brand-950 dark:text-brand-100",
-                    !showCorrect &&
-                      !showWrong &&
-                      !isSelected &&
-                      "border-border bg-background/50 text-brand-800 hover:border-brand-400 dark:bg-brand-950/40 dark:text-brand-200",
-                  )}
-                >
-                  {option}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <InstantMultipleChoiceOptions
+          options={exercise.options}
+          correctIndex={exercise.correctIndex}
+          selected={current.selected}
+          revealed={current.checked}
+          onSelect={handleOptionSelect}
+          labelledBy={promptId}
+          optionsAriaLabel={t("optionsAria")}
+        />
 
         <ExerciseStepNav
           canGoPrevious={canGoPrevious}
-          canGoNext={canGoNext}
+          canGoNext={canGoNext && current.checked}
           nextLabel={continueLabel}
           nextVariant={current.checked ? "default" : "outline"}
           onPrevious={handlePrevious}
@@ -252,21 +219,11 @@ export function MultipleChoiceExercises({
               </Button>
             ) : null
           }
-        >
-          {!current.checked ? (
-            <Button
-              type="button"
-              disabled={current.selected === null}
-              onClick={handleCheck}
-            >
-              {t("check")}
-            </Button>
-          ) : null}
-        </ExerciseStepNav>
+        />
       </article>
 
       <ExerciseResultDialog
-        open={resultOpen && current.checked}
+        open={resultOpen && current.checked && Boolean(exercise.explanation)}
         variant={isCorrect ? "correct" : "incorrect"}
         explanation={exercise.explanation}
         onOpenChange={setResultOpen}
