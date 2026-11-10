@@ -58,6 +58,7 @@ export type MultipleChoiceExercise = {
   options: string[];
   correctIndex: number;
   explanation?: string;
+  hint?: string;
 };
 
 export type FillBlankExercise = {
@@ -68,6 +69,7 @@ export type FillBlankExercise = {
   answer: string;
   acceptedAnswers?: string[];
   explanation?: string;
+  hint?: string;
 };
 
 export type ListeningExercise = {
@@ -81,6 +83,7 @@ export type ListeningExercise = {
   turkishOptions: string[];
   turkishCorrectIndex: number;
   explanation?: string;
+  hint?: string;
 };
 
 export type CrosswordDirection = "across" | "down";

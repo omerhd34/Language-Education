@@ -33,18 +33,21 @@ export type ReadingReferenceQuestion = {
   prompt: string;
   paragraphRef: number;
   acceptedAnswers: string[];
+  hint?: string;
 };
 
 export type ReadingShortAnswerQuestion = {
   id: string;
   prompt: string;
   acceptedAnswers: string[];
+  hint?: string;
 };
 
 export type ReadingTrueFalseQuestion = {
   id: string;
   statement: string;
   answer: boolean;
+  hint?: string;
 };
 
 export type ReadingFillBlankQuestion = {
@@ -53,6 +56,7 @@ export type ReadingFillBlankQuestion = {
   after: string;
   answer: string;
   acceptedAnswers?: string[];
+  hint?: string;
 };
 
 export type ReadingMultipleChoiceQuestion = {
@@ -60,6 +64,7 @@ export type ReadingMultipleChoiceQuestion = {
   prompt: string;
   options: string[];
   correctIndex: number;
+  hint?: string;
 };
 
 export type ReadingExerciseBlock = {
