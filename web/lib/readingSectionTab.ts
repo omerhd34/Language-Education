@@ -1,15 +1,25 @@
 export type ReadingSectionTab = "text" | "practice";
 
 export const READING_SECTION_ANCHORS = {
-  text: "reading-metin",
-  practice: "reading-alistirma",
+  text: "reading-text",
+  practice: "reading-exercise",
 } as const satisfies Record<ReadingSectionTab, string>;
 
-const LEGACY_EXAM_HASH = "reading-sinav";
+const LEGACY_PRACTICE_HASHES = new Set([
+  "reading-practice",
+  "reading-sinav",
+  "reading-exam",
+]);
 
+export function isReadingPracticeHash(hashId: string): boolean {
+  return (
+    hashId === READING_SECTION_ANCHORS.practice ||
+    LEGACY_PRACTICE_HASHES.has(hashId)
+  );
+}
 export function readingSectionHeadingId(tab: ReadingSectionTab): string {
   if (tab === "text") {
-    return "reading-metin-heading";
+    return "reading-text-heading";
   }
   return READING_SECTION_ANCHORS[tab];
 }
@@ -31,7 +41,7 @@ export function tabFromLocationHash(): ReadingSectionTab | null {
   const hash = window.location.hash.replace(/^#/, "");
   if (
     hash === READING_SECTION_ANCHORS.practice ||
-    hash === LEGACY_EXAM_HASH
+    LEGACY_PRACTICE_HASHES.has(hash)
   ) {
     return "practice";
   }
@@ -42,7 +52,7 @@ export function readingSectionTabHref(
   sectionId: string,
   tab: ReadingSectionTab,
 ): string {
-  const base = `/panel/okuma/${sectionId}`;
+  const base = `/panel/reading/${sectionId}`;
   return `${base}#${READING_SECTION_ANCHORS[tab]}`;
 }
 

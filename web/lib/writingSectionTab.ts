@@ -1,13 +1,15 @@
 export type WritingSectionTab = "model" | "practice";
 
 export const WRITING_SECTION_ANCHORS = {
-  model: "writing-ornek",
-  practice: "writing-alistirma",
+  model: "writing-example",
+  practice: "writing-exercise",
 } as const satisfies Record<WritingSectionTab, string>;
+
+const LEGACY_WRITING_PRACTICE_HASHES = new Set(["writing-practice"]);
 
 export function writingSectionHeadingId(tab: WritingSectionTab): string {
   if (tab === "model") {
-    return "writing-ornek-heading";
+    return "writing-example-heading";
   }
   return WRITING_SECTION_ANCHORS[tab];
 }
@@ -27,7 +29,10 @@ export function tabFromWritingLocationHash(): WritingSectionTab | null {
     return null;
   }
   const hash = window.location.hash.replace(/^#/, "");
-  if (hash === WRITING_SECTION_ANCHORS.practice) {
+  if (
+    hash === WRITING_SECTION_ANCHORS.practice ||
+    LEGACY_WRITING_PRACTICE_HASHES.has(hash)
+  ) {
     return "practice";
   }
   return null;

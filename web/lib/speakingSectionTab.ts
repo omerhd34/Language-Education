@@ -1,13 +1,15 @@
 export type SpeakingSectionTab = "model" | "practice";
 
 export const SPEAKING_SECTION_ANCHORS = {
-  model: "konusma-ornek",
-  practice: "konusma-alistirma",
+  model: "speaking-example",
+  practice: "speaking-exercise",
 } as const satisfies Record<SpeakingSectionTab, string>;
+
+const LEGACY_SPEAKING_PRACTICE_HASHES = new Set(["speaking-practice"]);
 
 export function speakingSectionHeadingId(tab: SpeakingSectionTab): string {
   if (tab === "model") {
-    return "konusma-ornek-heading";
+    return "speaking-example-heading";
   }
   return SPEAKING_SECTION_ANCHORS[tab];
 }
@@ -27,7 +29,10 @@ export function tabFromSpeakingLocationHash(): SpeakingSectionTab | null {
     return null;
   }
   const hash = window.location.hash.replace(/^#/, "");
-  if (hash === SPEAKING_SECTION_ANCHORS.practice) {
+  if (
+    hash === SPEAKING_SECTION_ANCHORS.practice ||
+    LEGACY_SPEAKING_PRACTICE_HASHES.has(hash)
+  ) {
     return "practice";
   }
   return null;

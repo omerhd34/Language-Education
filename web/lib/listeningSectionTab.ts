@@ -1,13 +1,15 @@
 export type ListeningSectionTab = "audio" | "practice";
 
 export const LISTENING_SECTION_ANCHORS = {
-  audio: "listening-ses",
-  practice: "listening-alistirma",
+  audio: "listening-audio",
+  practice: "listening-exercise",
 } as const satisfies Record<ListeningSectionTab, string>;
+
+const LEGACY_LISTENING_PRACTICE_HASHES = new Set(["listening-practice"]);
 
 export function listeningSectionHeadingId(tab: ListeningSectionTab): string {
   if (tab === "audio") {
-    return "listening-ses-heading";
+    return "listening-audio-heading";
   }
   return LISTENING_SECTION_ANCHORS[tab];
 }
@@ -27,7 +29,10 @@ export function tabFromListeningLocationHash(): ListeningSectionTab | null {
     return null;
   }
   const hash = window.location.hash.replace(/^#/, "");
-  if (hash === LISTENING_SECTION_ANCHORS.practice) {
+  if (
+    hash === LISTENING_SECTION_ANCHORS.practice ||
+    LEGACY_LISTENING_PRACTICE_HASHES.has(hash)
+  ) {
     return "practice";
   }
   return null;

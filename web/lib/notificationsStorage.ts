@@ -15,8 +15,8 @@ const DISMISSED_KEY = "pylmor-notifications-dismissed";
 export const NOTIFICATIONS_CHANGED_EVENT = "pylmor:notifications-changed";
 
 const NOTIFICATION_HREF_BY_TYPE: Record<AppNotificationType, string> = {
-  quiz_ready: "/panel/kelime/bugun-calisilan",
-  learn_missed_day: "/panel#kelimeler",
+  quiz_ready: "/panel/vocabulary/today-worked",
+  learn_missed_day: "/panel#vocabulary",
 };
 
 export function resolveNotificationHref(

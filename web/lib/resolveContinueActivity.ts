@@ -11,32 +11,35 @@ import type {
   ContinueActivitySkill,
 } from "@/lib/continueActivityStorage";
 import { LISTENING_SECTION_ANCHORS } from "@/lib/listeningSectionTab";
-import { READING_SECTION_ANCHORS } from "@/lib/readingSectionTab";
+import {
+  isReadingPracticeHash,
+  READING_SECTION_ANCHORS,
+} from "@/lib/readingSectionTab";
 import { SPEAKING_SECTION_ANCHORS } from "@/lib/speakingSectionTab";
 import { WRITING_SECTION_ANCHORS } from "@/lib/writingSectionTab";
 
 const VOCABULARY_STATIC_SEGMENTS = new Set([
-  "sinav",
-  "bugun-calisilan",
-  "bilinen",
+  "exam",
+  "today-worked",
+  "known-words",
 ]);
 
 const PANEL_HUB_BY_HASH: Record<string, ContinueActivitySkill> = {
-  dilbilgisi: "topics",
-  kelimeler: "vocabulary",
-  okuma: "reading",
-  dinleme: "listening",
-  yazma: "writing",
-  konusma: "speaking",
+  grammer: "topics",
+  vocabulary: "vocabulary",
+  reading: "reading",
+  listening: "listening",
+  writing: "writing",
+  speaking: "speaking",
 };
 
 const PANEL_HASH_BY_SKILL: Record<ContinueActivitySkill, string> = {
-  topics: "dilbilgisi",
-  vocabulary: "kelimeler",
-  reading: "okuma",
-  listening: "dinleme",
-  writing: "yazma",
-  speaking: "konusma",
+  topics: "grammer",
+  vocabulary: "vocabulary",
+  reading: "reading",
+  listening: "listening",
+  writing: "writing",
+  speaking: "speaking",
 };
 
 function hashIdFrom(hash: string): string {
@@ -45,10 +48,7 @@ function hashIdFrom(hash: string): string {
 
 function isReadingPractice(hash: string, search: string): boolean {
   const hashId = hashIdFrom(hash);
-  if (
-    hashId === READING_SECTION_ANCHORS.practice ||
-    hashId === "reading-sinav"
-  ) {
+  if (isReadingPracticeHash(hashId)) {
     return true;
   }
 
@@ -72,8 +72,8 @@ function parseReadingActivity(
   return {
     kind: isPractice ? "reading_exercises" : "reading_text",
     href: isPractice
-      ? `/panel/okuma/${sectionId}#${READING_SECTION_ANCHORS.practice}`
-      : `/panel/okuma/${sectionId}`,
+      ? `/panel/reading/${sectionId}#${READING_SECTION_ANCHORS.practice}`
+      : `/panel/reading/${sectionId}`,
     readingId: sectionId,
   };
 }
@@ -83,16 +83,29 @@ export function parseContinueActivityFromPath(
   search = "",
   hash = "",
 ): Omit<ContinueActivity, "updatedAt"> | null {
-  const path = pathname.replace(/\/+$/, "") || "/";
+  let path = pathname.replace(/\/+$/, "") || "/";
+  if (path.startsWith("/panel/kelime")) {
+    path = path.replace(/^\/panel\/kelime/, "/panel/vocabulary");
+  }
+  if (
+    path === "/panel/vocabulary/sinav" ||
+    path.endsWith("/bilinen") ||
+    path.endsWith("/bugun-calisilan")
+  ) {
+    path = path
+      .replace(/\/sinav$/, "/exam")
+      .replace(/\/bilinen$/, "/known-words")
+      .replace(/\/bugun-calisilan$/, "/today-worked");
+  }
 
-  if (path === "/panel/kelime/sinav") {
+  if (path === "/panel/vocabulary/exam") {
     return {
       kind: "vocabulary_quiz",
-      href: "/panel/kelime/sinav",
+      href: "/panel/vocabulary/exam",
     };
   }
 
-  const vocabularyMatch = path.match(/^\/panel\/kelime\/([^/]+)$/);
+  const vocabularyMatch = path.match(/^\/panel\/vocabulary\/([^/]+)$/);
   if (vocabularyMatch) {
     const categoryId = vocabularyMatch[1];
     if (!VOCABULARY_STATIC_SEGMENTS.has(categoryId)) {
@@ -102,8 +115,8 @@ export function parseContinueActivityFromPath(
       const tab = params.get("tab");
       const isExercises = tab === "exercises";
       const href = isExercises
-        ? `/panel/kelime/${categoryId}?tab=exercises`
-        : `/panel/kelime/${categoryId}`;
+        ? `/panel/vocabulary/${categoryId}?tab=exercises`
+        : `/panel/vocabulary/${categoryId}`;
 
       return {
         kind: isExercises ? "vocabulary_exercises" : "vocabulary_category",
@@ -113,52 +126,52 @@ export function parseContinueActivityFromPath(
     }
   }
 
-  const combinedMatch = path.match(/^\/panel\/konular\/birlesik\/([^/]+)$/);
+  const combinedMatch = path.match(/^\/panel\/grammer\/combined\/([^/]+)$/);
   if (combinedMatch) {
     return {
       kind: "combined_exercise",
-      href: `/panel/konular/birlesik/${combinedMatch[1]}`,
+      href: `/panel/grammer/combined/${combinedMatch[1]}`,
       combinedId: combinedMatch[1],
     };
   }
 
   const topicMatch = path.match(
-    /^\/panel\/konular\/([^/]+)\/(anlatim|alistirmalar|sinav)$/,
+    /^\/panel\/grammer\/([^/]+)\/(lesson|exercises|exam)$/,
   );
   if (topicMatch) {
     const topicId = topicMatch[1];
     const section = topicMatch[2];
     const kind: ContinueActivityKind =
-      section === "anlatim"
+      section === "lesson"
         ? "topic_lesson"
-        : section === "alistirmalar"
+        : section === "exercises"
           ? "topic_exercises"
           : "topic_exam";
 
     return {
       kind,
-      href: `/panel/konular/${topicId}/${section}`,
+      href: `/panel/grammer/${topicId}/${section}`,
       topicId,
     };
   }
 
   const readingNestedMatch = path.match(
-    /^\/panel\/okuma\/([^/]+)\/(metin|alistirmalar|sinav)$/,
+    /^\/panel\/reading\/([^/]+)\/(text|practice|exam)$/,
   );
   if (readingNestedMatch) {
     const nestedHash =
-      readingNestedMatch[2] === "metin"
+      readingNestedMatch[2] === "text"
         ? ""
         : `#${READING_SECTION_ANCHORS.practice}`;
     return parseReadingActivity(readingNestedMatch[1], nestedHash, "");
   }
 
-  const readingMatch = path.match(/^\/panel\/okuma\/([^/]+)$/);
+  const readingMatch = path.match(/^\/panel\/reading\/([^/]+)$/);
   if (readingMatch) {
     return parseReadingActivity(readingMatch[1], hash, search);
   }
 
-  const listeningMatch = path.match(/^\/panel\/dinleme\/([^/]+)$/);
+  const listeningMatch = path.match(/^\/panel\/listening\/([^/]+)$/);
   if (listeningMatch) {
     const sectionId = listeningMatch[1];
     if (!getListeningSectionById(sectionId)) {
@@ -169,13 +182,13 @@ export function parseContinueActivityFromPath(
     return {
       kind: isPractice ? "listening_exercises" : "listening_audio",
       href: isPractice
-        ? `/panel/dinleme/${sectionId}#${LISTENING_SECTION_ANCHORS.practice}`
-        : `/panel/dinleme/${sectionId}`,
+        ? `/panel/listening/${sectionId}#${LISTENING_SECTION_ANCHORS.practice}`
+        : `/panel/listening/${sectionId}`,
       listeningId: sectionId,
     };
   }
 
-  const writingMatch = path.match(/^\/panel\/yazma\/([^/]+)$/);
+  const writingMatch = path.match(/^\/panel\/writing\/([^/]+)$/);
   if (writingMatch) {
     const sectionId = writingMatch[1];
     if (!getWritingSectionById(sectionId)) {
@@ -186,13 +199,13 @@ export function parseContinueActivityFromPath(
     return {
       kind: isPractice ? "writing_exercises" : "writing_model",
       href: isPractice
-        ? `/panel/yazma/${sectionId}#${WRITING_SECTION_ANCHORS.practice}`
-        : `/panel/yazma/${sectionId}`,
+        ? `/panel/writing/${sectionId}#${WRITING_SECTION_ANCHORS.practice}`
+        : `/panel/writing/${sectionId}`,
       writingId: sectionId,
     };
   }
 
-  const speakingMatch = path.match(/^\/panel\/konusma\/([^/]+)$/);
+  const speakingMatch = path.match(/^\/panel\/speaking\/([^/]+)$/);
   if (speakingMatch) {
     const sectionId = speakingMatch[1];
     if (!getSpeakingSectionById(sectionId)) {
@@ -208,8 +221,8 @@ export function parseContinueActivityFromPath(
     return {
       kind: isPractice ? "speaking_exercises" : "speaking_model",
       href: isPractice
-        ? `/panel/konusma/${sectionId}?tab=practice`
-        : `/panel/konusma/${sectionId}`,
+        ? `/panel/speaking/${sectionId}?tab=practice`
+        : `/panel/speaking/${sectionId}`,
       speakingId: sectionId,
     };
   }
