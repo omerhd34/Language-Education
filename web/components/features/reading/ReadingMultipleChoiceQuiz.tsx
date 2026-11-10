@@ -20,22 +20,27 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import type { ReadingMultipleChoiceQuestion } from "@/data/readings/types";
 import { scrollToReadingSection } from "@/lib/readingSectionTab";
 import { cn } from "@/lib/utils";
 
 const PRACTICE_PASS_PERCENT = 50;
-const OPTION_LETTERS = ["a", "b", "c", "d", "e", "f", "g", "h"] as const;
+const OPTION_LETTERS = ["A", "B", "C", "D", "E", "F", "G", "H"] as const;
 
 type QuestionSlot = {
   selected: number;
   revealed: boolean;
 };
 
+type SkillQuizNamespace = "Reading" | "Listening";
+
 type ReadingMultipleChoiceQuizProps = {
   questions: ReadingMultipleChoiceQuestion[];
   listened?: boolean;
   onComplete?: (passed: boolean, percent: number) => void;
+  messageNamespace?: SkillQuizNamespace;
+  scrollToAudio?: () => void;
 };
 
 function optionLetter(index: number): string {
@@ -63,8 +68,11 @@ export function ReadingMultipleChoiceQuiz({
   questions,
   listened = false,
   onComplete,
+  messageNamespace = "Reading",
+  scrollToAudio,
 }: ReadingMultipleChoiceQuizProps) {
-  const t = useTranslations("Reading");
+  const t = useTranslations(messageNamespace);
+  const goToAudio = scrollToAudio ?? (() => scrollToReadingSection("text"));
   const completionSentRef = useRef(false);
   const [summaryOpen, setSummaryOpen] = useState(false);
   const [slots, setSlots] = useState<Array<QuestionSlot | null>>(() =>
@@ -133,6 +141,7 @@ export function ReadingMultipleChoiceQuiz({
                 number={questionIndex + 1}
                 selected={slot?.selected ?? null}
                 revealed={slot?.revealed === true}
+                messageNamespace={messageNamespace}
                 onSelect={(optionIndex) =>
                   handleSelect(questionIndex, optionIndex)
                 }
@@ -202,7 +211,7 @@ export function ReadingMultipleChoiceQuiz({
                 className="w-full sm:w-auto"
                 onClick={() => {
                   setSummaryOpen(false);
-                  scrollToReadingSection("text");
+                  goToAudio();
                 }}
               >
                 <Volume2 aria-hidden />
@@ -237,28 +246,30 @@ function ReadingChoiceQuestion({
   number,
   selected,
   revealed,
+  messageNamespace = "Reading",
   onSelect,
 }: {
   question: ReadingMultipleChoiceQuestion;
   number: number;
   selected: number | null;
   revealed: boolean;
+  messageNamespace?: SkillQuizNamespace;
   onSelect: (optionIndex: number) => void;
 }) {
-  const t = useTranslations("Reading");
+  const t = useTranslations(messageNamespace);
   const headingId = `${question.id}-prompt`;
 
   return (
     <div className="space-y-3">
-      <h3
-        id={headingId}
-        className="flex items-start gap-3 text-base font-semibold text-brand-950 dark:text-brand-100"
-      >
-        <span className="mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-(--glass-2) text-sm font-semibold text-brand-800 dark:text-brand-200">
-          {number}
-        </span>
-        <span className="pt-0.5">{question.prompt}</span>
-      </h3>
+      <ExerciseQuestionHeader
+        number={number}
+        title={question.prompt}
+        hint={question.hint}
+        fallbackKey={
+          messageNamespace === "Reading" ? "readingMultipleChoice" : undefined
+        }
+        headingId={headingId}
+      />
 
       <div
         className="grid gap-2 sm:grid-cols-2"

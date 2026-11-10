@@ -8,6 +8,8 @@ import { useVocabularyStore } from "@/store/vocabularyStore";
 import type { VocabularyQuizWord } from "@/types/api";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { vocabularyQuizHintKey } from "@/components/features/exercises/exerciseHintFallbacks";
+import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { useCountdown } from "@/hooks/useCountdown";
 import { formatDurationHms } from "@/lib/formatDuration";
@@ -240,19 +242,23 @@ export function VocabularyQuizView() {
       </div>
 
       <article className="dashboard-panel space-y-5">
-        <h2 className="section-title">{question.prompt}</h2>
-
-        {question.type === "listening" && question.speakText ? (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => speakText(question.speakText!)}
-          >
-            <Volume2 className="size-4" aria-hidden />
-            {t("quizPlayAudio")}
-          </Button>
-        ) : null}
+        <ExerciseQuestionHeader
+          title={question.prompt}
+          fallbackKey={vocabularyQuizHintKey(question.type)}
+          actions={
+            question.type === "listening" && question.speakText ? (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => speakText(question.speakText!)}
+              >
+                <Volume2 className="size-4" aria-hidden />
+                {t("quizPlayAudio")}
+              </Button>
+            ) : null
+          }
+        />
 
         {question.inputMode === "text" ? (
           <input

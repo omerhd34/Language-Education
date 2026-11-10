@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useRef } from "react";
+import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
@@ -105,11 +106,7 @@ export function MultipleChoiceExercises({
   }, [exercises, index, onSessionChange, slots]);
 
   if (exercises.length === 0 || !current) {
-    return (
-      <p className="page-subtitle mt-0">
-        {t("noExercisesForType")}
-      </p>
-    );
+    return <p className="page-subtitle mt-0">{t("noExercisesForType")}</p>;
   }
 
   const exercise = exercises[index];
@@ -131,9 +128,7 @@ export function MultipleChoiceExercises({
     const correctCount = countCorrect(exercises, slots);
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">
-          {t("finishedTitle")}
-        </h2>
+        <h2 className="page-title">{t("finishedTitle")}</h2>
         <p className="page-subtitle mt-0">
           {t("finishedScore", {
             correct: correctCount,
@@ -181,9 +176,11 @@ export function MultipleChoiceExercises({
       </div>
 
       <article className="dashboard-panel space-y-5">
-        <h2 className="section-title">
-          {exercise.prompt}
-        </h2>
+        <ExerciseQuestionHeader
+          title={exercise.prompt}
+          hint={exercise.hint}
+          fallbackKey="topicMultipleChoice"
+        />
 
         <ul
           className={cn(

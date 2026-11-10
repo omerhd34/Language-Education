@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Volume2 } from "lucide-react";
+import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
@@ -191,11 +192,7 @@ export function ListeningExercises({
   }, [exercise, finished, index]);
 
   if (exercises.length === 0 || !current || !exercise) {
-    return (
-      <p className="page-subtitle mt-0">
-        {t("noExercisesForType")}
-      </p>
-    );
+    return <p className="page-subtitle mt-0">{t("noExercisesForType")}</p>;
   }
 
   const isCorrect = current.checked && isListeningCorrect(exercise, current);
@@ -220,9 +217,7 @@ export function ListeningExercises({
     const correctCount = countCorrect(exercises, slots);
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">
-          {t("finishedTitle")}
-        </h2>
+        <h2 className="page-title">{t("finishedTitle")}</h2>
         <p className="page-subtitle mt-0">
           {t("finishedScore", {
             correct: correctCount,
@@ -263,11 +258,11 @@ export function ListeningExercises({
       </div>
 
       <article className="dashboard-panel space-y-5">
-        <div className="space-y-3">
-          <h2 className="section-title">
-            {exercise.prompt}
-          </h2>
-          <div className="flex flex-wrap items-center gap-3">
+        <ExerciseQuestionHeader
+          title={exercise.prompt}
+          hint={exercise.hint}
+          fallbackKey="topicListening"
+          actions={
             <Button
               type="button"
               variant="outline"
@@ -277,8 +272,8 @@ export function ListeningExercises({
               <Volume2 className="size-4" aria-hidden />
               {t("playAudio")}
             </Button>
-          </div>
-        </div>
+          }
+        />
 
         <div className="grid gap-5 sm:grid-cols-2">
           <OptionGroup

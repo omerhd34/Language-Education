@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Check, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import type {
@@ -409,6 +410,10 @@ export function CrosswordExerciseView({
         <ExercisePercentBadge percent={percent} />
       </div>
       <article className="dashboard-panel space-y-5">
+        <ExerciseQuestionHeader
+          title={t("typeCrossword")}
+          fallbackKey="topicCrossword"
+        />
         <div className="overflow-x-auto">
           <div
             className="mx-auto grid w-fit gap-0.5 sm:gap-1"

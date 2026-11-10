@@ -2,6 +2,9 @@
 
 import { useMemo, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
+import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
+import { readingExerciseHintKey } from "@/components/features/exercises/exerciseHintFallbacks";
+import { TrueFalseChoiceButtons } from "@/components/features/exercises/TrueFalseChoiceButtons";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
@@ -168,23 +171,6 @@ export function ReadingExercisePanel({
     });
   }
 
-  function sectionHint(kind: FlatReadingExercise["kind"]): string | null {
-    switch (kind) {
-      case "reference":
-        return tReading("sectionReference");
-      case "shortAnswer":
-        return tReading("sectionShortAnswer");
-      case "trueFalse":
-        return tReading("sectionTrueFalse");
-      case "fillBlank":
-        return tReading("sectionFillBlank");
-      default:
-        return null;
-    }
-  }
-
-  const hint = sectionHint(item.kind);
-
   return (
     <div className="mx-auto max-w-2xl space-y-4">
       <div className="flex items-center justify-between gap-3">
@@ -195,12 +181,6 @@ export function ReadingExercisePanel({
       </div>
 
       <article className="dashboard-panel space-y-5">
-        {hint ? (
-          <p className="text-xs font-semibold tracking-wide text-brand-500 uppercase dark:text-brand-400">
-            {hint}
-          </p>
-        ) : null}
-
         <ExerciseQuestionBody
           item={item}
           slot={current}
@@ -267,14 +247,22 @@ function ExerciseQuestionBody({
     case "reference":
       return (
         <div className="space-y-4">
-          <h2 className="section-title">
-            {item.question.prompt}{" "}
-            <span className="text-base font-normal text-brand-500">
-              (
-              {tReading("paragraphRef", { number: item.question.paragraphRef })}
-              )
-            </span>
-          </h2>
+          <ExerciseQuestionHeader
+            title={
+              <>
+                {item.question.prompt}{" "}
+                <span className="text-base font-normal text-brand-500">
+                  (
+                  {tReading("paragraphRef", {
+                    number: item.question.paragraphRef,
+                  })}
+                  )
+                </span>
+              </>
+            }
+            hint={item.question.hint}
+            fallbackKey={readingExerciseHintKey("reference")}
+          />
           <label className="flex w-full flex-col gap-1.5 text-sm">
             <input
               type="text"
@@ -292,7 +280,11 @@ function ExerciseQuestionBody({
     case "shortAnswer":
       return (
         <div className="space-y-4">
-          <h2 className="section-title">{item.question.prompt}</h2>
+          <ExerciseQuestionHeader
+            title={item.question.prompt}
+            hint={item.question.hint}
+            fallbackKey={readingExerciseHintKey("shortAnswer")}
+          />
           <label className="flex w-full flex-col gap-1.5 text-sm">
             <textarea
               rows={3}
@@ -312,54 +304,31 @@ function ExerciseQuestionBody({
     case "trueFalse":
       return (
         <div className="space-y-4">
-          <h2 className="section-title">{item.question.statement}</h2>
-          <div className="flex gap-2" role="group">
-            {([true, false] as const).map((value) => {
-              const label = value
-                ? tReading("trueLabel")
-                : tReading("falseLabel");
-              const isSelected = slot.trueFalse === value;
-              const showCorrect = checked && value === item.question.answer;
-              const showWrong =
-                checked && isSelected && value !== item.question.answer;
-
-              return (
-                <button
-                  key={label}
-                  type="button"
-                  disabled={checked}
-                  aria-pressed={isSelected}
-                  onClick={() => onTrueFalseChange(value)}
-                  className={cn(
-                    "min-w-14 cursor-pointer rounded-xl border px-4 py-3 text-sm font-medium transition-colors",
-                    "disabled:cursor-default",
-                    showCorrect &&
-                      "border-emerald-500/60 bg-emerald-500/10 text-emerald-800 dark:text-emerald-200",
-                    showWrong &&
-                      "border-red-500/60 bg-red-500/10 text-red-800 dark:text-red-200",
-                    !showCorrect &&
-                      !showWrong &&
-                      isSelected &&
-                      "border-sky-500 bg-sky-500/10 text-brand-950 dark:text-brand-100",
-                    !showCorrect &&
-                      !showWrong &&
-                      !isSelected &&
-                      "border-border bg-background/50 text-brand-800 hover:border-brand-400 dark:bg-brand-950/40 dark:text-brand-200",
-                  )}
-                >
-                  {label}
-                </button>
-              );
-            })}
-          </div>
+          <ExerciseQuestionHeader
+            title={item.question.statement}
+            hint={item.question.hint}
+            fallbackKey={readingExerciseHintKey("trueFalse")}
+          />
+          <TrueFalseChoiceButtons
+            trueLabel={tReading("trueLabel")}
+            falseLabel={tReading("falseLabel")}
+            trueCaption={tReading("trueCaption")}
+            falseCaption={tReading("falseCaption")}
+            selected={slot.trueFalse}
+            correctAnswer={item.question.answer}
+            revealed={checked}
+            onSelect={onTrueFalseChange}
+          />
         </div>
       );
     case "fillBlank":
       return (
         <div className="space-y-4">
-          <h2 className="section-title sr-only">
-            {tReading("sectionFillBlank")}
-          </h2>
+          <ExerciseQuestionHeader
+            title={tReading("sectionFillBlank")}
+            hint={item.question.hint}
+            fallbackKey={readingExerciseHintKey("fillBlank")}
+          />
           <p className="flex flex-wrap items-center gap-1 text-base leading-7 text-brand-800 dark:text-brand-200">
             <span>{item.question.before}</span>
             <input
