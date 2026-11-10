@@ -4,6 +4,7 @@ import { getListeningSectionById } from "@/data/listenings";
 import { getReadingSectionById } from "@/data/readings";
 import { getWritingSectionById } from "@/data/writings";
 import { getVocabularyCategoryById } from "@/data/vocabulary";
+import { getSpeakingSectionById } from "@/lib/speakingContent";
 import type {
   ContinueActivity,
   ContinueActivityKind,
@@ -11,6 +12,7 @@ import type {
 } from "@/lib/continueActivityStorage";
 import { LISTENING_SECTION_ANCHORS } from "@/lib/listeningSectionTab";
 import { READING_SECTION_ANCHORS } from "@/lib/readingSectionTab";
+import { SPEAKING_SECTION_ANCHORS } from "@/lib/speakingSectionTab";
 import { WRITING_SECTION_ANCHORS } from "@/lib/writingSectionTab";
 
 const VOCABULARY_STATIC_SEGMENTS = new Set([
@@ -190,6 +192,28 @@ export function parseContinueActivityFromPath(
     };
   }
 
+  const speakingMatch = path.match(/^\/panel\/konusma\/([^/]+)$/);
+  if (speakingMatch) {
+    const sectionId = speakingMatch[1];
+    if (!getSpeakingSectionById(sectionId)) {
+      return null;
+    }
+    const params = new URLSearchParams(
+      search.startsWith("?") ? search.slice(1) : search,
+    );
+    const hashId = hash.replace(/^#/, "");
+    const isPractice =
+      params.get("tab") === "practice" ||
+      hashId === SPEAKING_SECTION_ANCHORS.practice;
+    return {
+      kind: isPractice ? "speaking_exercises" : "speaking_model",
+      href: isPractice
+        ? `/panel/konusma/${sectionId}?tab=practice`
+        : `/panel/konusma/${sectionId}`,
+      speakingId: sectionId,
+    };
+  }
+
   if (path === "/panel" || path === "/") {
     const skill = PANEL_HUB_BY_HASH[hashIdFrom(hash)];
     if (skill) {
@@ -224,6 +248,8 @@ type ContinueActivityLabels = {
   listeningExercises: string;
   writingModel: string;
   writingExercises: string;
+  speakingModel: string;
+  speakingExercises: string;
   sectionKind: string;
   skillReading: string;
   skillListening: string;
@@ -344,6 +370,19 @@ export function resolveContinueActivityDisplay(
           activity.kind === "writing_exercises"
             ? labels.writingExercises
             : labels.writingModel,
+      };
+    }
+    case "speaking_model":
+    case "speaking_exercises": {
+      const section = activity.speakingId
+        ? getSpeakingSectionById(activity.speakingId)
+        : null;
+      return {
+        title: section?.title ?? labels.fallbackTitle,
+        kindLabel:
+          activity.kind === "speaking_exercises"
+            ? labels.speakingExercises
+            : labels.speakingModel,
       };
     }
     case "skill_hub":

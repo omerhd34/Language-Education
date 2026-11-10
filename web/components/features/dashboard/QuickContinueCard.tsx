@@ -33,6 +33,7 @@ function kindIcon(activity: ContinueActivity) {
     case "reading_exercises":
     case "listening_exercises":
     case "writing_exercises":
+    case "speaking_exercises":
       return PencilLine;
     case "vocabulary_category":
       return Layers3;
@@ -42,6 +43,8 @@ function kindIcon(activity: ContinueActivity) {
       return Headphones;
     case "writing_model":
       return PenLine;
+    case "speaking_model":
+      return Mic;
     case "skill_hub":
       switch (activity.skill) {
         case "listening":
@@ -133,6 +136,8 @@ export function QuickContinueCard() {
     listeningExercises: t("quickContinueKindListeningExercises"),
     writingModel: t("quickContinueKindWritingModel"),
     writingExercises: t("quickContinueKindWritingExercises"),
+    speakingModel: t("quickContinueKindSpeakingModel"),
+    speakingExercises: t("quickContinueKindSpeakingExercises"),
     sectionKind: t("quickContinueKindSection"),
     skillReading: tNav("reading"),
     skillListening: tNav("listening"),
