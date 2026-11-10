@@ -2,6 +2,7 @@ import type {
   SpeakingPromptItem,
   SpeakingSection,
 } from "@/data/speakings/types";
+import { A1_ANAGRAM_QUESTIONS } from "@/data/speakings/a1/anagrams";
 
 const A1_SPEAKING_PROMPTS: SpeakingPromptItem[] = [
   {
@@ -35,71 +36,161 @@ const A1_SPEAKING_PROMPTS: SpeakingPromptItem[] = [
     prompt: "the best way(s) to learn a language",
     promptTr: "Bir dil öğrenmenin en iyi yolu/yolları.",
   },
+  {
+    id: "p7",
+    prompt: "a person you admire",
+    promptTr: "Hayran olduğun bir kişi.",
+  },
+  {
+    id: "p8",
+    prompt: "somebody you would like to meet",
+    promptTr: "Tanışmak istediğin biri.",
+  },
+  {
+    id: "p9",
+    prompt: "the best holiday you've ever had",
+    promptTr: "Şimdiye kadarki en iyi tatilin.",
+  },
+  {
+    id: "p10",
+    prompt: "things that are important to do if you go for a job interview",
+    promptTr: "İş görüşmesinde önemli olan şeyler.",
+  },
+  {
+    id: "p11",
+    prompt: "your favourite food or drink",
+    promptTr: "En sevdiğin yemek veya içecek.",
+  },
+  {
+    id: "p12",
+    prompt: "what do you want to do this weekend?",
+    promptTr: "Bu hafta sonu ne yapmak istiyorsun?",
+  },
 ];
 
 const A1_BOX_PROMPTS: SpeakingPromptItem[] = [
   {
     id: "b1",
-    prompt: "somebody you would like to meet",
-    promptTr: "Tanışmak istediğin biri.",
+    prompt: "buying things in a shop or buying things online?",
+    promptTr: "Mağazadan mı, internetten mi alışveriş?",
   },
   {
     id: "b2",
-    prompt: "a person you admire",
-    promptTr: "Hayran olduğun bir kişi.",
+    prompt: "something important to teach children",
+    promptTr: "Çocuklara öğretilmesi önemli bir şey.",
   },
   {
     id: "b3",
-    prompt: "the best holiday you've ever had",
-    promptTr: "Şimdiye kadarki en iyi tatilin.",
+    prompt: "a time you found something in the street",
+    promptTr: "Sokakta bir şey bulduğun bir an.",
   },
   {
     id: "b4",
-    prompt: "things that are important to do if you go for a job interview",
-    promptTr: "İş görüşmesine giderken önemli olan şeyler.",
+    prompt: "a sport you enjoy watching or playing",
+    promptTr: "İzlemeyi veya oynamayı sevdiğin bir spor.",
   },
   {
     id: "b5",
+    prompt: "how you usually spend your evenings",
+    promptTr: "Akşamlarını genelde nasıl geçirirsin?",
+  },
+  {
+    id: "b6",
     prompt: "a time when you ate something really horrible",
     promptTr: "Gerçekten kötü bir şey yediğin bir an.",
   },
   {
-    id: "b6",
-    prompt: "what do you want to do this weekend?",
-    promptTr: "Bu hafta sonu ne yapmak istiyorsun?",
+    id: "b7",
+    prompt: "your favourite food and why you like it",
+    promptTr: "En sevdiğin yemek ve neden sevdiğin.",
+  },
+  {
+    id: "b8",
+    prompt: "your family or the people you live with",
+    promptTr: "Ailen veya birlikte yaşadığın kişiler.",
+  },
+  {
+    id: "b9",
+    prompt: "a song, film or book you really like",
+    promptTr: "Gerçekten sevdiğin bir şarkı, film veya kitap.",
+  },
+  {
+    id: "b10",
+    prompt: "your morning routine on a typical day",
+    promptTr: "Tipik bir günde sabah rutinin.",
+  },
+  {
+    id: "b11",
+    prompt: "public transport or driving — which do you prefer?",
+    promptTr: "Toplu taşıma mı, araba mı tercih edersin?",
+  },
+  {
+    id: "b12",
+    prompt: "a skill you would like to learn in the future",
+    promptTr: "Gelecekte öğrenmek istediğin bir beceri.",
   },
 ];
 
 const A1_CARD_PROMPTS: SpeakingPromptItem[] = [
   {
     id: "c1",
-    prompt: "buying things in a shop or buying things online?",
-    promptTr: "Mağazadan mı, internetten mi alışveriş?",
+    prompt: "a place you would like to visit",
+    promptTr: "Gitmek istediğin bir yer.",
   },
   {
     id: "c2",
-    prompt: "something important to teach children",
-    promptTr: "Çocuklara öğretilmesi önemli bir şey.",
+    prompt: "your best friend and what you do together",
+    promptTr: "En iyi arkadaşın ve birlikte neler yaptığınız.",
   },
   {
     id: "c3",
-    prompt: "a time you found something in the street",
-    promptTr: "Sokakta bir şey bulduğun bir an.",
+    prompt: "weather you like and why",
+    promptTr: "Sevdiğin hava durumu ve nedeni.",
   },
   {
     id: "c4",
-    prompt: "your favourite food and why you like it",
-    promptTr: "En sevdiğin yemek ve neden sevdiğin.",
+    prompt: "using phones too much — good or bad?",
+    promptTr: "Telefonu çok kullanmak — iyi mi, kötü mü?",
   },
   {
     id: "c5",
-    prompt: "a sport you enjoy watching or playing",
-    promptTr: "İzlemeyi veya oynamayı sevdiğin bir spor.",
+    prompt: "living in a big city or a small town?",
+    promptTr: "Büyük şehirde mi, küçük kasabada mı yaşamak?",
   },
   {
     id: "c6",
-    prompt: "how you usually spend your evenings",
-    promptTr: "Akşamlarını genelde nasıl geçirirsin?",
+    prompt: "a tradition in your country",
+    promptTr: "Ülkende bir gelenek.",
+  },
+  {
+    id: "c7",
+    prompt: "pets — do you have one or want one?",
+    promptTr: "Evcil hayvan — var mı, istiyor musun?",
+  },
+  {
+    id: "c8",
+    prompt: "your last birthday or a celebration",
+    promptTr: "Son doğum günün veya bir kutlama.",
+  },
+  {
+    id: "c9",
+    prompt: "studying alone or in a group?",
+    promptTr: "Yalnız mı, grupla mı çalışmak?",
+  },
+  {
+    id: "c10",
+    prompt: "music you listen to when you work or study",
+    promptTr: "Çalışırken veya ders çalışırken dinlediğin müzik.",
+  },
+  {
+    id: "c11",
+    prompt: "a famous person from your country",
+    promptTr: "Ülkenden ünlü bir kişi.",
+  },
+  {
+    id: "c12",
+    prompt: "something you bought recently and why",
+    promptTr: "Yakın zamanda aldığın bir şey ve nedeni.",
   },
 ];
 
@@ -167,14 +258,15 @@ export const a1SpeakingSections: SpeakingSection[] = [
         id: "wheel-1",
         instruction:
           "Spin the wheel and speak about the topic for two minutes.",
-        instructionTr: "Çarkı çevir ve çıkan konu hakkında iki dakika konuş.",
+        instructionTr: "Çarkı çevir ve çıkan konu hakkında 2 dakika konuş.",
         items: A1_SPEAKING_PROMPTS,
         hint: "Her konu için önce kısa not al, sonra yüksek sesle konuş.",
       },
       openBox: {
         id: "box-1",
-        instruction: "Open a box, read the question and answer it aloud.",
-        instructionTr: "Bir kutuya dokun, soruyu oku ve yüksek sesle yanıtla.",
+        instruction: "Open a box and speak about the topic for two minutes.",
+        instructionTr:
+          "Bir kutuya dokun; çıkan konuda mikrofonla 2 dakika konuş.",
         items: A1_BOX_PROMPTS,
         hint: "Kutuları sırayla veya rastgele açabilirsin.",
       },
@@ -182,56 +274,11 @@ export const a1SpeakingSections: SpeakingSection[] = [
         id: "cards-1",
         instruction:
           "Shuffle the deck, deal a card and speak about the prompt.",
-        instructionTr: "Desteyi karıştır, kart çek ve konu hakkında konuş.",
+        instructionTr: "Desteye dokun; çıkan konuda mikrofonla 2 dakika konuş.",
         items: A1_CARD_PROMPTS,
         hint: "Tüm kartlar bitene kadar devam et.",
       },
-      anagram: [
-        {
-          id: "anagram-1",
-          hint: "Kelime sırasını çöz; oluşan cümle konuşma konusun olsun.",
-          speakWhenDone: "What do you want to do this weekend?",
-          words: [
-            { answer: "what", letters: ["t", "a", "h", "w"] },
-            { answer: "do", letters: ["o", "d"] },
-            { answer: "you", letters: ["u", "o", "y"] },
-            { answer: "want", letters: ["n", "t", "a", "w"] },
-            { answer: "to", letters: ["t", "o"] },
-            { answer: "do", letters: ["d", "o"] },
-            { answer: "this", letters: ["s", "h", "t", "i"] },
-            { answer: "weekend", letters: ["k", "e", "e", "n", "w", "e", "d"] },
-          ],
-        },
-        {
-          id: "anagram-2",
-          hint: "Öğrenmek için kullanabileceğin yöntemleri anlat.",
-          speakWhenDone: "the best ways to learn a language",
-          words: [
-            { answer: "the", letters: ["h", "t", "e"] },
-            { answer: "best", letters: ["s", "b", "t", "e"] },
-            { answer: "ways", letters: ["w", "a", "s", "y"] },
-            { answer: "to", letters: ["o", "t"] },
-            { answer: "learn", letters: ["l", "r", "n", "a", "e"] },
-            { answer: "a", letters: ["a"] },
-            {
-              answer: "language",
-              letters: ["g", "n", "a", "g", "u", "a", "e", "l"],
-            },
-          ],
-        },
-        {
-          id: "anagram-3",
-          hint: "Rahatlamak için neler yaptığını anlat.",
-          speakWhenDone: "things you do to relax",
-          words: [
-            { answer: "things", letters: ["s", "t", "h", "n", "i", "g"] },
-            { answer: "you", letters: ["y", "o", "u"] },
-            { answer: "do", letters: ["d", "o"] },
-            { answer: "to", letters: ["t", "o"] },
-            { answer: "relax", letters: ["x", "e", "r", "a", "l"] },
-          ],
-        },
-      ],
+      anagram: A1_ANAGRAM_QUESTIONS,
     },
   },
 ];

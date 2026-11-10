@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/immutability */
 "use client";
 
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
@@ -33,7 +32,9 @@ import { Separator } from "@/components/ui/separator";
 import type { SpeakingExerciseBlock } from "@/data/speakings/types";
 import { cn } from "@/lib/utils";
 
-const PRACTICE_PASS_PERCENT = 85;
+import { SECTION_PRACTICE_PASS_PERCENT } from "@/lib/sectionPracticePassPercent";
+
+const PRACTICE_PASS_PERCENT = SECTION_PRACTICE_PASS_PERCENT;
 
 type SpeakingPracticeQuizProps = {
   block: SpeakingExerciseBlock;
@@ -157,6 +158,18 @@ export function SpeakingPracticeQuiz({
     [anagram.length, block],
   );
 
+  const unlockedAnagramCount = useMemo(() => {
+    let count = 1;
+    for (let i = 0; i < anagramScores.length; i += 1) {
+      if (anagramScores[i] === true) {
+        count = i + 2;
+      } else {
+        break;
+      }
+    }
+    return Math.min(count, anagram.length);
+  }, [anagram.length, anagramScores]);
+
   const progressPercents = useMemo(() => {
     const ratio = (done: number, total: number) =>
       total === 0 ? 0 : Math.round((done / total) * 100);
@@ -198,8 +211,6 @@ export function SpeakingPracticeQuiz({
     return <p className="page-subtitle mt-0">{t("noExercises")}</p>;
   }
 
-  let questionNumber = 0;
-
   type PracticePartConfig = {
     key: string;
     header: ReactNode;
@@ -225,6 +236,7 @@ export function SpeakingPracticeQuiz({
             </>
           }
           compactTitle
+          showHint={false}
           hint={block.wheel.hint}
           fallbackKey="speakingWheel"
         />
@@ -295,33 +307,30 @@ export function SpeakingPracticeQuiz({
       header: (
         <SpeakingPracticePartHeading
           title={t("task4Title")}
-          subtitle={t("anagramInstruction")}
+          subtitle={t("anagramInstruction", { total: anagram.length })}
         />
       ),
       body: (
         <div className="space-y-0">
-          {anagram.map((question, index) => {
-            questionNumber += 1;
-            return (
-              <div key={question.id}>
-                {index > 0 ? <Separator className="my-6" /> : null}
-                <SpeakingAnagramBlock
-                  question={question}
-                  number={questionNumber}
-                  onGraded={(isCorrect) => {
-                    setAnagramScores((prev) =>
-                      prev.map((score, i) => (i === index ? isCorrect : score)),
-                    );
-                  }}
-                  onReset={() => {
-                    setAnagramScores((prev) =>
-                      prev.map((score, i) => (i === index ? null : score)),
-                    );
-                  }}
-                />
-              </div>
-            );
-          })}
+          {anagram.slice(0, unlockedAnagramCount).map((question, index) => (
+            <div key={question.id}>
+              {index > 0 ? <Separator className="my-6" /> : null}
+              <SpeakingAnagramBlock
+                question={question}
+                number={index + 1}
+                onGraded={(isCorrect) => {
+                  setAnagramScores((prev) =>
+                    prev.map((score, i) => (i === index ? isCorrect : score)),
+                  );
+                }}
+                onReset={() => {
+                  setAnagramScores((prev) =>
+                    prev.map((score, i) => (i >= index ? null : score)),
+                  );
+                }}
+              />
+            </div>
+          ))}
         </div>
       ),
     });

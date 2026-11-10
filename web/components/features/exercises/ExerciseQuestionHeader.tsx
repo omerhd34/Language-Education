@@ -83,7 +83,7 @@ export function ExerciseQuestionHeader({
           </div>
         ) : null}
         {actions || showHint ? (
-          <div className="flex shrink-0 flex-wrap items-center justify-end gap-2">
+          <div className="flex shrink-0 flex-wrap items-start justify-end gap-2">
             {actions}
             {showHint ? (
               <Button

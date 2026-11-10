@@ -49,6 +49,7 @@ export type SpeakingRandomCardsExercise = {
 export type SpeakingAnagramWord = {
   letters: string[];
   answer: string;
+  meaningTr?: string;
 };
 
 export type SpeakingAnagramQuestion = {
@@ -56,6 +57,7 @@ export type SpeakingAnagramQuestion = {
   words: SpeakingAnagramWord[];
   hint: string;
   speakWhenDone?: string;
+  speakWhenDoneTr?: string;
 };
 
 export type SpeakingExerciseBlock = {

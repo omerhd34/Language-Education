@@ -1,0 +1,1 @@
+export const SPEAKING_WHEEL_REQUIRED_MS = 2 * 60 * 1000;
