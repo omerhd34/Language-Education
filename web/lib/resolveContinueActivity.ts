@@ -22,6 +22,7 @@ const VOCABULARY_STATIC_SEGMENTS = new Set([
   "exam",
   "today-worked",
   "known-words",
+  "verbs",
 ]);
 
 const PANEL_HUB_BY_HASH: Record<string, ContinueActivitySkill> = {

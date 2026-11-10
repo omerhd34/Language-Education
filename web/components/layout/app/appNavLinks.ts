@@ -6,6 +6,7 @@ import {
   ChartColumnIncreasing,
   CircleCheck,
   ClipboardList,
+  ListOrdered,
   Headphones,
   Home,
   Library,
@@ -22,6 +23,7 @@ export type AppNavLabelKey =
   | "vocabularyWords"
   | "vocabularyStudiedToday"
   | "vocabularyKnown"
+  | "vocabularyVerbs"
   | "listening"
   | "writing"
   | "speaking"
@@ -50,6 +52,11 @@ export const vocabularySubNav = [
     href: "/panel/vocabulary/known-words",
     labelKey: "vocabularyKnown",
     Icon: CircleCheck,
+  },
+  {
+    href: "/panel/vocabulary/verbs",
+    labelKey: "vocabularyVerbs",
+    Icon: ListOrdered,
   },
 ] as const satisfies readonly {
   href: string;
