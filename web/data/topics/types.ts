@@ -72,6 +72,14 @@ export type FillBlankExercise = {
   hint?: string;
 };
 
+export type VerbListeningRow = {
+  verbId: string;
+  v1: string;
+  regular: boolean;
+  v2CorrectPoolIndex: number;
+  v3CorrectPoolIndex: number;
+};
+
 export type ListeningExercise = {
   id: string;
   subtopicId: string;
@@ -82,6 +90,12 @@ export type ListeningExercise = {
   englishCorrectIndex: number;
   turkishOptions: string[];
   turkishCorrectIndex: number;
+  verbTripleForm?: boolean;
+  verbListeningRows?: VerbListeningRow[];
+  verbListeningV2Pool?: string[];
+  verbListeningV3Pool?: string[];
+  v2Options?: string[];
+  v2CorrectIndex?: number;
   explanation?: string;
   hint?: string;
 };
