@@ -46,6 +46,21 @@
     "exercises": "Exercises",
     "progress": "Progress",
     "settings": "Settings",
+    "homeTooltip": "Ana sayfa",
+    "overviewTooltip": "Genel",
+    "topicsTooltip": "Dil bilgisi",
+    "vocabularyTooltip": "Kelime bilgisi",
+    "vocabularyWordsTooltip": "Kelimeler",
+    "vocabularyStudiedTodayTooltip": "Bugün çalışılan kelimeler",
+    "vocabularyKnownTooltip": "Bilinen kelimeler",
+    "vocabularyVerbsTooltip": "Düzenli ve düzensiz fiiller",
+    "listeningTooltip": "Dinleme",
+    "writingTooltip": "Yazma",
+    "speakingTooltip": "Konuşma",
+    "readingTooltip": "Okuma",
+    "exercisesTooltip": "Alıştırmalar",
+    "progressTooltip": "İlerleme",
+    "settingsTooltip": "Ayarlar",
     "collapseSidebar": "Kenar çubuğunu daralt",
     "expandSidebar": "Kenar çubuğunu genişlet"
   },
@@ -193,27 +208,44 @@
     "passwordChangeSuccess": "Şifre güncellendi.",
     "passwordChangeError": "Şifre güncellenemedi. Lütfen tekrar dene.",
     "progressResetTitle": "Öğrenimi sıfırla",
-    "progressResetSubtitle": "Kelime, konu veya tüm ilerlemeyi ayrı ayrı temizleyebilirsin.",
+    "progressResetSubtitle": "Çalışma alanına göre ilerlemeyi sıfırla.",
     "progressResetConfirmTitle": "Emin misin?",
     "progressResetConfirm": "Evet, sıfırla",
     "progressResetCancel": "Vazgeç",
     "progressResetError": "Sıfırlama başarısız. Lütfen tekrar dene.",
     "progressResetScope": {
-      "vocabulary": {
-        "title": "Kelime öğrenimini sıfırla",
-        "description": "Bilinen ve öğrenilen kelimeler, kota ve sınav ilerlemesi silinir.",
-        "confirm": "Tüm kelime ilerlemelerin silinecek.",
-        "success": "Kelime öğrenimi sıfırlandı."
+      "grammar": {
+        "title": "Grammer",
+        "confirm": "Grammer öğrenim kayıtların silinecek.",
+        "success": "Grammer öğrenimi sıfırlandı."
       },
-      "topics": {
-        "title": "Konu öğrenimini sıfırla",
-        "description": "Konu tamamlanma kayıtları, seviye sınavları ve seri sıfırlanır.",
-        "confirm": "Konu öğrenim kayıtların silinecek.",
-        "success": "Konu öğrenimi sıfırlandı."
+      "vocabulary": {
+        "title": "Vocabulary",
+        "confirm": "Tüm kelime ilerlemelerin silinecek.",
+        "success": "Vocabulary öğrenimi sıfırlandı."
+      },
+      "reading": {
+        "title": "Reading",
+        "confirm": "Reading ilerlemen silinecek.",
+        "success": "Reading öğrenimi sıfırlandı."
+      },
+      "listening": {
+        "title": "Listening",
+        "confirm": "Listening ilerlemen silinecek.",
+        "success": "Listening öğrenimi sıfırlandı."
+      },
+      "writing": {
+        "title": "Writing",
+        "confirm": "Writing ilerlemen silinecek.",
+        "success": "Writing öğrenimi sıfırlandı."
+      },
+      "speaking": {
+        "title": "Speaking",
+        "confirm": "Speaking ilerlemen silinecek.",
+        "success": "Speaking öğrenimi sıfırlandı."
       },
       "all": {
-        "title": "Tüm öğrenimi sıfırla",
-        "description": "Kelime ve konu ilerlemelerinin tamamı temizlenir.",
+        "title": "Hepsi",
         "confirm": "Tüm öğrenim ilerlemen silinecek.",
         "success": "Tüm öğrenim sıfırlandı."
       }
@@ -234,7 +266,7 @@
     "weekly": "Haftalık",
     "monthly": "Aylık",
     "levelStatus": "Seviye durumu",
-    "levelStatusHint": "{level} seviyesindeki tüm beceri ilerlemenin ortalaması.",
+    "levelStatusHint": "Çalışma alanlarının seviyesi.",
     "levelStatusComplete": "{level} seviyesi tamamlandı.",
     "levelStatusProgressAria": "{level} seviye ilerlemesi %{percent}",
     "quickContinue": "Hızlı devam",
@@ -276,6 +308,7 @@
     "cancelStudyTimerError": "Süre iptal edilemedi. Lütfen tekrar dene.",
     "selectWord": "Kelime seç",
     "notifications": "Notifications",
+    "notificationsTooltip": "Bildirimler",
     "unreadNotifications": "{count} okunmamış bildirim",
     "notificationsEmpty": "Henüz bildirimin yok.",
     "notificationsMarkAllRead": "Tümünü okundu say",
@@ -366,6 +399,44 @@
     "studiedTodayDueNow": "Sınav zamanı geldi",
     "quizCardReady": "{count} kelime sınava hazır.",
     "quizCardCta": "Sınava Gir",
+    "generalTitle": "General",
+    "generalSubtitle": "Pylmor’da nasıl ilerleyeceğini, seviye ve kelime kurallarını ve günlük çalışma akışını burada bulursun.",
+    "generalRulesTitle": "Kurallar",
+    "generalRules": {
+      "levelProgression": "Bir üst CEFR seviyesini ancak alt seviyenin yeterlilik sınavını geçerek açarsın; kilitli seviyedeki içeriklere giremezsin.",
+      "grammarSequence": "Grammer’da her konu için önce konu anlatımı, sonra alıştırma ve konu sınavı vardır; sıradaki konu ancak öncekileri tamamlayınca açılır.",
+      "vocabularyWindow": "Kelimelerde aynı seviyede aynı anda en fazla {window} bölüm açıktır; açık bölümlerden birini bitirince sıradaki bölüm açılır.",
+      "studyTimer": "Öğrenmek istediğin kelimeleri seçip süreyi başlatırsın; süre bitince (yaklaşık 30 saniye) o kelimeler sınava hazır hâle gelir.",
+      "wordQuota": "Her öğrenme döngüsünde en fazla {limit} kelime seçebilirsin; önceki döngünün süresi bitip sınava girmeden yeni süre başlatamazsın.",
+      "skillsCompletion": "Reading, Listening, Writing ve Speaking bölümlerinde içeriği dinleyip veya okuyup alıştırmaları tamamlamadan bölüm tamamlanmış sayılmaz."
+    },
+    "generalStepsTitle": "Neler yapılmalıdır?",
+    "generalSteps": {
+      "overview": {
+        "title": "Paneli kontrol et",
+        "body": "Üstteki kartlardan seviye ilerlemeni, hızlı devam bağlantılarını ve kelime sınav sayacını gözden geçir; kaldığın yere oradan dönebilirsin."
+      },
+      "grammar": {
+        "title": "Grammer ile devam et",
+        "body": "Seviyene uygun konuya gir; konu anlatımını oku, alıştırmayı bitir ve konu sınavını geç. Gerekirse birleşik alıştırmalarla pekiştir."
+      },
+      "vocabulary": {
+        "title": "Kelime çalış",
+        "body": "Kelimeler bölümünden öğrenmek istediğin kelimeleri işaretle ve süreyi başlat. Süre dolunca kelime sınavına gir; tam bir döngüde en fazla {limit} kelime seçilir (hedef: {quizTarget} kelime)."
+      },
+      "skills": {
+        "title": "Beceri bölümlerini tamamla",
+        "body": "Reading, Listening, Writing ve Speaking’de sırayla ilerle; her bölümde metni oku veya dinle, alıştırmaları bitir."
+      },
+      "levelExam": {
+        "title": "Yeterlilik sınavına gir",
+        "body": "Seviyendeki gramer konularını ve alıştırmaları bitirdikten sonra o seviyenin yeterlilik sınavına gir; geçince bir üst seviye açılır."
+      },
+      "progress": {
+        "title": "İlerlemeni takip et",
+        "body": "Progress bölümünden puanlarını, seviye durumunu ve bilinen kelimelerini izle; düzenli kısa oturumlarla devam et."
+      }
+    },
     "sectionSoonTitle": "Yakında",
     "sectionSoonBody": "Bu bölüm henüz hazır değil. Şimdilik Grammer bölümünden devam edebilirsin.",
     "skillListeningTitle": "Listening",
@@ -626,6 +697,8 @@
     "continue": "Tamam"
   },
   "Exercises": {
+    "listen": "Dinle",
+    "listenWord": "{word} kelimesini dinle",
     "hint": "İpucu",
     "hintFallback": {
       "readingMultipleChoice": "Metne dön; ilgili bölümde cevabı bul.",
@@ -749,7 +822,7 @@
     "quizFinishedScorePercent": "Puanın: {score} / 100",
     "quizFinishedScoreDetail": "{correct} / {total} doğru",
     "quizFinishedHint": "Sınavdaki kelimeler bilinenlere eklendi ve öğrenme seçiminden çıkarıldı.",
-    "backToProgress": "Progress'e dön"
+    "backToProgress": "İlerleme'ye dön"
   },
   "Topic": {
     "backToTopics": "Konulara dön",
@@ -764,12 +837,12 @@
     "exercises": "Alıştırma",
     "topicExamTab": "Quiz",
     "examMetaTitle": "{title} — Quiz",
-    "quizSingleIntro": "Geçmek için en az %75 doğru gerekir.",
+    "quizSingleIntro": "Geçmek için en az %85 doğru gerekir.",
     "quizChooseTitle": "Quiz bölümü seç",
-    "quizChooseSubtitle": "Bölümler ayrıdır. İkisini de tamamlamalısın; her biri için en az %75 başarı gerekir.",
+    "quizChooseSubtitle": "Bölümler ayrıdır. Hepsini tamamlamalısın; her biri için en az %85 başarı gerekir.",
     "quizBackToParts": "Bölümlere dön",
     "quizPartPassedTitle": "Bu bölüm tamam",
-    "quizPartPassedBody": "En az %75 doğru yaptın. Diğer bölümü de geçince quiz tamamlanır.",
+    "quizPartPassedBody": "En az %85 doğru yaptın. Diğer bölümü de geçince quiz tamamlanır.",
     "levelExamIntro": "Bu yeterlilik sınavında bulmaca ve boşluk doldurma vardır; istediğin bölümden başlayabilirsin. Her bölümü ayrı ayrı en az %75 ile geçmeden bir sonraki seviyeye geçilemez.",
     "levelExamChooseTitle": "Sınav bölümü seç",
     "levelExamChooseSubtitle": "İki bölümü de tamamlamalısın. Sıra serbest; her biri için en az %75 başarı gerekir.",
@@ -782,11 +855,11 @@
     "topicExamPassedTitle": "Quiz'i geçtin!",
     "topicExamPassedBody": "Bu konunun quizi tamamlandı; ilerlemen güncellendi.",
     "topicExamFailedTitle": "Bu bölümü geçemedin",
-    "topicExamFailedBody": "En az %75 doğru gerekiyor. Aşağıdan tekrar deneyebilirsin.",
-    "lessonTimerTitle": "Progress için bekle",
+    "topicExamFailedBody": "En az %85 doğru gerekiyor. Aşağıdan tekrar deneyebilirsin.",
+    "lessonTimerTitle": "İlerleme için bekle.",
     "lessonTimerBody": "Bu sayfada en az {minutes} dakika kalmalısın. Kalan süre: {time}",
-    "lessonTimerDoneTitle": "Konu tamamdır.",
-    "lessonTimerDoneBody": "Bu konunun anlatım süresi doldu; ilerlemene eklendi.",
+    "lessonTimerDoneTitle": "Artık alıştırmaya geçebilirsin.",
+    "lessonTimerDoneBody": "Konu sekmesinde kalman gereken süreyi tamamladın.",
     "lessonTimerExamDoneBody": "Quiz'i geçtiğin için bu sayfada beklemen gerekmez.",
     "documentTitle": "Pylmor - {title}",
     "examples": "Örnekler",
@@ -813,9 +886,10 @@
     "typeListening": "Sesli dinleme",
     "typeListeningDesc": "Kelimeyi dinle, İngilizce ve Türkçesini seç.",
     "typeProgressBadge": "%{percent}",
+    "topicProgressAria": "Konu ilerlemesi %{progress}",
     "typeProgressAria": "Yüzde {percent} tamamlandı",
     "typeCompletedDesc": "Daha önce tamamladın. İstersen tekrar çözebilirsin.",
-    "typeAlreadyCompletedTitle": "Bu türü daha önce çözdün",
+    "typeAlreadyCompletedTitle": "Bu türü daha önce çözdün.",
     "typeAlreadyCompletedBody": "İstersen baştan tekrar çözebilirsin; ilerleme zaten kaydedildi.",
     "questionCount": "{count} soru",
     "puzzleCount": "{count} bulmaca",
@@ -856,6 +930,11 @@
     "crosswordIncomplete": "Bazı harfler eksik veya hatalı.",
     "levelLockedTitle": "{level} seviyesi kilitli",
     "levelLockedBody": "Bu içeriğe erişmek için önce {requiredLevel} seviyesinin sınavını geçmelisin.",
+    "topicItemLockedTitleTopic": "{index}. konu kilitli",
+    "topicItemLockedTitleCombined": "{index}. alıştırma kilitli",
+    "topicItemLockedTitleLevelExam": "Yeterlilik sınavı kilitli",
+    "topicItemLockedBody": "Bu içeriği açmak için önceki {count} konuyu ve aradaki birlikte alıştırmayı %100 tamamlamalısın.",
+    "topicItemLockedBodyLevelExam": "Sınava girebilmek için bu seviyedeki tüm konuları ve alıştırmaları %100 tamamlamalısın.",
     "examPassedTitle": "Sınavı geçtin!",
     "examPassedBody": "{nextLevel} seviyesi açıldı. Konulara dönüp devam edebilirsin.",
     "examPassedBodyFinal": "Tebrikler! En üst seviyenin sınavını da tamamladın.",
