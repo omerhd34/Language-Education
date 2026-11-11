@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Check, RotateCcw } from "lucide-react";
+import { Check, RotateCcw, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
@@ -18,7 +18,9 @@ import {
   readCrosswordDraft,
   writeCrosswordDraft,
 } from "@/lib/exerciseDraftStorage";
+import { crosswordAnswerSpeakText } from "@/lib/exerciseSpeakText";
 import { isCrosswordClueSolved } from "@/lib/exerciseTypeProgress";
+import { speakText } from "@/lib/speakText";
 import { cn } from "@/lib/utils";
 
 type ExerciseSessionResult = {
@@ -34,6 +36,7 @@ type CrosswordExerciseViewProps = {
   draftKey?: string | null;
   progressShare?: number;
   onBackToTypes?: () => void;
+  liveProgressPercent?: boolean;
 };
 
 type CellStart = {
@@ -173,8 +176,10 @@ export function CrosswordExerciseView({
   draftKey,
   progressShare = 100,
   onBackToTypes,
+  liveProgressPercent = true,
 }: CrosswordExerciseViewProps) {
   const t = useTranslations("Topic");
+  const tExercises = useTranslations("Exercises");
   const storageKey =
     draftKey === null
       ? null
@@ -446,7 +451,9 @@ export function CrosswordExerciseView({
             })}
           </p>
         ) : null}
-        <ExercisePercentBadge percent={percent} />
+        {liveProgressPercent ? (
+          <ExercisePercentBadge percent={percent} />
+        ) : null}
       </div>
       <article className="dashboard-panel space-y-5">
         <ExerciseQuestionHeader title={t("typeCrossword")} showHint={false} />
@@ -596,19 +603,37 @@ export function CrosswordExerciseView({
           className="grid grid-flow-col grid-cols-3 gap-x-3 gap-y-2 text-xs text-brand-700 sm:gap-x-4 sm:text-sm dark:text-brand-300"
           style={{ gridTemplateRows: `repeat(${clueRowCount}, auto)` }}
         >
-          {clues.map((clue) => (
-            <li
-              key={`${clue.direction}-${clue.number}`}
-              className="flex items-start gap-1.5"
-            >
-              <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-brand-400 text-[10px] leading-none font-semibold tabular-nums text-brand-950 sm:size-6 sm:text-[11px] dark:border-brand-500 dark:text-brand-100">
-                {clue.number}
-              </span>
-              <span className="min-w-0 pt-0.5">
-                <LessonBoldText text={clue.text} />
-              </span>
-            </li>
-          ))}
+          {clues.map((clue) => {
+            const spoken = crosswordAnswerSpeakText(clue.answer);
+            return (
+              <li
+                key={`${clue.direction}-${clue.number}`}
+                className="flex items-start gap-1.5"
+              >
+                <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-brand-400 text-[10px] leading-none font-semibold tabular-nums text-brand-950 sm:size-6 sm:text-[11px] dark:border-brand-500 dark:text-brand-100">
+                  {clue.number}
+                </span>
+                <span className="min-w-0 flex-1 pt-0.5">
+                  <LessonBoldText text={clue.text} />
+                </span>
+                {spoken ? (
+                  <Button
+                    type="button"
+                    size="icon-sm"
+                    variant="ghost"
+                    className="size-7 shrink-0 text-brand-700 hover:text-brand-950 dark:text-brand-300 dark:hover:text-brand-100"
+                    aria-label={tExercises("listenWord", { word: spoken })}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      speakText(spoken, "en-US");
+                    }}
+                  >
+                    <Volume2 className="size-3.5" aria-hidden />
+                  </Button>
+                ) : null}
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex flex-wrap gap-2">

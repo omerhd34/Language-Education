@@ -34,6 +34,7 @@ type FillBlankExercisesProps = {
   }) => void;
   showHint?: boolean;
   onBackToTypes?: () => void;
+  liveProgressPercent?: boolean;
 };
 
 type BlankSlot = {
@@ -78,6 +79,7 @@ export function FillBlankExercises({
   onSessionChange,
   showHint = true,
   onBackToTypes,
+  liveProgressPercent = true,
 }: FillBlankExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
@@ -186,7 +188,9 @@ export function FillBlankExercises({
         <p className="text-sm text-brand-500 dark:text-brand-400">
           {t("progress", { current: index + 1, total: exercises.length })}
         </p>
-        <ExercisePercentBadge percent={percent} />
+        {liveProgressPercent ? (
+          <ExercisePercentBadge percent={percent} />
+        ) : null}
       </div>
 
       <article className="dashboard-panel space-y-5 pb-5 sm:pb-6">

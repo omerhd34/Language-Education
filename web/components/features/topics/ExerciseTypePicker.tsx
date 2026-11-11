@@ -74,29 +74,26 @@ export function ExerciseTypePicker({
   const t = useTranslations("Topic");
   const visibleItems = TYPE_ITEMS.filter((item) => counts[item.type] > 0);
   const completedSet = new Set(completedTypes);
+  const gridColsClass =
+    visibleItems.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2";
 
   return (
     <div className="w-full space-y-4">
       <div className="space-y-1">
-        <h2 className="section-title">
-          {title ?? t("chooseTypeTitle")}
-        </h2>
+        <h2 className="section-title">{title ?? t("chooseTypeTitle")}</h2>
         <p className="page-subtitle mt-0">
           {subtitle ?? t("chooseTypeSubtitle")}
         </p>
       </div>
 
       <ul
-        className="grid gap-3 sm:grid-cols-2"
+        className={cn("grid gap-3", gridColsClass)}
         role="list"
         aria-label={t("typesAria")}
       >
         {visibleItems.map(({ type, titleKey, descKey, Icon }) => {
           const count = counts[type];
-          const countLabel =
-            type === "crossword"
-              ? t("puzzleCount", { count })
-              : t("questionCount", { count });
+          const countLabel = t("questionCount", { count });
           const percent = Math.min(
             completeAt,
             Math.max(

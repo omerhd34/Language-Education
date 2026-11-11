@@ -3,11 +3,11 @@
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef } from "react";
 import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
-import { ExerciseIncorrectExplanation } from "@/components/features/exercises/ExerciseIncorrectExplanation";
 import { ExerciseListenWordButton } from "@/components/features/exercises/ExerciseListenWordButton";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { InstantMultipleChoiceOptions } from "@/components/features/exercises/InstantMultipleChoiceOptions";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
+import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
 import type { MultipleChoiceExercise } from "@/data/topics/types";
@@ -40,6 +40,7 @@ type MultipleChoiceExercisesProps = {
   }) => void;
   showHint?: boolean;
   onBackToTypes?: () => void;
+  liveProgressPercent?: boolean;
 };
 
 function createChoiceSlot(): ChoiceSlot {
@@ -71,6 +72,7 @@ export function MultipleChoiceExercises({
   onSessionChange,
   showHint = true,
   onBackToTypes,
+  liveProgressPercent = true,
 }: MultipleChoiceExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
@@ -80,6 +82,8 @@ export function MultipleChoiceExercises({
     slots,
     current,
     finished,
+    resultOpen,
+    setResultOpen,
     nextLabelKey,
     canGoPrevious,
     canGoNext,
@@ -189,6 +193,9 @@ export function MultipleChoiceExercises({
     const isAnswerCorrect = optionIndex === exercise.correctIndex;
     updateCurrent({ selected: optionIndex, checked: true });
     shouldAutoAdvanceRef.current = isAnswerCorrect;
+    if (!isAnswerCorrect) {
+      setResultOpen(true);
+    }
   }
 
   function handleNext() {
@@ -214,7 +221,9 @@ export function MultipleChoiceExercises({
         <p className="text-sm text-brand-500 dark:text-brand-400">
           {t("progress", { current: index + 1, total: exercises.length })}
         </p>
-        <ExercisePercentBadge percent={percent} />
+        {liveProgressPercent ? (
+          <ExercisePercentBadge percent={percent} />
+        ) : null}
       </div>
 
       <article className="dashboard-panel space-y-5">
@@ -237,11 +246,6 @@ export function MultipleChoiceExercises({
           onSelect={handleOptionSelect}
           labelledBy={promptId}
           optionsAriaLabel={t("optionsAria")}
-        />
-
-        <ExerciseIncorrectExplanation
-          show={current.checked && !isCorrect}
-          explanation={exercise.explanation}
         />
 
         <ExerciseStepNav
@@ -267,6 +271,15 @@ export function MultipleChoiceExercises({
           }
         />
       </article>
+
+      <ExerciseResultDialog
+        open={resultOpen && current.checked && !isCorrect}
+        variant="incorrect"
+        explanation={exercise.explanation}
+        onOpenChange={setResultOpen}
+        onContinue={handleNext}
+        continueLabel={continueLabel}
+      />
     </div>
   );
 }

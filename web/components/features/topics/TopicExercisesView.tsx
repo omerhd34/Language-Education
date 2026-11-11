@@ -53,7 +53,9 @@ import {
 } from "@/lib/exerciseDraftStorage";
 import {
   computeExerciseTypeProgress,
+  countCrosswordCluesInExercises,
   crosswordDraftKey,
+  totalCrosswordClueCount,
 } from "@/lib/exerciseTypeProgress";
 import { shuffleSeeded } from "@/lib/seededRandom";
 import { getNextLevel } from "@/lib/topicAccess";
@@ -358,7 +360,7 @@ export function TopicExercisesView({
         (item) => item.type === "multiple_choice",
       ).length,
       fill_blank: exercises.filter((item) => item.type === "fill_blank").length,
-      crossword: exercises.filter((item) => item.type === "crossword").length,
+      crossword: countCrosswordCluesInExercises(exercises),
       listening: exercises.filter((item) => item.type === "listening").length,
     }),
     [exercises],
@@ -481,7 +483,9 @@ export function TopicExercisesView({
       ({
         multiple_choice: 0,
         fill_blank: levelExamFillBlanks?.length ?? 0,
-        crossword: levelExamCrosswords?.length ?? 0,
+        crossword: levelExamCrosswords
+          ? totalCrosswordClueCount(levelExamCrosswords)
+          : 0,
         listening: 0,
       }) satisfies Record<ExerciseType, number>,
     [levelExamCrosswords, levelExamFillBlanks],
