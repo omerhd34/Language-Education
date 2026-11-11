@@ -2,8 +2,16 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { RotateCcw } from "lucide-react";
+import { CheckCircle2, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { SettingsSection } from "@/components/features/settings/SettingsSection";
 import { clearClientProgressForScope } from "@/lib/progressResetClient";
 import { useVocabularyStore } from "@/store/vocabularyStore";
@@ -128,14 +136,37 @@ export function ProgressResetPanel() {
         </p>
       ) : null}
 
-      {doneScope ? (
-        <p
-          className="text-sm text-emerald-700 dark:text-emerald-300"
-          role="status"
-        >
-          {t(`progressResetScope.${doneScope}.success`)}
-        </p>
-      ) : null}
+      <Dialog
+        open={doneScope !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setDoneScope(null);
+          }
+        }}
+      >
+        <DialogContent className="sm:max-w-sm" showCloseButton={false}>
+          <DialogHeader className="items-center text-center sm:items-center sm:text-center">
+            <span className="mx-auto mb-1 flex size-14 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-300">
+              <CheckCircle2 className="size-7" aria-hidden />
+            </span>
+            <DialogTitle className="font-display text-2xl text-emerald-700 dark:text-emerald-300">
+              {doneScope ? t(`progressResetScope.${doneScope}.success`) : null}
+            </DialogTitle>
+            <DialogDescription className="sr-only">
+              {doneScope ? t(`progressResetScope.${doneScope}.success`) : null}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-center">
+            <Button
+              type="button"
+              className="w-full sm:w-auto"
+              onClick={() => setDoneScope(null)}
+            >
+              {t("progressResetSuccessClose")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </SettingsSection>
   );
 }
