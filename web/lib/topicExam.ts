@@ -10,6 +10,7 @@ import type {
   FillBlankExercise,
   MultipleChoiceExercise,
   TopicContent,
+  TopicQuizExercise,
 } from "@/data/topics/types";
 import {
   buildCrosswordFromCandidates,
@@ -32,6 +33,8 @@ function getLevelExamClues(level: CefrLevel): CrosswordCandidate[] {
 
 export const TOPIC_EXAM_OPTION_COUNT = 4;
 export const TOPIC_EXAM_QUESTION_COUNT = 10;
+export const TOPIC_QUIZ_MC_COUNT = 15;
+export const TOPIC_QUIZ_FB_COUNT = 15;
 
 export const LEVEL_EXAM_CROSSWORD_COUNT = 1;
 export const LEVEL_EXAM_CLUE_COUNT = 20;
@@ -99,38 +102,39 @@ export function ensureExamOptionCount(
   distractorPool: string[] = [],
   count: number = TOPIC_EXAM_OPTION_COUNT,
 ): MultipleChoiceExercise {
+  const targetCount = exercise.options.length === 2 ? 2 : count;
   const correct =
     exercise.options[exercise.correctIndex] ?? exercise.options[0] ?? "";
   const options: string[] = [];
 
   uniquePush(options, correct);
   for (const option of exercise.options) {
-    if (options.length >= count) {
+    if (options.length >= targetCount) {
       break;
     }
     uniquePush(options, option);
   }
   for (const distractor of distractorPool) {
-    if (options.length >= count) {
+    if (options.length >= targetCount) {
       break;
     }
     uniquePush(options, distractor);
   }
   for (const distractor of FALLBACK_DISTRACTORS) {
-    if (options.length >= count) {
+    if (options.length >= targetCount) {
       break;
     }
     uniquePush(options, distractor);
   }
 
   let filler = 1;
-  while (options.length < count) {
+  while (options.length < targetCount) {
     uniquePush(options, `Seçenek ${filler}`);
     filler += 1;
   }
 
   const finalOptions = shuffleOptions(
-    options.slice(0, count),
+    options.slice(0, targetCount),
     `${exercise.id}|${correct}`,
   );
   const correctIndex = Math.max(0, finalOptions.indexOf(correct));
@@ -153,6 +157,32 @@ function practiceMultipleChoice(
   return content.exercises.filter(
     (item): item is MultipleChoiceExercise => item.type === "multiple_choice",
   );
+}
+
+function practiceFillBlanks(content: TopicContent): FillBlankExercise[] {
+  return content.exercises.filter(
+    (item): item is FillBlankExercise => item.type === "fill_blank",
+  );
+}
+
+function pushUniqueFillBlank(
+  target: FillBlankExercise[],
+  seen: Set<string>,
+  item: FillBlankExercise,
+): void {
+  const key = item.prompt.trim().toLocaleLowerCase("tr");
+  if (seen.has(key)) {
+    return;
+  }
+  seen.add(key);
+  target.push(item);
+}
+
+export function topicQuizUsesMixedFormat(content: TopicContent): boolean {
+  const quiz = listQuizExercises(content);
+  const hasMc = quiz.some((item) => item.type === "multiple_choice");
+  const hasFb = quiz.some((item) => item.type === "fill_blank");
+  return hasMc && hasFb;
 }
 
 function pushUniqueQuestion(
@@ -261,7 +291,9 @@ export function resolveTopicExamExercises(
   const questionCount =
     content.quizQuestionCount && content.quizQuestionCount > 0
       ? content.quizQuestionCount
-      : TOPIC_EXAM_QUESTION_COUNT;
+      : topicQuizUsesMixedFormat(content)
+        ? TOPIC_QUIZ_MC_COUNT
+        : TOPIC_EXAM_QUESTION_COUNT;
   const practice = practiceMultipleChoice(content);
   const pool = [
     ...practice.flatMap((item) => item.options),
@@ -308,24 +340,75 @@ export function resolveTopicExamExercises(
 export function resolveTopicExamFillBlanks(
   content: TopicContent,
 ): FillBlankExercise[] {
-  return listQuizExercises(content)
-    .filter((item): item is FillBlankExercise => item.type === "fill_blank")
-    .map((item) => ({
-      ...item,
-      id: item.id.startsWith("quiz-") ? item.id : `quiz-${item.id}`,
-    }));
+  const fillCount =
+    content.quizFillBlankCount && content.quizFillBlankCount > 0
+      ? content.quizFillBlankCount
+      : topicQuizUsesMixedFormat(content)
+        ? TOPIC_QUIZ_FB_COUNT
+        : 0;
+  if (fillCount <= 0) {
+    return [];
+  }
+
+  const seen = new Set<string>();
+  const source: FillBlankExercise[] = [];
+  const quizFillBlanks = listQuizExercises(content).filter(
+    (item): item is FillBlankExercise => item.type === "fill_blank",
+  );
+
+  for (const item of quizFillBlanks) {
+    pushUniqueFillBlank(source, seen, item);
+  }
+  if (quizFillBlanks.length === 0) {
+    for (const item of practiceFillBlanks(content)) {
+      pushUniqueFillBlank(source, seen, {
+        ...item,
+        id: `quiz-${item.id}`,
+      });
+    }
+  } else if (source.length < fillCount) {
+    for (const item of practiceFillBlanks(content)) {
+      if (source.length >= fillCount) {
+        break;
+      }
+      pushUniqueFillBlank(source, seen, {
+        ...item,
+        id: `quiz-${item.id}`,
+      });
+    }
+  }
+
+  return shuffleSeeded(
+    source.slice(0, fillCount),
+    `topic:${content.topicId}:quiz-fb`,
+  ).map((item) => ({
+    ...item,
+    id: item.id.startsWith("quiz-") ? item.id : `quiz-${item.id}`,
+  }));
 }
 
 export function resolveTopicExamCrosswords(
-  content: TopicContent,
+  _content: TopicContent,
 ): CrosswordExercise[] {
-  return listQuizExercises(content)
-    .filter((item): item is CrosswordExercise => item.type === "crossword")
-    .slice(0, 1)
-    .map((item) => ({
-      ...item,
-      id: item.id.startsWith("quiz-") ? item.id : `quiz-${item.id}`,
-    }));
+  return [];
+}
+
+export function resolveMixedTopicQuizPool(
+  content: TopicContent,
+): TopicQuizExercise[] {
+  if (!topicQuizUsesMixedFormat(content)) {
+    return [];
+  }
+
+  const multipleChoice = resolveTopicExamExercises(content);
+  const fillBlanks = resolveTopicExamFillBlanks(content);
+  return [...multipleChoice, ...fillBlanks];
+}
+
+export function resolveMixedTopicQuiz(
+  content: TopicContent,
+): TopicQuizExercise[] {
+  return resolveMixedTopicQuizPool(content);
 }
 
 function shuffleCandidates(

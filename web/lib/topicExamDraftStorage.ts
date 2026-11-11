@@ -3,7 +3,11 @@ import { isTopicExamPassed } from "@/lib/topicProgressStorage";
 const STORAGE_KEY = "pylmor-topic-exam-drafts";
 export const TOPIC_EXAM_DRAFT_EVENT = "pylmor:topic-exam-draft";
 
-export type TopicQuizPart = "multiple_choice" | "fill_blank" | "crossword";
+export type TopicQuizPart =
+  | "multiple_choice"
+  | "fill_blank"
+  | "crossword"
+  | "mixed";
 
 export type TopicExamSlot = {
   selected: number | null;
@@ -23,6 +27,7 @@ export type TopicExamDraft = {
   requiredParts: TopicQuizPart[];
   passedParts: TopicQuizPart[];
   parts: Partial<Record<TopicQuizPart, TopicExamPartDraft>>;
+  quizOrderByPart?: Partial<Record<TopicQuizPart, string[]>>;
 };
 
 type TopicExamDraftMap = Record<string, TopicExamDraft>;
@@ -31,6 +36,7 @@ const QUIZ_PARTS: readonly TopicQuizPart[] = [
   "multiple_choice",
   "fill_blank",
   "crossword",
+  "mixed",
 ];
 
 function canUseDom(): boolean {
@@ -48,7 +54,8 @@ function isQuizPart(value: unknown): value is TopicQuizPart {
   return (
     value === "multiple_choice" ||
     value === "fill_blank" ||
-    value === "crossword"
+    value === "crossword" ||
+    value === "mixed"
   );
 }
 
@@ -110,7 +117,32 @@ function normalizePart(value: TopicExamPartDraft): TopicExamPartDraft {
 }
 
 function emptyDraft(): TopicExamDraft {
-  return { requiredParts: [], passedParts: [], parts: {} };
+  return { requiredParts: [], passedParts: [], parts: {}, quizOrderByPart: {} };
+}
+
+function normalizeOrderIds(value: unknown): string[] | undefined {
+  if (!Array.isArray(value)) {
+    return undefined;
+  }
+  const ids = value.filter((item): item is string => typeof item === "string");
+  return ids.length > 0 ? ids : undefined;
+}
+
+function normalizeQuizOrderByPart(
+  value: unknown,
+): TopicExamDraft["quizOrderByPart"] {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return {};
+  }
+  const source = value as Record<string, unknown>;
+  const next: NonNullable<TopicExamDraft["quizOrderByPart"]> = {};
+  for (const part of QUIZ_PARTS) {
+    const ids = normalizeOrderIds(source[part]);
+    if (ids) {
+      next[part] = ids;
+    }
+  }
+  return next;
 }
 
 function normalizeDraft(value: unknown): TopicExamDraft | null {
@@ -149,7 +181,9 @@ function normalizeDraft(value: unknown): TopicExamDraft | null {
     ? item.passedParts.filter(isQuizPart)
     : [];
 
-  return { requiredParts, passedParts, parts };
+  const quizOrderByPart = normalizeQuizOrderByPart(item.quizOrderByPart);
+
+  return { requiredParts, passedParts, parts, quizOrderByPart };
 }
 
 function readAll(): TopicExamDraftMap {
@@ -232,15 +266,6 @@ export function clearTopicExamDrafts(): void {
 }
 
 function partPercent(draft: TopicExamDraft, part: TopicQuizPart): number {
-  const item = draft.parts[part];
-  if (item?.active) {
-    if (part === "crossword" || item.slots.length === 0) {
-      return toExamPercent(item.correct, item.total);
-    }
-    const checked = item.slots.filter((slot) => slot.checked).length;
-    const total = item.total > 0 ? item.total : item.slots.length;
-    return toExamPercent(checked, total);
-  }
   if (draft.passedParts.includes(part)) {
     return 100;
   }
