@@ -3,7 +3,10 @@
 import type { MouseEvent } from "react";
 import { useTranslations } from "next-intl";
 import { BookA } from "lucide-react";
-import { vocabularySubNav } from "@/components/layout/app/appNavLinks";
+import {
+  appNavTooltipKey,
+  vocabularySubNav,
+} from "@/components/layout/app/appNavLinks";
 import { Link, usePathname } from "@/i18n/navigation";
 import { usePanelHash } from "@/hooks/usePanelHash";
 import {
@@ -47,12 +50,13 @@ export function VocabularyNavItem({ onNavigate }: VocabularyNavItemProps) {
       isSubNavActive(pathname, panelHash, item.href),
     );
   const parentLabel = t("vocabulary");
+  const parentTooltip = t(appNavTooltipKey("vocabulary"));
 
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
         isActive={sectionActive}
-        tooltip={parentLabel}
+        tooltip={parentTooltip}
         className={menuButtonClassName}
         render={<Link href={PARENT_HREF} />}
         onClick={(event) => onNavigate(event, PARENT_HREF)}
@@ -71,6 +75,7 @@ export function VocabularyNavItem({ onNavigate }: VocabularyNavItemProps) {
                 <SidebarMenuSubButton
                   isActive={itemActive}
                   size="sm"
+                  tooltip={t(appNavTooltipKey(item.labelKey))}
                   className={cn(
                     "group/sub-link h-7 gap-2 rounded-md px-2 text-sm font-medium text-sidebar-foreground/55",
                     "hover:bg-transparent hover:text-sky-600 dark:hover:text-sky-300",

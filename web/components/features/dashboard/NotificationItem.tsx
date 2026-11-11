@@ -67,9 +67,10 @@ export function NotificationItem({
             {item.title}
           </span>
           <span className="mt-0.5 block text-xs text-brand-600 dark:text-brand-400">
-            {typeLabel}
-            <span aria-hidden> · </span>
-            {timeLabel}
+            <span className="block">{typeLabel}</span>
+            <span className="mt-0.5 block whitespace-nowrap tabular-nums">
+              {timeLabel}
+            </span>
           </span>
         </span>
       </Link>

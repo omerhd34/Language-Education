@@ -1,3 +1,5 @@
+export const instant = false;
+
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { VocabularyQuizView } from "@/components/features/vocabulary/VocabularyQuizView";
 

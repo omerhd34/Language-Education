@@ -47,12 +47,22 @@ const lockedButtonClassName =
   "cursor-not-allowed border-brand-200 bg-brand-100/80 text-brand-400 opacity-100 hover:bg-brand-100/80 hover:text-brand-400 dark:border-brand-800 dark:bg-brand-900/70 dark:text-brand-500 dark:hover:bg-brand-900/70";
 
 function highlightWord(sentence: string, target: string) {
-  const escaped = target.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const regex = new RegExp(`(${escaped})`, "gi");
+  const trimmed = target.trim();
+  if (!trimmed) {
+    return sentence;
+  }
+
+  const escaped = trimmed.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(
+    `(?<![\\p{L}\\p{N}])(${escaped})(?![\\p{L}\\p{N}])`,
+    "giu",
+  );
   const parts = sentence.split(regex);
 
   return parts.map((part, partIndex) => {
-    if (part.toLocaleLowerCase("tr-TR") === target.toLocaleLowerCase("tr-TR")) {
+    if (
+      part.toLocaleLowerCase("tr-TR") === trimmed.toLocaleLowerCase("tr-TR")
+    ) {
       return (
         <strong
           key={`${part}-${partIndex}`}
@@ -179,14 +189,14 @@ export function VocabularyWordCard({
             <Button
               type="button"
               size="sm"
-              variant={isKnown && !knowDisabled ? "default" : "outline"}
+              variant="outline"
               disabled={isUpdating || knowDisabled}
               aria-pressed={isKnown}
               className={cn(
                 "rounded-full",
                 isKnown &&
                   !knowDisabled &&
-                  "border-transparent bg-emerald-700 text-white hover:bg-emerald-700/90 dark:bg-emerald-600 dark:hover:bg-emerald-600/90",
+                  "border-transparent! bg-emerald-700! text-white! hover:bg-emerald-700/90! dark:bg-emerald-600! dark:hover:bg-emerald-600/90!",
                 knowDisabled && lockedButtonClassName,
               )}
               onClick={() => {
@@ -205,9 +215,7 @@ export function VocabularyWordCard({
             <Button
               type="button"
               size="sm"
-              variant={
-                isLearning && !learnButtonDisabled ? "default" : "outline"
-              }
+              variant="outline"
               disabled={learnButtonDisabled}
               aria-pressed={isLearning}
               title={
@@ -219,7 +227,7 @@ export function VocabularyWordCard({
                 "rounded-full",
                 isLearning &&
                   !learnButtonDisabled &&
-                  "border-transparent bg-sky-700 text-white hover:bg-sky-700/90 dark:bg-sky-600 dark:hover:bg-sky-600/90",
+                  "border-transparent! bg-sky-700! text-white! hover:bg-sky-700/90! dark:bg-sky-600! dark:hover:bg-sky-600/90!",
                 learnButtonDisabled && lockedButtonClassName,
               )}
               onClick={() => {

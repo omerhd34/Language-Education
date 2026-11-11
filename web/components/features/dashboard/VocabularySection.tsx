@@ -36,10 +36,6 @@ export function VocabularySection() {
   const requiredLevel = getRequiredVocabularyLevelToUnlock(selectedLevel);
 
   function handleLevelChange(level: CefrLevel) {
-    if (level === "Başlangıç") {
-      return;
-    }
-
     setSelectedLevel(level);
 
     if (!canAccessVocabularyLevel(level, knownWordIds)) {
@@ -63,12 +59,7 @@ export function VocabularySection() {
         value={selectedLevel}
         onChange={handleLevelChange}
         levels={VOCABULARY_LEVEL_ORDER}
-        isUnlocked={(level) => {
-          if (level === "Başlangıç") {
-            return false;
-          }
-          return canAccessVocabularyLevel(level, knownWordIds);
-        }}
+        isUnlocked={(level) => canAccessVocabularyLevel(level, knownWordIds)}
       />
 
       <VocabularyLearnQuotaBanner />

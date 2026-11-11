@@ -197,15 +197,26 @@ export function VerbsSection() {
             ))}
           </nav>
 
-          {listFilter === "irregular" ? (
-            <div className="rounded-2xl border border-dashed border-brand-300/80 bg-brand-50/50 px-4 py-3 text-sm text-brand-900 dark:border-brand-700 dark:bg-brand-950/30 dark:text-brand-100">
+          <div
+            className={cn(
+              "grid rounded-2xl border border-dashed border-brand-300/80 bg-brand-50/50 px-4 py-3 text-sm text-brand-900",
+              "dark:border-brand-700 dark:bg-brand-950/30 dark:text-brand-100",
+              "*:col-start-1 *:row-start-1",
+            )}
+          >
+            <p
+              className={cn(listFilter !== "irregular" && "invisible")}
+              aria-hidden={listFilter !== "irregular"}
+            >
               {t("verbsIrregularHint")}
-            </div>
-          ) : (
-            <div className="rounded-2xl border border-dashed border-brand-300/80 bg-brand-50/50 px-4 py-3 text-sm text-brand-900 dark:border-brand-700 dark:bg-brand-950/30 dark:text-brand-100">
+            </p>
+            <p
+              className={cn(listFilter === "irregular" && "invisible")}
+              aria-hidden={listFilter === "irregular"}
+            >
               {t("verbsRegularHint")}
-            </div>
-          )}
+            </p>
+          </div>
 
           <VerbsTable
             verbs={listVerbs}

@@ -6,6 +6,7 @@ import { LogOut, Settings } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
   appNavLinks,
+  appNavTooltipKey,
   type AppNavLink,
 } from "@/components/layout/app/appNavLinks";
 import { BrandMark } from "@/components/brand/BrandMark";
@@ -130,12 +131,13 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
     const Icon = item.Icon;
     const active = isActive(item.href);
     const label = t(item.labelKey);
+    const tooltip = t(appNavTooltipKey(item.labelKey));
 
     return (
       <SidebarMenuItem key={item.labelKey}>
         <SidebarMenuButton
           isActive={active}
-          tooltip={label}
+          tooltip={tooltip}
           className={menuButtonClassName}
           render={<Link href={item.href} />}
           onClick={(event) => handleNavClick(event, item.href)}
@@ -213,7 +215,7 @@ export function AppSidebar({ user, isLoggingOut, onLogout }: AppSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton
               isActive={settingsActive}
-              tooltip={t("settings")}
+              tooltip={t("settingsTooltip")}
               className={menuButtonClassName}
               render={<Link href="/panel/ayarlar" />}
               onClick={() => setOpenMobile(false)}

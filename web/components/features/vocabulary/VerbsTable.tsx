@@ -65,8 +65,14 @@ export function VerbsTable({
   const typeSortable = listFilter === "all";
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
-      <table className="w-full min-w-130 border-collapse text-left text-sm">
+    <div className="overflow-x-auto rounded-2xl border border-border bg-card shadow-sm scrollbar-gutter-stable">
+      <table className="w-full min-w-130 table-fixed border-collapse text-left text-sm">
+        <colgroup>
+          <col className="w-[26%] sm:w-[24%]" />
+          <col className="w-[26%] sm:w-[24%]" />
+          <col className="w-[26%] sm:w-[24%]" />
+          <col className="hidden w-[22%] sm:table-column" />
+        </colgroup>
         <thead>
           <tr className="border-b border-border bg-muted/50">
             <th
@@ -149,8 +155,17 @@ export function VerbsTable({
                   )}
                 </button>
               ) : (
-                <span className="font-semibold text-foreground">
-                  {t("verbsColType")}
+                <span
+                  className={cn(
+                    headerButtonClassName,
+                    "cursor-default hover:text-foreground",
+                  )}
+                >
+                  <span>{t("verbsColType")}</span>
+                  <ChevronsUpDown
+                    className={cn(sortIconMutedClassName, "invisible")}
+                    aria-hidden
+                  />
                 </span>
               )}
             </th>

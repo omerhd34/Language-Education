@@ -15,17 +15,25 @@ import {
   getRequiredLevelToUnlock,
   isLevelExamPassed,
 } from "@/lib/topicAccess";
+import {
+  canAccessCombinedExercise,
+  canAccessGrammarTopic,
+  canAccessLevelProficiencyExam,
+} from "@/lib/topicItemAccess";
+import { useTopicItemAccessVersion } from "@/hooks/useTopicItemAccessVersion";
 
 export function TopicsSection() {
   const t = useTranslations("Dashboard");
   const passedExams = usePassedLevelExams();
-  const [selectedLevel, setSelectedLevel] = useState<CefrLevel>("Başlangıç");
+  const [selectedLevel, setSelectedLevel] = useState<CefrLevel>("A1");
   const [lockDialogOpen, setLockDialogOpen] = useState(false);
 
   const gridItems = useMemo(
     () => buildTopicGridItems(selectedLevel),
     [selectedLevel],
   );
+
+  useTopicItemAccessVersion();
 
   const levelUnlocked = canAccessLevel(selectedLevel, passedExams);
   const requiredLevel = getRequiredLevelToUnlock(selectedLevel);
@@ -68,7 +76,9 @@ export function TopicsSection() {
               <CombinedExerciseCard
                 key={item.combined.id}
                 combined={item.combined}
-                locked={!levelUnlocked}
+                locked={
+                  !levelUnlocked || !canAccessCombinedExercise(item.combined.id)
+                }
               />
             );
           }
@@ -78,7 +88,10 @@ export function TopicsSection() {
               <LevelExamCard
                 key={item.topic.id}
                 topic={item.topic}
-                locked={!levelUnlocked}
+                locked={
+                  !levelUnlocked ||
+                  !canAccessLevelProficiencyExam(selectedLevel)
+                }
                 passed={examPassed}
               />
             );
@@ -95,7 +108,7 @@ export function TopicsSection() {
               key={item.topic.id}
               topic={item.topic}
               index={index}
-              locked={!levelUnlocked}
+              locked={!levelUnlocked || !canAccessGrammarTopic(item.topic.id)}
             />
           );
         })}

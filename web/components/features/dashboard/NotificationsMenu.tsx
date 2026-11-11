@@ -15,6 +15,15 @@ import { useTranslations } from "next-intl";
 import { Bell, CheckCheck, ChevronRight, Trash2 } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
+import {
+  sidebarMenuTooltipContentClassName,
+  useSidebar,
+} from "@/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { NotificationFeaturedAlert } from "@/components/features/dashboard/NotificationFeaturedAlert";
 import { NotificationItem } from "@/components/features/dashboard/NotificationItem";
 import { useAppNotifications } from "@/hooks/useAppNotifications";
@@ -44,10 +53,21 @@ function formatNotificationTime(iso: string): string {
     return "";
   }
 
-  return new Intl.DateTimeFormat("tr-TR", {
+  const dateLabel = new Intl.DateTimeFormat("tr-TR", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }).format(date);
+  const weekday = new Intl.DateTimeFormat("tr-TR", {
+    weekday: "long",
+  }).format(date);
+  const time = new Intl.DateTimeFormat("tr-TR", {
     hour: "2-digit",
     minute: "2-digit",
   }).format(date);
+
+  const nbsp = "\u00A0";
+  return `${dateLabel}${nbsp}${weekday}${nbsp}${time}`;
 }
 
 type NotificationsMenuProps = {
@@ -76,6 +96,7 @@ export function NotificationsMenu({
   const [filter, setFilter] = useState<NotificationFilter>("all");
   const [panelStyle, setPanelStyle] = useState<CSSProperties>({});
   const isSidebar = variant === "sidebar";
+  const { isMobile } = useSidebar();
 
   const updatePosition = useCallback(() => {
     const root = rootRef.current;
@@ -362,6 +383,54 @@ export function NotificationsMenu({
     </div>
   );
 
+  const notificationTrigger = (
+    <Button
+      type="button"
+      variant="ghost"
+      size={isSidebar ? "default" : "icon"}
+      className={cn(
+        isSidebar
+          ? "h-auto w-full justify-start gap-2 rounded-[13px] px-2.5 py-2 text-base font-medium text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-foreground group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0"
+          : "size-11 text-brand-800 shadow-none hover:bg-transparent hover:text-brand-950 dark:text-brand-400 dark:hover:bg-transparent dark:hover:text-brand-100 [&_svg:not([class*='size-'])]:size-5",
+        open && isSidebar && "bg-sidebar-accent text-sidebar-accent-foreground",
+        triggerClassName,
+      )}
+      aria-label={t("notifications")}
+      aria-expanded={open}
+      aria-haspopup="dialog"
+      title={isSidebar ? undefined : t("notifications")}
+      onClick={toggleMenu}
+    >
+      <Bell
+        className={cn(isSidebar ? "size-4" : "size-5")}
+        strokeWidth={1.75}
+        aria-hidden
+      />
+      {isSidebar ? (
+        <span className="group-data-[collapsible=icon]:hidden">
+          {t("notifications")}
+        </span>
+      ) : null}
+    </Button>
+  );
+
+  const notificationTriggerWithTooltip =
+    isSidebar && !isMobile ? (
+      <Tooltip>
+        <TooltipTrigger render={notificationTrigger} />
+        <TooltipContent
+          side="right"
+          align="center"
+          sideOffset={20}
+          className={sidebarMenuTooltipContentClassName}
+        >
+          {t("notificationsTooltip")}
+        </TooltipContent>
+      </Tooltip>
+    ) : (
+      notificationTrigger
+    );
+
   return (
     <div
       ref={rootRef}
@@ -373,36 +442,7 @@ export function NotificationsMenu({
       )}
     >
       <span className={cn("bar-badged", isSidebar && "is-nav w-full")}>
-        <Button
-          type="button"
-          variant="ghost"
-          size={isSidebar ? "default" : "icon"}
-          className={cn(
-            isSidebar
-              ? "h-auto w-full justify-start gap-2 rounded-[13px] px-2.5 py-2 text-base font-medium text-sidebar-foreground/65 hover:bg-sidebar-accent hover:text-sidebar-foreground group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0"
-              : "size-11 text-brand-800 shadow-none hover:bg-transparent hover:text-brand-950 dark:text-brand-400 dark:hover:bg-transparent dark:hover:text-brand-100 [&_svg:not([class*='size-'])]:size-5",
-            open &&
-              isSidebar &&
-              "bg-sidebar-accent text-sidebar-accent-foreground",
-            triggerClassName,
-          )}
-          aria-label={t("notifications")}
-          aria-expanded={open}
-          aria-haspopup="dialog"
-          title={t("notifications")}
-          onClick={toggleMenu}
-        >
-          <Bell
-            className={cn(isSidebar ? "size-4" : "size-5")}
-            strokeWidth={1.75}
-            aria-hidden
-          />
-          {isSidebar ? (
-            <span className="group-data-[collapsible=icon]:hidden">
-              {t("notifications")}
-            </span>
-          ) : null}
-        </Button>
+        {notificationTriggerWithTooltip}
         {unreadCount > 0 ? (
           <>
             <span

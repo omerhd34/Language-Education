@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { DashboardStatsBar } from "@/components/features/dashboard/DashboardStatsBar";
+import { GeneralSection } from "@/components/features/dashboard/GeneralSection";
 import { ProgressSection } from "@/components/features/dashboard/ProgressSection";
 import { ListeningSection } from "@/components/features/dashboard/ListeningSection";
 import { ReadingSection } from "@/components/features/dashboard/ReadingSection";
@@ -26,6 +27,7 @@ function isSkillHash(section: string): section is SkillHash {
 }
 
 const READY_SECTIONS = new Set<string>([
+  "general",
   "grammer",
   "vocabulary",
   "progress",
@@ -40,6 +42,7 @@ export function DashboardHome() {
   return (
     <div className="page-shell">
       <DashboardStatsBar />
+      {section === "general" ? <GeneralSection /> : null}
       {section === "grammer" ? <TopicsSection /> : null}
       {section === "vocabulary" ? <VocabularySection /> : null}
       {section === "reading" ? <ReadingSection /> : null}

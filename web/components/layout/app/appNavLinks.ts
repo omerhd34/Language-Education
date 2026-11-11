@@ -15,6 +15,12 @@ import {
   SpellCheck2,
 } from "lucide-react";
 
+export type AppNavTooltipKey = `${AppNavLabelKey}Tooltip`;
+
+export function appNavTooltipKey(labelKey: AppNavLabelKey): AppNavTooltipKey {
+  return `${labelKey}Tooltip`;
+}
+
 export type AppNavLabelKey =
   | "home"
   | "overview"

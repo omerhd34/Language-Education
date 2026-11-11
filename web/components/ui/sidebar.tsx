@@ -26,7 +26,7 @@ import {
   SIDEBAR_COOKIE_MAX_AGE,
   SIDEBAR_COOKIE_NAME,
 } from "@/lib/sidebarPreference";
-const SIDEBAR_WIDTH = "16rem";
+const SIDEBAR_WIDTH = "17rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "5.25rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
@@ -520,6 +520,12 @@ const sidebarMenuButtonVariants = cva(
   },
 );
 
+const sidebarMenuTooltipContentClassName =
+  "border-0 bg-background px-3 py-1.5 text-sm font-medium text-sidebar-foreground shadow-[inset_0_1px_0_var(--glass-edge),inset_0_0_0_1px_var(--glass-edge-2),0_0_0_1px_var(--glass-line),var(--glass-shadow)]";
+
+const SIDEBAR_MENU_TOOLTIP_SIDE_OFFSET = 20;
+const SIDEBAR_SUB_MENU_TOOLTIP_SIDE_OFFSET = 44;
+
 function SidebarMenuButton({
   render,
   isActive = false,
@@ -533,7 +539,7 @@ function SidebarMenuButton({
     isActive?: boolean;
     tooltip?: string | React.ComponentProps<typeof TooltipContent>;
   } & VariantProps<typeof sidebarMenuButtonVariants>) {
-  const { isMobile, state } = useSidebar();
+  const { isMobile } = useSidebar();
   const comp = useRender({
     defaultTagName: "button",
     props: mergeProps<"button">(
@@ -567,13 +573,10 @@ function SidebarMenuButton({
       <TooltipContent
         side="right"
         align="center"
-        sideOffset={20}
-        hidden={state !== "collapsed" || isMobile}
+        sideOffset={SIDEBAR_MENU_TOOLTIP_SIDE_OFFSET}
+        hidden={isMobile}
         {...tooltip}
-        className={cn(
-          "border-0 bg-(--glass-3) px-3 py-1.5 text-sm font-medium text-sidebar-foreground shadow-[inset_0_1px_0_var(--glass-edge),inset_0_0_0_1px_var(--glass-edge-2),0_0_0_1px_var(--glass-line),var(--glass-shadow)] backdrop-blur-lg backdrop-saturate-150",
-          tooltip.className,
-        )}
+        className={cn(sidebarMenuTooltipContentClassName, tooltip.className)}
       />
     </Tooltip>
   );
@@ -695,14 +698,17 @@ function SidebarMenuSubButton({
   render,
   size = "md",
   isActive = false,
+  tooltip,
   className,
   ...props
 }: useRender.ComponentProps<"a"> &
   React.ComponentProps<"a"> & {
     size?: "sm" | "md";
     isActive?: boolean;
+    tooltip?: string | React.ComponentProps<typeof TooltipContent>;
   }) {
-  return useRender({
+  const { isMobile } = useSidebar();
+  const comp = useRender({
     defaultTagName: "a",
     props: mergeProps<"a">(
       {
@@ -713,7 +719,7 @@ function SidebarMenuSubButton({
       },
       props,
     ),
-    render,
+    render: !tooltip ? render : <TooltipTrigger render={render} />,
     state: {
       slot: "sidebar-menu-sub-button",
       sidebar: "menu-sub-button",
@@ -721,6 +727,36 @@ function SidebarMenuSubButton({
       active: isActive,
     },
   });
+
+  if (!tooltip) {
+    return comp;
+  }
+
+  let tooltipProps: React.ComponentProps<typeof TooltipContent>;
+  if (typeof tooltip === "string") {
+    tooltipProps = { children: tooltip };
+  } else {
+    tooltipProps = tooltip;
+  }
+
+  return (
+    <Tooltip>
+      {comp}
+      <TooltipContent
+        side="right"
+        align="center"
+        hidden={isMobile}
+        {...tooltipProps}
+        sideOffset={
+          tooltipProps.sideOffset ?? SIDEBAR_SUB_MENU_TOOLTIP_SIDE_OFFSET
+        }
+        className={cn(
+          sidebarMenuTooltipContentClassName,
+          tooltipProps.className,
+        )}
+      />
+    </Tooltip>
+  );
 }
 
 export {
@@ -747,5 +783,6 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  sidebarMenuTooltipContentClassName,
   useSidebar,
 };
