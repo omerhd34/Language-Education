@@ -3,7 +3,6 @@ import { examA1Clues } from "@/data/topics/exam/examA1";
 import { examA2Clues } from "@/data/topics/exam/examA2";
 import { examB1Clues } from "@/data/topics/exam/examB1";
 import { examB2Clues } from "@/data/topics/exam/examB2";
-import { examBaslangicClues } from "@/data/topics/exam/examBaslangic";
 import { examC1Clues } from "@/data/topics/exam/examC1";
 import { examC2Clues } from "@/data/topics/exam/examC2";
 import type {
@@ -19,7 +18,6 @@ import {
 import { shuffleSeeded } from "@/lib/seededRandom";
 
 const LEVEL_EXAM_CLUES: Record<CefrLevel, CrosswordCandidate[]> = {
-  Başlangıç: examBaslangicClues,
   A1: examA1Clues,
   A2: examA2Clues,
   B1: examB1Clues,
@@ -39,7 +37,7 @@ export const LEVEL_EXAM_CROSSWORD_COUNT = 1;
 export const LEVEL_EXAM_CLUE_COUNT = 20;
 export const LEVEL_EXAM_FILL_BLANK_COUNT = 20;
 
-export const TOPIC_EXAM_PASS_RATIO = 0.75;
+export const TOPIC_EXAM_PASS_RATIO = 0.85;
 
 const FALLBACK_DISTRACTORS = [
   "Hiçbiri",
@@ -145,6 +143,10 @@ export function ensureExamOptionCount(
   };
 }
 
+function listQuizExercises(content: TopicContent) {
+  return content.quizExercises ?? [];
+}
+
 function practiceMultipleChoice(
   content: TopicContent,
 ): MultipleChoiceExercise[] {
@@ -186,7 +188,7 @@ function buildExtraTopicQuestions(
     extras.push(
       ensureExamOptionCount(
         {
-          id: `exam-extra-${content.topicId}-${subtopic.id}-1`,
+          id: `quiz-extra-${content.topicId}-${subtopic.id}-1`,
           subtopicId: subtopic.id,
           type: "multiple_choice",
           prompt: `"${subtopic.title}" hangi konunun parçasıdır?`,
@@ -208,7 +210,7 @@ function buildExtraTopicQuestions(
     extras.push(
       ensureExamOptionCount(
         {
-          id: `exam-extra-${content.topicId}-${subtopic.id}-2`,
+          id: `quiz-extra-${content.topicId}-${subtopic.id}-2`,
           subtopicId: subtopic.id,
           type: "multiple_choice",
           prompt: `"${subtopic.title}" için en iyi çalışma yolu hangisidir?`,
@@ -232,7 +234,7 @@ function buildExtraTopicQuestions(
     extras.push(
       ensureExamOptionCount(
         {
-          id: `exam-extra-${content.topicId}-pad-${index}`,
+          id: `quiz-extra-${content.topicId}-pad-${index}`,
           subtopicId: subtopics[0]?.id ?? content.topicId,
           type: "multiple_choice",
           prompt: `Bu konuyla ilgili doğru ifade hangisidir? (${index})`,
@@ -257,8 +259,8 @@ export function resolveTopicExamExercises(
   content: TopicContent,
 ): MultipleChoiceExercise[] {
   const questionCount =
-    content.examQuestionCount && content.examQuestionCount > 0
-      ? content.examQuestionCount
+    content.quizQuestionCount && content.quizQuestionCount > 0
+      ? content.quizQuestionCount
       : TOPIC_EXAM_QUESTION_COUNT;
   const practice = practiceMultipleChoice(content);
   const pool = [
@@ -267,15 +269,20 @@ export function resolveTopicExamExercises(
   ];
   const seen = new Set<string>();
   const source: MultipleChoiceExercise[] = [];
+  const quizMultipleChoice = listQuizExercises(content).filter(
+    (item): item is MultipleChoiceExercise => item.type === "multiple_choice",
+  );
 
-  for (const item of content.examExercises ?? []) {
+  for (const item of quizMultipleChoice) {
     pushUniqueQuestion(source, seen, item);
   }
-  for (const item of practice) {
-    pushUniqueQuestion(source, seen, {
-      ...item,
-      id: `exam-${item.id}`,
-    });
+  if (quizMultipleChoice.length === 0 && source.length < questionCount) {
+    for (const item of practice) {
+      pushUniqueQuestion(source, seen, {
+        ...item,
+        id: `quiz-${item.id}`,
+      });
+    }
   }
 
   if (source.length < questionCount) {
@@ -289,8 +296,8 @@ export function resolveTopicExamExercises(
   }
 
   const optionCount =
-    content.examOptionCount && content.examOptionCount > 1
-      ? content.examOptionCount
+    content.quizOptionCount && content.quizOptionCount > 1
+      ? content.quizOptionCount
       : TOPIC_EXAM_OPTION_COUNT;
 
   return source
@@ -301,25 +308,24 @@ export function resolveTopicExamExercises(
 export function resolveTopicExamFillBlanks(
   content: TopicContent,
 ): FillBlankExercise[] {
-  const seen = new Set<string>();
-  const questions: FillBlankExercise[] = [];
-
-  for (const item of content.exercises) {
-    if (item.type !== "fill_blank") {
-      continue;
-    }
-    const key = item.prompt.trim().toLocaleLowerCase("tr");
-    if (seen.has(key)) {
-      continue;
-    }
-    seen.add(key);
-    questions.push({
+  return listQuizExercises(content)
+    .filter((item): item is FillBlankExercise => item.type === "fill_blank")
+    .map((item) => ({
       ...item,
-      id: `exam-fb-${item.id}`,
-    });
-  }
+      id: item.id.startsWith("quiz-") ? item.id : `quiz-${item.id}`,
+    }));
+}
 
-  return questions;
+export function resolveTopicExamCrosswords(
+  content: TopicContent,
+): CrosswordExercise[] {
+  return listQuizExercises(content)
+    .filter((item): item is CrosswordExercise => item.type === "crossword")
+    .slice(0, 1)
+    .map((item) => ({
+      ...item,
+      id: item.id.startsWith("quiz-") ? item.id : `quiz-${item.id}`,
+    }));
 }
 
 function shuffleCandidates(

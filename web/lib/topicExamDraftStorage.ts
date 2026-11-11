@@ -3,7 +3,7 @@ import { isTopicExamPassed } from "@/lib/topicProgressStorage";
 const STORAGE_KEY = "pylmor-topic-exam-drafts";
 export const TOPIC_EXAM_DRAFT_EVENT = "pylmor:topic-exam-draft";
 
-export type TopicQuizPart = "multiple_choice" | "fill_blank";
+export type TopicQuizPart = "multiple_choice" | "fill_blank" | "crossword";
 
 export type TopicExamSlot = {
   selected: number | null;
@@ -27,7 +27,11 @@ export type TopicExamDraft = {
 
 type TopicExamDraftMap = Record<string, TopicExamDraft>;
 
-const QUIZ_PARTS: readonly TopicQuizPart[] = ["multiple_choice", "fill_blank"];
+const QUIZ_PARTS: readonly TopicQuizPart[] = [
+  "multiple_choice",
+  "fill_blank",
+  "crossword",
+];
 
 function canUseDom(): boolean {
   return typeof window !== "undefined";
@@ -41,7 +45,11 @@ function emitChanged(): void {
 }
 
 function isQuizPart(value: unknown): value is TopicQuizPart {
-  return value === "multiple_choice" || value === "fill_blank";
+  return (
+    value === "multiple_choice" ||
+    value === "fill_blank" ||
+    value === "crossword"
+  );
 }
 
 function isSlot(value: unknown): value is TopicExamSlot {
@@ -226,6 +234,9 @@ export function clearTopicExamDrafts(): void {
 function partPercent(draft: TopicExamDraft, part: TopicQuizPart): number {
   const item = draft.parts[part];
   if (item?.active) {
+    if (part === "crossword" || item.slots.length === 0) {
+      return toExamPercent(item.correct, item.total);
+    }
     const checked = item.slots.filter((slot) => slot.checked).length;
     const total = item.total > 0 ? item.total : item.slots.length;
     return toExamPercent(checked, total);

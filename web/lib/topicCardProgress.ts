@@ -2,17 +2,23 @@ import { getTopicContent } from "@/data/topics";
 import type { ExerciseType } from "@/data/topics/types";
 import { computeExerciseTypeProgress } from "@/lib/exerciseTypeProgress";
 import {
+  resolveTopicExamCrosswords,
   resolveTopicExamExercises,
   resolveTopicExamFillBlanks,
 } from "@/lib/topicExam";
-import {
-  readTopicQuizPartPercents,
-  type TopicQuizPart,
-} from "@/lib/topicExamDraftStorage";
+import type { TopicQuizPart } from "@/lib/topicExamDraftStorage";
 import {
   getLessonViewRequiredMs,
   getTopicProgressRecord,
+  isTopicExamPassed,
 } from "@/lib/topicProgressStorage";
+
+export type TopicProgressWeights = {
+  pillarCount: number;
+  pillarPercent: number;
+  exerciseTypeCount: number;
+  quizPartCount: number;
+};
 
 function availableExerciseTypes(topicId: string): ExerciseType[] {
   const content = getTopicContent(topicId);
@@ -36,6 +42,9 @@ function availableQuizParts(topicId: string): TopicQuizPart[] {
   if (resolveTopicExamFillBlanks(content).length > 0) {
     parts.push("fill_blank");
   }
+  if (resolveTopicExamCrosswords(content).length > 0) {
+    parts.push("crossword");
+  }
   return parts;
 }
 
@@ -50,36 +59,100 @@ function lessonPercent(topicId: string): number {
   return viewed >= requiredMs ? 100 : 0;
 }
 
-function lessonSectionPercents(topicId: string): number[] {
-  const sections = getTopicContent(topicId)?.lesson.sections ?? [];
-  if (sections.length === 0) {
-    return [];
+function pillarShareFromItemPercents(
+  pillarPoints: number,
+  itemPercents: readonly number[],
+): number {
+  if (itemPercents.length === 0) {
+    return 0;
   }
 
-  const percent = lessonPercent(topicId);
-  return sections.map(() => percent);
+  const sharePerItem = pillarPoints / itemPercents.length;
+  return itemPercents.reduce((sum, value) => {
+    const clamped = Math.min(100, Math.max(0, value));
+    return sum + sharePerItem * (clamped / 100);
+  }, 0);
+}
+
+function topicProgressPillarCount(topicId: string): number {
+  const hasLesson = getTopicContent(topicId) !== undefined;
+  const hasExercises = availableExerciseTypes(topicId).length > 0;
+  const hasQuiz = availableQuizParts(topicId).length > 0;
+
+  let count = 0;
+  if (hasLesson) {
+    count += 1;
+  }
+  if (hasExercises) {
+    count += 1;
+  }
+  if (hasQuiz) {
+    count += 1;
+  }
+  return Math.max(count, 1);
+}
+
+/** Konu başına dilim: Konu (ders) + Alıştırma (tüm türler) + Quiz (tüm bölümler). */
+export function getTopicProgressWeights(topicId: string): TopicProgressWeights {
+  const exerciseTypeCount = availableExerciseTypes(topicId).length;
+  const quizPartCount = availableQuizParts(topicId).length;
+  const pillarCount = topicProgressPillarCount(topicId);
+
+  return {
+    pillarCount,
+    pillarPercent: 100 / pillarCount,
+    exerciseTypeCount,
+    quizPartCount,
+  };
+}
+
+export function topicExerciseTypeWeightPercent(topicId: string): number {
+  const { pillarPercent, exerciseTypeCount } = getTopicProgressWeights(topicId);
+  if (exerciseTypeCount <= 0) {
+    return 0;
+  }
+  return pillarPercent / exerciseTypeCount;
+}
+
+export function topicQuizPartWeightPercent(topicId: string): number {
+  const { pillarPercent, quizPartCount } = getTopicProgressWeights(topicId);
+  if (quizPartCount <= 0) {
+    return 0;
+  }
+  return pillarPercent / quizPartCount;
+}
+
+function pointsFromPercent(share: number, percent: number): number {
+  const clamped = Math.min(100, Math.max(0, percent));
+  return share * (clamped / 100);
 }
 
 export function computeDisplayedTopicProgress(topicId: string): number {
   const content = getTopicContent(topicId);
   const record = getTopicProgressRecord(topicId);
+  const { pillarPercent, exerciseTypeCount, quizPartCount } =
+    getTopicProgressWeights(topicId);
+
+  const lessonPoints =
+    content !== undefined
+      ? pointsFromPercent(pillarPercent, lessonPercent(topicId))
+      : 0;
+
   const types = availableExerciseTypes(topicId);
   const typeProgress = computeExerciseTypeProgress({
     topicId,
     exercises: content?.exercises ?? [],
     completedTypes: record.completedTypes ?? [],
   });
+  const exerciseTypePercents = types.map((type) => typeProgress[type] ?? 0);
+  const exercisePoints =
+    exerciseTypeCount > 0
+      ? pillarShareFromItemPercents(pillarPercent, exerciseTypePercents)
+      : 0;
 
-  const parts: number[] = [
-    ...lessonSectionPercents(topicId),
-    ...types.map((type) => typeProgress[type] ?? 0),
-    ...readTopicQuizPartPercents(topicId, availableQuizParts(topicId)),
-  ];
+  const quizPoints =
+    quizPartCount > 0 && isTopicExamPassed(topicId) ? pillarPercent : 0;
 
-  if (parts.length === 0) {
-    return 0;
-  }
-
-  const total = parts.reduce((sum, value) => sum + value, 0);
-  return Math.min(100, Math.max(0, Math.round(total / parts.length)));
+  const total = lessonPoints + exercisePoints + quizPoints;
+  return Math.min(100, Math.max(0, Math.round(total)));
 }

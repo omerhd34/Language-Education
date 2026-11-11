@@ -45,10 +45,30 @@ type ExerciseDraftStore = {
   crosswords: Record<string, CrosswordDraft>;
   selectedTypes: Record<string, ExerciseType | null>;
   sessions: Record<string, LinearSessionDraft>;
+  sessionOrders: Record<string, string[]>;
 };
 
 function emptyStore(): ExerciseDraftStore {
-  return { crosswords: {}, selectedTypes: {}, sessions: {} };
+  return {
+    crosswords: {},
+    selectedTypes: {},
+    sessions: {},
+    sessionOrders: {},
+  };
+}
+
+function sanitizeSessionOrder(value: unknown): string[] | null {
+  if (!Array.isArray(value) || value.length === 0) {
+    return null;
+  }
+  const ids: string[] = [];
+  for (const item of value) {
+    if (typeof item !== "string" || item.length === 0) {
+      return null;
+    }
+    ids.push(item);
+  }
+  return ids;
 }
 
 function emitChanged(): void {
@@ -228,6 +248,7 @@ function readStore(): ExerciseDraftStore {
     const crosswords: Record<string, CrosswordDraft> = {};
     const selectedTypes: Record<string, ExerciseType | null> = {};
     const sessions: Record<string, LinearSessionDraft> = {};
+    const sessionOrders: Record<string, string[]> = {};
 
     if (
       record.crosswords &&
@@ -276,7 +297,20 @@ function readStore(): ExerciseDraftStore {
       }
     }
 
-    return { crosswords, selectedTypes, sessions };
+    if (
+      record.sessionOrders &&
+      typeof record.sessionOrders === "object" &&
+      !Array.isArray(record.sessionOrders)
+    ) {
+      for (const [key, value] of Object.entries(record.sessionOrders)) {
+        const order = sanitizeSessionOrder(value);
+        if (order) {
+          sessionOrders[key] = order;
+        }
+      }
+    }
+
+    return { crosswords, selectedTypes, sessions, sessionOrders };
   } catch {
     return emptyStore();
   }
@@ -290,7 +324,8 @@ function writeStore(store: ExerciseDraftStore): void {
   if (
     Object.keys(store.crosswords).length === 0 &&
     Object.keys(store.selectedTypes).length === 0 &&
-    Object.keys(store.sessions).length === 0
+    Object.keys(store.sessions).length === 0 &&
+    Object.keys(store.sessionOrders).length === 0
   ) {
     window.localStorage.removeItem(STORAGE_KEY);
     emitChanged();
@@ -391,12 +426,40 @@ export function writeLinearSession(
   writeStore(store);
 }
 
-export function clearLinearSession(key: string): void {
-  const store = readStore();
-  if (!store.sessions[key]) {
+export function readLinearSessionOrder(key: string): string[] | null {
+  return readStore().sessionOrders[key] ?? null;
+}
+
+export function writeLinearSessionOrder(
+  key: string,
+  exerciseIds: string[],
+): void {
+  const order = sanitizeSessionOrder(exerciseIds);
+  if (!order) {
     return;
   }
-  delete store.sessions[key];
+  const store = readStore();
+  const current = store.sessionOrders[key];
+  if (current && JSON.stringify(current) === JSON.stringify(order)) {
+    return;
+  }
+  store.sessionOrders[key] = order;
+  writeStore(store);
+}
+
+export function clearLinearSession(key: string): void {
+  const store = readStore();
+  const hadSession = Boolean(store.sessions[key]);
+  const hadOrder = Boolean(store.sessionOrders[key]);
+  if (!hadSession && !hadOrder) {
+    return;
+  }
+  if (hadSession) {
+    delete store.sessions[key];
+  }
+  if (hadOrder) {
+    delete store.sessionOrders[key];
+  }
   writeStore(store);
 }
 
