@@ -1,15 +1,18 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
+import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
+import { ExerciseIncorrectExplanation } from "@/components/features/exercises/ExerciseIncorrectExplanation";
+import { ExerciseListenWordButton } from "@/components/features/exercises/ExerciseListenWordButton";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { InstantMultipleChoiceOptions } from "@/components/features/exercises/InstantMultipleChoiceOptions";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
-import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
 import type { MultipleChoiceExercise } from "@/data/topics/types";
 import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
+import { multipleChoiceSpeakText } from "@/lib/exerciseSpeakText";
 import { cn } from "@/lib/utils";
 
 export type ExerciseSessionResult = {
@@ -36,6 +39,7 @@ type MultipleChoiceExercisesProps = {
     slots: ChoiceSlot[];
   }) => void;
   showHint?: boolean;
+  onBackToTypes?: () => void;
 };
 
 function createChoiceSlot(): ChoiceSlot {
@@ -55,6 +59,8 @@ function countCorrect(
   }, 0);
 }
 
+const CORRECT_ANSWER_AUTO_ADVANCE_MS = 480;
+
 export function MultipleChoiceExercises({
   exercises,
   onComplete,
@@ -64,16 +70,16 @@ export function MultipleChoiceExercises({
   progressShare = 100,
   onSessionChange,
   showHint = true,
+  onBackToTypes,
 }: MultipleChoiceExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
+  const shouldAutoAdvanceRef = useRef(false);
   const {
     index,
     slots,
     current,
     finished,
-    resultOpen,
-    setResultOpen,
     nextLabelKey,
     canGoPrevious,
     canGoNext,
@@ -108,16 +114,44 @@ export function MultipleChoiceExercises({
     });
   }, [exercises, index, onSessionChange, slots]);
 
+  const exercise = exercises[index];
+
+  const finishOrAdvance = useCallback(() => {
+    handleAdvance((answered) => {
+      onComplete?.({
+        correct: countCorrect(exercises, answered),
+        total: exercises.length,
+      });
+    });
+  }, [exercises, handleAdvance, onComplete]);
+
+  useEffect(() => {
+    if (!exercise || !shouldAutoAdvanceRef.current) {
+      return;
+    }
+    if (!current?.checked || current.selected !== exercise.correctIndex) {
+      shouldAutoAdvanceRef.current = false;
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      shouldAutoAdvanceRef.current = false;
+      finishOrAdvance();
+    }, CORRECT_ANSWER_AUTO_ADVANCE_MS);
+
+    return () => clearTimeout(timer);
+  }, [current?.checked, current?.selected, exercise, index, finishOrAdvance]);
+
   if (exercises.length === 0 || !current) {
     return <p className="page-subtitle mt-0">{t("noExercisesForType")}</p>;
   }
 
-  const exercise = exercises[index];
   if (!exercise) {
     return null;
   }
 
   const promptId = `${exercise.id}-prompt`;
+  const listenWord = multipleChoiceSpeakText(exercise);
 
   const isCorrect =
     current.checked && current.selected === exercise.correctIndex;
@@ -140,9 +174,10 @@ export function MultipleChoiceExercises({
             total: exercises.length,
           })}
         </p>
-        <Button type="button" onClick={resetSession}>
-          {t("retry")}
-        </Button>
+        <ExerciseFinishedActions
+          onRetry={resetSession}
+          onBackToTypes={onBackToTypes}
+        />
       </div>
     );
   }
@@ -151,16 +186,19 @@ export function MultipleChoiceExercises({
     if (current.checked) {
       return;
     }
+    const isAnswerCorrect = optionIndex === exercise.correctIndex;
     updateCurrent({ selected: optionIndex, checked: true });
+    shouldAutoAdvanceRef.current = isAnswerCorrect;
   }
 
   function handleNext() {
-    handleAdvance((answered) => {
-      onComplete?.({
-        correct: countCorrect(exercises, answered),
-        total: exercises.length,
-      });
-    });
+    shouldAutoAdvanceRef.current = false;
+    finishOrAdvance();
+  }
+
+  function handlePreviousWithCancelAutoAdvance() {
+    shouldAutoAdvanceRef.current = false;
+    handlePrevious();
   }
 
   return (
@@ -186,6 +224,9 @@ export function MultipleChoiceExercises({
           fallbackKey={showHint ? "topicMultipleChoice" : undefined}
           showHint={showHint}
           headingId={promptId}
+          actions={
+            listenWord ? <ExerciseListenWordButton text={listenWord} /> : null
+          }
         />
 
         <InstantMultipleChoiceOptions
@@ -198,12 +239,17 @@ export function MultipleChoiceExercises({
           optionsAriaLabel={t("optionsAria")}
         />
 
+        <ExerciseIncorrectExplanation
+          show={current.checked && !isCorrect}
+          explanation={exercise.explanation}
+        />
+
         <ExerciseStepNav
           canGoPrevious={canGoPrevious}
           canGoNext={canGoNext && current.checked}
           nextLabel={continueLabel}
           nextVariant={current.checked ? "default" : "outline"}
-          onPrevious={handlePrevious}
+          onPrevious={handlePreviousWithCancelAutoAdvance}
           onNext={handleNext}
           trailing={
             canRestart ? (
@@ -221,15 +267,6 @@ export function MultipleChoiceExercises({
           }
         />
       </article>
-
-      <ExerciseResultDialog
-        open={resultOpen && current.checked && Boolean(exercise.explanation)}
-        variant={isCorrect ? "correct" : "incorrect"}
-        explanation={exercise.explanation}
-        onOpenChange={setResultOpen}
-        onContinue={handleNext}
-        continueLabel={continueLabel}
-      />
     </div>
   );
 }

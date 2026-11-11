@@ -43,8 +43,10 @@ import {
   clearCrosswordDraft,
   clearLinearSession,
   readLinearSession,
+  readLinearSessionOrder,
   readSelectedExerciseType,
   writeLinearSession,
+  writeLinearSessionOrder,
   writeSelectedExerciseType,
   type LinearSessionDraft,
   type LinearSlot,
@@ -53,6 +55,7 @@ import {
   computeExerciseTypeProgress,
   crosswordDraftKey,
 } from "@/lib/exerciseTypeProgress";
+import { shuffleSeeded } from "@/lib/seededRandom";
 import { getNextLevel } from "@/lib/topicAccess";
 
 type TopicExercisesViewProps = {
@@ -99,6 +102,32 @@ const PRACTICE_TYPES_WITH_RANDOM_SET: ExerciseType[] = [
   "fill_blank",
   "listening",
 ];
+
+function orderExercisesByIds<T extends TopicExercise>(
+  items: T[],
+  ids: string[],
+): T[] {
+  if (ids.length !== items.length) {
+    return items;
+  }
+  const byId = new Map(items.map((item) => [item.id, item]));
+  const ordered: T[] = [];
+  for (const id of ids) {
+    const exercise = byId.get(id);
+    if (!exercise) {
+      return items;
+    }
+    ordered.push(exercise);
+  }
+  return ordered;
+}
+
+function createShuffledExerciseOrder(
+  items: TopicExercise[],
+  seed: string,
+): string[] {
+  return shuffleSeeded(items, seed).map((item) => item.id);
+}
 
 function toLinearSlots(session: LinearSessionInput): LinearSlot[] {
   return session.slots.map((slot) => ({
@@ -230,6 +259,53 @@ export function TopicExercisesView({
     writeSelectedExerciseType(selectionKey, selectedType);
   }, [isExam, selectedType, selectionKey, sessionReady]);
 
+  useEffect(() => {
+    if (
+      isExam ||
+      !sessionReady ||
+      !selectionKey ||
+      !selectedType ||
+      onExerciseSessionStart
+    ) {
+      return;
+    }
+    if (!PRACTICE_TYPES_WITH_RANDOM_SET.includes(selectedType)) {
+      return;
+    }
+
+    const ofType = exercises.filter((item) => item.type === selectedType);
+    if (ofType.length === 0) {
+      return;
+    }
+
+    const sessionKey = `${selectionKey}:${selectedType}`;
+    const storedOrder = readLinearSessionOrder(sessionKey);
+    if (storedOrder && storedOrder.length === ofType.length) {
+      return;
+    }
+
+    const saved = readLinearSession(sessionKey);
+    const compatibleSave = saved && saved.slots.length === ofType.length;
+    const progress = compatibleSave ? linearSessionProgressPercent(saved) : 0;
+    if (progress > 0) {
+      return;
+    }
+
+    writeLinearSessionOrder(
+      sessionKey,
+      createShuffledExerciseOrder(ofType, crypto.randomUUID()),
+    );
+    setSessionNonce((value) => value + 1);
+    setDraftVersion((value) => value + 1);
+  }, [
+    exercises,
+    isExam,
+    onExerciseSessionStart,
+    selectedType,
+    selectionKey,
+    sessionReady,
+  ]);
+
   const typeProgress = useMemo(() => {
     if (!progressReady) {
       return undefined;
@@ -287,6 +363,32 @@ export function TopicExercisesView({
     }),
     [exercises],
   );
+
+  const filteredExercises = useMemo(() => {
+    if (!selectedType) {
+      return [];
+    }
+    const ofType = exercises.filter((item) => item.type === selectedType);
+    if (
+      onExerciseSessionStart ||
+      !selectionKey ||
+      !PRACTICE_TYPES_WITH_RANDOM_SET.includes(selectedType)
+    ) {
+      return ofType;
+    }
+    const order = readLinearSessionOrder(`${selectionKey}:${selectedType}`);
+    if (order) {
+      return orderExercisesByIds(ofType, order);
+    }
+    return ofType;
+  }, [
+    exercises,
+    onExerciseSessionStart,
+    selectedType,
+    selectionKey,
+    sessionNonce,
+    draftVersion,
+  ]);
 
   const [levelPartPercents, setLevelPartPercents] = useState<
     Partial<Record<LevelExamPart, number>>
@@ -456,24 +558,42 @@ export function TopicExercisesView({
     }
   }
 
+  const assignFreshExerciseOrder = useCallback(
+    (type: ExerciseType) => {
+      if (!selectionKey || onExerciseSessionStart) {
+        return;
+      }
+      const ofType = exercises.filter((item) => item.type === type);
+      if (ofType.length === 0) {
+        return;
+      }
+      writeLinearSessionOrder(
+        `${selectionKey}:${type}`,
+        createShuffledExerciseOrder(ofType, crypto.randomUUID()),
+      );
+    },
+    [exercises, onExerciseSessionStart, selectionKey],
+  );
+
   function beginExerciseSession(type: ExerciseType) {
-    if (
-      PRACTICE_TYPES_WITH_RANDOM_SET.includes(type) &&
-      onExerciseSessionStart &&
-      selectionKey
-    ) {
+    if (PRACTICE_TYPES_WITH_RANDOM_SET.includes(type) && selectionKey) {
       const total = exercises.filter((item) => item.type === type).length;
       const saved = readLinearSession(`${selectionKey}:${type}`);
       const compatibleSave = saved && saved.slots.length === total;
       const progress = compatibleSave ? linearSessionProgressPercent(saved) : 0;
       const shouldPickNewSet = !compatibleSave || progress === 0;
       if (shouldPickNewSet) {
-        onExerciseSessionStart(type);
+        onExerciseSessionStart?.(type);
         clearLinearSession(`${selectionKey}:${type}`);
+        assignFreshExerciseOrder(type);
         setSessionNonce((value) => value + 1);
       }
     }
     setSelectedType(type);
+  }
+
+  function backToExerciseTypePicker() {
+    setSelectedType(null);
   }
 
   function handleSessionRestart() {
@@ -483,6 +603,7 @@ export function TopicExercisesView({
     onExerciseSessionStart?.(selectedType ?? undefined);
     if (selectionKey && selectedType) {
       clearLinearSession(`${selectionKey}:${selectedType}`);
+      assignFreshExerciseOrder(selectedType);
       if (selectedType === "crossword") {
         clearCrosswordDraft(
           crosswordDraftKey(
@@ -667,7 +788,7 @@ export function TopicExercisesView({
     );
   }
 
-  const filtered = exercises.filter((item) => item.type === selectedType);
+  const filtered = filteredExercises;
   const alreadyCompleted = completedTypes.includes(selectedType);
   const savedMultipleChoice = savedPracticeSession(
     "multiple_choice",
@@ -711,6 +832,7 @@ export function TopicExercisesView({
           }
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
+          onBackToTypes={backToExerciseTypePicker}
         />
       ) : null}
 
@@ -729,6 +851,7 @@ export function TopicExercisesView({
           }
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
+          onBackToTypes={backToExerciseTypePicker}
         />
       ) : null}
 
@@ -739,6 +862,7 @@ export function TopicExercisesView({
           draftKey={crosswordDraftKey(topicId, filtered as CrosswordExercise[])}
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
+          onBackToTypes={backToExerciseTypePicker}
         />
       ) : null}
 
@@ -759,6 +883,7 @@ export function TopicExercisesView({
           }
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
+          onBackToTypes={backToExerciseTypePicker}
         />
       ) : null}
     </div>

@@ -6,13 +6,16 @@ import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
+import { CrosswordExerciseView } from "@/components/features/topics/CrosswordExerciseView";
 import { ExerciseTypePicker } from "@/components/features/topics/ExerciseTypePicker";
 import { FillBlankExercises } from "@/components/features/topics/FillBlankExercises";
 import { MultipleChoiceExercises } from "@/components/features/topics/MultipleChoiceExercises";
 import type {
+  CrosswordExercise,
   FillBlankExercise,
   MultipleChoiceExercise,
 } from "@/data/topics/types";
+import { clearCrosswordDraft } from "@/lib/exerciseDraftStorage";
 import { didPassTopicExamScore } from "@/lib/topicExam";
 import {
   emptyTopicExamDraft,
@@ -32,6 +35,7 @@ type TopicExamViewProps = {
   topicId: string;
   multipleChoice: MultipleChoiceExercise[];
   fillBlanks: FillBlankExercise[];
+  crosswords: CrosswordExercise[];
 };
 
 type PartOutcome = "passed" | "failed";
@@ -46,6 +50,9 @@ type PartSession = {
 function partProgress(draft: TopicExamDraft, part: TopicQuizPart): number {
   const item = draft.parts[part];
   if (item?.active) {
+    if (part === "crossword" || item.slots.length === 0) {
+      return toExamPercent(item.correct, item.total);
+    }
     const checked = item.slots.filter((slot) => slot.checked).length;
     const total = item.total > 0 ? item.total : item.slots.length;
     return toExamPercent(checked, total);
@@ -56,12 +63,28 @@ function partProgress(draft: TopicExamDraft, part: TopicQuizPart): number {
   return 0;
 }
 
+function defaultQuizPart(
+  multipleChoice: MultipleChoiceExercise[],
+  fillBlanks: FillBlankExercise[],
+  crosswords: CrosswordExercise[],
+): TopicQuizPart {
+  if (multipleChoice.length > 0) {
+    return "multiple_choice";
+  }
+  if (fillBlanks.length > 0) {
+    return "fill_blank";
+  }
+  return "crossword";
+}
+
 export function TopicExamView({
   topicId,
   multipleChoice,
   fillBlanks,
+  crosswords,
 }: TopicExamViewProps) {
   const t = useTranslations("Topic");
+  const examCrosswordDraftKey = `topic:${topicId}:exam:crossword`;
   const requiredParts = useMemo<TopicQuizPart[]>(() => {
     const parts: TopicQuizPart[] = [];
     if (multipleChoice.length > 0) {
@@ -70,8 +93,11 @@ export function TopicExamView({
     if (fillBlanks.length > 0) {
       parts.push("fill_blank");
     }
+    if (crosswords.length > 0) {
+      parts.push("crossword");
+    }
     return parts;
-  }, [fillBlanks.length, multipleChoice.length]);
+  }, [crosswords.length, fillBlanks.length, multipleChoice.length]);
   const [ready, setReady] = useState(false);
   const [draft, setDraft] = useState<TopicExamDraft>(emptyTopicExamDraft());
   const [selected, setSelected] = useState<TopicQuizPart | null>(null);
@@ -95,7 +121,7 @@ export function TopicExamView({
     writeTopicExamDraft(topicId, next);
     setDraft(next);
     setReady(true);
-  }, [fillBlanks.length, multipleChoice.length, requiredParts, topicId]);
+  }, [crosswords.length, fillBlanks.length, multipleChoice.length, requiredParts, topicId]);
 
   const saveDraft = useCallback(
     (next: TopicExamDraft) => {
@@ -164,22 +190,41 @@ export function TopicExamView({
     [handleSessionChange],
   );
 
+  const handleCrosswordProgress = useCallback(
+    (percent: number) => {
+      handleSessionChange("crossword", {
+        index: 0,
+        correct: percent,
+        total: 100,
+        slots: [],
+      });
+    },
+    [handleSessionChange],
+  );
+
   const clearPartPass = useCallback(
     (part: TopicQuizPart) => {
+      if (part === "crossword") {
+        clearCrosswordDraft(examCrosswordDraftKey);
+      }
       const current = readTopicExamDraft(topicId) ?? emptyTopicExamDraft();
       saveDraft({
         ...current,
         passedParts: current.passedParts.filter((item) => item !== part),
       });
     },
-    [saveDraft, topicId],
+    [examCrosswordDraftKey, saveDraft, topicId],
   );
 
   if (!ready) {
     return null;
   }
 
-  if (multipleChoice.length === 0 && fillBlanks.length === 0) {
+  if (
+    multipleChoice.length === 0 &&
+    fillBlanks.length === 0 &&
+    crosswords.length === 0
+  ) {
     return <p className="page-subtitle mt-0">{t("noExamQuestions")}</p>;
   }
 
@@ -217,7 +262,7 @@ export function TopicExamView({
   const allPassed = requiredParts.every((part) =>
     draft.passedParts.includes(part),
   );
-  const showPicker = fillBlanks.length > 0 && multipleChoice.length > 0;
+  const showPicker = requiredParts.length > 1;
 
   if (showPicker && !selected) {
     return (
@@ -233,18 +278,23 @@ export function TopicExamView({
           counts={{
             multiple_choice: multipleChoice.length,
             fill_blank: fillBlanks.length,
-            crossword: 0,
+            crossword: crosswords.length,
             listening: 0,
           }}
           completedTypes={draft.passedParts}
           progressPercents={{
             multiple_choice: partProgress(draft, "multiple_choice"),
             fill_blank: partProgress(draft, "fill_blank"),
+            crossword: partProgress(draft, "crossword"),
           }}
           title={t("quizChooseTitle")}
           subtitle={t("quizChooseSubtitle")}
           onSelect={(type) => {
-            if (type !== "multiple_choice" && type !== "fill_blank") {
+            if (
+              type !== "multiple_choice" &&
+              type !== "fill_blank" &&
+              type !== "crossword"
+            ) {
               return;
             }
             setPartOutcome(null);
@@ -256,7 +306,7 @@ export function TopicExamView({
   }
 
   const activePart: TopicQuizPart =
-    selected ?? (multipleChoice.length > 0 ? "multiple_choice" : "fill_blank");
+    selected ?? defaultQuizPart(multipleChoice, fillBlanks, crosswords);
   const partDraft = draft.parts[activePart];
 
   return (
@@ -303,6 +353,15 @@ export function TopicExamView({
             {t("examBackToTopics")}
           </ButtonLink>
         )
+      ) : activePart === "crossword" ? (
+        <CrosswordExerciseView
+          key={`exam-cw-${crosswords[0]?.id ?? "cw"}`}
+          exercises={crosswords}
+          draftKey={examCrosswordDraftKey}
+          onProgress={handleCrosswordProgress}
+          onRestart={() => clearPartPass("crossword")}
+          onComplete={(result) => handleComplete("crossword", result)}
+        />
       ) : activePart === "fill_blank" ? (
         <FillBlankExercises
           key="fill_blank"

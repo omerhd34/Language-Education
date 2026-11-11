@@ -3,6 +3,7 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Volume2 } from "lucide-react";
+import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
@@ -33,6 +34,7 @@ type ListeningExercisesProps = {
     total: number;
     slots: ListeningSlot[];
   }) => void;
+  onBackToTypes?: () => void;
 };
 
 type VerbRowSlotSelection = {
@@ -538,6 +540,7 @@ export function ListeningExercises({
   initialSlots,
   progressShare = 100,
   onSessionChange,
+  onBackToTypes,
 }: ListeningExercisesProps) {
   const t = useTranslations("Topic");
   const [batchPanelKey, setBatchPanelKey] = useState(0);
@@ -655,9 +658,10 @@ export function ListeningExercises({
             total: exercises.length,
           })}
         </p>
-        <Button type="button" onClick={resetAll}>
-          {t("retry")}
-        </Button>
+        <ExerciseFinishedActions
+          onRetry={resetAll}
+          onBackToTypes={onBackToTypes}
+        />
       </div>
     );
   }

@@ -4,9 +4,11 @@ import { useTranslations } from "next-intl";
 import { Check, RotateCcw } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
+import { LessonBoldText } from "@/components/features/topics/LessonBoldText";
 import type {
   CrosswordDirection,
   CrosswordExercise,
@@ -31,6 +33,7 @@ type CrosswordExerciseViewProps = {
   onProgress?: (percent: number) => void;
   draftKey?: string | null;
   progressShare?: number;
+  onBackToTypes?: () => void;
 };
 
 type CellStart = {
@@ -169,6 +172,7 @@ export function CrosswordExerciseView({
   onProgress,
   draftKey,
   progressShare = 100,
+  onBackToTypes,
 }: CrosswordExerciseViewProps) {
   const t = useTranslations("Topic");
   const storageKey =
@@ -418,15 +422,10 @@ export function CrosswordExerciseView({
     return (
       <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
         <h2 className="page-title">{t("crosswordComplete")}</h2>
-        <p className="page-subtitle mt-0">
-          {t("finishedScore", {
-            correct: solvedCount,
-            total: exercises.length,
-          })}
-        </p>
-        <Button type="button" onClick={resetAll}>
-          {t("retry")}
-        </Button>
+        <ExerciseFinishedActions
+          onRetry={resetAll}
+          onBackToTypes={onBackToTypes}
+        />
       </div>
     );
   }
@@ -450,10 +449,7 @@ export function CrosswordExerciseView({
         <ExercisePercentBadge percent={percent} />
       </div>
       <article className="dashboard-panel space-y-5">
-        <ExerciseQuestionHeader
-          title={t("typeCrossword")}
-          fallbackKey="topicCrossword"
-        />
+        <ExerciseQuestionHeader title={t("typeCrossword")} showHint={false} />
         <div className="overflow-x-auto">
           <div
             className="mx-auto grid w-fit gap-0.5 sm:gap-1"
@@ -608,7 +604,9 @@ export function CrosswordExerciseView({
               <span className="inline-flex size-5 shrink-0 items-center justify-center rounded-full border border-brand-400 text-[10px] leading-none font-semibold tabular-nums text-brand-950 sm:size-6 sm:text-[11px] dark:border-brand-500 dark:text-brand-100">
                 {clue.number}
               </span>
-              <span className="min-w-0 pt-0.5">{clue.text}</span>
+              <span className="min-w-0 pt-0.5">
+                <LessonBoldText text={clue.text} />
+              </span>
             </li>
           ))}
         </ul>

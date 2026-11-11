@@ -2,6 +2,8 @@
 
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, type FormEvent } from "react";
+import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
+import { ExerciseListenWordButton } from "@/components/features/exercises/ExerciseListenWordButton";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
@@ -9,6 +11,7 @@ import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
 import type { FillBlankExercise } from "@/data/topics/types";
 import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
+import { fillBlankSpeakText } from "@/lib/exerciseSpeakText";
 import { cn } from "@/lib/utils";
 
 type ExerciseSessionResult = {
@@ -30,6 +33,7 @@ type FillBlankExercisesProps = {
     slots: BlankSlot[];
   }) => void;
   showHint?: boolean;
+  onBackToTypes?: () => void;
 };
 
 type BlankSlot = {
@@ -73,6 +77,7 @@ export function FillBlankExercises({
   progressShare = 100,
   onSessionChange,
   showHint = true,
+  onBackToTypes,
 }: FillBlankExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
@@ -147,9 +152,10 @@ export function FillBlankExercises({
             total: exercises.length,
           })}
         </p>
-        <Button type="button" onClick={resetSession}>
-          {t("retry")}
-        </Button>
+        <ExerciseFinishedActions
+          onRetry={resetSession}
+          onBackToTypes={onBackToTypes}
+        />
       </div>
     );
   }
@@ -172,6 +178,8 @@ export function FillBlankExercises({
     });
   }
 
+  const listenWord = fillBlankSpeakText(exercise);
+
   return (
     <div className="mx-auto max-w-2xl space-y-4">
       <div className="flex items-center justify-between gap-3">
@@ -181,12 +189,15 @@ export function FillBlankExercises({
         <ExercisePercentBadge percent={percent} />
       </div>
 
-      <article className="dashboard-panel space-y-5">
+      <article className="dashboard-panel space-y-5 pb-5 sm:pb-6">
         <ExerciseQuestionHeader
           title={exercise.prompt}
           hint={exercise.hint}
           fallbackKey={showHint ? "topicFillBlank" : undefined}
           showHint={showHint}
+          actions={
+            listenWord ? <ExerciseListenWordButton text={listenWord} /> : null
+          }
         />
 
         <form className="space-y-4" onSubmit={handleCheck}>
@@ -219,7 +230,7 @@ export function FillBlankExercises({
 
           <ExerciseStepNav
             canGoPrevious={canGoPrevious}
-            canGoNext={canGoNext}
+            canGoNext={canGoNext && current.checked}
             nextLabel={continueLabel}
             nextVariant={current.checked ? "default" : "outline"}
             onPrevious={handlePrevious}

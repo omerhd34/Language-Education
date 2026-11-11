@@ -64,7 +64,7 @@ export function ExerciseQuestionHeader({
               <div
                 id={headingId}
                 className={cn(
-                  "min-w-0 flex-1",
+                  "min-w-0 flex-1 wrap-break-word text-pretty",
                   compactTitle &&
                     typeof title === "string" &&
                     "text-base font-medium text-brand-800 dark:text-brand-200",
