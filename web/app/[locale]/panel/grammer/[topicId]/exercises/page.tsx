@@ -5,6 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { TopicContentMissing } from "@/components/features/topics/TopicContentMissing";
 import { TopicExercisesView } from "@/components/features/topics/TopicExercisesView";
+import { TopicGrammarAccessGate } from "@/components/features/topics/TopicGrammarAccessGate";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
 import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
@@ -72,12 +73,18 @@ export default async function TopicExercisesPage({ params }: PageProps) {
       {!unlocked && requiredLevel ? (
         <TopicLevelLocked level={topic.level} requiredLevel={requiredLevel} />
       ) : content ? (
-        <TopicExercisesView
+        <TopicGrammarAccessGate
           topicId={topic.id}
-          exercises={content.exercises}
-          isExam={Boolean(topic.isExam)}
-          level={topic.level}
-        />
+          lockedKind={topic.isExam ? "levelExam" : "topic"}
+          displayIndex={topic.isExam ? undefined : index}
+        >
+          <TopicExercisesView
+            topicId={topic.id}
+            exercises={content.exercises}
+            isExam={Boolean(topic.isExam)}
+            level={topic.level}
+          />
+        </TopicGrammarAccessGate>
       ) : (
         <TopicContentMissing />
       )}

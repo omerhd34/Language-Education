@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { TopicContentMissing } from "@/components/features/topics/TopicContentMissing";
 import { TopicExamView } from "@/components/features/topics/TopicExamView";
+import { TopicGrammarAccessGate } from "@/components/features/topics/TopicGrammarAccessGate";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
 import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
@@ -13,6 +14,7 @@ import {
   parsePassedLevelExams,
 } from "@/lib/levelExamStorage";
 import {
+  resolveTopicExamCrosswords,
   resolveTopicExamExercises,
   resolveTopicExamFillBlanks,
 } from "@/lib/topicExam";
@@ -61,8 +63,9 @@ export default async function TopicExamPage({ params }: PageProps) {
   );
   const unlocked = canAccessLevel(topic.level, passedExams);
   const requiredLevel = getRequiredLevelToUnlock(topic.level);
-  const examExercises = content ? resolveTopicExamExercises(content) : [];
+  const quizExercises = content ? resolveTopicExamExercises(content) : [];
   const examFillBlanks = content ? resolveTopicExamFillBlanks(content) : [];
+  const examCrosswords = content ? resolveTopicExamCrosswords(content) : [];
 
   return (
     <div className="mx-auto w-full max-w-7xl space-y-8 p-4 sm:p-6 lg:p-8">
@@ -77,12 +80,22 @@ export default async function TopicExamPage({ params }: PageProps) {
       />
       {!unlocked && requiredLevel ? (
         <TopicLevelLocked level={topic.level} requiredLevel={requiredLevel} />
-      ) : content && (examExercises.length > 0 || examFillBlanks.length > 0) ? (
-        <TopicExamView
+      ) : content &&
+        (quizExercises.length > 0 ||
+          examFillBlanks.length > 0 ||
+          examCrosswords.length > 0) ? (
+        <TopicGrammarAccessGate
           topicId={topic.id}
-          multipleChoice={examExercises}
-          fillBlanks={examFillBlanks}
-        />
+          lockedKind="topic"
+          displayIndex={index}
+        >
+          <TopicExamView
+            topicId={topic.id}
+            multipleChoice={quizExercises}
+            fillBlanks={examFillBlanks}
+            crosswords={examCrosswords}
+          />
+        </TopicGrammarAccessGate>
       ) : (
         <TopicContentMissing />
       )}

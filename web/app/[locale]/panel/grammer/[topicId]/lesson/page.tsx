@@ -1,9 +1,12 @@
+export const instant = false;
+
 import { cookies } from "next/headers";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { TopicContentMissing } from "@/components/features/topics/TopicContentMissing";
 import { TopicLessonProgressTracker } from "@/components/features/topics/TopicLessonProgressTracker";
 import { TopicLessonView } from "@/components/features/topics/TopicLessonView";
+import { TopicGrammarAccessGate } from "@/components/features/topics/TopicGrammarAccessGate";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
 import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
@@ -13,6 +16,7 @@ import {
   PASSED_LEVEL_EXAMS_COOKIE,
   parsePassedLevelExams,
 } from "@/lib/levelExamStorage";
+import { buildTopicPageMetadata } from "@/lib/server/topicPageMetadata";
 import { canAccessLevel, getRequiredLevelToUnlock } from "@/lib/topicAccess";
 
 type PageProps = {
@@ -24,13 +28,9 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
+  "use cache";
   const { locale, topicId } = await params;
-  const t = await getTranslations({ locale, namespace: "Topic" });
-  const topic = getDashboardTopicById(topicId);
-
-  return {
-    title: topic ? t("documentTitle", { title: topic.title }) : t("lesson"),
-  };
+  return buildTopicPageMetadata(locale, topicId, "lesson");
 }
 
 export default async function TopicLessonPage({ params }: PageProps) {
@@ -85,10 +85,14 @@ export default async function TopicLessonPage({ params }: PageProps) {
       {!unlocked && requiredLevel ? (
         <TopicLevelLocked level={topic.level} requiredLevel={requiredLevel} />
       ) : content ? (
-        <>
+        <TopicGrammarAccessGate
+          topicId={topic.id}
+          lockedKind="topic"
+          displayIndex={index}
+        >
           <TopicLessonProgressTracker topicId={topic.id} />
           <TopicLessonView lesson={content.lesson} />
-        </>
+        </TopicGrammarAccessGate>
       ) : (
         <TopicContentMissing />
       )}

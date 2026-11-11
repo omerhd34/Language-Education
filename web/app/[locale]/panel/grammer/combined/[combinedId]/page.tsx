@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { CombinedExerciseHeader } from "@/components/features/topics/CombinedExerciseHeader";
 import { TopicContentMissing } from "@/components/features/topics/TopicContentMissing";
 import { TopicExercisesView } from "@/components/features/topics/TopicExercisesView";
+import { TopicGrammarAccessGate } from "@/components/features/topics/TopicGrammarAccessGate";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import {
   combinedExerciseStorageId,
@@ -65,10 +66,16 @@ export default async function CombinedExercisePage({ params }: PageProps) {
           requiredLevel={requiredLevel}
         />
       ) : exercises.length > 0 ? (
-        <TopicExercisesView
-          topicId={combinedExerciseStorageId(combined.id)}
-          exercises={exercises}
-        />
+        <TopicGrammarAccessGate
+          combinedId={combined.id}
+          lockedKind="combined"
+          displayIndex={combined.index}
+        >
+          <TopicExercisesView
+            topicId={combinedExerciseStorageId(combined.id)}
+            exercises={exercises}
+          />
+        </TopicGrammarAccessGate>
       ) : (
         <TopicContentMissing />
       )}
