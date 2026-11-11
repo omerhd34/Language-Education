@@ -14,9 +14,11 @@ import {
   parsePassedLevelExams,
 } from "@/lib/levelExamStorage";
 import {
+  resolveMixedTopicQuiz,
   resolveTopicExamCrosswords,
   resolveTopicExamExercises,
   resolveTopicExamFillBlanks,
+  topicQuizUsesMixedFormat,
 } from "@/lib/topicExam";
 import { canAccessLevel, getRequiredLevelToUnlock } from "@/lib/topicAccess";
 
@@ -63,8 +65,16 @@ export default async function TopicExamPage({ params }: PageProps) {
   );
   const unlocked = canAccessLevel(topic.level, passedExams);
   const requiredLevel = getRequiredLevelToUnlock(topic.level);
-  const quizExercises = content ? resolveTopicExamExercises(content) : [];
-  const examFillBlanks = content ? resolveTopicExamFillBlanks(content) : [];
+  const mixedQuiz =
+    content && topicQuizUsesMixedFormat(content)
+      ? resolveMixedTopicQuiz(content)
+      : [];
+  const quizExercises =
+    content && mixedQuiz.length === 0 ? resolveTopicExamExercises(content) : [];
+  const examFillBlanks =
+    content && mixedQuiz.length === 0
+      ? resolveTopicExamFillBlanks(content)
+      : [];
   const examCrosswords = content ? resolveTopicExamCrosswords(content) : [];
 
   return (
@@ -81,7 +91,8 @@ export default async function TopicExamPage({ params }: PageProps) {
       {!unlocked && requiredLevel ? (
         <TopicLevelLocked level={topic.level} requiredLevel={requiredLevel} />
       ) : content &&
-        (quizExercises.length > 0 ||
+        (mixedQuiz.length > 0 ||
+          quizExercises.length > 0 ||
           examFillBlanks.length > 0 ||
           examCrosswords.length > 0) ? (
         <TopicGrammarAccessGate
@@ -94,6 +105,7 @@ export default async function TopicExamPage({ params }: PageProps) {
             multipleChoice={quizExercises}
             fillBlanks={examFillBlanks}
             crosswords={examCrosswords}
+            mixedQuiz={mixedQuiz}
           />
         </TopicGrammarAccessGate>
       ) : (

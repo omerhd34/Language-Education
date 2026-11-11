@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/refs */
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, CheckCircle2 } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/Button";
@@ -10,17 +11,19 @@ import { CrosswordExerciseView } from "@/components/features/topics/CrosswordExe
 import { ExerciseTypePicker } from "@/components/features/topics/ExerciseTypePicker";
 import { FillBlankExercises } from "@/components/features/topics/FillBlankExercises";
 import { MultipleChoiceExercises } from "@/components/features/topics/MultipleChoiceExercises";
+import { TopicMixedQuizExercises } from "@/components/features/topics/TopicMixedQuizExercises";
 import type {
   CrosswordExercise,
   FillBlankExercise,
   MultipleChoiceExercise,
+  TopicQuizExercise,
 } from "@/data/topics/types";
 import { clearCrosswordDraft } from "@/lib/exerciseDraftStorage";
+import { totalCrosswordClueCount } from "@/lib/exerciseTypeProgress";
 import { didPassTopicExamScore } from "@/lib/topicExam";
 import {
   emptyTopicExamDraft,
   readTopicExamDraft,
-  toExamPercent,
   writeTopicExamDraft,
   type TopicExamDraft,
   type TopicExamPartDraft,
@@ -30,12 +33,19 @@ import {
   isTopicExamPassed,
   markTopicExamPassed,
 } from "@/lib/topicProgressStorage";
+import {
+  buildQuizOrderIds,
+  orderItemsByIds,
+  quizPartProgressPercent,
+  quizPartSessionStarted,
+} from "@/lib/topicQuizOrder";
 
 type TopicExamViewProps = {
   topicId: string;
   multipleChoice: MultipleChoiceExercise[];
   fillBlanks: FillBlankExercise[];
   crosswords: CrosswordExercise[];
+  mixedQuiz?: TopicQuizExercise[];
 };
 
 type PartOutcome = "passed" | "failed";
@@ -46,22 +56,6 @@ type PartSession = {
   total: number;
   slots: TopicExamPartDraft["slots"];
 };
-
-function partProgress(draft: TopicExamDraft, part: TopicQuizPart): number {
-  const item = draft.parts[part];
-  if (item?.active) {
-    if (part === "crossword" || item.slots.length === 0) {
-      return toExamPercent(item.correct, item.total);
-    }
-    const checked = item.slots.filter((slot) => slot.checked).length;
-    const total = item.total > 0 ? item.total : item.slots.length;
-    return toExamPercent(checked, total);
-  }
-  if (draft.passedParts.includes(part)) {
-    return 100;
-  }
-  return 0;
-}
 
 function defaultQuizPart(
   multipleChoice: MultipleChoiceExercise[],
@@ -82,10 +76,15 @@ export function TopicExamView({
   multipleChoice,
   fillBlanks,
   crosswords,
+  mixedQuiz = [],
 }: TopicExamViewProps) {
   const t = useTranslations("Topic");
   const examCrosswordDraftKey = `topic:${topicId}:exam:crossword`;
+  const isMixedQuiz = mixedQuiz.length > 0;
   const requiredParts = useMemo<TopicQuizPart[]>(() => {
+    if (isMixedQuiz) {
+      return ["mixed"];
+    }
     const parts: TopicQuizPart[] = [];
     if (multipleChoice.length > 0) {
       parts.push("multiple_choice");
@@ -97,11 +96,115 @@ export function TopicExamView({
       parts.push("crossword");
     }
     return parts;
-  }, [crosswords.length, fillBlanks.length, multipleChoice.length]);
+  }, [
+    crosswords.length,
+    fillBlanks.length,
+    isMixedQuiz,
+    multipleChoice.length,
+  ]);
   const [ready, setReady] = useState(false);
   const [draft, setDraft] = useState<TopicExamDraft>(emptyTopicExamDraft());
   const [selected, setSelected] = useState<TopicQuizPart | null>(null);
   const [partOutcome, setPartOutcome] = useState<PartOutcome | null>(null);
+  const freshMixedOrderRef = useRef<string[] | null>(null);
+  const freshMultipleChoiceOrderRef = useRef<string[] | null>(null);
+
+  const mixedSessionStarted = useMemo(
+    () => quizPartSessionStarted("mixed", draft.parts.mixed),
+    [draft.parts.mixed],
+  );
+
+  const multipleChoiceSessionStarted = useMemo(
+    () =>
+      quizPartSessionStarted(
+        "multiple_choice",
+        draft.parts.multiple_choice,
+      ),
+    [draft.parts.multiple_choice],
+  );
+
+  const mixedOrderIds = useMemo(() => {
+    if (mixedQuiz.length === 0) {
+      return [] as string[];
+    }
+    const saved = draft.quizOrderByPart?.mixed;
+    if (mixedSessionStarted && saved?.length === mixedQuiz.length) {
+      return saved;
+    }
+    if (!mixedSessionStarted) {
+      if (
+        !freshMixedOrderRef.current ||
+        freshMixedOrderRef.current.length !== mixedQuiz.length
+      ) {
+        freshMixedOrderRef.current = buildQuizOrderIds(
+          mixedQuiz,
+          undefined,
+          false,
+        );
+      }
+      return freshMixedOrderRef.current;
+    }
+    if (
+      freshMixedOrderRef.current &&
+      freshMixedOrderRef.current.length === mixedQuiz.length
+    ) {
+      return freshMixedOrderRef.current;
+    }
+    return mixedQuiz.map((item) => item.id);
+  }, [draft.quizOrderByPart?.mixed, mixedQuiz, mixedSessionStarted]);
+
+  const orderedMixedQuiz = useMemo(
+    () => orderItemsByIds(mixedQuiz, mixedOrderIds),
+    [mixedOrderIds, mixedQuiz],
+  );
+
+  const multipleChoiceOrderIds = useMemo(() => {
+    if (multipleChoice.length === 0) {
+      return [] as string[];
+    }
+    const saved = draft.quizOrderByPart?.multiple_choice;
+    if (
+      multipleChoiceSessionStarted &&
+      saved?.length === multipleChoice.length
+    ) {
+      return saved;
+    }
+    if (!multipleChoiceSessionStarted) {
+      if (
+        !freshMultipleChoiceOrderRef.current ||
+        freshMultipleChoiceOrderRef.current.length !== multipleChoice.length
+      ) {
+        freshMultipleChoiceOrderRef.current = buildQuizOrderIds(
+          multipleChoice,
+          undefined,
+          false,
+        );
+      }
+      return freshMultipleChoiceOrderRef.current;
+    }
+    if (
+      freshMultipleChoiceOrderRef.current &&
+      freshMultipleChoiceOrderRef.current.length === multipleChoice.length
+    ) {
+      return freshMultipleChoiceOrderRef.current;
+    }
+    return multipleChoice.map((item) => item.id);
+  }, [
+    draft.quizOrderByPart?.multiple_choice,
+    multipleChoice,
+    multipleChoice.length,
+    multipleChoiceSessionStarted,
+  ]);
+
+  const orderedMultipleChoice = useMemo(
+    () => orderItemsByIds(multipleChoice, multipleChoiceOrderIds),
+    [multipleChoice, multipleChoiceOrderIds],
+  );
+
+  useEffect(() => {
+    freshMixedOrderRef.current = null;
+    freshMultipleChoiceOrderRef.current = null;
+  }, [topicId]);
 
   useEffect(() => {
     const saved = readTopicExamDraft(topicId) ?? emptyTopicExamDraft();
@@ -118,10 +221,15 @@ export function TopicExamView({
       requiredParts,
       passedParts,
     };
-    writeTopicExamDraft(topicId, next);
     setDraft(next);
     setReady(true);
-  }, [crosswords.length, fillBlanks.length, multipleChoice.length, requiredParts, topicId]);
+  }, [
+    crosswords.length,
+    fillBlanks.length,
+    multipleChoice.length,
+    requiredParts,
+    topicId,
+  ]);
 
   const saveDraft = useCallback(
     (next: TopicExamDraft) => {
@@ -132,22 +240,64 @@ export function TopicExamView({
   );
 
   const handleSessionChange = useCallback(
-    (part: TopicQuizPart, session: PartSession) => {
+    (
+      part: TopicQuizPart,
+      session: PartSession,
+      lockOrderIds?: readonly string[],
+    ) => {
       const current = readTopicExamDraft(topicId) ?? emptyTopicExamDraft();
-      saveDraft({
+      const hasProgress =
+        session.index > 0 || session.slots.some((slot) => slot.checked);
+      const quizOrderByPart = { ...current.quizOrderByPart };
+      if (
+        hasProgress &&
+        lockOrderIds &&
+        lockOrderIds.length > 0 &&
+        !quizOrderByPart[part]?.length
+      ) {
+        quizOrderByPart[part] = [...lockOrderIds];
+      }
+
+      const partDraft = {
+        active: true,
+        index: session.index,
+        correct: session.correct,
+        total: session.total,
+        slots: session.slots,
+      };
+
+      const nextParts = { ...current.parts, [part]: partDraft };
+      const next: TopicExamDraft = {
         ...current,
         requiredParts,
-        parts: {
-          ...current.parts,
-          [part]: {
-            active: true,
-            index: session.index,
-            correct: session.correct,
-            total: session.total,
-            slots: session.slots,
-          },
-        },
-      });
+        quizOrderByPart,
+        parts: nextParts,
+      };
+
+      const prevPart = current.parts[part];
+      const orderUnchanged =
+        quizOrderByPart[part]?.join("|") ===
+        current.quizOrderByPart?.[part]?.join("|");
+      const partUnchanged =
+        prevPart?.index === partDraft.index &&
+        prevPart.correct === partDraft.correct &&
+        prevPart.total === partDraft.total &&
+        prevPart.slots.length === partDraft.slots.length &&
+        prevPart.slots.every((slot, slotIndex) => {
+          const nextSlot = partDraft.slots[slotIndex];
+          return (
+            nextSlot !== undefined &&
+            slot.selected === nextSlot.selected &&
+            slot.answer === nextSlot.answer &&
+            slot.checked === nextSlot.checked
+          );
+        });
+
+      if (orderUnchanged && partUnchanged) {
+        return;
+      }
+
+      saveDraft(next);
     },
     [requiredParts, saveDraft, topicId],
   );
@@ -159,16 +309,20 @@ export function TopicExamView({
       total: number;
       slots: { selected: number | null; checked: boolean }[];
     }) => {
-      handleSessionChange("multiple_choice", {
-        ...session,
-        slots: session.slots.map((slot) => ({
-          selected: slot.selected,
-          answer: "",
-          checked: slot.checked,
-        })),
-      });
+      handleSessionChange(
+        "multiple_choice",
+        {
+          ...session,
+          slots: session.slots.map((slot) => ({
+            selected: slot.selected,
+            answer: "",
+            checked: slot.checked,
+          })),
+        },
+        multipleChoiceOrderIds,
+      );
     },
-    [handleSessionChange],
+    [handleSessionChange, multipleChoiceOrderIds],
   );
 
   const handleFillBlankSession = useCallback(
@@ -190,6 +344,22 @@ export function TopicExamView({
     [handleSessionChange],
   );
 
+  const handleMixedQuizSession = useCallback(
+    (session: {
+      index: number;
+      correct: number;
+      total: number;
+      slots: {
+        selected: number | null;
+        answer: string;
+        checked: boolean;
+      }[];
+    }) => {
+      handleSessionChange("mixed", session, mixedOrderIds);
+    },
+    [handleSessionChange, mixedOrderIds],
+  );
+
   const handleCrosswordProgress = useCallback(
     (percent: number) => {
       handleSessionChange("crossword", {
@@ -207,10 +377,23 @@ export function TopicExamView({
       if (part === "crossword") {
         clearCrosswordDraft(examCrosswordDraftKey);
       }
+      if (part === "mixed") {
+        freshMixedOrderRef.current = null;
+      }
+      if (part === "multiple_choice") {
+        freshMultipleChoiceOrderRef.current = null;
+      }
       const current = readTopicExamDraft(topicId) ?? emptyTopicExamDraft();
+      const quizOrderByPart = { ...current.quizOrderByPart };
+      delete quizOrderByPart[part];
       saveDraft({
         ...current,
         passedParts: current.passedParts.filter((item) => item !== part),
+        parts: {
+          ...current.parts,
+          [part]: undefined,
+        },
+        quizOrderByPart,
       });
     },
     [examCrosswordDraftKey, saveDraft, topicId],
@@ -221,6 +404,7 @@ export function TopicExamView({
   }
 
   if (
+    !isMixedQuiz &&
     multipleChoice.length === 0 &&
     fillBlanks.length === 0 &&
     crosswords.length === 0
@@ -278,14 +462,28 @@ export function TopicExamView({
           counts={{
             multiple_choice: multipleChoice.length,
             fill_blank: fillBlanks.length,
-            crossword: crosswords.length,
+            crossword: totalCrosswordClueCount(crosswords),
             listening: 0,
           }}
-          completedTypes={draft.passedParts}
+          completedTypes={draft.passedParts.filter(
+            (part): part is Exclude<TopicQuizPart, "mixed"> => part !== "mixed",
+          )}
           progressPercents={{
-            multiple_choice: partProgress(draft, "multiple_choice"),
-            fill_blank: partProgress(draft, "fill_blank"),
-            crossword: partProgress(draft, "crossword"),
+            multiple_choice: quizPartProgressPercent(
+              "multiple_choice",
+              draft.parts.multiple_choice,
+              draft.passedParts.includes("multiple_choice"),
+            ),
+            fill_blank: quizPartProgressPercent(
+              "fill_blank",
+              draft.parts.fill_blank,
+              draft.passedParts.includes("fill_blank"),
+            ),
+            crossword: quizPartProgressPercent(
+              "crossword",
+              draft.parts.crossword,
+              draft.passedParts.includes("crossword"),
+            ),
           }}
           title={t("quizChooseTitle")}
           subtitle={t("quizChooseSubtitle")}
@@ -305,8 +503,9 @@ export function TopicExamView({
     );
   }
 
-  const activePart: TopicQuizPart =
-    selected ?? defaultQuizPart(multipleChoice, fillBlanks, crosswords);
+  const activePart: TopicQuizPart = isMixedQuiz
+    ? "mixed"
+    : (selected ?? defaultQuizPart(multipleChoice, fillBlanks, crosswords));
   const partDraft = draft.parts[activePart];
 
   return (
@@ -353,11 +552,40 @@ export function TopicExamView({
             {t("examBackToTopics")}
           </ButtonLink>
         )
+      ) : activePart === "mixed" ? (
+        <TopicMixedQuizExercises
+          key={`mixed-quiz-${mixedOrderIds.join("|")}`}
+          exercises={orderedMixedQuiz}
+          showHint={false}
+          liveProgressPercent={false}
+          initialIndex={
+            mixedSessionStarted &&
+            partDraft &&
+            partDraft.slots.length === orderedMixedQuiz.length
+              ? partDraft.index
+              : 0
+          }
+          initialSlots={
+            mixedSessionStarted &&
+            partDraft &&
+            partDraft.slots.length === orderedMixedQuiz.length
+              ? partDraft.slots.map((slot) => ({
+                  selected: slot.selected,
+                  answer: slot.answer,
+                  checked: slot.checked,
+                }))
+              : undefined
+          }
+          onSessionChange={handleMixedQuizSession}
+          onRestart={() => clearPartPass("mixed")}
+          onComplete={(result) => handleComplete("mixed", result)}
+        />
       ) : activePart === "crossword" ? (
         <CrosswordExerciseView
           key={`exam-cw-${crosswords[0]?.id ?? "cw"}`}
           exercises={crosswords}
           draftKey={examCrosswordDraftKey}
+          liveProgressPercent={false}
           onProgress={handleCrosswordProgress}
           onRestart={() => clearPartPass("crossword")}
           onComplete={(result) => handleComplete("crossword", result)}
@@ -366,6 +594,7 @@ export function TopicExamView({
         <FillBlankExercises
           key="fill_blank"
           exercises={fillBlanks}
+          liveProgressPercent={false}
           initialIndex={
             partDraft && partDraft.slots.length === fillBlanks.length
               ? partDraft.index
@@ -385,15 +614,16 @@ export function TopicExamView({
         />
       ) : (
         <MultipleChoiceExercises
-          key="multiple_choice"
-          exercises={multipleChoice}
+          key={`multiple_choice-${multipleChoiceOrderIds.join("|")}`}
+          exercises={orderedMultipleChoice}
+          liveProgressPercent={false}
           initialIndex={
-            partDraft && partDraft.slots.length === multipleChoice.length
+            partDraft && partDraft.slots.length === orderedMultipleChoice.length
               ? partDraft.index
               : 0
           }
           initialSlots={
-            partDraft && partDraft.slots.length === multipleChoice.length
+            partDraft && partDraft.slots.length === orderedMultipleChoice.length
               ? partDraft.slots.map((slot) => ({
                   selected: slot.selected,
                   checked: slot.checked,
