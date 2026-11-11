@@ -7,6 +7,7 @@ import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Link } from "@/i18n/navigation";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 import { getCefrLevelBadgeClass } from "@/lib/topicAccess";
+import { TopicProgressBadge } from "@/components/features/topics/TopicProgressBadge";
 import { cn } from "@/lib/utils";
 
 export type TopicSectionNavItem = {
@@ -47,10 +48,13 @@ export function TopicPageHeader({
 
   return (
     <header className="space-y-4">
-      <ButtonLink href="/panel#grammer" variant="outline" size="sm">
-        <ArrowLeft className="size-4" aria-hidden />
-        {t("backToTopics")}
-      </ButtonLink>
+      <div className="flex items-center justify-between gap-3">
+        <ButtonLink href="/panel#grammer" variant="outline" size="sm">
+          <ArrowLeft className="size-4" aria-hidden />
+          {t("backToTopics")}
+        </ButtonLink>
+        <TopicProgressBadge topicId={topicId} />
+      </div>
 
       <div className="flex flex-wrap items-center gap-2">
         <p className="inline-flex w-fit rounded-md bg-zinc-500/15 px-2 py-1 text-[11px] font-semibold tracking-wide text-zinc-700 uppercase dark:bg-zinc-400/15 dark:text-zinc-300">

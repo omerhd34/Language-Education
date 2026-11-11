@@ -41,13 +41,11 @@ export function LessonSoundParts({
               aria-controls={selected ? `section-${part.id}` : undefined}
               aria-label={part.shortTitle ? part.title : undefined}
               className={cn(
-                "h-auto rounded-md bg-brand-100/70 px-2.5 py-1.5 text-xs font-medium text-brand-700 hover:bg-sky-500/15 hover:text-brand-950 dark:bg-brand-900/50 dark:text-brand-300 dark:hover:bg-sky-500/20 dark:hover:text-brand-100",
+                "h-auto rounded-md bg-brand-100/70 px-2.5 py-1.5 text-sm font-medium text-brand-700 hover:bg-sky-500/15 hover:text-brand-950 dark:bg-brand-900/50 dark:text-brand-300 dark:hover:bg-sky-500/20 dark:hover:text-brand-100",
                 selected &&
                   "bg-sky-500/15 text-brand-950 ring-1 ring-sky-500/40 hover:bg-sky-500/20 dark:bg-sky-500/20 dark:text-brand-100 dark:ring-sky-400/40",
               )}
-              onClick={() =>
-                setOpenId((current) => (current === part.id ? null : part.id))
-              }
+              onClick={() => setOpenId(part.id)}
             >
               {part.shortTitle ?? part.title}
             </Button>

@@ -222,7 +222,7 @@ export function LessonExampleCarousel({
     >
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
-          <h3 className="text-xs font-semibold tracking-wide text-brand-500 uppercase dark:text-brand-400">
+          <h3 className="text-md font-semibold tracking-wide text-brand-500 uppercase dark:text-brand-400">
             {title}
           </h3>
         </div>

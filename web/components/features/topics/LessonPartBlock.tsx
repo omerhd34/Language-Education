@@ -1,3 +1,4 @@
+import { LessonBoldText } from "@/components/features/topics/LessonBoldText";
 import { LessonExampleCarousel } from "@/components/features/topics/LessonExampleCarousel";
 import type { TopicLessonPart, TopicLessonSection } from "@/data/topics/types";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
@@ -55,9 +56,9 @@ export function LessonPartBlock({
           {part.paragraphs.map((paragraph) => (
             <p
               key={paragraph}
-              className="text-sm leading-relaxed text-brand-700 dark:text-brand-300"
+              className="text-md leading-relaxed text-brand-700 dark:text-brand-300"
             >
-              {paragraph}
+              <LessonBoldText text={paragraph} />
             </p>
           ))}
         </div>

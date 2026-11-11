@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import { LessonBoldText } from "@/components/features/topics/LessonBoldText";
 import {
   LessonPartBlock,
   SectionExamples,
@@ -17,7 +18,7 @@ export async function TopicLessonView({ lesson }: TopicLessonViewProps) {
   return (
     <div className="space-y-8">
       <p className="text-base leading-relaxed text-brand-700 dark:text-brand-300">
-        {lesson.intro}
+        <LessonBoldText text={lesson.intro} />
       </p>
 
       {lesson.sections.map((section) => {
@@ -41,7 +42,7 @@ export async function TopicLessonView({ lesson }: TopicLessonViewProps) {
                 {section.title}
               </h2>
               {titleEn ? (
-                <p className="text-sm font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
+                <p className="text-lg font-medium tracking-wide text-brand-500 italic dark:text-brand-400">
                   {titleEn}
                 </p>
               ) : null}
@@ -51,9 +52,9 @@ export async function TopicLessonView({ lesson }: TopicLessonViewProps) {
               {section.paragraphs.map((paragraph) => (
                 <p
                   key={paragraph}
-                  className="text-sm leading-relaxed text-brand-700 dark:text-brand-300"
+                  className="text-md leading-relaxed text-brand-700 dark:text-brand-300"
                 >
-                  {paragraph}
+                  <LessonBoldText text={paragraph} />
                 </p>
               ))}
             </div>
