@@ -109,9 +109,9 @@ export const topicContent11: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-11-11-1-1",
+      id: "quiz-11-11-1-1",
       subtopicId: "11-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent11: TopicContent = {
         'Bu alt konu "Sayılabilen/Sayılamayan İsimler ve Miktar Belirteçleri" başlığı altındadır.',
     },
     {
-      id: "exam-11-11-1-2",
+      id: "quiz-11-11-1-2",
       subtopicId: "11-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent11: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-11-11-1-3",
+      id: "quiz-11-11-1-3",
       subtopicId: "11-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent11: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-11-level",
+      id: "quiz-11-level",
       subtopicId: "11-1",
       type: "multiple_choice",
       prompt:

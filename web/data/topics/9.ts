@@ -106,9 +106,9 @@ export const topicContent9: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-9-9-1-1",
+      id: "quiz-9-9-1-1",
       subtopicId: "9-1",
       type: "multiple_choice",
       prompt: '"Şimdiki Zaman" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent9: TopicContent = {
       explanation: 'Bu alt konu "Şimdiki Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-9-9-1-2",
+      id: "quiz-9-9-1-2",
       subtopicId: "9-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent9: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-9-9-1-3",
+      id: "quiz-9-9-1-3",
       subtopicId: "9-1",
       type: "multiple_choice",
       prompt: '"Şimdiki Zaman" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent9: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-9-level",
+      id: "quiz-9-level",
       subtopicId: "9-1",
       type: "multiple_choice",
       prompt: '"Şimdiki Zaman" konusu hangi seviyeye aittir?',

@@ -59,6 +59,7 @@ export type MultipleChoiceExercise = {
   correctIndex: number;
   explanation?: string;
   hint?: string;
+  speakText?: string;
 };
 
 export type FillBlankExercise = {
@@ -70,6 +71,7 @@ export type FillBlankExercise = {
   acceptedAnswers?: string[];
   explanation?: string;
   hint?: string;
+  speakText?: string;
 };
 
 export type VerbListeningRow = {
@@ -126,12 +128,17 @@ export type TopicExercise =
   | CrosswordExercise
   | ListeningExercise;
 
+export type TopicQuizExercise =
+  | MultipleChoiceExercise
+  | FillBlankExercise
+  | CrosswordExercise;
+
 export type TopicContent = {
   topicId: string;
   viewMinutes?: number;
-  examQuestionCount?: number;
-  examOptionCount?: number;
+  quizQuestionCount?: number;
+  quizOptionCount?: number;
   lesson: TopicLesson;
   exercises: TopicExercise[];
-  examExercises?: MultipleChoiceExercise[];
+  quizExercises?: TopicQuizExercise[];
 };

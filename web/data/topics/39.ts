@@ -109,9 +109,9 @@ export const topicContent39: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-39-39-1-1",
+      id: "quiz-39-39-1-1",
       subtopicId: "39-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent39: TopicContent = {
         'Bu alt konu "Karmaşık Kip Görünümleri ve Gerçek Dışı Geçmiş" başlığı altındadır.',
     },
     {
-      id: "exam-39-39-1-2",
+      id: "quiz-39-39-1-2",
       subtopicId: "39-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent39: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-39-39-1-3",
+      id: "quiz-39-39-1-3",
       subtopicId: "39-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent39: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-39-level",
+      id: "quiz-39-level",
       subtopicId: "39-1",
       type: "multiple_choice",
       prompt:

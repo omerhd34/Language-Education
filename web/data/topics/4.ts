@@ -12,8 +12,8 @@ export const topicContent4: TopicContent = {
         title: "Özne Zamirleri ve Olmak Fiili",
         titleEn: "Subject Pronouns & 'To Be'",
         paragraphs: [
-          '"Özne Zamirleri ve Olmak Fiili" başlığında Özne Zamirleri ve Olmak Fiili konusunun önemli noktalarını adım adım görürsün.',
-          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
+          "**Özne Zamirleri** ve **Olmak Fiili** başlığında **Özne Zamirleri** ve **Olmak Fiili** konusunun önemli noktalarını adım adım görürsün.",
+          "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. **A1 seviyesinde** düzenli tekrar yeterlidir.",
           "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
         examples: [
@@ -109,9 +109,9 @@ export const topicContent4: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-4-4-1-1",
+      id: "quiz-4-4-1-1",
       subtopicId: "4-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent4: TopicContent = {
         'Bu alt konu "Özne Zamirleri ve Olmak Fiili" başlığı altındadır.',
     },
     {
-      id: "exam-4-4-1-2",
+      id: "quiz-4-4-1-2",
       subtopicId: "4-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent4: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-4-4-1-3",
+      id: "quiz-4-4-1-3",
       subtopicId: "4-1",
       type: "multiple_choice",
       prompt: '"Özne Zamirleri ve Olmak Fiili" çalışırken hangisi doğrudur?',
@@ -156,7 +156,7 @@ export const topicContent4: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-4-level",
+      id: "quiz-4-level",
       subtopicId: "4-1",
       type: "multiple_choice",
       prompt: '"Özne Zamirleri ve Olmak Fiili" konusu hangi seviyeye aittir?',

@@ -106,9 +106,9 @@ export const topicContent29: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-29-29-1-1",
+      id: "quiz-29-29-1-1",
       subtopicId: "29-1",
       type: "multiple_choice",
       prompt: '"Dilek / Keşke Cümleleri" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent29: TopicContent = {
       explanation: 'Bu alt konu "Dilek / Keşke Cümleleri" başlığı altındadır.',
     },
     {
-      id: "exam-29-29-1-2",
+      id: "quiz-29-29-1-2",
       subtopicId: "29-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent29: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-29-29-1-3",
+      id: "quiz-29-29-1-3",
       subtopicId: "29-1",
       type: "multiple_choice",
       prompt: '"Dilek / Keşke Cümleleri" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent29: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-29-level",
+      id: "quiz-29-level",
       subtopicId: "29-1",
       type: "multiple_choice",
       prompt: '"Dilek / Keşke Cümleleri" konusu hangi seviyeye aittir?',

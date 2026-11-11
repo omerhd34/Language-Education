@@ -106,9 +106,9 @@ export const topicContent35: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-35-35-1-1",
+      id: "quiz-35-35-1-1",
       subtopicId: "35-1",
       type: "multiple_choice",
       prompt: '"Eksiltme ve Yerine Koyma" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent35: TopicContent = {
       explanation: 'Bu alt konu "Eksiltme ve Yerine Koyma" başlığı altındadır.',
     },
     {
-      id: "exam-35-35-1-2",
+      id: "quiz-35-35-1-2",
       subtopicId: "35-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent35: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-35-35-1-3",
+      id: "quiz-35-35-1-3",
       subtopicId: "35-1",
       type: "multiple_choice",
       prompt: '"Eksiltme ve Yerine Koyma" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent35: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-35-level",
+      id: "quiz-35-level",
       subtopicId: "35-1",
       type: "multiple_choice",
       prompt: '"Eksiltme ve Yerine Koyma" konusu hangi seviyeye aittir?',

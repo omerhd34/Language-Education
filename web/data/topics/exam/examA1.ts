@@ -1,6 +1,8 @@
 import type { CrosswordCandidate } from "@/lib/crosswordBuilder";
+import { examBaslangicClues } from "@/data/topics/exam/examBaslangic";
 
 export const examA1Clues: CrosswordCandidate[] = [
+  ...examBaslangicClues,
   { answer: "SHE", text: "Zamirler: o (kadın)" },
   { answer: "THEY", text: "Zamirler: onlar" },
   { answer: "MY", text: "İyelik: benim" },

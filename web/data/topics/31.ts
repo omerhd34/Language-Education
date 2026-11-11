@@ -108,9 +108,9 @@ export const topicContent31: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-31-31-1-1",
+      id: "quiz-31-31-1-1",
       subtopicId: "31-1",
       type: "multiple_choice",
       prompt:
@@ -126,7 +126,7 @@ export const topicContent31: TopicContent = {
         'Bu alt konu "Bölünmüş / Vurgu Cümleleri" başlığı altındadır.',
     },
     {
-      id: "exam-31-31-1-2",
+      id: "quiz-31-31-1-2",
       subtopicId: "31-1",
       type: "multiple_choice",
       prompt:
@@ -141,7 +141,7 @@ export const topicContent31: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-31-31-1-3",
+      id: "quiz-31-31-1-3",
       subtopicId: "31-1",
       type: "multiple_choice",
       prompt: '"Bölünmüş / Vurgu Cümleleri" çalışırken hangisi doğrudur?',
@@ -155,7 +155,7 @@ export const topicContent31: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-31-level",
+      id: "quiz-31-level",
       subtopicId: "31-1",
       type: "multiple_choice",
       prompt: '"Bölünmüş / Vurgu Cümleleri" konusu hangi seviyeye aittir?',

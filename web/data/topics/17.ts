@@ -109,9 +109,9 @@ export const topicContent17: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-17-17-1-1",
+      id: "quiz-17-17-1-1",
       subtopicId: "17-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent17: TopicContent = {
         'Bu alt konu "Kipler: Zorunluluk ve Tavsiye" başlığı altındadır.',
     },
     {
-      id: "exam-17-17-1-2",
+      id: "quiz-17-17-1-2",
       subtopicId: "17-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent17: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-17-17-1-3",
+      id: "quiz-17-17-1-3",
       subtopicId: "17-1",
       type: "multiple_choice",
       prompt: '"Kipler: Zorunluluk ve Tavsiye" çalışırken hangisi doğrudur?',
@@ -156,7 +156,7 @@ export const topicContent17: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-17-level",
+      id: "quiz-17-level",
       subtopicId: "17-1",
       type: "multiple_choice",
       prompt: '"Kipler: Zorunluluk ve Tavsiye" konusu hangi seviyeye aittir?',

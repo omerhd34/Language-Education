@@ -109,9 +109,9 @@ export const topicContent36: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-36-36-1-1",
+      id: "quiz-36-36-1-1",
       subtopicId: "36-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent36: TopicContent = {
         'Bu alt konu "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" başlığı altındadır.',
     },
     {
-      id: "exam-36-36-1-2",
+      id: "quiz-36-36-1-2",
       subtopicId: "36-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent36: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-36-36-1-3",
+      id: "quiz-36-36-1-3",
       subtopicId: "36-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent36: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-36-level",
+      id: "quiz-36-level",
       subtopicId: "36-1",
       type: "multiple_choice",
       prompt:

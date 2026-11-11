@@ -109,9 +109,9 @@ export const topicContent26: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-26-26-1-1",
+      id: "quiz-26-26-1-1",
       subtopicId: "26-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent26: TopicContent = {
         'Bu alt konu "Koşul Cümleleri - Tip 3 ve Karışık" başlığı altındadır.',
     },
     {
-      id: "exam-26-26-1-2",
+      id: "quiz-26-26-1-2",
       subtopicId: "26-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent26: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-26-26-1-3",
+      id: "quiz-26-26-1-3",
       subtopicId: "26-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent26: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-26-level",
+      id: "quiz-26-level",
       subtopicId: "26-1",
       type: "multiple_choice",
       prompt:

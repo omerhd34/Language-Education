@@ -5,14 +5,14 @@ export const topicContent3: TopicContent = {
   viewMinutes: 5,
   lesson: {
     intro:
-      "Bu konuda bilgi almak için kullanılan temel soru kelimelerini öğrenirsin. What, Who, Where, How, When, Why, Which ve Whose her zaman sorunun başında durur.",
+      "Bu konuda bilgi almak için kullanılan temel soru kelimelerini öğrenirsin. **What**, **Who**, **Where**, **How**, **When**, **Why**, **Which** ve **Whose** her zaman sorunun başında durur.",
     sections: [
       {
         subtopicId: "3-1",
         title: "What",
         titleEn: "Asking about things",
         paragraphs: [
-          "What, Türkçede 'Ne?' anlamına gelir. Nesneleri, durumları ve bilgileri sormak içindir. Günlük İngilizcede en sık duyacağın soru kelimesidir.",
+          "**What**, Türkçede **Ne?** anlamına gelir. Nesneleri, durumları ve bilgileri sormak içindir. Günlük İngilizcede en sık duyacağın soru kelimesidir.",
         ],
         examplesTitle: "What ile temel kalıplar",
         examplesLayout: "columns",
@@ -32,7 +32,7 @@ export const topicContent3: TopicContent = {
         title: "Who",
         titleEn: "Asking about people",
         paragraphs: [
-          "Who, Türkçede 'Kim?' anlamına gelir. Yalnızca insanlar içindir. Birinin kim olduğunu sorduğunda cümlenin başına gelir.",
+          "**Who**, Türkçede **Kim?** anlamına gelir. Yalnızca insanlar içindir. Birinin kim olduğunu sorduğunda cümlenin başına gelir.",
         ],
         examplesTitle: "Who ile temel kalıplar",
         examplesLayout: "columns",
@@ -52,7 +52,7 @@ export const topicContent3: TopicContent = {
         title: "Where",
         titleEn: "Asking about places",
         paragraphs: [
-          "Where, Türkçede 'Nerede?' veya 'Nereye?' anlamına gelir. Bir kişinin veya nesnenin yerini sorar. Nerelisin sorusunda da aynı kelimeyi kullanırsın.",
+          "**Where**, Türkçede **Nerede?** veya **Nereye?** anlamına gelir. Bir kişinin veya nesnenin yerini sorar. Nerelisin sorusunda da aynı kelimeyi kullanırsın.",
         ],
         examplesTitle: "Where ile temel kalıplar",
         examplesLayout: "columns",
@@ -72,7 +72,7 @@ export const topicContent3: TopicContent = {
         title: "How",
         titleEn: "Asking about conditions",
         paragraphs: [
-          "How, Türkçede 'Nasıl?' anlamına gelir. Bir durumun nasıl olduğunu sorar. Yanına gelen kelimeyle anlamı değişebilir; How old yaş (kaç yaşında), How much ise fiyat (ne kadar) sorar.",
+          "**How**, Türkçede **Nasıl?** anlamına gelir. Bir durumun nasıl olduğunu sorar. Yanına gelen kelimeyle anlamı değişebilir; **How old** **yaş (kaç yaşında)**, **How much** ise **fiyat (ne kadar)** sorar.",
         ],
         examplesTitle: "How ile temel kalıplar",
         examplesLayout: "columns",
@@ -96,7 +96,7 @@ export const topicContent3: TopicContent = {
         title: "When",
         titleEn: "Asking about time",
         paragraphs: [
-          "When, Türkçede 'Ne zaman?' anlamına gelir. Bir olayın zamanını sorar. Gün, saat veya yıl öğrenmek istediğinde cümlenin başına gelir.",
+          "**When**, Türkçede **Ne zaman?** anlamına gelir. Bir olayın zamanını sorar. **Gün**, **saat** veya **yıl** öğrenmek istediğinde cümlenin başına gelir.",
         ],
         examplesTitle: "When ile temel kalıplar",
         examplesLayout: "columns",
@@ -116,7 +116,7 @@ export const topicContent3: TopicContent = {
         title: "Why",
         titleEn: "Asking for reasons",
         paragraphs: [
-          "Why, Türkçede 'Neden?' veya 'Niçin?' anlamına gelir. Bir durumun sebebini sorar. Cevaba çoğu zaman Because (çünkü) kelimesi ile başlarsın.",
+          "**Why**, Türkçede **Neden?** veya **Niçin?** anlamına gelir. Bir durumun sebebini sorar. Cevaba çoğu zaman **Because (çünkü)** kelimesi ile başlarsın.",
         ],
         examplesTitle: "Why ile temel kalıplar",
         examplesLayout: "columns",
@@ -136,7 +136,7 @@ export const topicContent3: TopicContent = {
         title: "Which",
         titleEn: "Asking for choices",
         paragraphs: [
-          "Which, Türkçede 'Hangi?' veya 'Hangisi?' anlamına gelir. Belirli seçenekler arasından birini sorduğunda kullanılır. Sıklıkla Which one (hangisi) kalıbını görürsün.",
+          "**Which**, Türkçede **Hangi?** veya **Hangisi?** anlamına gelir. Belirli seçenekler arasından birini sorduğunda kullanılır. Sıklıkla **Which one (hangisi)** kalıbını görürsün.",
         ],
         examplesTitle: "Which ile temel kalıplar",
         examplesLayout: "columns",
@@ -156,7 +156,7 @@ export const topicContent3: TopicContent = {
         title: "Whose",
         titleEn: "Asking about possession",
         paragraphs: [
-          "Whose, Türkçede 'Kimin?' anlamına gelir. Bir şeyin kime ait olduğunu (sahipliğini) sorar. Sahibi sorulan ismin hemen önünde durur.",
+          "**Whose**, Türkçede **Kimin?** anlamına gelir. Bir şeyin kime ait olduğunu (sahipliğini) sorar. Sahibi sorulan ismin hemen önünde durur.",
         ],
         examplesTitle: "Whose ile temel kalıplar",
         examplesLayout: "columns",
@@ -394,7 +394,7 @@ export const topicContent3: TopicContent = {
       explanation: "'Where' mekan/yer sorar. Zaman soran kelime 'When'dir.",
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
       id: "3-exam-1",
       subtopicId: "3-3",

@@ -106,9 +106,9 @@ export const topicContent12: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-12-12-1-1",
+      id: "quiz-12-12-1-1",
       subtopicId: "12-1",
       type: "multiple_choice",
       prompt: '"Di\'li Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent12: TopicContent = {
       explanation: 'Bu alt konu "Di\'li Geçmiş Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-12-12-1-2",
+      id: "quiz-12-12-1-2",
       subtopicId: "12-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent12: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-12-12-1-3",
+      id: "quiz-12-12-1-3",
       subtopicId: "12-1",
       type: "multiple_choice",
       prompt: '"Di\'li Geçmiş Zaman" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent12: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-12-level",
+      id: "quiz-12-level",
       subtopicId: "12-1",
       type: "multiple_choice",
       prompt: '"Di\'li Geçmiş Zaman" konusu hangi seviyeye aittir?',

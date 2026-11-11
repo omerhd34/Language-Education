@@ -106,9 +106,9 @@ export const topicContent10: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-10-10-1-1",
+      id: "quiz-10-10-1-1",
       subtopicId: "10-1",
       type: "multiple_choice",
       prompt: '"Kipler: Yapabilmek" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent10: TopicContent = {
       explanation: 'Bu alt konu "Kipler: Yapabilmek" başlığı altındadır.',
     },
     {
-      id: "exam-10-10-1-2",
+      id: "quiz-10-10-1-2",
       subtopicId: "10-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent10: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-10-10-1-3",
+      id: "quiz-10-10-1-3",
       subtopicId: "10-1",
       type: "multiple_choice",
       prompt: '"Kipler: Yapabilmek" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent10: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-10-level",
+      id: "quiz-10-level",
       subtopicId: "10-1",
       type: "multiple_choice",
       prompt: '"Kipler: Yapabilmek" konusu hangi seviyeye aittir?',

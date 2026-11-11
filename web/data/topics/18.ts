@@ -106,9 +106,9 @@ export const topicContent18: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-18-18-1-1",
+      id: "quiz-18-18-1-1",
       subtopicId: "18-1",
       type: "multiple_choice",
       prompt: '"Temel Sıfat Cümlecikleri" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent18: TopicContent = {
       explanation: 'Bu alt konu "Temel Sıfat Cümlecikleri" başlığı altındadır.',
     },
     {
-      id: "exam-18-18-1-2",
+      id: "quiz-18-18-1-2",
       subtopicId: "18-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent18: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-18-18-1-3",
+      id: "quiz-18-18-1-3",
       subtopicId: "18-1",
       type: "multiple_choice",
       prompt: '"Temel Sıfat Cümlecikleri" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent18: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-18-level",
+      id: "quiz-18-level",
       subtopicId: "18-1",
       type: "multiple_choice",
       prompt: '"Temel Sıfat Cümlecikleri" konusu hangi seviyeye aittir?',

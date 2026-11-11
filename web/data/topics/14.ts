@@ -106,9 +106,9 @@ export const topicContent14: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-14-14-1-1",
+      id: "quiz-14-14-1-1",
       subtopicId: "14-1",
       type: "multiple_choice",
       prompt: '"Gelecek Zaman" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent14: TopicContent = {
       explanation: 'Bu alt konu "Gelecek Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-14-14-1-2",
+      id: "quiz-14-14-1-2",
       subtopicId: "14-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent14: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-14-14-1-3",
+      id: "quiz-14-14-1-3",
       subtopicId: "14-1",
       type: "multiple_choice",
       prompt: '"Gelecek Zaman" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent14: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-14-level",
+      id: "quiz-14-level",
       subtopicId: "14-1",
       type: "multiple_choice",
       prompt: '"Gelecek Zaman" konusu hangi seviyeye aittir?',

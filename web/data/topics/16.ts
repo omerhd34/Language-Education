@@ -109,9 +109,9 @@ export const topicContent16: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-16-16-1-1",
+      id: "quiz-16-16-1-1",
       subtopicId: "16-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent16: TopicContent = {
         'Bu alt konu "Karşılaştırma ve En Üstünlük Dereceleri" başlığı altındadır.',
     },
     {
-      id: "exam-16-16-1-2",
+      id: "quiz-16-16-1-2",
       subtopicId: "16-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent16: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-16-16-1-3",
+      id: "quiz-16-16-1-3",
       subtopicId: "16-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent16: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-16-level",
+      id: "quiz-16-level",
       subtopicId: "16-1",
       type: "multiple_choice",
       prompt:

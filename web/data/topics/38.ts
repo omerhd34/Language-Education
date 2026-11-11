@@ -106,9 +106,9 @@ export const topicContent38: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-38-38-1-1",
+      id: "quiz-38-38-1-1",
       subtopicId: "38-1",
       type: "multiple_choice",
       prompt: '"İleri Düzey İsimleştirme" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent38: TopicContent = {
       explanation: 'Bu alt konu "İleri Düzey İsimleştirme" başlığı altındadır.',
     },
     {
-      id: "exam-38-38-1-2",
+      id: "quiz-38-38-1-2",
       subtopicId: "38-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent38: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-38-38-1-3",
+      id: "quiz-38-38-1-3",
       subtopicId: "38-1",
       type: "multiple_choice",
       prompt: '"İleri Düzey İsimleştirme" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent38: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-38-level",
+      id: "quiz-38-level",
       subtopicId: "38-1",
       type: "multiple_choice",
       prompt: '"İleri Düzey İsimleştirme" konusu hangi seviyeye aittir?',

@@ -106,9 +106,9 @@ export const topicContent20: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-20-20-1-1",
+      id: "quiz-20-20-1-1",
       subtopicId: "20-1",
       type: "multiple_choice",
       prompt: '"Miş\'li Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent20: TopicContent = {
       explanation: 'Bu alt konu "Miş\'li Geçmiş Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-20-20-1-2",
+      id: "quiz-20-20-1-2",
       subtopicId: "20-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent20: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-20-20-1-3",
+      id: "quiz-20-20-1-3",
       subtopicId: "20-1",
       type: "multiple_choice",
       prompt: '"Miş\'li Geçmiş Zaman" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent20: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-20-level",
+      id: "quiz-20-level",
       subtopicId: "20-1",
       type: "multiple_choice",
       prompt: '"Miş\'li Geçmiş Zaman" konusu hangi seviyeye aittir?',

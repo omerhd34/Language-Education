@@ -109,9 +109,9 @@ export const topicContent37: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-37-37-1-1",
+      id: "quiz-37-37-1-1",
       subtopicId: "37-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent37: TopicContent = {
         'Bu alt konu "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" başlığı altındadır.',
     },
     {
-      id: "exam-37-37-1-2",
+      id: "quiz-37-37-1-2",
       subtopicId: "37-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent37: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-37-37-1-3",
+      id: "quiz-37-37-1-3",
       subtopicId: "37-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent37: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-37-level",
+      id: "quiz-37-level",
       subtopicId: "37-1",
       type: "multiple_choice",
       prompt:

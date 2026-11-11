@@ -109,9 +109,9 @@ export const topicContent19: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-19-19-1-1",
+      id: "quiz-19-19-1-1",
       subtopicId: "19-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent19: TopicContent = {
         'Bu alt konu "Süregelen Yakın Geçmiş Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-19-19-1-2",
+      id: "quiz-19-19-1-2",
       subtopicId: "19-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent19: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-19-19-1-3",
+      id: "quiz-19-19-1-3",
       subtopicId: "19-1",
       type: "multiple_choice",
       prompt: '"Süregelen Yakın Geçmiş Zaman" çalışırken hangisi doğrudur?',
@@ -156,7 +156,7 @@ export const topicContent19: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-19-level",
+      id: "quiz-19-level",
       subtopicId: "19-1",
       type: "multiple_choice",
       prompt: '"Süregelen Yakın Geçmiş Zaman" konusu hangi seviyeye aittir?',

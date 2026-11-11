@@ -106,9 +106,9 @@ export const topicContent30: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-30-30-1-1",
+      id: "quiz-30-30-1-1",
       subtopicId: "30-1",
       type: "multiple_choice",
       prompt: '"Devrik Cümleler" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent30: TopicContent = {
       explanation: 'Bu alt konu "Devrik Cümleler" başlığı altındadır.',
     },
     {
-      id: "exam-30-30-1-2",
+      id: "quiz-30-30-1-2",
       subtopicId: "30-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent30: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-30-30-1-3",
+      id: "quiz-30-30-1-3",
       subtopicId: "30-1",
       type: "multiple_choice",
       prompt: '"Devrik Cümleler" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent30: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-30-level",
+      id: "quiz-30-level",
       subtopicId: "30-1",
       type: "multiple_choice",
       prompt: '"Devrik Cümleler" konusu hangi seviyeye aittir?',

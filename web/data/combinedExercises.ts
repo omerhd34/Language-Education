@@ -5,6 +5,7 @@ import {
 } from "@/data/dashboardTopics";
 import { getTopicContent } from "@/data/topics";
 import type { TopicExercise } from "@/data/topics/types";
+import { CEFR_LEVEL_ORDER } from "@/lib/topicAccess";
 
 export type CombinedExercise = {
   id: string;
@@ -18,8 +19,9 @@ export type TopicGridItem =
   | { kind: "topic"; topic: DashboardTopic }
   | { kind: "combined"; combined: CombinedExercise };
 
+export const TOPIC_BATCH_INTERVAL = 3;
+
 const CEFR_LEVEL_SLUG: Record<CefrLevel, string> = {
-  Başlangıç: "baslangic",
   A1: "a1",
   A2: "a2",
   B1: "b1",
@@ -28,8 +30,12 @@ const CEFR_LEVEL_SLUG: Record<CefrLevel, string> = {
   C2: "c2",
 };
 
-function getCombinedInterval(level: CefrLevel): number {
-  return 3;
+const LEGACY_COMBINED_ID: Record<string, string> = {
+  "baslangic-1": "a1-1",
+};
+
+function getCombinedInterval(_level: CefrLevel): number {
+  return TOPIC_BATCH_INTERVAL;
 }
 
 function buildCombinedId(level: CefrLevel, index: number): string {
@@ -64,17 +70,10 @@ export function getCombinedExercisesForLevel(
 export function getCombinedExerciseById(
   combinedId: string,
 ): CombinedExercise | undefined {
-  const normalizedId = decodeURIComponent(combinedId);
+  const decoded = decodeURIComponent(combinedId);
+  const normalizedId = LEGACY_COMBINED_ID[decoded] ?? decoded;
 
-  for (const level of [
-    "Başlangıç",
-    "A1",
-    "A2",
-    "B1",
-    "B2",
-    "C1",
-    "C2",
-  ] as const satisfies readonly CefrLevel[]) {
+  for (const level of CEFR_LEVEL_ORDER) {
     const match = getCombinedExercisesForLevel(level).find(
       (item) => item.id === normalizedId,
     );
@@ -86,8 +85,8 @@ export function getCombinedExerciseById(
 }
 
 export function getAllCombinedExercises(): CombinedExercise[] {
-  return (["Başlangıç", "A1", "A2", "B1", "B2", "C1", "C2"] as const).flatMap(
-    (level) => getCombinedExercisesForLevel(level),
+  return CEFR_LEVEL_ORDER.flatMap((level) =>
+    getCombinedExercisesForLevel(level),
   );
 }
 

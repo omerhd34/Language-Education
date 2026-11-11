@@ -109,9 +109,9 @@ export const topicContent40: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-40-40-1-1",
+      id: "quiz-40-40-1-1",
       subtopicId: "40-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent40: TopicContent = {
         'Bu alt konu "İleri Düzey Biçem ve Ton Nüansları" başlığı altındadır.',
     },
     {
-      id: "exam-40-40-1-2",
+      id: "quiz-40-40-1-2",
       subtopicId: "40-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent40: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-40-40-1-3",
+      id: "quiz-40-40-1-3",
       subtopicId: "40-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent40: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-40-level",
+      id: "quiz-40-level",
       subtopicId: "40-1",
       type: "multiple_choice",
       prompt:

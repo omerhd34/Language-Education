@@ -106,9 +106,9 @@ export const topicContent23: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-23-23-1-1",
+      id: "quiz-23-23-1-1",
       subtopicId: "23-1",
       type: "multiple_choice",
       prompt: '"Dolaylı Anlatım - Temel" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent23: TopicContent = {
       explanation: 'Bu alt konu "Dolaylı Anlatım - Temel" başlığı altındadır.',
     },
     {
-      id: "exam-23-23-1-2",
+      id: "quiz-23-23-1-2",
       subtopicId: "23-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent23: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-23-23-1-3",
+      id: "quiz-23-23-1-3",
       subtopicId: "23-1",
       type: "multiple_choice",
       prompt: '"Dolaylı Anlatım - Temel" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent23: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-23-level",
+      id: "quiz-23-level",
       subtopicId: "23-1",
       type: "multiple_choice",
       prompt: '"Dolaylı Anlatım - Temel" konusu hangi seviyeye aittir?',

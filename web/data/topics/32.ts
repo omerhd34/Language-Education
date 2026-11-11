@@ -106,9 +106,9 @@ export const topicContent32: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-32-32-1-1",
+      id: "quiz-32-32-1-1",
       subtopicId: "32-1",
       type: "multiple_choice",
       prompt: '"İstek / Dilek Kipi" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent32: TopicContent = {
       explanation: 'Bu alt konu "İstek / Dilek Kipi" başlığı altındadır.',
     },
     {
-      id: "exam-32-32-1-2",
+      id: "quiz-32-32-1-2",
       subtopicId: "32-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent32: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-32-32-1-3",
+      id: "quiz-32-32-1-3",
       subtopicId: "32-1",
       type: "multiple_choice",
       prompt: '"İstek / Dilek Kipi" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent32: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-32-level",
+      id: "quiz-32-level",
       subtopicId: "32-1",
       type: "multiple_choice",
       prompt: '"İstek / Dilek Kipi" konusu hangi seviyeye aittir?',

@@ -1,6 +1,6 @@
 import { grammarHeadings, type GrammarHeading } from "@/data/grammarHeading";
 
-export type CefrLevel = "Başlangıç" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+export type CefrLevel = "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
 
 export type DashboardSubtopic = {
   id: string;
@@ -21,13 +21,6 @@ export type DashboardTopic = {
 };
 
 const levelExamSeeds: GrammarHeading[] = [
-  {
-    id: "122",
-    level: "Başlangıç",
-    title: "Başlangıç Yeterlilik Sınavı",
-    titleEng: "Starter Proficiency Exam",
-    titleEx: "Starter Proficiency Exam",
-  },
   {
     id: "123",
     level: "A1",
@@ -96,8 +89,6 @@ const grammarTopics = grammarHeadings.map((seed) => toTopic(seed));
 const levelExams = levelExamSeeds.map((seed) => toTopic(seed, true));
 
 export const dashboardTopics: DashboardTopic[] = [
-  ...grammarTopics.filter((topic) => topic.level === "Başlangıç"),
-  ...levelExams.filter((topic) => topic.level === "Başlangıç"),
   ...grammarTopics.filter((topic) => topic.level === "A1"),
   ...levelExams.filter((topic) => topic.level === "A1"),
   ...grammarTopics.filter((topic) => topic.level === "A2"),

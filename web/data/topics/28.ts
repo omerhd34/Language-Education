@@ -109,9 +109,9 @@ export const topicContent28: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-28-28-1-1",
+      id: "quiz-28-28-1-1",
       subtopicId: "28-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent28: TopicContent = {
         'Bu alt konu "Sıfat Cümleciklerinde Kısaltmalar" başlığı altındadır.',
     },
     {
-      id: "exam-28-28-1-2",
+      id: "quiz-28-28-1-2",
       subtopicId: "28-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent28: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-28-28-1-3",
+      id: "quiz-28-28-1-3",
       subtopicId: "28-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent28: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-28-level",
+      id: "quiz-28-level",
       subtopicId: "28-1",
       type: "multiple_choice",
       prompt:

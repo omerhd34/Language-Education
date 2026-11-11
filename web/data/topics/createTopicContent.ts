@@ -109,7 +109,7 @@ function buildExercises(topic: DashboardTopic): TopicExercise[] {
   return exercises;
 }
 
-function buildExamExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
+function buildQuizExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
   const pool = [
     topic.title,
     "Tamamen farklı bir konu",
@@ -128,7 +128,7 @@ function buildExamExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
   const built = topic.subtopics.flatMap((subtopic, index) => {
     const base: MultipleChoiceExercise[] = [
       {
-        id: `exam-${topic.id}-${subtopic.id}-1`,
+        id: `quiz-${topic.id}-${subtopic.id}-1`,
         subtopicId: subtopic.id,
         type: "multiple_choice",
         prompt: `"${subtopic.title}" alt konusu hangi ana konuya aittir?`,
@@ -142,7 +142,7 @@ function buildExamExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
         explanation: `Bu alt konu "${topic.title}" başlığı altındadır.`,
       },
       {
-        id: `exam-${topic.id}-${subtopic.id}-2`,
+        id: `quiz-${topic.id}-${subtopic.id}-2`,
         subtopicId: subtopic.id,
         type: "multiple_choice",
         prompt: `${topic.level} seviyesindeki "${subtopic.title}" için doğru yaklaşım hangisidir?`,
@@ -156,7 +156,7 @@ function buildExamExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
         explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
       },
       {
-        id: `exam-${topic.id}-${subtopic.id}-3`,
+        id: `quiz-${topic.id}-${subtopic.id}-3`,
         subtopicId: subtopic.id,
         type: "multiple_choice",
         prompt: `"${subtopic.title}" çalışırken hangisi doğrudur?`,
@@ -173,7 +173,7 @@ function buildExamExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
 
     if (index === 0) {
       base.push({
-        id: `exam-${topic.id}-level`,
+        id: `quiz-${topic.id}-level`,
         subtopicId: subtopic.id,
         type: "multiple_choice",
         prompt: `"${topic.title}" konusu hangi seviyeye aittir?`,
@@ -230,6 +230,6 @@ export function createTopicContent(topic: DashboardTopic): TopicContent {
       }),
     },
     exercises,
-    examExercises: topic.isExam ? undefined : buildExamExercises(topic),
+    quizExercises: topic.isExam ? undefined : buildQuizExercises(topic),
   };
 }

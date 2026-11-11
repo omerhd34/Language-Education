@@ -1,6 +1,6 @@
 export type GrammarHeading = {
   id: string;
-  level: "Başlangıç" | "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
+  level: "A1" | "A2" | "B1" | "B2" | "C1" | "C2";
   title: string;
   titleEng: string;
   titleEx: string;
@@ -9,21 +9,21 @@ export type GrammarHeading = {
 export const grammarHeadings: GrammarHeading[] = [
   {
     id: "1",
-    level: "Başlangıç",
+    level: "A1",
     title: "Alfabe & Ses Bilgisi",
     titleEng: "Alphabet & Basic Phonics",
     titleEx: "A, B, C — C is /k/ in cat and /s/ in city.",
   },
   {
     id: "2",
-    level: "Başlangıç",
+    level: "A1",
     title: "Emir Kipleri & Talimatlar",
     titleEng: "Basic Instructions & Imperatives",
     titleEx: "Listen, Open your book, Sit down",
   },
   {
     id: "3",
-    level: "Başlangıç",
+    level: "A1",
     title: "Temel Soru Kelimeleri",
     titleEng: "Basic Question Words",
     titleEx: "What is this? Who is that? Where are you?",

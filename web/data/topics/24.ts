@@ -107,9 +107,9 @@ export const topicContent24: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-24-24-1-1",
+      id: "quiz-24-24-1-1",
       subtopicId: "24-1",
       type: "multiple_choice",
       prompt: '"İsim Fiiller ve Mastarlar" alt konusu hangi ana konuya aittir?',
@@ -124,7 +124,7 @@ export const topicContent24: TopicContent = {
         'Bu alt konu "İsim Fiiller ve Mastarlar" başlığı altındadır.',
     },
     {
-      id: "exam-24-24-1-2",
+      id: "quiz-24-24-1-2",
       subtopicId: "24-1",
       type: "multiple_choice",
       prompt:
@@ -139,7 +139,7 @@ export const topicContent24: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-24-24-1-3",
+      id: "quiz-24-24-1-3",
       subtopicId: "24-1",
       type: "multiple_choice",
       prompt: '"İsim Fiiller ve Mastarlar" çalışırken hangisi doğrudur?',
@@ -153,7 +153,7 @@ export const topicContent24: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-24-level",
+      id: "quiz-24-level",
       subtopicId: "24-1",
       type: "multiple_choice",
       prompt: '"İsim Fiiller ve Mastarlar" konusu hangi seviyeye aittir?',

@@ -105,9 +105,9 @@ export const topicContent8: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-8-8-1-1",
+      id: "quiz-8-8-1-1",
       subtopicId: "8-1",
       type: "multiple_choice",
       prompt: '"Geniş Zaman" alt konusu hangi ana konuya aittir?',
@@ -121,7 +121,7 @@ export const topicContent8: TopicContent = {
       explanation: 'Bu alt konu "Geniş Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-8-8-1-2",
+      id: "quiz-8-8-1-2",
       subtopicId: "8-1",
       type: "multiple_choice",
       prompt: 'A1 seviyesindeki "Geniş Zaman" için doğru yaklaşım hangisidir?',
@@ -135,7 +135,7 @@ export const topicContent8: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-8-8-1-3",
+      id: "quiz-8-8-1-3",
       subtopicId: "8-1",
       type: "multiple_choice",
       prompt: '"Geniş Zaman" çalışırken hangisi doğrudur?',
@@ -149,7 +149,7 @@ export const topicContent8: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-8-level",
+      id: "quiz-8-level",
       subtopicId: "8-1",
       type: "multiple_choice",
       prompt: '"Geniş Zaman" konusu hangi seviyeye aittir?',

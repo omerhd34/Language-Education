@@ -109,9 +109,9 @@ export const topicContent25: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-25-25-1-1",
+      id: "quiz-25-25-1-1",
       subtopicId: "25-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent25: TopicContent = {
         'Bu alt konu "Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-25-25-1-2",
+      id: "quiz-25-25-1-2",
       subtopicId: "25-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent25: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-25-25-1-3",
+      id: "quiz-25-25-1-3",
       subtopicId: "25-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent25: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-25-level",
+      id: "quiz-25-level",
       subtopicId: "25-1",
       type: "multiple_choice",
       prompt:

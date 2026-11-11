@@ -12,7 +12,7 @@ export const topicContent5: TopicContent = {
         title: "Tanımlıklar ve Çoğul İsimler",
         titleEn: "Articles & Plural Nouns",
         paragraphs: [
-          '"Tanımlıklar ve Çoğul İsimler" başlığında Tanımlıklar ve Çoğul İsimler konusunun önemli noktalarını adım adım görürsün.',
+          "**Tanımlıklar** ve **Çoğul İsimler** başlığında Tanımlıklar ve Çoğul İsimler konusunun önemli noktalarını adım adım görürsün.",
           "Bu bölümde kalıpları tanı, örnekleri sesli tekrarla ve ardından alıştırmalara geç. A1 seviyesinde düzenli tekrar yeterlidir.",
           "Kısa not: Anlamadığın bir örneği işaretleyip alıştırmada yeniden dene.",
         ],
@@ -109,9 +109,9 @@ export const topicContent5: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-5-5-1-1",
+      id: "quiz-5-5-1-1",
       subtopicId: "5-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent5: TopicContent = {
         'Bu alt konu "Tanımlıklar ve Çoğul İsimler" başlığı altındadır.',
     },
     {
-      id: "exam-5-5-1-2",
+      id: "quiz-5-5-1-2",
       subtopicId: "5-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent5: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-5-5-1-3",
+      id: "quiz-5-5-1-3",
       subtopicId: "5-1",
       type: "multiple_choice",
       prompt: '"Tanımlıklar ve Çoğul İsimler" çalışırken hangisi doğrudur?',
@@ -156,7 +156,7 @@ export const topicContent5: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-5-level",
+      id: "quiz-5-level",
       subtopicId: "5-1",
       type: "multiple_choice",
       prompt: '"Tanımlıklar ve Çoğul İsimler" konusu hangi seviyeye aittir?',

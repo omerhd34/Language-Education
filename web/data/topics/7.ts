@@ -106,9 +106,9 @@ export const topicContent7: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-7-7-1-1",
+      id: "quiz-7-7-1-1",
       subtopicId: "7-1",
       type: "multiple_choice",
       prompt: '"Zaman ve Yer Edatları" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent7: TopicContent = {
       explanation: 'Bu alt konu "Zaman ve Yer Edatları" başlığı altındadır.',
     },
     {
-      id: "exam-7-7-1-2",
+      id: "quiz-7-7-1-2",
       subtopicId: "7-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent7: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-7-7-1-3",
+      id: "quiz-7-7-1-3",
       subtopicId: "7-1",
       type: "multiple_choice",
       prompt: '"Zaman ve Yer Edatları" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent7: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-7-level",
+      id: "quiz-7-level",
       subtopicId: "7-1",
       type: "multiple_choice",
       prompt: '"Zaman ve Yer Edatları" konusu hangi seviyeye aittir?',

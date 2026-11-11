@@ -2,7 +2,6 @@ import type { TopicContent } from "@/data/topics/types";
 import { topicContent1 } from "@/data/topics/1";
 import { topicContent2 } from "@/data/topics/2";
 import { topicContent3 } from "@/data/topics/3";
-import { topicContent122 } from "@/data/topics/exam/122";
 import { topicContent4 } from "@/data/topics/4";
 import { topicContent5 } from "@/data/topics/5";
 import { topicContent6 } from "@/data/topics/6";
@@ -51,7 +50,6 @@ const topicContentById: Record<string, TopicContent> = {
   "1": topicContent1,
   "2": topicContent2,
   "3": topicContent3,
-  "122": topicContent122,
   "4": topicContent4,
   "5": topicContent5,
   "6": topicContent6,

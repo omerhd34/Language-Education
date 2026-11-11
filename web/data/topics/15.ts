@@ -106,9 +106,9 @@ export const topicContent15: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-15-15-1-1",
+      id: "quiz-15-15-1-1",
       subtopicId: "15-1",
       type: "multiple_choice",
       prompt: '"Yakın Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
@@ -122,7 +122,7 @@ export const topicContent15: TopicContent = {
       explanation: 'Bu alt konu "Yakın Geçmiş Zaman" başlığı altındadır.',
     },
     {
-      id: "exam-15-15-1-2",
+      id: "quiz-15-15-1-2",
       subtopicId: "15-1",
       type: "multiple_choice",
       prompt:
@@ -137,7 +137,7 @@ export const topicContent15: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-15-15-1-3",
+      id: "quiz-15-15-1-3",
       subtopicId: "15-1",
       type: "multiple_choice",
       prompt: '"Yakın Geçmiş Zaman" çalışırken hangisi doğrudur?',
@@ -151,7 +151,7 @@ export const topicContent15: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-15-level",
+      id: "quiz-15-level",
       subtopicId: "15-1",
       type: "multiple_choice",
       prompt: '"Yakın Geçmiş Zaman" konusu hangi seviyeye aittir?',

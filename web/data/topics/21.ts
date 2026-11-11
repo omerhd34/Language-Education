@@ -109,9 +109,9 @@ export const topicContent21: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-21-21-1-1",
+      id: "quiz-21-21-1-1",
       subtopicId: "21-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent21: TopicContent = {
         'Bu alt konu "Koşul Cümleleri - Tip 0, 1, 2" başlığı altındadır.',
     },
     {
-      id: "exam-21-21-1-2",
+      id: "quiz-21-21-1-2",
       subtopicId: "21-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent21: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-21-21-1-3",
+      id: "quiz-21-21-1-3",
       subtopicId: "21-1",
       type: "multiple_choice",
       prompt: '"Koşul Cümleleri - Tip 0, 1, 2" çalışırken hangisi doğrudur?',
@@ -156,7 +156,7 @@ export const topicContent21: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-21-level",
+      id: "quiz-21-level",
       subtopicId: "21-1",
       type: "multiple_choice",
       prompt: '"Koşul Cümleleri - Tip 0, 1, 2" konusu hangi seviyeye aittir?',

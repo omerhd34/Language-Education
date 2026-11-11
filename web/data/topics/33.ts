@@ -109,9 +109,9 @@ export const topicContent33: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-33-33-1-1",
+      id: "quiz-33-33-1-1",
       subtopicId: "33-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent33: TopicContent = {
         'Bu alt konu "İleri Düzey Ortaç / Ulaç Cümlecikleri" başlığı altındadır.',
     },
     {
-      id: "exam-33-33-1-2",
+      id: "quiz-33-33-1-2",
       subtopicId: "33-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent33: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-33-33-1-3",
+      id: "quiz-33-33-1-3",
       subtopicId: "33-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent33: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-33-level",
+      id: "quiz-33-level",
       subtopicId: "33-1",
       type: "multiple_choice",
       prompt:

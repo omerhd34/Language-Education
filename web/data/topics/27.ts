@@ -109,9 +109,9 @@ export const topicContent27: TopicContent = {
       ],
     },
   ],
-  examExercises: [
+  quizExercises: [
     {
-      id: "exam-27-27-1-1",
+      id: "quiz-27-27-1-1",
       subtopicId: "27-1",
       type: "multiple_choice",
       prompt:
@@ -127,7 +127,7 @@ export const topicContent27: TopicContent = {
         'Bu alt konu "İleri Edilgen Çatı ve Ettirgen Yapılar" başlığı altındadır.',
     },
     {
-      id: "exam-27-27-1-2",
+      id: "quiz-27-27-1-2",
       subtopicId: "27-1",
       type: "multiple_choice",
       prompt:
@@ -142,7 +142,7 @@ export const topicContent27: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
-      id: "exam-27-27-1-3",
+      id: "quiz-27-27-1-3",
       subtopicId: "27-1",
       type: "multiple_choice",
       prompt:
@@ -157,7 +157,7 @@ export const topicContent27: TopicContent = {
       explanation: "Tekrar ve işaretleme öğrenmeyi güçlendirir.",
     },
     {
-      id: "exam-27-level",
+      id: "quiz-27-level",
       subtopicId: "27-1",
       type: "multiple_choice",
       prompt:
