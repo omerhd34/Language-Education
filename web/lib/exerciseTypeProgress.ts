@@ -35,11 +35,27 @@ export function isCrosswordClueSolved(
   return true;
 }
 
+export function totalCrosswordClueCount(
+  exercises: readonly CrosswordExercise[],
+): number {
+  return exercises.reduce((sum, item) => sum + item.clues.length, 0);
+}
+
+export function countCrosswordCluesInExercises(
+  exercises: readonly TopicExercise[],
+): number {
+  return totalCrosswordClueCount(
+    exercises.filter(
+      (item): item is CrosswordExercise => item.type === "crossword",
+    ),
+  );
+}
+
 export function countSolvedCrosswordClues(
   exercises: CrosswordExercise[],
   draft: CrosswordDraft | null,
 ): { solved: number; total: number } {
-  const total = exercises.reduce((sum, item) => sum + item.clues.length, 0);
+  const total = totalCrosswordClueCount(exercises);
   if (!draft || total === 0) {
     return { solved: 0, total };
   }

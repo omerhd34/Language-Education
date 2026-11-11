@@ -2,9 +2,9 @@ import { getTopicContent } from "@/data/topics";
 import type { ExerciseType } from "@/data/topics/types";
 import { computeExerciseTypeProgress } from "@/lib/exerciseTypeProgress";
 import {
-  resolveTopicExamCrosswords,
+  resolveMixedTopicQuiz,
+  topicQuizUsesMixedFormat,
   resolveTopicExamExercises,
-  resolveTopicExamFillBlanks,
 } from "@/lib/topicExam";
 import type { TopicQuizPart } from "@/lib/topicExamDraftStorage";
 import {
@@ -35,15 +35,13 @@ function availableQuizParts(topicId: string): TopicQuizPart[] {
     return [];
   }
 
+  if (topicQuizUsesMixedFormat(content)) {
+    return resolveMixedTopicQuiz(content).length > 0 ? ["mixed"] : [];
+  }
+
   const parts: TopicQuizPart[] = [];
   if (resolveTopicExamExercises(content).length > 0) {
     parts.push("multiple_choice");
-  }
-  if (resolveTopicExamFillBlanks(content).length > 0) {
-    parts.push("fill_blank");
-  }
-  if (resolveTopicExamCrosswords(content).length > 0) {
-    parts.push("crossword");
   }
   return parts;
 }
