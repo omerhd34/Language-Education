@@ -128,15 +128,13 @@ export type TopicExercise =
   | CrosswordExercise
   | ListeningExercise;
 
-export type TopicQuizExercise =
-  | MultipleChoiceExercise
-  | FillBlankExercise
-  | CrosswordExercise;
+export type TopicQuizExercise = MultipleChoiceExercise | FillBlankExercise;
 
 export type TopicContent = {
   topicId: string;
   viewMinutes?: number;
   quizQuestionCount?: number;
+  quizFillBlankCount?: number;
   quizOptionCount?: number;
   lesson: TopicLesson;
   exercises: TopicExercise[];
