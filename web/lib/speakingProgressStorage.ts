@@ -280,3 +280,13 @@ export function markSpeakingLevelPassed(level: SpeakingLevel): void {
 }
 
 export const SPEAKING_LEVEL_PASSED_EVENT = LEVEL_PASSED_EVENT;
+
+export function clearSpeakingProgressStorage(): void {
+  if (!canUseStorage()) {
+    return;
+  }
+  window.localStorage.removeItem(STORAGE_KEY);
+  window.localStorage.removeItem(PASSED_SPEAKING_LEVELS_KEY);
+  window.dispatchEvent(new CustomEvent(PASSED_EVENT, { detail: {} }));
+  window.dispatchEvent(new CustomEvent(LEVEL_PASSED_EVENT, { detail: [] }));
+}

@@ -160,7 +160,14 @@ export type VocabularyQuizAnswerPayload = {
   passed: VocabularyQuizTypeProgress;
 };
 
-export type ProgressResetScope = "vocabulary" | "topics" | "all";
+export type ProgressResetScope =
+  | "grammar"
+  | "vocabulary"
+  | "reading"
+  | "listening"
+  | "writing"
+  | "speaking"
+  | "all";
 
 export type ProgressResetBody = {
   scope: ProgressResetScope;

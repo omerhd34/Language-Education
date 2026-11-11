@@ -5,17 +5,19 @@ import { useTranslations } from "next-intl";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { SettingsSection } from "@/components/features/settings/SettingsSection";
-import { clearExerciseDraftStorage } from "@/lib/exerciseDraftStorage";
-import { clearLevelExamProgress } from "@/lib/levelExamProgressStorage";
-import { clearPassedLevelExams } from "@/lib/levelExamStorage";
-import { clearTopicExamDrafts } from "@/lib/topicExamDraftStorage";
-import { clearTopicProgressStorage } from "@/lib/topicProgressStorage";
-import { clearVocabularyActivityStorage } from "@/lib/vocabularyActivityStorage";
-import { clearLastVocabularyQuizResult } from "@/lib/vocabularyQuizResultStorage";
+import { clearClientProgressForScope } from "@/lib/progressResetClient";
 import { useVocabularyStore } from "@/store/vocabularyStore";
 import type { ProgressResetScope } from "@/types/api";
 
-const SCOPES: ProgressResetScope[] = ["vocabulary", "topics", "all"];
+const SCOPES: ProgressResetScope[] = [
+  "grammar",
+  "vocabulary",
+  "reading",
+  "listening",
+  "writing",
+  "speaking",
+  "all",
+];
 
 export function ProgressResetPanel() {
   const t = useTranslations("Settings");
@@ -35,17 +37,7 @@ export function ProgressResetPanel() {
     setError(false);
     try {
       await resetProgress({ scope: pendingScope });
-      if (pendingScope === "vocabulary" || pendingScope === "all") {
-        clearLastVocabularyQuizResult();
-        clearVocabularyActivityStorage();
-      }
-      if (pendingScope === "topics" || pendingScope === "all") {
-        clearPassedLevelExams();
-        clearLevelExamProgress();
-        clearTopicProgressStorage();
-        clearExerciseDraftStorage();
-        clearTopicExamDrafts();
-      }
+      clearClientProgressForScope(pendingScope);
       setDoneScope(pendingScope);
       setPendingScope(null);
     } catch {
@@ -60,9 +52,12 @@ export function ProgressResetPanel() {
       description={t("progressResetSubtitle")}
       icon={<RotateCcw className="size-5" aria-hidden />}
     >
-      <ul className="space-y-2">
+      <ul className="grid grid-cols-2 gap-2">
         {SCOPES.map((scope) => (
-          <li key={scope}>
+          <li
+            key={scope}
+            className={scope === "all" ? "col-span-2" : undefined}
+          >
             <button
               type="button"
               disabled={isLoading}
@@ -71,18 +66,13 @@ export function ProgressResetPanel() {
                 setError(false);
                 setPendingScope(scope);
               }}
-              className="flex w-full cursor-pointer items-start gap-3 rounded-xl border border-border bg-background/80 px-3.5 py-3 text-left transition-colors hover:border-sky-500/45 hover:bg-sky-500/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-brand-950/40"
+              className="flex h-full w-full cursor-pointer items-center gap-2.5 rounded-xl border border-border bg-background/80 px-3 py-2.5 text-left transition-colors hover:border-sky-500/45 hover:bg-sky-500/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/40 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-brand-950/40"
             >
               <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg bg-brand-100 text-brand-700 dark:bg-brand-900 dark:text-brand-200">
                 <RotateCcw className="size-3.5" aria-hidden />
               </span>
-              <span className="min-w-0 space-y-0.5">
-                <span className="block text-sm font-medium text-brand-950 dark:text-brand-100">
-                  {t(`progressResetScope.${scope}.title`)}
-                </span>
-                <span className="block text-xs leading-snug text-brand-600 dark:text-brand-400">
-                  {t(`progressResetScope.${scope}.description`)}
-                </span>
+              <span className="min-w-0 truncate text-sm font-medium text-brand-950 dark:text-brand-100">
+                {t(`progressResetScope.${scope}.title`)}
               </span>
             </button>
           </li>

@@ -184,3 +184,13 @@ export function markReadingLevelPassed(level: ReadingLevel): void {
 }
 
 export const READING_LEVEL_PASSED_EVENT = LEVEL_PASSED_EVENT;
+
+export function clearReadingProgressStorage(): void {
+  if (!canUseStorage()) {
+    return;
+  }
+  window.localStorage.removeItem(STORAGE_KEY);
+  window.localStorage.removeItem(PASSED_READING_LEVELS_KEY);
+  window.dispatchEvent(new CustomEvent(PASSED_EVENT, { detail: {} }));
+  window.dispatchEvent(new CustomEvent(LEVEL_PASSED_EVENT, { detail: [] }));
+}

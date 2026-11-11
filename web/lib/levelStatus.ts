@@ -1,5 +1,6 @@
+import { getCombinedExercisesForLevel } from "@/data/combinedExercises";
 import { dashboardTopics, type CefrLevel } from "@/data/dashboardTopics";
-import type { ReadingLevel } from "@/data/readings/types";
+import { computeCombinedExerciseProgress } from "@/lib/combinedExerciseProgress";
 import {
   getVocabularyCategoriesByLevel,
   type VocabularyLevel,
@@ -36,24 +37,15 @@ function averagePercents(values: number[]): number {
   return Math.min(100, Math.max(0, Math.round(total / values.length)));
 }
 
-type CefrSkillLevel = ReadingLevel;
-
-function asCefrSkillLevel(level: CefrLevel): CefrSkillLevel | null {
-  if (level === "Başlangıç") {
-    return null;
-  }
+function asVocabularyLevel(level: CefrLevel): VocabularyLevel {
   return level;
-}
-
-function asVocabularyLevel(level: CefrLevel): VocabularyLevel | null {
-  return asCefrSkillLevel(level);
 }
 
 function grammarPercents(
   level: CefrLevel,
   passedExams: readonly CefrLevel[],
 ): number[] {
-  return dashboardTopics
+  const topicPercents = dashboardTopics
     .filter((topic) => topic.level === level)
     .map((topic) => {
       if (topic.isExam) {
@@ -63,66 +55,78 @@ function grammarPercents(
       }
       return computeDisplayedTopicProgress(topic.id);
     });
+
+  const combinedPercents = getCombinedExercisesForLevel(level).map((combined) =>
+    computeCombinedExerciseProgress(combined),
+  );
+
+  return [...topicPercents, ...combinedPercents];
 }
 
 function vocabularyPercents(
   level: CefrLevel,
   knownWordIds: ReadonlySet<string>,
 ): number[] {
-  const vocabularyLevel = asVocabularyLevel(level);
-  if (!vocabularyLevel) {
-    return [];
-  }
-  return getVocabularyCategoriesByLevel(vocabularyLevel).map((category) =>
-    vocabularySectionPercent(category, knownWordIds),
+  return getVocabularyCategoriesByLevel(asVocabularyLevel(level)).map(
+    (category) => vocabularySectionPercent(category, knownWordIds),
   );
 }
 
 function readingPercents(level: CefrLevel): number[] {
-  const readingLevel = asCefrSkillLevel(level);
-  if (!readingLevel) {
-    return [];
-  }
-  return getReadingSectionsByLevel(readingLevel).map((section) =>
+  return getReadingSectionsByLevel(level).map((section) =>
     readingSectionPercent(section.id),
   );
 }
 
 function listeningPercents(level: CefrLevel): number[] {
-  const skillLevel = asCefrSkillLevel(level);
-  if (!skillLevel) {
-    return [];
-  }
-  return getListeningSectionsByLevel(skillLevel).map((section) =>
+  return getListeningSectionsByLevel(level).map((section) =>
     listeningSectionPercent(section.id),
   );
 }
 
 function writingPercents(level: CefrLevel): number[] {
-  const skillLevel = asCefrSkillLevel(level);
-  if (!skillLevel) {
-    return [];
-  }
-  return getWritingSectionsByLevel(skillLevel).map((section) =>
+  return getWritingSectionsByLevel(level).map((section) =>
     writingSectionPercent(section.id),
   );
 }
 
 function speakingPercents(level: CefrLevel): number[] {
-  const skillLevel = asCefrSkillLevel(level);
-  if (!skillLevel) {
-    return [];
-  }
-  return getSpeakingSectionsByLevel(skillLevel).map((section) =>
+  return getSpeakingSectionsByLevel(level).map((section) =>
     speakingSectionPercent(section.id),
   );
 }
 
-function skillBandAverage(parts: number[]): number | null {
-  if (parts.length === 0) {
-    return null;
+/** Panel menüsündeki altı çalışma alanı (eşit ağırlık). */
+const LEVEL_SKILL_COUNT = 6;
+
+function padBandToTargetSize(band: number[], targetSize: number): number[] {
+  if (band.length >= targetSize) {
+    return band;
   }
-  return averagePercents(parts);
+  return [...band, ...Array<number>(targetSize - band.length).fill(0)];
+}
+
+function skillBandPercent(band: number[], targetSize: number): number {
+  const units = band.length > 0 ? band : [0];
+  return averagePercents(padBandToTargetSize(units, targetSize));
+}
+
+function levelSkillPercents(
+  level: CefrLevel,
+  passedExams: readonly CefrLevel[],
+  knownWordIds: ReadonlySet<string>,
+): number[] {
+  const bands = [
+    grammarPercents(level, passedExams),
+    vocabularyPercents(level, knownWordIds),
+    readingPercents(level),
+    listeningPercents(level),
+    writingPercents(level),
+    speakingPercents(level),
+  ];
+
+  const targetSize = Math.max(...bands.map((band) => band.length), 1);
+  return bands.map((band) => skillBandPercent(band, targetSize));
 }
 
 export function getActiveCefrLevel(
@@ -145,17 +149,10 @@ export function computeLevelCompletionPercent(
   passedExams: readonly CefrLevel[] = [],
   knownWordIds: ReadonlySet<string> = new Set(),
 ): number {
-  const skillPercents = [
-    grammarPercents(level, passedExams),
-    vocabularyPercents(level, knownWordIds),
-    readingPercents(level),
-    listeningPercents(level),
-    writingPercents(level),
-    speakingPercents(level),
-  ]
-    .map((parts) => skillBandAverage(parts))
-    .filter((value): value is number => value !== null);
-
+  const skillPercents = levelSkillPercents(level, passedExams, knownWordIds);
+  if (skillPercents.length !== LEVEL_SKILL_COUNT) {
+    return 0;
+  }
   return averagePercents(skillPercents);
 }
 

@@ -71,7 +71,7 @@ export async function resetUserProgress(
     vocabularyDeleted = await resetVocabulary(userId);
   }
 
-  if (scope === "topics" || scope === "all") {
+  if (scope === "grammar" || scope === "all") {
     const topics = await resetTopics(userId);
     topicProgressDeleted = topics.topicProgressDeleted;
     streakReset = topics.streakReset;

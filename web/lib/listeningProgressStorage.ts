@@ -123,3 +123,13 @@ export function markListeningLevelPassed(level: ListeningLevel): void {
 }
 
 export const LISTENING_LEVEL_PASSED_EVENT = LEVEL_PASSED_EVENT;
+
+export function clearListeningProgressStorage(): void {
+  if (!canUseStorage()) {
+    return;
+  }
+  window.localStorage.removeItem(STORAGE_KEY);
+  window.localStorage.removeItem(PASSED_LISTENING_LEVELS_KEY);
+  window.dispatchEvent(new CustomEvent(PASSED_EVENT, { detail: {} }));
+  window.dispatchEvent(new CustomEvent(LEVEL_PASSED_EVENT, { detail: [] }));
+}

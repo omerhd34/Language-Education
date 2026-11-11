@@ -189,3 +189,13 @@ export function markWritingLevelPassed(level: WritingLevel): void {
 }
 
 export const WRITING_LEVEL_PASSED_EVENT = LEVEL_PASSED_EVENT;
+
+export function clearWritingProgressStorage(): void {
+  if (!canUseStorage()) {
+    return;
+  }
+  window.localStorage.removeItem(STORAGE_KEY);
+  window.localStorage.removeItem(PASSED_WRITING_LEVELS_KEY);
+  window.dispatchEvent(new CustomEvent(PASSED_EVENT, { detail: {} }));
+  window.dispatchEvent(new CustomEvent(LEVEL_PASSED_EVENT, { detail: [] }));
+}
