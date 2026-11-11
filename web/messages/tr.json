@@ -213,6 +213,7 @@
     "progressResetConfirm": "Evet, sıfırla",
     "progressResetCancel": "Vazgeç",
     "progressResetError": "Sıfırlama başarısız. Lütfen tekrar dene.",
+    "progressResetSuccessClose": "Tamam",
     "progressResetScope": {
       "grammar": {
         "title": "Grammer",
@@ -837,7 +838,7 @@
     "exercises": "Alıştırma",
     "topicExamTab": "Quiz",
     "examMetaTitle": "{title} — Quiz",
-    "quizSingleIntro": "Geçmek için en az %85 doğru gerekir.",
+    "quizSingleIntro": "Geçmek için en az %85 doğru gerekir. Çoktan seçmeli ve boşluk doldurma soruları tek quiste karışık sırayla gelir.",
     "quizChooseTitle": "Quiz bölümü seç",
     "quizChooseSubtitle": "Bölümler ayrıdır. Hepsini tamamlamalısın; her biri için en az %85 başarı gerekir.",
     "quizBackToParts": "Bölümlere dön",
@@ -892,7 +893,6 @@
     "typeAlreadyCompletedTitle": "Bu türü daha önce çözdün.",
     "typeAlreadyCompletedBody": "İstersen baştan tekrar çözebilirsin; ilerleme zaten kaydedildi.",
     "questionCount": "{count} soru",
-    "puzzleCount": "{count} bulmaca",
     "backToTypes": "Türlere dön",
     "progress": "Soru {current} / {total}",
     "optionsAria": "Cevap seçenekleri",
