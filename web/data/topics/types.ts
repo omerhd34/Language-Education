@@ -46,14 +46,44 @@ export type TopicLesson = {
 
 export type ExerciseType =
   | "multiple_choice"
+  | "true_false"
   | "fill_blank"
   | "crossword"
-  | "listening";
+  | "listening"
+  | "matching"
+  | "mixed";
+
+export type MatchingPair = {
+  left: string;
+  right: string;
+};
+
+export type MatchingExercise = {
+  id: string;
+  subtopicId: string;
+  type: "matching";
+  prompt: string;
+  pairs: MatchingPair[];
+  explanation?: string;
+  hint?: string;
+};
 
 export type MultipleChoiceExercise = {
   id: string;
   subtopicId: string;
   type: "multiple_choice";
+  prompt: string;
+  options: string[];
+  correctIndex: number;
+  explanation?: string;
+  hint?: string;
+  speakText?: string;
+};
+
+export type TrueFalseExercise = {
+  id: string;
+  subtopicId: string;
+  type: "true_false";
   prompt: string;
   options: string[];
   correctIndex: number;
@@ -124,11 +154,32 @@ export type CrosswordExercise = {
 
 export type TopicExercise =
   | MultipleChoiceExercise
+  | TrueFalseExercise
   | FillBlankExercise
   | CrosswordExercise
-  | ListeningExercise;
+  | ListeningExercise
+  | MatchingExercise;
+
+export type ErrorCorrectionExercise = {
+  id: string;
+  subtopicId: string;
+  type: "error_correction";
+  sentence: string;
+  tokens?: string[];
+  errorTokenIndex: number;
+  correction: string;
+  acceptedCorrections?: string[];
+  explanation?: string;
+  hint?: string;
+  speakText?: string;
+};
 
 export type TopicQuizExercise = MultipleChoiceExercise | FillBlankExercise;
+
+export type TopicQuizItem =
+  | TopicQuizExercise
+  | ErrorCorrectionExercise
+  | ListeningExercise;
 
 export type TopicContent = {
   topicId: string;
@@ -136,7 +187,15 @@ export type TopicContent = {
   quizQuestionCount?: number;
   quizFillBlankCount?: number;
   quizOptionCount?: number;
+  practiceMixed?: boolean;
+  quizIntro?: string;
   lesson: TopicLesson;
-  exercises: TopicExercise[];
-  quizExercises?: TopicQuizExercise[];
+  exercises?: TopicExercise[];
+  exercisesMultipleChoice?: MultipleChoiceExercise[];
+  exercisesFillBlank?: FillBlankExercise[];
+  exercisesTrueFalse?: TrueFalseExercise[];
+  exercisesMatching?: MatchingExercise[];
+  exercisesCrossword?: CrosswordExercise[];
+  exercisesListening?: ListeningExercise[];
+  quiz?: TopicQuizItem[];
 };

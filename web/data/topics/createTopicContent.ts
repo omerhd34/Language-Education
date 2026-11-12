@@ -3,6 +3,7 @@ import type {
   MultipleChoiceExercise,
   TopicContent,
   TopicExercise,
+  TrueFalseExercise,
 } from "@/data/topics/types";
 import {
   TOPIC_EXAM_QUESTION_COUNT,
@@ -25,8 +26,46 @@ function pickSamples(topicId: string, count: number) {
   });
 }
 
-function buildExercises(topic: DashboardTopic): TopicExercise[] {
+function tsLiteral(value: unknown, indent = 0): string {
+  const pad = " ".repeat(indent);
+  if (value === null) {
+    return "null";
+  }
+  if (typeof value === "string") {
+    return JSON.stringify(value);
+  }
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value);
+  }
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return "[]";
+    }
+    const lines = value.map(
+      (item) => `${" ".repeat(indent + 2)}${tsLiteral(item, indent + 2)},`,
+    );
+    return `[\n${lines.join("\n")}\n${pad}]`;
+  }
+  if (typeof value === "object") {
+    const record = value as Record<string, unknown>;
+    const lines = Object.entries(record)
+      .filter(([, item]) => item !== undefined)
+      .map(
+        ([key, item]) =>
+          `${" ".repeat(indent + 2)}${key}: ${tsLiteral(item, indent + 2)},`,
+      );
+    return `{\n${lines.join("\n")}\n${pad}}`;
+  }
+  return "undefined";
+}
+
+export function buildPracticeExercises(
+  topic: DashboardTopic,
+  options?: { includeCrossword?: boolean },
+): TopicExercise[] {
+  const includeCrossword = options?.includeCrossword ?? topic.id !== "1";
   const exercises: TopicExercise[] = [];
+  const firstSubtopic = topic.subtopics[0];
 
   for (const subtopic of topic.subtopics) {
     exercises.push({
@@ -59,6 +98,17 @@ function buildExercises(topic: DashboardTopic): TopicExercise[] {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     });
 
+    const trueFalse: TrueFalseExercise = {
+      id: `${topic.id}-tf-${subtopic.id}-1`,
+      subtopicId: subtopic.id,
+      type: "true_false",
+      prompt: `"${subtopic.title}" başlığı "${topic.title}" konusunun bir parçasıdır.`,
+      options: ["Doğru", "Yanlış"],
+      correctIndex: 0,
+      explanation: `Bu alt başlık "${topic.title}" konusu altında işlenir.`,
+    };
+    exercises.push(trueFalse);
+
     exercises.push({
       id: `${topic.id}-fb-${subtopic.id}-1`,
       subtopicId: subtopic.id,
@@ -69,8 +119,38 @@ function buildExercises(topic: DashboardTopic): TopicExercise[] {
     });
   }
 
-  const firstSubtopic = topic.subtopics[0];
   if (firstSubtopic) {
+    const pairs =
+      topic.subtopics.length > 1
+        ? topic.subtopics.slice(0, 6).map((subtopic) => ({
+            left: subtopic.titleEng || subtopic.titleEx,
+            right: subtopic.title,
+          }))
+        : [
+            {
+              left: topic.titleEng || topic.titleEx,
+              right: topic.title,
+            },
+            {
+              left: `${topic.level} level`,
+              right: `${topic.level} seviyesi`,
+            },
+            { left: "Practice", right: "Alıştırma" },
+            { left: "Example", right: "Örnek" },
+            { left: "Lesson", right: "Konu anlatımı" },
+            { left: "Quiz", right: "Quiz" },
+          ];
+
+    exercises.push({
+      id: `${topic.id}-match-1`,
+      subtopicId: firstSubtopic.id,
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs,
+    });
+  }
+
+  if (includeCrossword && firstSubtopic) {
     exercises.push({
       id: `${topic.id}-cw-1`,
       subtopicId: firstSubtopic.id,
@@ -107,6 +187,17 @@ function buildExercises(topic: DashboardTopic): TopicExercise[] {
   }
 
   return exercises;
+}
+
+export function formatExercisesBlock(exercises: TopicExercise[]): string {
+  const items = exercises
+    .map((item) => `    ${tsLiteral(item, 4)}`)
+    .join(",\n");
+  return `  exercises: [\n${items},\n  ],`;
+}
+
+function buildExercises(topic: DashboardTopic): TopicExercise[] {
+  return buildPracticeExercises(topic);
 }
 
 function buildQuizExercises(topic: DashboardTopic): MultipleChoiceExercise[] {
@@ -230,6 +321,6 @@ export function createTopicContent(topic: DashboardTopic): TopicContent {
       }),
     },
     exercises,
-    quizExercises: topic.isExam ? undefined : buildQuizExercises(topic),
+    quiz: topic.isExam ? undefined : buildQuizExercises(topic),
   };
 }
