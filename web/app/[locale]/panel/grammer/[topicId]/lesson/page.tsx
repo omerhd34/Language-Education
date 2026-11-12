@@ -9,8 +9,8 @@ import { TopicLessonView } from "@/components/features/topics/TopicLessonView";
 import { TopicGrammarAccessGate } from "@/components/features/topics/TopicGrammarAccessGate";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
-import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
-import { getTopicContent } from "@/data/topics";
+import { dashboardTopics, getDashboardTopicById } from "@/data/grammar/dashboardTopics";
+import { getTopicContent } from "@/data/grammar";
 import { redirect } from "@/i18n/navigation";
 import {
   PASSED_LEVEL_EXAMS_COOKIE,

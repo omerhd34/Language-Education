@@ -8,9 +8,9 @@ import { TopicExercisesView } from "@/components/features/topics/TopicExercisesV
 import { TopicGrammarAccessGate } from "@/components/features/topics/TopicGrammarAccessGate";
 import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked";
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
-import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
-import { getTopicContent } from "@/data/topics";
-import { getTopicPracticeExercises } from "@/data/topics/topicExercises";
+import { dashboardTopics, getDashboardTopicById } from "@/data/grammar/dashboardTopics";
+import { getTopicContent } from "@/data/grammar";
+import { getTopicPracticeExercises } from "@/data/grammar/topicExercises";
 import {
   PASSED_LEVEL_EXAMS_COOKIE,
   parsePassedLevelExams,
