@@ -403,6 +403,7 @@
     "generalTitle": "General",
     "generalSubtitle": "Pylmor’da nasıl ilerleyeceğini, seviye ve kelime kurallarını ve günlük çalışma akışını burada bulursun.",
     "generalRulesTitle": "Kurallar",
+    "generalRulesSubtitle": "Seviye kilidi, gramer sırası ve kelime çalışma döngüsünün temel kuralları.",
     "generalRules": {
       "levelProgression": "Bir üst CEFR seviyesini ancak alt seviyenin yeterlilik sınavını geçerek açarsın; kilitli seviyedeki içeriklere giremezsin.",
       "grammarSequence": "Grammer’da her konu için önce konu anlatımı, sonra alıştırma ve konu sınavı vardır; sıradaki konu ancak öncekileri tamamlayınca açılır.",
@@ -412,6 +413,7 @@
       "skillsCompletion": "Reading, Listening, Writing ve Speaking bölümlerinde içeriği dinleyip veya okuyup alıştırmaları tamamlamadan bölüm tamamlanmış sayılmaz."
     },
     "generalStepsTitle": "Neler yapılmalıdır?",
+    "generalStepsSubtitle": "Günlük oturumda izlemen önerilen sıra; üst kartlardan kaldığın yere hızlı dönebilirsin.",
     "generalSteps": {
       "overview": {
         "title": "Paneli kontrol et",
