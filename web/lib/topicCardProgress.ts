@@ -1,10 +1,17 @@
 import { getTopicContent } from "@/data/topics";
+import { getTopicPracticeExercises } from "@/data/topics/topicExercises";
 import type { ExerciseType } from "@/data/topics/types";
 import { computeExerciseTypeProgress } from "@/lib/exerciseTypeProgress";
 import {
   resolveMixedTopicQuiz,
+  toTopicQuizExercises,
+  topicPracticeUsesMixedFormat,
   topicQuizUsesMixedFormat,
   resolveTopicExamExercises,
+  topicQuizUsesErrorCorrectionFormat,
+  resolveTopicErrorCorrectionQuiz,
+  topicQuizUsesListeningFormat,
+  resolveTopicListeningQuiz,
 } from "@/lib/topicExam";
 import type { TopicQuizPart } from "@/lib/topicExamDraftStorage";
 import {
@@ -26,13 +33,37 @@ function availableExerciseTypes(topicId: string): ExerciseType[] {
     return [];
   }
 
-  return [...new Set(content.exercises.map((item) => item.type))];
+  if (topicPracticeUsesMixedFormat(content)) {
+    const types: ExerciseType[] = [];
+    const exercises = getTopicPracticeExercises(content);
+    if (toTopicQuizExercises(exercises).length > 0) {
+      types.push("mixed");
+    }
+    if (exercises.some((item) => item.type === "matching")) {
+      types.push("matching");
+    }
+    return types;
+  }
+
+  return [
+    ...new Set(getTopicPracticeExercises(content).map((item) => item.type)),
+  ];
 }
 
 function availableQuizParts(topicId: string): TopicQuizPart[] {
   const content = getTopicContent(topicId);
   if (!content) {
     return [];
+  }
+
+  if (topicQuizUsesListeningFormat(content)) {
+    return resolveTopicListeningQuiz(content).length > 0 ? ["listening"] : [];
+  }
+
+  if (topicQuizUsesErrorCorrectionFormat(content)) {
+    return resolveTopicErrorCorrectionQuiz(content).length > 0
+      ? ["error_correction"]
+      : [];
   }
 
   if (topicQuizUsesMixedFormat(content)) {
@@ -139,7 +170,7 @@ export function computeDisplayedTopicProgress(topicId: string): number {
   const types = availableExerciseTypes(topicId);
   const typeProgress = computeExerciseTypeProgress({
     topicId,
-    exercises: content?.exercises ?? [],
+    exercises: content ? getTopicPracticeExercises(content) : [],
     completedTypes: record.completedTypes ?? [],
   });
   const exerciseTypePercents = types.map((type) => typeProgress[type] ?? 0);

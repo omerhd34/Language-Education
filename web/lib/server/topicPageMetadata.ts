@@ -32,3 +32,12 @@ export async function buildTopicPageMetadata(
       };
   }
 }
+
+export async function buildCombinedPageMetadata(locale: string) {
+  "use cache";
+
+  const t = await getTranslations({ locale, namespace: "Topic" });
+  return {
+    title: t("documentTitle", { title: t("combinedExerciseTitle") }),
+  };
+}

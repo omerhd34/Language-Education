@@ -1,9 +1,16 @@
+import { getTopicContent } from "@/data/topics";
 import type {
   CrosswordClue,
   CrosswordExercise,
   ExerciseType,
   TopicExercise,
 } from "@/data/topics/types";
+import {
+  toTopicQuizExercises,
+  topicPracticeUsesMixedFormat,
+} from "@/lib/topicExam";
+
+export const PRACTICE_MIXED_SESSION_SUFFIX = "practice-mixed";
 import {
   readCrosswordDraft,
   readLinearSession,
@@ -106,6 +113,59 @@ export function computeExerciseTypeProgress(options: {
 }): Partial<Record<ExerciseType, number>> {
   const progress: Partial<Record<ExerciseType, number>> = {};
   const completed = new Set(options.completedTypes);
+  const scope = options.progressKey ?? options.topicId;
+  const content = options.topicId
+    ? getTopicContent(options.topicId)
+    : undefined;
+
+  if (content && topicPracticeUsesMixedFormat(content) && scope) {
+    const mixed = readLinearSession(
+      `${scope}:${PRACTICE_MIXED_SESSION_SUFFIX}`,
+    );
+    const checked = mixed?.slots.filter((slot) => slot.checked).length ?? 0;
+    const base = mixed && mixed.total > 0 ? toPercent(checked, mixed.total) : 0;
+    const mixedComplete =
+      completed.has("mixed") ||
+      (completed.has("multiple_choice") && completed.has("fill_blank"));
+
+    if (toTopicQuizExercises(options.exercises).length > 0) {
+      progress.mixed = mixedComplete ? 100 : base;
+    }
+    const crosswords = options.exercises.filter(
+      (item): item is CrosswordExercise => item.type === "crossword",
+    );
+    if (crosswords.length > 0) {
+      const draft = readCrosswordDraft(
+        crosswordDraftKey(options.topicId, crosswords),
+      );
+      const { solved, total } = countSolvedCrosswordClues(crosswords, draft);
+      progress.crossword = completed.has("crossword")
+        ? 100
+        : toPercent(solved, total);
+    }
+    if (options.exercises.some((item) => item.type === "listening")) {
+      const saved = readLinearSession(`${scope}:listening`);
+      const listeningChecked =
+        saved?.slots.filter((slot) => slot.checked).length ?? 0;
+      progress.listening = completed.has("listening")
+        ? 100
+        : saved && saved.total > 0
+          ? toPercent(listeningChecked, saved.total)
+          : 0;
+    }
+    if (options.exercises.some((item) => item.type === "matching")) {
+      const saved = readLinearSession(`${scope}:matching`);
+      const matchingChecked =
+        saved?.slots.filter((slot) => slot.checked).length ?? 0;
+      progress.matching = completed.has("matching")
+        ? 100
+        : saved && saved.total > 0
+          ? toPercent(matchingChecked, saved.total)
+          : 0;
+    }
+    return progress;
+  }
+
   const crosswords = options.exercises.filter(
     (item): item is CrosswordExercise => item.type === "crossword",
   );

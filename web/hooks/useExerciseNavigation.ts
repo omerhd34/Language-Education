@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type CheckedAnswer = {
   checked: boolean;
@@ -14,7 +14,7 @@ type UseExerciseNavigationOptions<T extends CheckedAnswer> = {
   initialSlots?: T[];
 };
 
-export type ExerciseAdvanceLabel = "next" | "seeResult" | "goToUnanswered";
+export type ExerciseAdvanceLabel = "next" | "goToUnanswered";
 
 function defaultSlots<T extends CheckedAnswer>(
   length: number,
@@ -50,21 +50,28 @@ export function useExerciseNavigation<T extends CheckedAnswer>({
   const allChecked = length > 0 && missingIndex === -1;
   const isLast = length === 0 || index >= length - 1;
 
+  const sessionComplete = isLast && allChecked;
+
   const nextLabelKey: ExerciseAdvanceLabel = !isLast
     ? "next"
-    : allChecked
-      ? "seeResult"
-      : current?.checked
-        ? "goToUnanswered"
-        : "seeResult";
+    : current?.checked && !allChecked
+      ? "goToUnanswered"
+      : "next";
 
   const canGoNext =
     !resultOpen &&
+    !sessionComplete &&
     (!isLast ||
-      allChecked ||
       (Boolean(current?.checked) &&
         missingIndex >= 0 &&
         missingIndex !== index));
+
+  useEffect(() => {
+    if (finished || !sessionComplete) {
+      return;
+    }
+    setFinished(true);
+  }, [finished, sessionComplete]);
 
   function updateCurrent(patch: Partial<T>) {
     setSlots((previous) =>

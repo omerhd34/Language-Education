@@ -5,9 +5,12 @@ export const EXERCISE_DRAFT_EVENT = "pylmor:exercise-draft";
 
 const EXERCISE_TYPES: readonly ExerciseType[] = [
   "multiple_choice",
+  "true_false",
   "fill_blank",
   "crossword",
   "listening",
+  "matching",
+  "mixed",
 ];
 
 export type CrosswordDraft = {
@@ -32,6 +35,9 @@ export type LinearSlot = {
   v2Selected: number | null;
   verbRows?: LinearVerbRowSlot[];
   checked: boolean;
+  matchingAssignments?: Record<string, number>;
+  matchingRevealed?: boolean;
+  matchingCorrect?: boolean;
 };
 
 export type LinearSessionDraft = {
@@ -117,6 +123,26 @@ function isNullableIndex(value: unknown): value is number | null {
   );
 }
 
+function sanitizeMatchingAssignments(
+  value: unknown,
+): Record<string, number> | undefined {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return undefined;
+  }
+  const result: Record<string, number> = {};
+  for (const [key, slot] of Object.entries(value)) {
+    if (
+      !/^\d+$/.test(key) ||
+      typeof slot !== "number" ||
+      !Number.isInteger(slot)
+    ) {
+      continue;
+    }
+    result[key] = slot;
+  }
+  return Object.keys(result).length > 0 ? result : undefined;
+}
+
 function sanitizeVerbRowSlots(value: unknown): LinearVerbRowSlot[] | undefined {
   if (!Array.isArray(value)) {
     return undefined;
@@ -198,6 +224,17 @@ function normalizeLinearSession(value: unknown): LinearSessionDraft | null {
       v2Selected: isNullableIndex(slot.v2Selected) ? slot.v2Selected : null,
       verbRows: sanitizeVerbRowSlots(slot.verbRows),
       checked: slot.checked,
+      matchingAssignments: sanitizeMatchingAssignments(
+        slot.matchingAssignments,
+      ),
+      matchingRevealed:
+        typeof slot.matchingRevealed === "boolean"
+          ? slot.matchingRevealed
+          : undefined,
+      matchingCorrect:
+        typeof slot.matchingCorrect === "boolean"
+          ? slot.matchingCorrect
+          : undefined,
     });
   }
 

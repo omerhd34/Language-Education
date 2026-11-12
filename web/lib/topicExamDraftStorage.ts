@@ -7,12 +7,17 @@ export type TopicQuizPart =
   | "multiple_choice"
   | "fill_blank"
   | "crossword"
-  | "mixed";
+  | "mixed"
+  | "error_correction"
+  | "listening";
 
 export type TopicExamSlot = {
   selected: number | null;
   answer: string;
   checked: boolean;
+  englishSelected?: number | null;
+  turkishSelected?: number | null;
+  v2Selected?: number | null;
 };
 
 export type TopicExamPartDraft = {
@@ -37,6 +42,8 @@ const QUIZ_PARTS: readonly TopicQuizPart[] = [
   "fill_blank",
   "crossword",
   "mixed",
+  "error_correction",
+  "listening",
 ];
 
 function canUseDom(): boolean {
@@ -55,7 +62,9 @@ function isQuizPart(value: unknown): value is TopicQuizPart {
     value === "multiple_choice" ||
     value === "fill_blank" ||
     value === "crossword" ||
-    value === "mixed"
+    value === "mixed" ||
+    value === "error_correction" ||
+    value === "listening"
   );
 }
 
@@ -75,7 +84,7 @@ function isSlot(value: unknown): value is TopicExamSlot {
 }
 
 function normalizeSlot(value: TopicExamSlot): TopicExamSlot {
-  return {
+  const base: TopicExamSlot = {
     selected:
       typeof value.selected === "number" && value.selected >= 0
         ? value.selected
@@ -83,6 +92,25 @@ function normalizeSlot(value: TopicExamSlot): TopicExamSlot {
     answer: typeof value.answer === "string" ? value.answer : "",
     checked: value.checked,
   };
+  if (value.englishSelected !== undefined) {
+    base.englishSelected =
+      typeof value.englishSelected === "number" && value.englishSelected >= 0
+        ? value.englishSelected
+        : null;
+  }
+  if (value.turkishSelected !== undefined) {
+    base.turkishSelected =
+      typeof value.turkishSelected === "number" && value.turkishSelected >= 0
+        ? value.turkishSelected
+        : null;
+  }
+  if (value.v2Selected !== undefined) {
+    base.v2Selected =
+      typeof value.v2Selected === "number" && value.v2Selected >= 0
+        ? value.v2Selected
+        : null;
+  }
+  return base;
 }
 
 function isPartDraft(value: unknown): value is TopicExamPartDraft {

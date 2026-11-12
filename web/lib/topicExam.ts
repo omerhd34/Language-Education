@@ -1,4 +1,4 @@
-import { dashboardTopics, type CefrLevel } from "@/data/dashboardTopics";
+import { type CefrLevel } from "@/data/dashboardTopics";
 import { examA1Clues } from "@/data/topics/exam/examA1";
 import { examA2Clues } from "@/data/topics/exam/examA2";
 import { examB1Clues } from "@/data/topics/exam/examB1";
@@ -10,8 +10,12 @@ import type {
   FillBlankExercise,
   MultipleChoiceExercise,
   TopicContent,
+  TopicExercise,
   TopicQuizExercise,
+  ErrorCorrectionExercise,
+  ListeningExercise,
 } from "@/data/topics/types";
+import { getTopicPracticeExercises } from "@/data/topics/topicExercises";
 import {
   buildCrosswordFromCandidates,
   type CrosswordCandidate,
@@ -147,20 +151,61 @@ export function ensureExamOptionCount(
   };
 }
 
+export function toTopicQuizExercises(
+  exercises: readonly TopicExercise[],
+): TopicQuizExercise[] {
+  return exercises.filter(
+    (item): item is TopicQuizExercise =>
+      item.type === "multiple_choice" || item.type === "fill_blank",
+  );
+}
+
 function listQuizExercises(content: TopicContent) {
-  return content.quizExercises ?? [];
+  const quiz = content.quiz ?? [];
+  if (quiz.length > 0) {
+    return quiz;
+  }
+  return toTopicQuizExercises(getTopicPracticeExercises(content));
+}
+
+export function topicQuizUsesErrorCorrectionFormat(
+  content: TopicContent,
+): boolean {
+  const quiz = listQuizExercises(content);
+  return (
+    quiz.length > 0 &&
+    quiz.every(
+      (item): item is ErrorCorrectionExercise =>
+        item.type === "error_correction",
+    )
+  );
+}
+
+export function resolveTopicErrorCorrectionQuiz(
+  content: TopicContent,
+): ErrorCorrectionExercise[] {
+  if (!topicQuizUsesErrorCorrectionFormat(content)) {
+    return [];
+  }
+  return listQuizExercises(content).filter(
+    (item): item is ErrorCorrectionExercise => item.type === "error_correction",
+  );
+}
+
+export function topicPracticeUsesMixedFormat(content: TopicContent): boolean {
+  return content.practiceMixed === true;
 }
 
 function practiceMultipleChoice(
   content: TopicContent,
 ): MultipleChoiceExercise[] {
-  return content.exercises.filter(
+  return getTopicPracticeExercises(content).filter(
     (item): item is MultipleChoiceExercise => item.type === "multiple_choice",
   );
 }
 
 function practiceFillBlanks(content: TopicContent): FillBlankExercise[] {
-  return content.exercises.filter(
+  return getTopicPracticeExercises(content).filter(
     (item): item is FillBlankExercise => item.type === "fill_blank",
   );
 }
@@ -178,7 +223,32 @@ function pushUniqueFillBlank(
   target.push(item);
 }
 
+export function topicQuizUsesListeningFormat(content: TopicContent): boolean {
+  const quiz = listQuizExercises(content);
+  return (
+    quiz.length > 0 &&
+    quiz.every((item): item is ListeningExercise => item.type === "listening")
+  );
+}
+
+export function resolveTopicListeningQuiz(
+  content: TopicContent,
+): ListeningExercise[] {
+  if (!topicQuizUsesListeningFormat(content)) {
+    return [];
+  }
+  return listQuizExercises(content).filter(
+    (item): item is ListeningExercise => item.type === "listening",
+  );
+}
+
 export function topicQuizUsesMixedFormat(content: TopicContent): boolean {
+  if (
+    topicQuizUsesListeningFormat(content) ||
+    topicQuizUsesErrorCorrectionFormat(content)
+  ) {
+    return false;
+  }
   const quiz = listQuizExercises(content);
   const hasMc = quiz.some((item) => item.type === "multiple_choice");
   const hasFb = quiz.some((item) => item.type === "fill_blank");
@@ -196,93 +266,6 @@ function pushUniqueQuestion(
   }
   seen.add(key);
   target.push(item);
-}
-
-function buildExtraTopicQuestions(
-  content: TopicContent,
-  needed: number,
-  distractorPool: string[],
-): MultipleChoiceExercise[] {
-  if (needed <= 0) {
-    return [];
-  }
-
-  const topic = dashboardTopics.find((item) => item.id === content.topicId);
-  const extras: MultipleChoiceExercise[] = [];
-  const subtopics = topic?.subtopics ?? [];
-
-  for (const subtopic of subtopics) {
-    if (extras.length >= needed) {
-      break;
-    }
-    extras.push(
-      ensureExamOptionCount(
-        {
-          id: `quiz-extra-${content.topicId}-${subtopic.id}-1`,
-          subtopicId: subtopic.id,
-          type: "multiple_choice",
-          prompt: `"${subtopic.title}" hangi konunun parçasıdır?`,
-          options: [
-            topic?.title ?? content.topicId,
-            "Farklı bir konu",
-            "Kelime listesi",
-            "Hiçbiri",
-          ],
-          correctIndex: 0,
-          explanation: `"${subtopic.title}" bu konuya aittir.`,
-        },
-        distractorPool,
-      ),
-    );
-    if (extras.length >= needed) {
-      break;
-    }
-    extras.push(
-      ensureExamOptionCount(
-        {
-          id: `quiz-extra-${content.topicId}-${subtopic.id}-2`,
-          subtopicId: subtopic.id,
-          type: "multiple_choice",
-          prompt: `"${subtopic.title}" için en iyi çalışma yolu hangisidir?`,
-          options: [
-            "Örnekleri okuyup pratik yapmak",
-            "Konuyu atlamak",
-            "Hiç tekrar etmemek",
-            "Sadece ezberlemek",
-          ],
-          correctIndex: 0,
-          explanation: "Örnek + pratik kalıcı öğrenmeye yardımcı olur.",
-        },
-        distractorPool,
-      ),
-    );
-  }
-
-  let index = extras.length;
-  while (extras.length < needed) {
-    index += 1;
-    extras.push(
-      ensureExamOptionCount(
-        {
-          id: `quiz-extra-${content.topicId}-pad-${index}`,
-          subtopicId: subtopics[0]?.id ?? content.topicId,
-          type: "multiple_choice",
-          prompt: `Bu konuyla ilgili doğru ifade hangisidir? (${index})`,
-          options: [
-            "Düzenli pratik ilerlemeyi hızlandırır",
-            "Hiç alıştırma çözmemek yeterlidir",
-            "Konuyu tamamen atlamak gerekir",
-            "Örnekleri okumamak daha iyidir",
-          ],
-          correctIndex: 0,
-          explanation: "Düzenli pratik öğrenmeyi pekiştirir.",
-        },
-        distractorPool,
-      ),
-    );
-  }
-
-  return extras.slice(0, needed);
 }
 
 export function resolveTopicExamExercises(
@@ -314,16 +297,6 @@ export function resolveTopicExamExercises(
         ...item,
         id: `quiz-${item.id}`,
       });
-    }
-  }
-
-  if (source.length < questionCount) {
-    for (const item of buildExtraTopicQuestions(
-      content,
-      questionCount - source.length,
-      pool,
-    )) {
-      pushUniqueQuestion(source, seen, item);
     }
   }
 
