@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import {
   PASSED_LEVEL_EXAMS_CHANGED_EVENT,
   readPassedLevelExams,
