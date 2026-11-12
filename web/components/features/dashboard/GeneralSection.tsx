@@ -1,8 +1,29 @@
 "use client";
 
+import {
+  ArrowUpCircle,
+  BookA,
+  BookOpenCheck,
+  CircleCheckBig,
+  ClipboardCheck,
+  Clock,
+  Gauge,
+  Layers3,
+  LayoutDashboard,
+  ListOrdered,
+  ScrollText,
+  TrendingUp,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
-import { EducationStep } from "@/components/features/landing/EducationStep";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/Card";
+import { GeneralRuleItem } from "@/components/features/dashboard/GeneralRuleItem";
+import { GeneralStepCard } from "@/components/features/dashboard/GeneralStepCard";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
 import { ACTIVE_VOCABULARY_WINDOW } from "@/lib/vocabularyAccess";
 import {
   LEARN_WORD_PERIOD_LIMIT,
@@ -27,8 +48,32 @@ const STEP_KEYS = [
   "progress",
 ] as const;
 
+const RULE_ICONS = {
+  levelProgression: ArrowUpCircle,
+  grammarSequence: BookOpenCheck,
+  vocabularyWindow: Layers3,
+  studyTimer: Clock,
+  wordQuota: Gauge,
+  skillsCompletion: CircleCheckBig,
+} as const;
+
+const STEP_ICONS = {
+  overview: LayoutDashboard,
+  grammar: ListOrdered,
+  vocabulary: BookA,
+  skills: CircleCheckBig,
+  levelExam: ClipboardCheck,
+  progress: TrendingUp,
+} as const;
+
 export function GeneralSection() {
   const t = useTranslations("Dashboard");
+
+  const messageValues = {
+    window: ACTIVE_VOCABULARY_WINDOW,
+    limit: LEARN_WORD_PERIOD_LIMIT,
+    quizTarget: VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
+  };
 
   return (
     <section
@@ -43,45 +88,53 @@ export function GeneralSection() {
         <p className="page-subtitle">{t("generalSubtitle")}</p>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle className="section-title text-lg">
-              {t("generalRulesTitle")}
-            </CardTitle>
+      <div className="flex flex-col gap-6">
+        <Card>
+          <CardHeader className="gap-3 sm:flex-row sm:items-center sm:gap-4">
+            <span
+              className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-brand-500/10 text-brand-700 dark:bg-brand-400/15 dark:text-brand-300"
+              aria-hidden
+            >
+              <ScrollText className="size-5" strokeWidth={1.75} />
+            </span>
+            <div className="min-w-0 space-y-1">
+              <CardTitle className="text-lg">{t("generalRulesTitle")}</CardTitle>
+              <CardDescription>{t("generalRulesSubtitle")}</CardDescription>
+            </div>
           </CardHeader>
           <CardContent>
-            <ul className="list-disc space-y-2.5 pl-5 text-sm leading-6 text-brand-600 dark:text-brand-400">
+            <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {RULE_KEYS.map((key) => (
-                <li key={key}>
-                  {t(`generalRules.${key}`, {
-                    window: ACTIVE_VOCABULARY_WINDOW,
-                    limit: LEARN_WORD_PERIOD_LIMIT,
-                    quizTarget: VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
-                  })}
-                </li>
+                <GeneralRuleItem key={key} icon={RULE_ICONS[key]}>
+                  {t(`generalRules.${key}`, messageValues)}
+                </GeneralRuleItem>
               ))}
             </ul>
           </CardContent>
         </Card>
 
-        <Card className="h-full">
-          <CardHeader>
-            <CardTitle className="section-title text-lg">
-              {t("generalStepsTitle")}
-            </CardTitle>
+        <Card>
+          <CardHeader className="gap-3 sm:flex-row sm:items-center sm:gap-4">
+            <span
+              className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary dark:bg-primary/15"
+              aria-hidden
+            >
+              <ListOrdered className="size-5" strokeWidth={1.75} />
+            </span>
+            <div className="min-w-0 space-y-1">
+              <CardTitle className="text-lg">{t("generalStepsTitle")}</CardTitle>
+              <CardDescription>{t("generalStepsSubtitle")}</CardDescription>
+            </div>
           </CardHeader>
-          <CardContent className="px-0 pb-0 sm:px-0">
-            <ol className="px-6">
+          <CardContent>
+            <ol className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
               {STEP_KEYS.map((key, index) => (
-                <EducationStep
+                <GeneralStepCard
                   key={key}
                   index={index + 1}
+                  icon={STEP_ICONS[key]}
                   title={t(`generalSteps.${key}.title`)}
-                  body={t(`generalSteps.${key}.body`, {
-                    limit: LEARN_WORD_PERIOD_LIMIT,
-                    quizTarget: VOCABULARY_QUIZ_CYCLE_WORD_TARGET,
-                  })}
+                  body={t(`generalSteps.${key}.body`, messageValues)}
                 />
               ))}
             </ol>

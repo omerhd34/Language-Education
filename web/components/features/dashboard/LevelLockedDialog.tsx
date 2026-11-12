@@ -1,6 +1,6 @@
 "use client";
 
-import { Lock } from "lucide-react";
+import { Check, Lock } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import {
   Dialog,
@@ -50,6 +50,7 @@ export function LevelLockedDialog({
         </DialogHeader>
         <DialogFooter className="sm:justify-stretch">
           <DialogClose render={<Button type="button" className="w-full" />}>
+            <Check className="size-4" strokeWidth={2.25} aria-hidden />
             {ctaLabel}
           </DialogClose>
         </DialogFooter>
