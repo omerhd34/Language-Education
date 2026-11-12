@@ -1,6 +1,6 @@
-import { getTopicContent } from "@/data/topics";
-import { getTopicPracticeExercises } from "@/data/topics/topicExercises";
-import type { ExerciseType } from "@/data/topics/types";
+import { getTopicContent } from "@/data/grammar";
+import { getTopicPracticeExercises } from "@/data/grammar/topicExercises";
+import type { ExerciseType } from "@/data/grammar/types";
 import { computeExerciseTypeProgress } from "@/lib/exerciseTypeProgress";
 import {
   resolveMixedTopicQuiz,

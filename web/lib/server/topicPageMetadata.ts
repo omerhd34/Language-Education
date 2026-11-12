@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { getDashboardTopicById } from "@/data/dashboardTopics";
+import { getDashboardTopicById } from "@/data/grammar/dashboardTopics";
 
 export type TopicPageMetadataVariant = "lesson" | "exercises" | "exam";
 

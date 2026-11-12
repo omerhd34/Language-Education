@@ -1,5 +1,5 @@
 import { getCombinedExercisesForLevel } from "@/data/combinedExercises";
-import { dashboardTopics, type CefrLevel } from "@/data/dashboardTopics";
+import { dashboardTopics, type CefrLevel } from "@/data/grammar/dashboardTopics";
 import { computeCombinedExerciseProgress } from "@/lib/combinedExerciseProgress";
 import {
   getVocabularyCategoriesByLevel,

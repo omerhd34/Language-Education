@@ -1,10 +1,10 @@
-import { type CefrLevel } from "@/data/dashboardTopics";
-import { examA1Clues } from "@/data/topics/exam/examA1";
-import { examA2Clues } from "@/data/topics/exam/examA2";
-import { examB1Clues } from "@/data/topics/exam/examB1";
-import { examB2Clues } from "@/data/topics/exam/examB2";
-import { examC1Clues } from "@/data/topics/exam/examC1";
-import { examC2Clues } from "@/data/topics/exam/examC2";
+import { type CefrLevel } from "@/data/grammar/dashboardTopics";
+import { examA1Clues } from "@/data/grammar/exam/examA1";
+import { examA2Clues } from "@/data/grammar/exam/examA2";
+import { examB1Clues } from "@/data/grammar/exam/examB1";
+import { examB2Clues } from "@/data/grammar/exam/examB2";
+import { examC1Clues } from "@/data/grammar/exam/examC1";
+import { examC2Clues } from "@/data/grammar/exam/examC2";
 import type {
   CrosswordExercise,
   FillBlankExercise,
@@ -14,8 +14,8 @@ import type {
   TopicQuizExercise,
   ErrorCorrectionExercise,
   ListeningExercise,
-} from "@/data/topics/types";
-import { getTopicPracticeExercises } from "@/data/topics/topicExercises";
+} from "@/data/grammar/types";
+import { getTopicPracticeExercises } from "@/data/grammar/topicExercises";
 import {
   buildCrosswordFromCandidates,
   type CrosswordCandidate,

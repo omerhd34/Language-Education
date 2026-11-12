@@ -1,4 +1,4 @@
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import { CEFR_LEVEL_ORDER } from "@/lib/topicAccess";
 
 const STORAGE_KEY = "pylmor-passed-level-exams";

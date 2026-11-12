@@ -1,7 +1,7 @@
 import type {
   FillBlankExercise,
   MultipleChoiceExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 
 function quotedSegments(prompt: string): string[] {
   return [...prompt.matchAll(/'([^']+)'/g)]

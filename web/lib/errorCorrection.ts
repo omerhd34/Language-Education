@@ -1,4 +1,4 @@
-import type { ErrorCorrectionExercise } from "@/data/topics/types";
+import type { ErrorCorrectionExercise } from "@/data/grammar/types";
 
 export function errorCorrectionTokens(
   exercise: ErrorCorrectionExercise,

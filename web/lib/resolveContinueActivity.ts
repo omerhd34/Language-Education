@@ -1,5 +1,5 @@
 import { getCombinedExerciseById } from "@/data/combinedExercises";
-import { getDashboardTopicById } from "@/data/dashboardTopics";
+import { getDashboardTopicById } from "@/data/grammar/dashboardTopics";
 import { getListeningSectionById } from "@/data/listenings";
 import { getReadingSectionById } from "@/data/readings";
 import { getWritingSectionById } from "@/data/writings";

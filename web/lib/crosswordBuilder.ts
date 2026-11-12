@@ -2,7 +2,7 @@ import type {
   CrosswordClue,
   CrosswordDirection,
   CrosswordExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 
 export type CrosswordCandidate = {
   answer: string;

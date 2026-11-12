@@ -1,4 +1,4 @@
-import type { ExerciseType } from "@/data/topics/types";
+import type { ExerciseType } from "@/data/grammar/types";
 
 const STORAGE_KEY = "pylmor-exercise-drafts";
 export const EXERCISE_DRAFT_EVENT = "pylmor:exercise-draft";

@@ -1,4 +1,4 @@
-import type { FillBlankExercise } from "@/data/topics/types";
+import type { FillBlankExercise } from "@/data/grammar/types";
 
 export function fillBlankSpeakText(exercise: FillBlankExercise): string | null {
   const explicit = exercise.speakText?.trim();

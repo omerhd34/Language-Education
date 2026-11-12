@@ -1,10 +1,10 @@
-import { getTopicContent } from "@/data/topics";
+import { getTopicContent } from "@/data/grammar";
 import type {
   CrosswordClue,
   CrosswordExercise,
   ExerciseType,
   TopicExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 import {
   toTopicQuizExercises,
   topicPracticeUsesMixedFormat,

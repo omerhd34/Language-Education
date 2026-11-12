@@ -2,7 +2,7 @@ import {
   dashboardTopics,
   type CefrLevel,
   type DashboardTopic,
-} from "@/data/dashboardTopics";
+} from "@/data/grammar/dashboardTopics";
 
 export const CEFR_LEVEL_ORDER: CefrLevel[] = [
   "A1",

@@ -1,4 +1,4 @@
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import { readPassedLevelExams } from "@/lib/levelExamStorage";
 import { getLevelExamParts, type LevelExamPart } from "@/lib/topicExam";
 

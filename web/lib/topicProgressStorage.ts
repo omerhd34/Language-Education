@@ -1,5 +1,5 @@
-import { getTopicContent } from "@/data/topics";
-import type { ExerciseType } from "@/data/topics/types";
+import { getTopicContent } from "@/data/grammar";
+import type { ExerciseType } from "@/data/grammar/types";
 
 const STORAGE_KEY = "pylmor-topic-progress";
 export const TOPIC_PROGRESS_CHANGED_EVENT = "pylmor:topic-progress-changed";
