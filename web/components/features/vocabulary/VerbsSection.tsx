@@ -19,7 +19,7 @@ import {
   generateVerbExercises,
   type VerbExerciseSessionSeeds,
 } from "@/lib/vocabulary/generateVerbExercises";
-import type { ExerciseType } from "@/data/topics/types";
+import type { ExerciseType } from "@/data/grammar/types";
 import {
   applyVerbTableSort,
   type VerbListFilter,

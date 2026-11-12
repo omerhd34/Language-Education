@@ -3,7 +3,7 @@ import type {
   CrosswordExercise,
   ExerciseType,
   TopicExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 import {
   readCrosswordDraft,
   readLinearSession,

@@ -7,7 +7,7 @@ import type {
   MultipleChoiceExercise,
   TopicExercise,
   VerbListeningRow,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 import {
   generateCrosswordExercise,
   type CrosswordGenerateOptions,

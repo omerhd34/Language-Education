@@ -6,7 +6,7 @@ import type {
   ListeningExercise,
   MultipleChoiceExercise,
   TopicExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 
 import { shuffleSeeded } from "@/lib/seededRandom";
 
