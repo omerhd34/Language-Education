@@ -18,6 +18,7 @@ type ExerciseQuestionHeaderProps = {
   showHint?: boolean;
   headingId?: string;
   className?: string;
+  titleVariant?: "section" | "prompt";
 };
 
 export function ExerciseQuestionHeader({
@@ -31,6 +32,7 @@ export function ExerciseQuestionHeader({
   showHint = true,
   headingId,
   className,
+  titleVariant = "section",
 }: ExerciseQuestionHeaderProps) {
   const t = useTranslations("Exercises");
   const [open, setOpen] = useState(false);
@@ -40,6 +42,9 @@ export function ExerciseQuestionHeader({
 
   const hasTitle = title != null && title !== "";
   const hasHeading = number !== undefined || hasTitle || headingAddon != null;
+
+  const usePromptTitle =
+    titleVariant === "prompt" || number !== undefined || headingAddon != null;
 
   return (
     <div className={cn("space-y-3", className)}>
@@ -69,13 +74,13 @@ export function ExerciseQuestionHeader({
                     typeof title === "string" &&
                     "text-base font-medium text-brand-800 dark:text-brand-200",
                   !compactTitle &&
-                    number === undefined &&
-                    headingAddon == null &&
                     "section-title text-brand-950 dark:text-brand-100",
-                  !compactTitle &&
-                    (number !== undefined || headingAddon != null) &&
-                    "pt-0.5 text-base font-semibold text-brand-950 dark:text-brand-100",
                 )}
+                style={
+                  !compactTitle && usePromptTitle
+                    ? { fontSize: 19, lineHeight: 1.35 }
+                    : undefined
+                }
               >
                 {title}
               </div>

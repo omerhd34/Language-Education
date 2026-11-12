@@ -6,6 +6,7 @@ export type ExerciseHintFallbackKey =
   | "readingFillBlank"
   | "topicMultipleChoice"
   | "topicFillBlank"
+  | "topicErrorCorrection"
   | "topicListening"
   | "topicCrossword"
   | "vocabularyQuizChoice"

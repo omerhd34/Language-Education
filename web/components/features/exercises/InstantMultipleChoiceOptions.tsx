@@ -68,6 +68,9 @@ export function InstantMultipleChoiceOptions({
                 !isSelected &&
                 "motion-safe:animate-[reading-option-pop_0.45s_ease-out_0.12s_both]",
               !revealed &&
+                isSelected &&
+                "border-brand-800/80 bg-brand-100/50 text-brand-950 ring-2 ring-brand-800/15 dark:border-brand-400 dark:bg-brand-900/60 dark:text-brand-100 dark:ring-brand-400/20",
+              !revealed &&
                 !isSelected &&
                 "border-border bg-background/60 text-brand-800 hover:border-brand-400 dark:bg-brand-950/30 dark:text-brand-200",
             )}
@@ -80,6 +83,10 @@ export function InstantMultipleChoiceOptions({
                 (showCorrect || showWrong) &&
                   "reading-quiz-icon-pop motion-safe:animate-[reading-icon-pop_0.35s_ease-out]",
                 !revealed &&
+                  isSelected &&
+                  "bg-brand-800 text-white dark:bg-brand-400 dark:text-brand-950",
+                !revealed &&
+                  !isSelected &&
                   "bg-(--glass-2) text-brand-600 dark:text-brand-300",
               )}
             >
