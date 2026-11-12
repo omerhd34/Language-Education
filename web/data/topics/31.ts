@@ -39,24 +39,21 @@ export const topicContent31: TopicContent = {
       id: "31-ex-31-1-1",
       subtopicId: "31-1",
       type: "multiple_choice",
-      prompt:
-        '"Bölünmüş / Vurgu Cümleleri" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Bölünmüş & Vurgu Cümleleri\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Bölünmüş / Vurgu Cümleleri",
+        "Bölünmüş & Vurgu Cümleleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Bölünmüş / Vurgu Cümleleri" başlığı altındadır.',
+      explanation: "Bu alt konu \"Bölünmüş & Vurgu Cümleleri\" başlığı altındadır.",
     },
     {
       id: "31-ex-31-1-2",
       subtopicId: "31-1",
       type: "multiple_choice",
-      prompt:
-        'C1 seviyesindeki "Bölünmüş / Vurgu Cümleleri" için doğru yaklaşım hangisidir?',
+      prompt: "C1 seviyesindeki \"Bölünmüş & Vurgu Cümleleri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,12 +64,56 @@ export const topicContent31: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "31-tf-31-1-1",
+      subtopicId: "31-1",
+      type: "true_false",
+      prompt: "\"Bölünmüş & Vurgu Cümleleri\" başlığı \"Bölünmüş & Vurgu Cümleleri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Bölünmüş & Vurgu Cümleleri\" konusu altında işlenir.",
+    },
+    {
       id: "31-fb-31-1-1",
       subtopicId: "31-1",
       type: "fill_blank",
-      prompt: '"Bölünmüş / Vurgu Cümleleri" konusu _____ seviyesine uygundur.',
+      prompt: "\"Bölünmüş & Vurgu Cümleleri\" konusu _____ seviyesine uygundur.",
       answer: "C1",
       explanation: "Bu konu C1 seviyesindedir.",
+    },
+    {
+      id: "31-match-1",
+      subtopicId: "31-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Cleft Sentences",
+          right: "Bölünmüş & Vurgu Cümleleri",
+        },
+        {
+          left: "C1 level",
+          right: "C1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "31-cw-1",
@@ -108,7 +149,7 @@ export const topicContent31: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-31-31-1-1",
       subtopicId: "31-1",

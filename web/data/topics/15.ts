@@ -39,7 +39,7 @@ export const topicContent15: TopicContent = {
       id: "15-ex-15-1-1",
       subtopicId: "15-1",
       type: "multiple_choice",
-      prompt: '"Yakın Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Yakın Geçmiş Zaman\" alt konusu hangi ana konuya aittir?",
       options: [
         "Yakın Geçmiş Zaman",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent15: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Yakın Geçmiş Zaman" başlığı altındadır.',
+      explanation: "Bu alt konu \"Yakın Geçmiş Zaman\" başlığı altındadır.",
     },
     {
       id: "15-ex-15-1-2",
       subtopicId: "15-1",
       type: "multiple_choice",
-      prompt:
-        'A2 seviyesindeki "Yakın Geçmiş Zaman" için doğru yaklaşım hangisidir?',
+      prompt: "A2 seviyesindeki \"Yakın Geçmiş Zaman\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent15: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "15-tf-15-1-1",
+      subtopicId: "15-1",
+      type: "true_false",
+      prompt: "\"Yakın Geçmiş Zaman\" başlığı \"Yakın Geçmiş Zaman\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Yakın Geçmiş Zaman\" konusu altında işlenir.",
+    },
+    {
       id: "15-fb-15-1-1",
       subtopicId: "15-1",
       type: "fill_blank",
-      prompt: '"Yakın Geçmiş Zaman" konusu _____ seviyesine uygundur.',
+      prompt: "\"Yakın Geçmiş Zaman\" konusu _____ seviyesine uygundur.",
       answer: "A2",
       explanation: "Bu konu A2 seviyesindedir.",
+    },
+    {
+      id: "15-match-1",
+      subtopicId: "15-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Present Perfect Simple",
+          right: "Yakın Geçmiş Zaman",
+        },
+        {
+          left: "A2 level",
+          right: "A2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "15-cw-1",
@@ -106,7 +149,7 @@ export const topicContent15: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-15-15-1-1",
       subtopicId: "15-1",

@@ -39,8 +39,7 @@ export const topicContent19: TopicContent = {
       id: "19-ex-19-1-1",
       subtopicId: "19-1",
       type: "multiple_choice",
-      prompt:
-        '"Süregelen Yakın Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Süregelen Yakın Geçmiş Zaman\" alt konusu hangi ana konuya aittir?",
       options: [
         "Süregelen Yakın Geçmiş Zaman",
         "Tamamen farklı bir konu",
@@ -48,15 +47,13 @@ export const topicContent19: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Süregelen Yakın Geçmiş Zaman" başlığı altındadır.',
+      explanation: "Bu alt konu \"Süregelen Yakın Geçmiş Zaman\" başlığı altındadır.",
     },
     {
       id: "19-ex-19-1-2",
       subtopicId: "19-1",
       type: "multiple_choice",
-      prompt:
-        'B1 seviyesindeki "Süregelen Yakın Geçmiş Zaman" için doğru yaklaşım hangisidir?',
+      prompt: "B1 seviyesindeki \"Süregelen Yakın Geçmiş Zaman\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent19: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "19-tf-19-1-1",
+      subtopicId: "19-1",
+      type: "true_false",
+      prompt: "\"Süregelen Yakın Geçmiş Zaman\" başlığı \"Süregelen Yakın Geçmiş Zaman\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Süregelen Yakın Geçmiş Zaman\" konusu altında işlenir.",
+    },
+    {
       id: "19-fb-19-1-1",
       subtopicId: "19-1",
       type: "fill_blank",
-      prompt:
-        '"Süregelen Yakın Geçmiş Zaman" konusu _____ seviyesine uygundur.',
+      prompt: "\"Süregelen Yakın Geçmiş Zaman\" konusu _____ seviyesine uygundur.",
       answer: "B1",
       explanation: "Bu konu B1 seviyesindedir.",
+    },
+    {
+      id: "19-match-1",
+      subtopicId: "19-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Present Perfect Continuous",
+          right: "Süregelen Yakın Geçmiş Zaman",
+        },
+        {
+          left: "B1 level",
+          right: "B1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "19-cw-1",
@@ -109,7 +149,7 @@ export const topicContent19: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-19-19-1-1",
       subtopicId: "19-1",

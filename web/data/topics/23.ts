@@ -39,7 +39,7 @@ export const topicContent23: TopicContent = {
       id: "23-ex-23-1-1",
       subtopicId: "23-1",
       type: "multiple_choice",
-      prompt: '"Dolaylı Anlatım - Temel" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Dolaylı Anlatım - Temel\" alt konusu hangi ana konuya aittir?",
       options: [
         "Dolaylı Anlatım - Temel",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent23: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Dolaylı Anlatım - Temel" başlığı altındadır.',
+      explanation: "Bu alt konu \"Dolaylı Anlatım - Temel\" başlığı altındadır.",
     },
     {
       id: "23-ex-23-1-2",
       subtopicId: "23-1",
       type: "multiple_choice",
-      prompt:
-        'B1 seviyesindeki "Dolaylı Anlatım - Temel" için doğru yaklaşım hangisidir?',
+      prompt: "B1 seviyesindeki \"Dolaylı Anlatım - Temel\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent23: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "23-tf-23-1-1",
+      subtopicId: "23-1",
+      type: "true_false",
+      prompt: "\"Dolaylı Anlatım - Temel\" başlığı \"Dolaylı Anlatım - Temel\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Dolaylı Anlatım - Temel\" konusu altında işlenir.",
+    },
+    {
       id: "23-fb-23-1-1",
       subtopicId: "23-1",
       type: "fill_blank",
-      prompt: '"Dolaylı Anlatım - Temel" konusu _____ seviyesine uygundur.',
+      prompt: "\"Dolaylı Anlatım - Temel\" konusu _____ seviyesine uygundur.",
       answer: "B1",
       explanation: "Bu konu B1 seviyesindedir.",
+    },
+    {
+      id: "23-match-1",
+      subtopicId: "23-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Reported Speech",
+          right: "Dolaylı Anlatım - Temel",
+        },
+        {
+          left: "B1 level",
+          right: "B1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "23-cw-1",
@@ -106,7 +149,7 @@ export const topicContent23: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-23-23-1-1",
       subtopicId: "23-1",

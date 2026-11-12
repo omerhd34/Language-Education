@@ -39,24 +39,21 @@ export const topicContent40: TopicContent = {
       id: "40-ex-40-1-1",
       subtopicId: "40-1",
       type: "multiple_choice",
-      prompt:
-        '"İleri Düzey Biçem ve Ton Nüansları" alt konusu hangi ana konuya aittir?',
+      prompt: "\"İleri Düzey Biçem & Ton Nüansları\" alt konusu hangi ana konuya aittir?",
       options: [
-        "İleri Düzey Biçem ve Ton Nüansları",
+        "İleri Düzey Biçem & Ton Nüansları",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "İleri Düzey Biçem ve Ton Nüansları" başlığı altındadır.',
+      explanation: "Bu alt konu \"İleri Düzey Biçem & Ton Nüansları\" başlığı altındadır.",
     },
     {
       id: "40-ex-40-1-2",
       subtopicId: "40-1",
       type: "multiple_choice",
-      prompt:
-        'C2 seviyesindeki "İleri Düzey Biçem ve Ton Nüansları" için doğru yaklaşım hangisidir?',
+      prompt: "C2 seviyesindeki \"İleri Düzey Biçem & Ton Nüansları\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent40: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "40-tf-40-1-1",
+      subtopicId: "40-1",
+      type: "true_false",
+      prompt: "\"İleri Düzey Biçem & Ton Nüansları\" başlığı \"İleri Düzey Biçem & Ton Nüansları\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"İleri Düzey Biçem & Ton Nüansları\" konusu altında işlenir.",
+    },
+    {
       id: "40-fb-40-1-1",
       subtopicId: "40-1",
       type: "fill_blank",
-      prompt:
-        '"İleri Düzey Biçem ve Ton Nüansları" konusu _____ seviyesine uygundur.',
+      prompt: "\"İleri Düzey Biçem & Ton Nüansları\" konusu _____ seviyesine uygundur.",
       answer: "C2",
       explanation: "Bu konu C2 seviyesindedir.",
+    },
+    {
+      id: "40-match-1",
+      subtopicId: "40-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Advanced Register & Tone Nuances",
+          right: "İleri Düzey Biçem & Ton Nüansları",
+        },
+        {
+          left: "C2 level",
+          right: "C2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "40-cw-1",
@@ -109,7 +149,7 @@ export const topicContent40: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-40-40-1-1",
       subtopicId: "40-1",

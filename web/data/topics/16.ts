@@ -39,24 +39,21 @@ export const topicContent16: TopicContent = {
       id: "16-ex-16-1-1",
       subtopicId: "16-1",
       type: "multiple_choice",
-      prompt:
-        '"Karşılaştırma ve En Üstünlük Dereceleri" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Karşılaştırma & En Üstünlük Dereceleri\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Karşılaştırma ve En Üstünlük Dereceleri",
+        "Karşılaştırma & En Üstünlük Dereceleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Karşılaştırma ve En Üstünlük Dereceleri" başlığı altındadır.',
+      explanation: "Bu alt konu \"Karşılaştırma & En Üstünlük Dereceleri\" başlığı altındadır.",
     },
     {
       id: "16-ex-16-1-2",
       subtopicId: "16-1",
       type: "multiple_choice",
-      prompt:
-        'A2 seviyesindeki "Karşılaştırma ve En Üstünlük Dereceleri" için doğru yaklaşım hangisidir?',
+      prompt: "A2 seviyesindeki \"Karşılaştırma & En Üstünlük Dereceleri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent16: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "16-tf-16-1-1",
+      subtopicId: "16-1",
+      type: "true_false",
+      prompt: "\"Karşılaştırma & En Üstünlük Dereceleri\" başlığı \"Karşılaştırma & En Üstünlük Dereceleri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Karşılaştırma & En Üstünlük Dereceleri\" konusu altında işlenir.",
+    },
+    {
       id: "16-fb-16-1-1",
       subtopicId: "16-1",
       type: "fill_blank",
-      prompt:
-        '"Karşılaştırma ve En Üstünlük Dereceleri" konusu _____ seviyesine uygundur.',
+      prompt: "\"Karşılaştırma & En Üstünlük Dereceleri\" konusu _____ seviyesine uygundur.",
       answer: "A2",
       explanation: "Bu konu A2 seviyesindedir.",
+    },
+    {
+      id: "16-match-1",
+      subtopicId: "16-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Comparatives & Superlatives",
+          right: "Karşılaştırma & En Üstünlük Dereceleri",
+        },
+        {
+          left: "A2 level",
+          right: "A2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "16-cw-1",
@@ -109,7 +149,7 @@ export const topicContent16: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-16-16-1-1",
       subtopicId: "16-1",

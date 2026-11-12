@@ -38,7 +38,7 @@ export const topicContent125: TopicContent = {
       id: "125-ex-125-1-1",
       subtopicId: "125-1",
       type: "multiple_choice",
-      prompt: '"B1 Yeterlilik Sınavı" alt konusu hangi ana konuya aittir?',
+      prompt: "\"B1 Yeterlilik Sınavı\" alt konusu hangi ana konuya aittir?",
       options: [
         "B1 Yeterlilik Sınavı",
         "Tamamen farklı bir konu",
@@ -46,14 +46,13 @@ export const topicContent125: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "B1 Yeterlilik Sınavı" başlığı altındadır.',
+      explanation: "Bu alt konu \"B1 Yeterlilik Sınavı\" başlığı altındadır.",
     },
     {
       id: "125-ex-125-1-2",
       subtopicId: "125-1",
       type: "multiple_choice",
-      prompt:
-        'B1 seviyesindeki "B1 Yeterlilik Sınavı" için doğru yaklaşım hangisidir?',
+      prompt: "B1 seviyesindeki \"B1 Yeterlilik Sınavı\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -64,12 +63,56 @@ export const topicContent125: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "125-tf-125-1-1",
+      subtopicId: "125-1",
+      type: "true_false",
+      prompt: "\"B1 Yeterlilik Sınavı\" başlığı \"B1 Yeterlilik Sınavı\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"B1 Yeterlilik Sınavı\" konusu altında işlenir.",
+    },
+    {
       id: "125-fb-125-1-1",
       subtopicId: "125-1",
       type: "fill_blank",
-      prompt: '"B1 Yeterlilik Sınavı" konusu _____ seviyesine uygundur.',
+      prompt: "\"B1 Yeterlilik Sınavı\" konusu _____ seviyesine uygundur.",
       answer: "B1",
       explanation: "Bu konu B1 seviyesindedir.",
+    },
+    {
+      id: "125-match-1",
+      subtopicId: "125-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "B1 Proficiency Exam",
+          right: "B1 Yeterlilik Sınavı",
+        },
+        {
+          left: "B1 level",
+          right: "B1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "125-cw-1",

@@ -39,22 +39,21 @@ export const topicContent29: TopicContent = {
       id: "29-ex-29-1-1",
       subtopicId: "29-1",
       type: "multiple_choice",
-      prompt: '"Dilek / Keşke Cümleleri" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Dilek & Keşke Cümleleri\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Dilek / Keşke Cümleleri",
+        "Dilek & Keşke Cümleleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Dilek / Keşke Cümleleri" başlığı altındadır.',
+      explanation: "Bu alt konu \"Dilek & Keşke Cümleleri\" başlığı altındadır.",
     },
     {
       id: "29-ex-29-1-2",
       subtopicId: "29-1",
       type: "multiple_choice",
-      prompt:
-        'B2 seviyesindeki "Dilek / Keşke Cümleleri" için doğru yaklaşım hangisidir?',
+      prompt: "B2 seviyesindeki \"Dilek & Keşke Cümleleri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent29: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "29-tf-29-1-1",
+      subtopicId: "29-1",
+      type: "true_false",
+      prompt: "\"Dilek & Keşke Cümleleri\" başlığı \"Dilek & Keşke Cümleleri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Dilek & Keşke Cümleleri\" konusu altında işlenir.",
+    },
+    {
       id: "29-fb-29-1-1",
       subtopicId: "29-1",
       type: "fill_blank",
-      prompt: '"Dilek / Keşke Cümleleri" konusu _____ seviyesine uygundur.',
+      prompt: "\"Dilek & Keşke Cümleleri\" konusu _____ seviyesine uygundur.",
       answer: "B2",
       explanation: "Bu konu B2 seviyesindedir.",
+    },
+    {
+      id: "29-match-1",
+      subtopicId: "29-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Wish & If Only Clauses",
+          right: "Dilek & Keşke Cümleleri",
+        },
+        {
+          left: "B2 level",
+          right: "B2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "29-cw-1",
@@ -106,7 +149,7 @@ export const topicContent29: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-29-29-1-1",
       subtopicId: "29-1",

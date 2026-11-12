@@ -39,24 +39,21 @@ export const topicContent34: TopicContent = {
       id: "34-ex-34-1-1",
       subtopicId: "34-1",
       type: "multiple_choice",
-      prompt:
-        '"İleri Düzey Söylem Belirleyiciler" alt konusu hangi ana konuya aittir?',
+      prompt: "\"İleri Düzey Söylem Belirleyicileri\" alt konusu hangi ana konuya aittir?",
       options: [
-        "İleri Düzey Söylem Belirleyiciler",
+        "İleri Düzey Söylem Belirleyicileri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "İleri Düzey Söylem Belirleyiciler" başlığı altındadır.',
+      explanation: "Bu alt konu \"İleri Düzey Söylem Belirleyicileri\" başlığı altındadır.",
     },
     {
       id: "34-ex-34-1-2",
       subtopicId: "34-1",
       type: "multiple_choice",
-      prompt:
-        'C1 seviyesindeki "İleri Düzey Söylem Belirleyiciler" için doğru yaklaşım hangisidir?',
+      prompt: "C1 seviyesindeki \"İleri Düzey Söylem Belirleyicileri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent34: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "34-tf-34-1-1",
+      subtopicId: "34-1",
+      type: "true_false",
+      prompt: "\"İleri Düzey Söylem Belirleyicileri\" başlığı \"İleri Düzey Söylem Belirleyicileri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"İleri Düzey Söylem Belirleyicileri\" konusu altında işlenir.",
+    },
+    {
       id: "34-fb-34-1-1",
       subtopicId: "34-1",
       type: "fill_blank",
-      prompt:
-        '"İleri Düzey Söylem Belirleyiciler" konusu _____ seviyesine uygundur.',
+      prompt: "\"İleri Düzey Söylem Belirleyicileri\" konusu _____ seviyesine uygundur.",
       answer: "C1",
       explanation: "Bu konu C1 seviyesindedir.",
+    },
+    {
+      id: "34-match-1",
+      subtopicId: "34-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Advanced Discourse Markers",
+          right: "İleri Düzey Söylem Belirleyicileri",
+        },
+        {
+          left: "C1 level",
+          right: "C1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "34-cw-1",
@@ -109,7 +149,7 @@ export const topicContent34: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-34-34-1-1",
       subtopicId: "34-1",

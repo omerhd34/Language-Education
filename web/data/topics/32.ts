@@ -39,22 +39,21 @@ export const topicContent32: TopicContent = {
       id: "32-ex-32-1-1",
       subtopicId: "32-1",
       type: "multiple_choice",
-      prompt: '"İstek / Dilek Kipi" alt konusu hangi ana konuya aittir?',
+      prompt: "\"İstek & Dilek Kipi\" alt konusu hangi ana konuya aittir?",
       options: [
-        "İstek / Dilek Kipi",
+        "İstek & Dilek Kipi",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "İstek / Dilek Kipi" başlığı altındadır.',
+      explanation: "Bu alt konu \"İstek & Dilek Kipi\" başlığı altındadır.",
     },
     {
       id: "32-ex-32-1-2",
       subtopicId: "32-1",
       type: "multiple_choice",
-      prompt:
-        'C1 seviyesindeki "İstek / Dilek Kipi" için doğru yaklaşım hangisidir?',
+      prompt: "C1 seviyesindeki \"İstek & Dilek Kipi\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent32: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "32-tf-32-1-1",
+      subtopicId: "32-1",
+      type: "true_false",
+      prompt: "\"İstek & Dilek Kipi\" başlığı \"İstek & Dilek Kipi\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"İstek & Dilek Kipi\" konusu altında işlenir.",
+    },
+    {
       id: "32-fb-32-1-1",
       subtopicId: "32-1",
       type: "fill_blank",
-      prompt: '"İstek / Dilek Kipi" konusu _____ seviyesine uygundur.',
+      prompt: "\"İstek & Dilek Kipi\" konusu _____ seviyesine uygundur.",
       answer: "C1",
       explanation: "Bu konu C1 seviyesindedir.",
+    },
+    {
+      id: "32-match-1",
+      subtopicId: "32-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Subjunctive Mood",
+          right: "İstek & Dilek Kipi",
+        },
+        {
+          left: "C1 level",
+          right: "C1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "32-cw-1",
@@ -106,7 +149,7 @@ export const topicContent32: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-32-32-1-1",
       subtopicId: "32-1",

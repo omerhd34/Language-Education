@@ -39,23 +39,21 @@ export const topicContent24: TopicContent = {
       id: "24-ex-24-1-1",
       subtopicId: "24-1",
       type: "multiple_choice",
-      prompt: '"İsim Fiiller ve Mastarlar" alt konusu hangi ana konuya aittir?',
+      prompt: "\"İsim Fiiller & Mastarlar\" alt konusu hangi ana konuya aittir?",
       options: [
-        "İsim Fiiller ve Mastarlar",
+        "İsim Fiiller & Mastarlar",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "İsim Fiiller ve Mastarlar" başlığı altındadır.',
+      explanation: "Bu alt konu \"İsim Fiiller & Mastarlar\" başlığı altındadır.",
     },
     {
       id: "24-ex-24-1-2",
       subtopicId: "24-1",
       type: "multiple_choice",
-      prompt:
-        'B1 seviyesindeki "İsim Fiiller ve Mastarlar" için doğru yaklaşım hangisidir?',
+      prompt: "B1 seviyesindeki \"İsim Fiiller & Mastarlar\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -66,12 +64,56 @@ export const topicContent24: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "24-tf-24-1-1",
+      subtopicId: "24-1",
+      type: "true_false",
+      prompt: "\"İsim Fiiller & Mastarlar\" başlığı \"İsim Fiiller & Mastarlar\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"İsim Fiiller & Mastarlar\" konusu altında işlenir.",
+    },
+    {
       id: "24-fb-24-1-1",
       subtopicId: "24-1",
       type: "fill_blank",
-      prompt: '"İsim Fiiller ve Mastarlar" konusu _____ seviyesine uygundur.',
+      prompt: "\"İsim Fiiller & Mastarlar\" konusu _____ seviyesine uygundur.",
       answer: "B1",
       explanation: "Bu konu B1 seviyesindedir.",
+    },
+    {
+      id: "24-match-1",
+      subtopicId: "24-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Gerunds & Infinitives",
+          right: "İsim Fiiller & Mastarlar",
+        },
+        {
+          left: "B1 level",
+          right: "B1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "24-cw-1",
@@ -107,7 +149,7 @@ export const topicContent24: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-24-24-1-1",
       subtopicId: "24-1",

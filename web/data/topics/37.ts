@@ -39,24 +39,21 @@ export const topicContent37: TopicContent = {
       id: "37-ex-37-1-1",
       subtopicId: "37-1",
       type: "multiple_choice",
-      prompt:
-        '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Kalıplaşmış İstek Kipleri & Eskimiş İfadeler\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler",
+        "Kalıplaşmış İstek Kipleri & Eskimiş İfadeler",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" başlığı altındadır.',
+      explanation: "Bu alt konu \"Kalıplaşmış İstek Kipleri & Eskimiş İfadeler\" başlığı altındadır.",
     },
     {
       id: "37-ex-37-1-2",
       subtopicId: "37-1",
       type: "multiple_choice",
-      prompt:
-        'C2 seviyesindeki "Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" için doğru yaklaşım hangisidir?',
+      prompt: "C2 seviyesindeki \"Kalıplaşmış İstek Kipleri & Eskimiş İfadeler\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent37: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "37-tf-37-1-1",
+      subtopicId: "37-1",
+      type: "true_false",
+      prompt: "\"Kalıplaşmış İstek Kipleri & Eskimiş İfadeler\" başlığı \"Kalıplaşmış İstek Kipleri & Eskimiş İfadeler\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Kalıplaşmış İstek Kipleri & Eskimiş İfadeler\" konusu altında işlenir.",
+    },
+    {
       id: "37-fb-37-1-1",
       subtopicId: "37-1",
       type: "fill_blank",
-      prompt:
-        '"Kalıplaşmış İstek Kipleri ve Eskimiş İfadeler" konusu _____ seviyesine uygundur.',
+      prompt: "\"Kalıplaşmış İstek Kipleri & Eskimiş İfadeler\" konusu _____ seviyesine uygundur.",
       answer: "C2",
       explanation: "Bu konu C2 seviyesindedir.",
+    },
+    {
+      id: "37-match-1",
+      subtopicId: "37-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Fixed Subjunctive & Archaic Expressions",
+          right: "Kalıplaşmış İstek Kipleri & Eskimiş İfadeler",
+        },
+        {
+          left: "C2 level",
+          right: "C2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "37-cw-1",
@@ -109,7 +149,7 @@ export const topicContent37: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-37-37-1-1",
       subtopicId: "37-1",

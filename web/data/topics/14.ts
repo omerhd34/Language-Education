@@ -39,7 +39,7 @@ export const topicContent14: TopicContent = {
       id: "14-ex-14-1-1",
       subtopicId: "14-1",
       type: "multiple_choice",
-      prompt: '"Gelecek Zaman" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Gelecek Zaman\" alt konusu hangi ana konuya aittir?",
       options: [
         "Gelecek Zaman",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent14: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Gelecek Zaman" başlığı altındadır.',
+      explanation: "Bu alt konu \"Gelecek Zaman\" başlığı altındadır.",
     },
     {
       id: "14-ex-14-1-2",
       subtopicId: "14-1",
       type: "multiple_choice",
-      prompt:
-        'A2 seviyesindeki "Gelecek Zaman" için doğru yaklaşım hangisidir?',
+      prompt: "A2 seviyesindeki \"Gelecek Zaman\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent14: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "14-tf-14-1-1",
+      subtopicId: "14-1",
+      type: "true_false",
+      prompt: "\"Gelecek Zaman\" başlığı \"Gelecek Zaman\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Gelecek Zaman\" konusu altında işlenir.",
+    },
+    {
       id: "14-fb-14-1-1",
       subtopicId: "14-1",
       type: "fill_blank",
-      prompt: '"Gelecek Zaman" konusu _____ seviyesine uygundur.',
+      prompt: "\"Gelecek Zaman\" konusu _____ seviyesine uygundur.",
       answer: "A2",
       explanation: "Bu konu A2 seviyesindedir.",
+    },
+    {
+      id: "14-match-1",
+      subtopicId: "14-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Future: Will vs. Going to",
+          right: "Gelecek Zaman",
+        },
+        {
+          left: "A2 level",
+          right: "A2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "14-cw-1",
@@ -106,7 +149,7 @@ export const topicContent14: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-14-14-1-1",
       subtopicId: "14-1",

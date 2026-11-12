@@ -39,24 +39,21 @@ export const topicContent11: TopicContent = {
       id: "11-ex-11-1-1",
       subtopicId: "11-1",
       type: "multiple_choice",
-      prompt:
-        '"Sayılabilen/Sayılamayan İsimler ve Miktar Belirteçleri" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Sayılabilen/Sayılamayan İsimler ve Miktar Belirteçleri",
+        "Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Sayılabilen/Sayılamayan İsimler ve Miktar Belirteçleri" başlığı altındadır.',
+      explanation: "Bu alt konu \"Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri\" başlığı altındadır.",
     },
     {
       id: "11-ex-11-1-2",
       subtopicId: "11-1",
       type: "multiple_choice",
-      prompt:
-        'A1 seviyesindeki "Sayılabilen/Sayılamayan İsimler ve Miktar Belirteçleri" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent11: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "11-tf-11-1-1",
+      subtopicId: "11-1",
+      type: "true_false",
+      prompt: "\"Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri\" başlığı \"Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri\" konusu altında işlenir.",
+    },
+    {
       id: "11-fb-11-1-1",
       subtopicId: "11-1",
       type: "fill_blank",
-      prompt:
-        '"Sayılabilen/Sayılamayan İsimler ve Miktar Belirteçleri" konusu _____ seviyesine uygundur.',
+      prompt: "\"Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "11-match-1",
+      subtopicId: "11-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Countable / Uncountable & Quantifiers",
+          right: "Sayılabilen/Sayılamayan İsimler & Miktar Belirteçleri",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "11-cw-1",
@@ -109,7 +149,7 @@ export const topicContent11: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-11-11-1-1",
       subtopicId: "11-1",

@@ -39,7 +39,7 @@ export const topicContent20: TopicContent = {
       id: "20-ex-20-1-1",
       subtopicId: "20-1",
       type: "multiple_choice",
-      prompt: '"Miş\'li Geçmiş Zaman" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Miş'li Geçmiş Zaman\" alt konusu hangi ana konuya aittir?",
       options: [
         "Miş'li Geçmiş Zaman",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent20: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Miş\'li Geçmiş Zaman" başlığı altındadır.',
+      explanation: "Bu alt konu \"Miş'li Geçmiş Zaman\" başlığı altındadır.",
     },
     {
       id: "20-ex-20-1-2",
       subtopicId: "20-1",
       type: "multiple_choice",
-      prompt:
-        'B1 seviyesindeki "Miş\'li Geçmiş Zaman" için doğru yaklaşım hangisidir?',
+      prompt: "B1 seviyesindeki \"Miş'li Geçmiş Zaman\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent20: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "20-tf-20-1-1",
+      subtopicId: "20-1",
+      type: "true_false",
+      prompt: "\"Miş'li Geçmiş Zaman\" başlığı \"Miş'li Geçmiş Zaman\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Miş'li Geçmiş Zaman\" konusu altında işlenir.",
+    },
+    {
       id: "20-fb-20-1-1",
       subtopicId: "20-1",
       type: "fill_blank",
-      prompt: '"Miş\'li Geçmiş Zaman" konusu _____ seviyesine uygundur.',
+      prompt: "\"Miş'li Geçmiş Zaman\" konusu _____ seviyesine uygundur.",
       answer: "B1",
       explanation: "Bu konu B1 seviyesindedir.",
+    },
+    {
+      id: "20-match-1",
+      subtopicId: "20-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Past Perfect Simple",
+          right: "Miş'li Geçmiş Zaman",
+        },
+        {
+          left: "B1 level",
+          right: "B1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "20-cw-1",
@@ -106,7 +149,7 @@ export const topicContent20: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-20-20-1-1",
       subtopicId: "20-1",

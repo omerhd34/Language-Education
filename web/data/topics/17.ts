@@ -39,24 +39,21 @@ export const topicContent17: TopicContent = {
       id: "17-ex-17-1-1",
       subtopicId: "17-1",
       type: "multiple_choice",
-      prompt:
-        '"Kipler: Zorunluluk ve Tavsiye" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Kipler: Zorunluluk & Tavsiye\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Kipler: Zorunluluk ve Tavsiye",
+        "Kipler: Zorunluluk & Tavsiye",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Kipler: Zorunluluk ve Tavsiye" başlığı altındadır.',
+      explanation: "Bu alt konu \"Kipler: Zorunluluk & Tavsiye\" başlığı altındadır.",
     },
     {
       id: "17-ex-17-1-2",
       subtopicId: "17-1",
       type: "multiple_choice",
-      prompt:
-        'A2 seviyesindeki "Kipler: Zorunluluk ve Tavsiye" için doğru yaklaşım hangisidir?',
+      prompt: "A2 seviyesindeki \"Kipler: Zorunluluk & Tavsiye\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent17: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "17-tf-17-1-1",
+      subtopicId: "17-1",
+      type: "true_false",
+      prompt: "\"Kipler: Zorunluluk & Tavsiye\" başlığı \"Kipler: Zorunluluk & Tavsiye\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Kipler: Zorunluluk & Tavsiye\" konusu altında işlenir.",
+    },
+    {
       id: "17-fb-17-1-1",
       subtopicId: "17-1",
       type: "fill_blank",
-      prompt:
-        '"Kipler: Zorunluluk ve Tavsiye" konusu _____ seviyesine uygundur.',
+      prompt: "\"Kipler: Zorunluluk & Tavsiye\" konusu _____ seviyesine uygundur.",
       answer: "A2",
       explanation: "Bu konu A2 seviyesindedir.",
+    },
+    {
+      id: "17-match-1",
+      subtopicId: "17-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Modals: Must, Should, Have to",
+          right: "Kipler: Zorunluluk & Tavsiye",
+        },
+        {
+          left: "A2 level",
+          right: "A2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "17-cw-1",
@@ -109,7 +149,7 @@ export const topicContent17: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-17-17-1-1",
       subtopicId: "17-1",

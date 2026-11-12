@@ -493,6 +493,69 @@ export const topicContent2: TopicContent = {
         "Başla. = Start. (Tek kişiye emir; Let's start birlikte öneridir.)",
     },
     {
+      id: "2-tf-1",
+      subtopicId: "2-1",
+      type: "true_false",
+      prompt: "Sit down. olumlu bir emirdir.",
+      hint: "Fiille başlayan ve yapmaya çağıran kısa cümle.",
+      options: ["Doğru", "Yanlış"],
+      correctIndex: 0,
+      explanation:
+        "Doğru. Sit down. özne olmadan fiille başlar; bu olumlu emir kalıbıdır.",
+    },
+    {
+      id: "2-tf-2",
+      subtopicId: "2-2",
+      type: "true_false",
+      prompt: "Don't ile kurulan cümleler yapmama emridir.",
+      options: ["Doğru", "Yanlış"],
+      correctIndex: 0,
+      explanation:
+        "Doğru. Don't + yalın fiil yapmama emri kurar; örnek: Don't speak.",
+    },
+    {
+      id: "2-tf-3",
+      subtopicId: "2-4",
+      type: "true_false",
+      prompt: "Let's go! tek bir kişiye emir verir.",
+      options: ["Doğru", "Yanlış"],
+      correctIndex: 1,
+      explanation:
+        "Yanlış. Let's go! ortak öneridir; Listen! gibi tek kişilik emir değildir.",
+    },
+    {
+      id: "2-tf-4",
+      subtopicId: "2-3",
+      type: "true_false",
+      prompt: "Please eklendiğinde emir cümlesi daha kibar bir ricaya dönüşür.",
+      options: ["Doğru", "Yanlış"],
+      correctIndex: 0,
+      explanation: "Doğru. Örnek: Please sit down. = Lütfen otur.",
+    },
+    {
+      id: "2-tf-5",
+      subtopicId: "2-5",
+      type: "true_false",
+      prompt: "Fill in the blanks. talimatı boşlukları doldurmanı ister.",
+      options: ["Doğru", "Yanlış"],
+      correctIndex: 0,
+      explanation: "Doğru. Fill in the blanks. = Boşlukları doldur.",
+    },
+    {
+      id: "2-match-1",
+      subtopicId: "2-1",
+      type: "matching",
+      prompt: "Emir ve talimat cümlelerini Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        { left: "Sit down.", right: "Otur." },
+        { left: "Don't run.", right: "Koşma." },
+        { left: "Let's go!", right: "Hadi gidelim!" },
+        { left: "Listen.", right: "Dinle." },
+        { left: "Stand up.", right: "Ayağa kalk." },
+        { left: "Stop.", right: "Dur." },
+      ],
+    },
+    {
       id: "2-cw-1",
       subtopicId: "2-1",
       type: "crossword",
@@ -622,7 +685,7 @@ export const topicContent2: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "2-quiz-1",
       subtopicId: "2-1",

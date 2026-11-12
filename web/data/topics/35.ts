@@ -39,22 +39,21 @@ export const topicContent35: TopicContent = {
       id: "35-ex-35-1-1",
       subtopicId: "35-1",
       type: "multiple_choice",
-      prompt: '"Eksiltme ve Yerine Koyma" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Eksiltme & Yerine Koyma\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Eksiltme ve Yerine Koyma",
+        "Eksiltme & Yerine Koyma",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Eksiltme ve Yerine Koyma" başlığı altındadır.',
+      explanation: "Bu alt konu \"Eksiltme & Yerine Koyma\" başlığı altındadır.",
     },
     {
       id: "35-ex-35-1-2",
       subtopicId: "35-1",
       type: "multiple_choice",
-      prompt:
-        'C1 seviyesindeki "Eksiltme ve Yerine Koyma" için doğru yaklaşım hangisidir?',
+      prompt: "C1 seviyesindeki \"Eksiltme & Yerine Koyma\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent35: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "35-tf-35-1-1",
+      subtopicId: "35-1",
+      type: "true_false",
+      prompt: "\"Eksiltme & Yerine Koyma\" başlığı \"Eksiltme & Yerine Koyma\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Eksiltme & Yerine Koyma\" konusu altında işlenir.",
+    },
+    {
       id: "35-fb-35-1-1",
       subtopicId: "35-1",
       type: "fill_blank",
-      prompt: '"Eksiltme ve Yerine Koyma" konusu _____ seviyesine uygundur.',
+      prompt: "\"Eksiltme & Yerine Koyma\" konusu _____ seviyesine uygundur.",
       answer: "C1",
       explanation: "Bu konu C1 seviyesindedir.",
+    },
+    {
+      id: "35-match-1",
+      subtopicId: "35-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Ellipsis & Substitution",
+          right: "Eksiltme & Yerine Koyma",
+        },
+        {
+          left: "C1 level",
+          right: "C1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "35-cw-1",
@@ -106,7 +149,7 @@ export const topicContent35: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-35-35-1-1",
       subtopicId: "35-1",

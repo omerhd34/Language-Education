@@ -39,24 +39,21 @@ export const topicContent5: TopicContent = {
       id: "5-ex-5-1-1",
       subtopicId: "5-1",
       type: "multiple_choice",
-      prompt:
-        '"Tanımlıklar ve Çoğul İsimler" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Tanımlıklar & Çoğul İsimler\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Tanımlıklar ve Çoğul İsimler",
+        "Tanımlıklar & Çoğul İsimler",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Tanımlıklar ve Çoğul İsimler" başlığı altındadır.',
+      explanation: "Bu alt konu \"Tanımlıklar & Çoğul İsimler\" başlığı altındadır.",
     },
     {
       id: "5-ex-5-1-2",
       subtopicId: "5-1",
       type: "multiple_choice",
-      prompt:
-        'A1 seviyesindeki "Tanımlıklar ve Çoğul İsimler" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"Tanımlıklar & Çoğul İsimler\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent5: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "5-tf-5-1-1",
+      subtopicId: "5-1",
+      type: "true_false",
+      prompt: "\"Tanımlıklar & Çoğul İsimler\" başlığı \"Tanımlıklar & Çoğul İsimler\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Tanımlıklar & Çoğul İsimler\" konusu altında işlenir.",
+    },
+    {
       id: "5-fb-5-1-1",
       subtopicId: "5-1",
       type: "fill_blank",
-      prompt:
-        '"Tanımlıklar ve Çoğul İsimler" konusu _____ seviyesine uygundur.',
+      prompt: "\"Tanımlıklar & Çoğul İsimler\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "5-match-1",
+      subtopicId: "5-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Articles & Plural Nouns",
+          right: "Tanımlıklar & Çoğul İsimler",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "5-cw-1",
@@ -109,7 +149,7 @@ export const topicContent5: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-5-5-1-1",
       subtopicId: "5-1",

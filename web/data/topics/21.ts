@@ -39,24 +39,21 @@ export const topicContent21: TopicContent = {
       id: "21-ex-21-1-1",
       subtopicId: "21-1",
       type: "multiple_choice",
-      prompt:
-        '"Koşul Cümleleri - Tip 0, 1, 2" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Koşul Cümleleri (Tip 0, 1, 2)\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Koşul Cümleleri - Tip 0, 1, 2",
+        "Koşul Cümleleri (Tip 0, 1, 2)",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Koşul Cümleleri - Tip 0, 1, 2" başlığı altındadır.',
+      explanation: "Bu alt konu \"Koşul Cümleleri (Tip 0, 1, 2)\" başlığı altındadır.",
     },
     {
       id: "21-ex-21-1-2",
       subtopicId: "21-1",
       type: "multiple_choice",
-      prompt:
-        'B1 seviyesindeki "Koşul Cümleleri - Tip 0, 1, 2" için doğru yaklaşım hangisidir?',
+      prompt: "B1 seviyesindeki \"Koşul Cümleleri (Tip 0, 1, 2)\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent21: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "21-tf-21-1-1",
+      subtopicId: "21-1",
+      type: "true_false",
+      prompt: "\"Koşul Cümleleri (Tip 0, 1, 2)\" başlığı \"Koşul Cümleleri (Tip 0, 1, 2)\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Koşul Cümleleri (Tip 0, 1, 2)\" konusu altında işlenir.",
+    },
+    {
       id: "21-fb-21-1-1",
       subtopicId: "21-1",
       type: "fill_blank",
-      prompt:
-        '"Koşul Cümleleri - Tip 0, 1, 2" konusu _____ seviyesine uygundur.',
+      prompt: "\"Koşul Cümleleri (Tip 0, 1, 2)\" konusu _____ seviyesine uygundur.",
       answer: "B1",
       explanation: "Bu konu B1 seviyesindedir.",
+    },
+    {
+      id: "21-match-1",
+      subtopicId: "21-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Conditionals (Type 0, 1, 2)",
+          right: "Koşul Cümleleri (Tip 0, 1, 2)",
+        },
+        {
+          left: "B1 level",
+          right: "B1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "21-cw-1",
@@ -109,7 +149,7 @@ export const topicContent21: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-21-21-1-1",
       subtopicId: "21-1",

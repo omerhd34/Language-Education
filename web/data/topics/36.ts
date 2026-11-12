@@ -39,24 +39,21 @@ export const topicContent36: TopicContent = {
       id: "36-ex-36-1-1",
       subtopicId: "36-1",
       type: "multiple_choice",
-      prompt:
-        '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Üslupsal Öne Çıkarma & Sıfat Devriklikleri\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri",
+        "Üslupsal Öne Çıkarma & Sıfat Devriklikleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" başlığı altındadır.',
+      explanation: "Bu alt konu \"Üslupsal Öne Çıkarma & Sıfat Devriklikleri\" başlığı altındadır.",
     },
     {
       id: "36-ex-36-1-2",
       subtopicId: "36-1",
       type: "multiple_choice",
-      prompt:
-        'C2 seviyesindeki "Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" için doğru yaklaşım hangisidir?',
+      prompt: "C2 seviyesindeki \"Üslupsal Öne Çıkarma & Sıfat Devriklikleri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent36: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "36-tf-36-1-1",
+      subtopicId: "36-1",
+      type: "true_false",
+      prompt: "\"Üslupsal Öne Çıkarma & Sıfat Devriklikleri\" başlığı \"Üslupsal Öne Çıkarma & Sıfat Devriklikleri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Üslupsal Öne Çıkarma & Sıfat Devriklikleri\" konusu altında işlenir.",
+    },
+    {
       id: "36-fb-36-1-1",
       subtopicId: "36-1",
       type: "fill_blank",
-      prompt:
-        '"Üslupsal Öne Çıkarma ve Sıfat Devriklikleri" konusu _____ seviyesine uygundur.',
+      prompt: "\"Üslupsal Öne Çıkarma & Sıfat Devriklikleri\" konusu _____ seviyesine uygundur.",
       answer: "C2",
       explanation: "Bu konu C2 seviyesindedir.",
+    },
+    {
+      id: "36-match-1",
+      subtopicId: "36-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Stylistic Fronting & Adjective Inversion",
+          right: "Üslupsal Öne Çıkarma & Sıfat Devriklikleri",
+        },
+        {
+          left: "C2 level",
+          right: "C2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "36-cw-1",
@@ -109,7 +149,7 @@ export const topicContent36: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-36-36-1-1",
       subtopicId: "36-1",

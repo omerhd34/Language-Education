@@ -39,24 +39,21 @@ export const topicContent26: TopicContent = {
       id: "26-ex-26-1-1",
       subtopicId: "26-1",
       type: "multiple_choice",
-      prompt:
-        '"Koşul Cümleleri - Tip 3 ve Karışık" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Koşul Cümleleri - Tip 3 & Karışık\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Koşul Cümleleri - Tip 3 ve Karışık",
+        "Koşul Cümleleri - Tip 3 & Karışık",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Koşul Cümleleri - Tip 3 ve Karışık" başlığı altındadır.',
+      explanation: "Bu alt konu \"Koşul Cümleleri - Tip 3 & Karışık\" başlığı altındadır.",
     },
     {
       id: "26-ex-26-1-2",
       subtopicId: "26-1",
       type: "multiple_choice",
-      prompt:
-        'B2 seviyesindeki "Koşul Cümleleri - Tip 3 ve Karışık" için doğru yaklaşım hangisidir?',
+      prompt: "B2 seviyesindeki \"Koşul Cümleleri - Tip 3 & Karışık\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent26: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "26-tf-26-1-1",
+      subtopicId: "26-1",
+      type: "true_false",
+      prompt: "\"Koşul Cümleleri - Tip 3 & Karışık\" başlığı \"Koşul Cümleleri - Tip 3 & Karışık\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Koşul Cümleleri - Tip 3 & Karışık\" konusu altında işlenir.",
+    },
+    {
       id: "26-fb-26-1-1",
       subtopicId: "26-1",
       type: "fill_blank",
-      prompt:
-        '"Koşul Cümleleri - Tip 3 ve Karışık" konusu _____ seviyesine uygundur.',
+      prompt: "\"Koşul Cümleleri - Tip 3 & Karışık\" konusu _____ seviyesine uygundur.",
       answer: "B2",
       explanation: "Bu konu B2 seviyesindedir.",
+    },
+    {
+      id: "26-match-1",
+      subtopicId: "26-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Conditionals - Type 3 & Mixed",
+          right: "Koşul Cümleleri - Tip 3 & Karışık",
+        },
+        {
+          left: "B2 level",
+          right: "B2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "26-cw-1",
@@ -109,7 +149,7 @@ export const topicContent26: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-26-26-1-1",
       subtopicId: "26-1",

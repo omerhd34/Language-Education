@@ -39,24 +39,21 @@ export const topicContent33: TopicContent = {
       id: "33-ex-33-1-1",
       subtopicId: "33-1",
       type: "multiple_choice",
-      prompt:
-        '"İleri Düzey Ortaç / Ulaç Cümlecikleri" alt konusu hangi ana konuya aittir?',
+      prompt: "\"İleri Düzey Ortaç & Ulaç Cümlecikleri\" alt konusu hangi ana konuya aittir?",
       options: [
-        "İleri Düzey Ortaç / Ulaç Cümlecikleri",
+        "İleri Düzey Ortaç & Ulaç Cümlecikleri",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "İleri Düzey Ortaç / Ulaç Cümlecikleri" başlığı altındadır.',
+      explanation: "Bu alt konu \"İleri Düzey Ortaç & Ulaç Cümlecikleri\" başlığı altındadır.",
     },
     {
       id: "33-ex-33-1-2",
       subtopicId: "33-1",
       type: "multiple_choice",
-      prompt:
-        'C1 seviyesindeki "İleri Düzey Ortaç / Ulaç Cümlecikleri" için doğru yaklaşım hangisidir?',
+      prompt: "C1 seviyesindeki \"İleri Düzey Ortaç & Ulaç Cümlecikleri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent33: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "33-tf-33-1-1",
+      subtopicId: "33-1",
+      type: "true_false",
+      prompt: "\"İleri Düzey Ortaç & Ulaç Cümlecikleri\" başlığı \"İleri Düzey Ortaç & Ulaç Cümlecikleri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"İleri Düzey Ortaç & Ulaç Cümlecikleri\" konusu altında işlenir.",
+    },
+    {
       id: "33-fb-33-1-1",
       subtopicId: "33-1",
       type: "fill_blank",
-      prompt:
-        '"İleri Düzey Ortaç / Ulaç Cümlecikleri" konusu _____ seviyesine uygundur.',
+      prompt: "\"İleri Düzey Ortaç & Ulaç Cümlecikleri\" konusu _____ seviyesine uygundur.",
       answer: "C1",
       explanation: "Bu konu C1 seviyesindedir.",
+    },
+    {
+      id: "33-match-1",
+      subtopicId: "33-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Advanced Participle Clauses",
+          right: "İleri Düzey Ortaç & Ulaç Cümlecikleri",
+        },
+        {
+          left: "C1 level",
+          right: "C1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "33-cw-1",
@@ -109,7 +149,7 @@ export const topicContent33: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-33-33-1-1",
       subtopicId: "33-1",

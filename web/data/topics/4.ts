@@ -39,24 +39,21 @@ export const topicContent4: TopicContent = {
       id: "4-ex-4-1-1",
       subtopicId: "4-1",
       type: "multiple_choice",
-      prompt:
-        '"Özne Zamirleri ve Olmak Fiili" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Özne Zamirleri & 'To Be'\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Özne Zamirleri ve Olmak Fiili",
+        "Özne Zamirleri & 'To Be'",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Özne Zamirleri ve Olmak Fiili" başlığı altındadır.',
+      explanation: "Bu alt konu \"Özne Zamirleri & 'To Be'\" başlığı altındadır.",
     },
     {
       id: "4-ex-4-1-2",
       subtopicId: "4-1",
       type: "multiple_choice",
-      prompt:
-        'A1 seviyesindeki "Özne Zamirleri ve Olmak Fiili" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"Özne Zamirleri & 'To Be'\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent4: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "4-tf-4-1-1",
+      subtopicId: "4-1",
+      type: "true_false",
+      prompt: "\"Özne Zamirleri & 'To Be'\" başlığı \"Özne Zamirleri & 'To Be'\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Özne Zamirleri & 'To Be'\" konusu altında işlenir.",
+    },
+    {
       id: "4-fb-4-1-1",
       subtopicId: "4-1",
       type: "fill_blank",
-      prompt:
-        '"Özne Zamirleri ve Olmak Fiili" konusu _____ seviyesine uygundur.',
+      prompt: "\"Özne Zamirleri & 'To Be'\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "4-match-1",
+      subtopicId: "4-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Subject Pronouns & 'To Be'",
+          right: "Özne Zamirleri & 'To Be'",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "4-cw-1",
@@ -109,7 +149,7 @@ export const topicContent4: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-4-4-1-1",
       subtopicId: "4-1",

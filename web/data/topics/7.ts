@@ -39,22 +39,21 @@ export const topicContent7: TopicContent = {
       id: "7-ex-7-1-1",
       subtopicId: "7-1",
       type: "multiple_choice",
-      prompt: '"Zaman ve Yer Edatları" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Zaman & Yer Edatları\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Zaman ve Yer Edatları",
+        "Zaman & Yer Edatları",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Zaman ve Yer Edatları" başlığı altındadır.',
+      explanation: "Bu alt konu \"Zaman & Yer Edatları\" başlığı altındadır.",
     },
     {
       id: "7-ex-7-1-2",
       subtopicId: "7-1",
       type: "multiple_choice",
-      prompt:
-        'A1 seviyesindeki "Zaman ve Yer Edatları" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"Zaman & Yer Edatları\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent7: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "7-tf-7-1-1",
+      subtopicId: "7-1",
+      type: "true_false",
+      prompt: "\"Zaman & Yer Edatları\" başlığı \"Zaman & Yer Edatları\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Zaman & Yer Edatları\" konusu altında işlenir.",
+    },
+    {
       id: "7-fb-7-1-1",
       subtopicId: "7-1",
       type: "fill_blank",
-      prompt: '"Zaman ve Yer Edatları" konusu _____ seviyesine uygundur.',
+      prompt: "\"Zaman & Yer Edatları\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "7-match-1",
+      subtopicId: "7-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Prepositions of Time & Place",
+          right: "Zaman & Yer Edatları",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "7-cw-1",
@@ -106,7 +149,7 @@ export const topicContent7: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-7-7-1-1",
       subtopicId: "7-1",

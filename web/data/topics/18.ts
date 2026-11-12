@@ -39,7 +39,7 @@ export const topicContent18: TopicContent = {
       id: "18-ex-18-1-1",
       subtopicId: "18-1",
       type: "multiple_choice",
-      prompt: '"Temel Sıfat Cümlecikleri" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Temel Sıfat Cümlecikleri\" alt konusu hangi ana konuya aittir?",
       options: [
         "Temel Sıfat Cümlecikleri",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent18: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Temel Sıfat Cümlecikleri" başlığı altındadır.',
+      explanation: "Bu alt konu \"Temel Sıfat Cümlecikleri\" başlığı altındadır.",
     },
     {
       id: "18-ex-18-1-2",
       subtopicId: "18-1",
       type: "multiple_choice",
-      prompt:
-        'A2 seviyesindeki "Temel Sıfat Cümlecikleri" için doğru yaklaşım hangisidir?',
+      prompt: "A2 seviyesindeki \"Temel Sıfat Cümlecikleri\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent18: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "18-tf-18-1-1",
+      subtopicId: "18-1",
+      type: "true_false",
+      prompt: "\"Temel Sıfat Cümlecikleri\" başlığı \"Temel Sıfat Cümlecikleri\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Temel Sıfat Cümlecikleri\" konusu altında işlenir.",
+    },
+    {
       id: "18-fb-18-1-1",
       subtopicId: "18-1",
       type: "fill_blank",
-      prompt: '"Temel Sıfat Cümlecikleri" konusu _____ seviyesine uygundur.',
+      prompt: "\"Temel Sıfat Cümlecikleri\" konusu _____ seviyesine uygundur.",
       answer: "A2",
       explanation: "Bu konu A2 seviyesindedir.",
+    },
+    {
+      id: "18-match-1",
+      subtopicId: "18-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Basic Relative Clauses",
+          right: "Temel Sıfat Cümlecikleri",
+        },
+        {
+          left: "A2 level",
+          right: "A2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "18-cw-1",
@@ -106,7 +149,7 @@ export const topicContent18: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-18-18-1-1",
       subtopicId: "18-1",

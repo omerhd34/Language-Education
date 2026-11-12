@@ -38,7 +38,7 @@ export const topicContent124: TopicContent = {
       id: "124-ex-124-1-1",
       subtopicId: "124-1",
       type: "multiple_choice",
-      prompt: '"A2 Yeterlilik Sınavı" alt konusu hangi ana konuya aittir?',
+      prompt: "\"A2 Yeterlilik Sınavı\" alt konusu hangi ana konuya aittir?",
       options: [
         "A2 Yeterlilik Sınavı",
         "Tamamen farklı bir konu",
@@ -46,14 +46,13 @@ export const topicContent124: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "A2 Yeterlilik Sınavı" başlığı altındadır.',
+      explanation: "Bu alt konu \"A2 Yeterlilik Sınavı\" başlığı altındadır.",
     },
     {
       id: "124-ex-124-1-2",
       subtopicId: "124-1",
       type: "multiple_choice",
-      prompt:
-        'A2 seviyesindeki "A2 Yeterlilik Sınavı" için doğru yaklaşım hangisidir?',
+      prompt: "A2 seviyesindeki \"A2 Yeterlilik Sınavı\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -64,12 +63,56 @@ export const topicContent124: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "124-tf-124-1-1",
+      subtopicId: "124-1",
+      type: "true_false",
+      prompt: "\"A2 Yeterlilik Sınavı\" başlığı \"A2 Yeterlilik Sınavı\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"A2 Yeterlilik Sınavı\" konusu altında işlenir.",
+    },
+    {
       id: "124-fb-124-1-1",
       subtopicId: "124-1",
       type: "fill_blank",
-      prompt: '"A2 Yeterlilik Sınavı" konusu _____ seviyesine uygundur.',
+      prompt: "\"A2 Yeterlilik Sınavı\" konusu _____ seviyesine uygundur.",
       answer: "A2",
       explanation: "Bu konu A2 seviyesindedir.",
+    },
+    {
+      id: "124-match-1",
+      subtopicId: "124-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "A2 Proficiency Exam",
+          right: "A2 Yeterlilik Sınavı",
+        },
+        {
+          left: "A2 level",
+          right: "A2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "124-cw-1",

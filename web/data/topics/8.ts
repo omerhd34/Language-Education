@@ -39,7 +39,7 @@ export const topicContent8: TopicContent = {
       id: "8-ex-8-1-1",
       subtopicId: "8-1",
       type: "multiple_choice",
-      prompt: '"Geniş Zaman" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Geniş Zaman\" alt konusu hangi ana konuya aittir?",
       options: [
         "Geniş Zaman",
         "Tamamen farklı bir konu",
@@ -47,13 +47,13 @@ export const topicContent8: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Geniş Zaman" başlığı altındadır.',
+      explanation: "Bu alt konu \"Geniş Zaman\" başlığı altındadır.",
     },
     {
       id: "8-ex-8-1-2",
       subtopicId: "8-1",
       type: "multiple_choice",
-      prompt: 'A1 seviyesindeki "Geniş Zaman" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"Geniş Zaman\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -64,12 +64,56 @@ export const topicContent8: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "8-tf-8-1-1",
+      subtopicId: "8-1",
+      type: "true_false",
+      prompt: "\"Geniş Zaman\" başlığı \"Geniş Zaman\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Geniş Zaman\" konusu altında işlenir.",
+    },
+    {
       id: "8-fb-8-1-1",
       subtopicId: "8-1",
       type: "fill_blank",
-      prompt: '"Geniş Zaman" konusu _____ seviyesine uygundur.',
+      prompt: "\"Geniş Zaman\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "8-match-1",
+      subtopicId: "8-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Present Simple",
+          right: "Geniş Zaman",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "8-cw-1",
@@ -105,7 +149,7 @@ export const topicContent8: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-8-8-1-1",
       subtopicId: "8-1",

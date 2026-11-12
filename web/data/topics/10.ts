@@ -39,7 +39,7 @@ export const topicContent10: TopicContent = {
       id: "10-ex-10-1-1",
       subtopicId: "10-1",
       type: "multiple_choice",
-      prompt: '"Kipler: Yapabilmek" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Kipler: Yapabilmek\" alt konusu hangi ana konuya aittir?",
       options: [
         "Kipler: Yapabilmek",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent10: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Kipler: Yapabilmek" başlığı altındadır.',
+      explanation: "Bu alt konu \"Kipler: Yapabilmek\" başlığı altındadır.",
     },
     {
       id: "10-ex-10-1-2",
       subtopicId: "10-1",
       type: "multiple_choice",
-      prompt:
-        'A1 seviyesindeki "Kipler: Yapabilmek" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"Kipler: Yapabilmek\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent10: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "10-tf-10-1-1",
+      subtopicId: "10-1",
+      type: "true_false",
+      prompt: "\"Kipler: Yapabilmek\" başlığı \"Kipler: Yapabilmek\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Kipler: Yapabilmek\" konusu altında işlenir.",
+    },
+    {
       id: "10-fb-10-1-1",
       subtopicId: "10-1",
       type: "fill_blank",
-      prompt: '"Kipler: Yapabilmek" konusu _____ seviyesine uygundur.',
+      prompt: "\"Kipler: Yapabilmek\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "10-match-1",
+      subtopicId: "10-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Modals: Can / Can't",
+          right: "Kipler: Yapabilmek",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "10-cw-1",
@@ -106,7 +149,7 @@ export const topicContent10: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-10-10-1-1",
       subtopicId: "10-1",

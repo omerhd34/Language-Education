@@ -39,7 +39,7 @@ export const topicContent30: TopicContent = {
       id: "30-ex-30-1-1",
       subtopicId: "30-1",
       type: "multiple_choice",
-      prompt: '"Devrik Cümleler" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Devrik Cümleler\" alt konusu hangi ana konuya aittir?",
       options: [
         "Devrik Cümleler",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent30: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Devrik Cümleler" başlığı altındadır.',
+      explanation: "Bu alt konu \"Devrik Cümleler\" başlığı altındadır.",
     },
     {
       id: "30-ex-30-1-2",
       subtopicId: "30-1",
       type: "multiple_choice",
-      prompt:
-        'C1 seviyesindeki "Devrik Cümleler" için doğru yaklaşım hangisidir?',
+      prompt: "C1 seviyesindeki \"Devrik Cümleler\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent30: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "30-tf-30-1-1",
+      subtopicId: "30-1",
+      type: "true_false",
+      prompt: "\"Devrik Cümleler\" başlığı \"Devrik Cümleler\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Devrik Cümleler\" konusu altında işlenir.",
+    },
+    {
       id: "30-fb-30-1-1",
       subtopicId: "30-1",
       type: "fill_blank",
-      prompt: '"Devrik Cümleler" konusu _____ seviyesine uygundur.',
+      prompt: "\"Devrik Cümleler\" konusu _____ seviyesine uygundur.",
       answer: "C1",
       explanation: "Bu konu C1 seviyesindedir.",
+    },
+    {
+      id: "30-match-1",
+      subtopicId: "30-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Inversion",
+          right: "Devrik Cümleler",
+        },
+        {
+          left: "C1 level",
+          right: "C1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "30-cw-1",
@@ -106,7 +149,7 @@ export const topicContent30: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-30-30-1-1",
       subtopicId: "30-1",

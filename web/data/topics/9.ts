@@ -39,7 +39,7 @@ export const topicContent9: TopicContent = {
       id: "9-ex-9-1-1",
       subtopicId: "9-1",
       type: "multiple_choice",
-      prompt: '"Şimdiki Zaman" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Şimdiki Zaman\" alt konusu hangi ana konuya aittir?",
       options: [
         "Şimdiki Zaman",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent9: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "Şimdiki Zaman" başlığı altındadır.',
+      explanation: "Bu alt konu \"Şimdiki Zaman\" başlığı altındadır.",
     },
     {
       id: "9-ex-9-1-2",
       subtopicId: "9-1",
       type: "multiple_choice",
-      prompt:
-        'A1 seviyesindeki "Şimdiki Zaman" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"Şimdiki Zaman\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent9: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "9-tf-9-1-1",
+      subtopicId: "9-1",
+      type: "true_false",
+      prompt: "\"Şimdiki Zaman\" başlığı \"Şimdiki Zaman\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Şimdiki Zaman\" konusu altında işlenir.",
+    },
+    {
       id: "9-fb-9-1-1",
       subtopicId: "9-1",
       type: "fill_blank",
-      prompt: '"Şimdiki Zaman" konusu _____ seviyesine uygundur.',
+      prompt: "\"Şimdiki Zaman\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "9-match-1",
+      subtopicId: "9-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Present Continuous",
+          right: "Şimdiki Zaman",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "9-cw-1",
@@ -106,7 +149,7 @@ export const topicContent9: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-9-9-1-1",
       subtopicId: "9-1",

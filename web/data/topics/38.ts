@@ -39,7 +39,7 @@ export const topicContent38: TopicContent = {
       id: "38-ex-38-1-1",
       subtopicId: "38-1",
       type: "multiple_choice",
-      prompt: '"İleri Düzey İsimleştirme" alt konusu hangi ana konuya aittir?',
+      prompt: "\"İleri Düzey İsimleştirme\" alt konusu hangi ana konuya aittir?",
       options: [
         "İleri Düzey İsimleştirme",
         "Tamamen farklı bir konu",
@@ -47,14 +47,13 @@ export const topicContent38: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation: 'Bu alt konu "İleri Düzey İsimleştirme" başlığı altındadır.',
+      explanation: "Bu alt konu \"İleri Düzey İsimleştirme\" başlığı altındadır.",
     },
     {
       id: "38-ex-38-1-2",
       subtopicId: "38-1",
       type: "multiple_choice",
-      prompt:
-        'C2 seviyesindeki "İleri Düzey İsimleştirme" için doğru yaklaşım hangisidir?',
+      prompt: "C2 seviyesindeki \"İleri Düzey İsimleştirme\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -65,12 +64,56 @@ export const topicContent38: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "38-tf-38-1-1",
+      subtopicId: "38-1",
+      type: "true_false",
+      prompt: "\"İleri Düzey İsimleştirme\" başlığı \"İleri Düzey İsimleştirme\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"İleri Düzey İsimleştirme\" konusu altında işlenir.",
+    },
+    {
       id: "38-fb-38-1-1",
       subtopicId: "38-1",
       type: "fill_blank",
-      prompt: '"İleri Düzey İsimleştirme" konusu _____ seviyesine uygundur.',
+      prompt: "\"İleri Düzey İsimleştirme\" konusu _____ seviyesine uygundur.",
       answer: "C2",
       explanation: "Bu konu C2 seviyesindedir.",
+    },
+    {
+      id: "38-match-1",
+      subtopicId: "38-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Advanced Nominalization",
+          right: "İleri Düzey İsimleştirme",
+        },
+        {
+          left: "C2 level",
+          right: "C2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "38-cw-1",
@@ -106,7 +149,7 @@ export const topicContent38: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-38-38-1-1",
       subtopicId: "38-1",

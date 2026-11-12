@@ -1,4 +1,4 @@
-import type { TopicContent } from "@/data/topics/types";
+﻿import type { TopicContent } from "@/data/topics/types";
 
 export const topicContent39: TopicContent = {
   topicId: "39",
@@ -39,24 +39,21 @@ export const topicContent39: TopicContent = {
       id: "39-ex-39-1-1",
       subtopicId: "39-1",
       type: "multiple_choice",
-      prompt:
-        '"Karmaşık Kip Görünümleri ve Gerçek Dışı Geçmiş" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Karmaşık Kip Görünümleri ve Gerçek Dışı Geçmiş",
+        "Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Karmaşık Kip Görünümleri ve Gerçek Dışı Geçmiş" başlığı altındadır.',
+      explanation: "Bu alt konu \"Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş\" başlığı altındadır.",
     },
     {
       id: "39-ex-39-1-2",
       subtopicId: "39-1",
       type: "multiple_choice",
-      prompt:
-        'C2 seviyesindeki "Karmaşık Kip Görünümleri ve Gerçek Dışı Geçmiş" için doğru yaklaşım hangisidir?',
+      prompt: "C2 seviyesindeki \"Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent39: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "39-tf-39-1-1",
+      subtopicId: "39-1",
+      type: "true_false",
+      prompt: "\"Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş\" başlığı \"Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş\" konusu altında işlenir.",
+    },
+    {
       id: "39-fb-39-1-1",
       subtopicId: "39-1",
       type: "fill_blank",
-      prompt:
-        '"Karmaşık Kip Görünümleri ve Gerçek Dışı Geçmiş" konusu _____ seviyesine uygundur.',
+      prompt: "\"Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş\" konusu _____ seviyesine uygundur.",
       answer: "C2",
       explanation: "Bu konu C2 seviyesindedir.",
+    },
+    {
+      id: "39-match-1",
+      subtopicId: "39-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Complex Modal Aspects & Unreal Past",
+          right: "Karmaşık Kip Görünümleri & Gerçek Dışı Geçmiş",
+        },
+        {
+          left: "C2 level",
+          right: "C2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "39-cw-1",
@@ -109,7 +149,7 @@ export const topicContent39: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-39-39-1-1",
       subtopicId: "39-1",

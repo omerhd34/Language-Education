@@ -39,8 +39,7 @@ export const topicContent28: TopicContent = {
       id: "28-ex-28-1-1",
       subtopicId: "28-1",
       type: "multiple_choice",
-      prompt:
-        '"Sıfat Cümleciklerinde Kısaltmalar" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Sıfat Cümleciklerinde Kısaltmalar\" alt konusu hangi ana konuya aittir?",
       options: [
         "Sıfat Cümleciklerinde Kısaltmalar",
         "Tamamen farklı bir konu",
@@ -48,15 +47,13 @@ export const topicContent28: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Sıfat Cümleciklerinde Kısaltmalar" başlığı altındadır.',
+      explanation: "Bu alt konu \"Sıfat Cümleciklerinde Kısaltmalar\" başlığı altındadır.",
     },
     {
       id: "28-ex-28-1-2",
       subtopicId: "28-1",
       type: "multiple_choice",
-      prompt:
-        'B2 seviyesindeki "Sıfat Cümleciklerinde Kısaltmalar" için doğru yaklaşım hangisidir?',
+      prompt: "B2 seviyesindeki \"Sıfat Cümleciklerinde Kısaltmalar\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent28: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "28-tf-28-1-1",
+      subtopicId: "28-1",
+      type: "true_false",
+      prompt: "\"Sıfat Cümleciklerinde Kısaltmalar\" başlığı \"Sıfat Cümleciklerinde Kısaltmalar\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Sıfat Cümleciklerinde Kısaltmalar\" konusu altında işlenir.",
+    },
+    {
       id: "28-fb-28-1-1",
       subtopicId: "28-1",
       type: "fill_blank",
-      prompt:
-        '"Sıfat Cümleciklerinde Kısaltmalar" konusu _____ seviyesine uygundur.',
+      prompt: "\"Sıfat Cümleciklerinde Kısaltmalar\" konusu _____ seviyesine uygundur.",
       answer: "B2",
       explanation: "Bu konu B2 seviyesindedir.",
+    },
+    {
+      id: "28-match-1",
+      subtopicId: "28-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Reduced Relative Clauses",
+          right: "Sıfat Cümleciklerinde Kısaltmalar",
+        },
+        {
+          left: "B2 level",
+          right: "B2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "28-cw-1",
@@ -109,7 +149,7 @@ export const topicContent28: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-28-28-1-1",
       subtopicId: "28-1",

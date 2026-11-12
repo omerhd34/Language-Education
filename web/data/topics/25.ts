@@ -39,24 +39,21 @@ export const topicContent25: TopicContent = {
       id: "25-ex-25-1-1",
       subtopicId: "25-1",
       type: "multiple_choice",
-      prompt:
-        '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman\" alt konusu hangi ana konuya aittir?",
       options: [
-        "Süregelen Miş'li Geçmiş ve Gelecekte Bitmiş Zaman",
+        "Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" başlığı altındadır.',
+      explanation: "Bu alt konu \"Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman\" başlığı altındadır.",
     },
     {
       id: "25-ex-25-1-2",
       subtopicId: "25-1",
       type: "multiple_choice",
-      prompt:
-        'B2 seviyesindeki "Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" için doğru yaklaşım hangisidir?',
+      prompt: "B2 seviyesindeki \"Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent25: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "25-tf-25-1-1",
+      subtopicId: "25-1",
+      type: "true_false",
+      prompt: "\"Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman\" başlığı \"Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman\" konusu altında işlenir.",
+    },
+    {
       id: "25-fb-25-1-1",
       subtopicId: "25-1",
       type: "fill_blank",
-      prompt:
-        '"Süregelen Miş\'li Geçmiş ve Gelecekte Bitmiş Zaman" konusu _____ seviyesine uygundur.',
+      prompt: "\"Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman\" konusu _____ seviyesine uygundur.",
       answer: "B2",
       explanation: "Bu konu B2 seviyesindedir.",
+    },
+    {
+      id: "25-match-1",
+      subtopicId: "25-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Past Perfect Continuous & Future Perfect",
+          right: "Süregelen Miş'li Geçmiş & Gelecekte Bitmiş Zaman",
+        },
+        {
+          left: "B2 level",
+          right: "B2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "25-cw-1",
@@ -109,7 +149,7 @@ export const topicContent25: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-25-25-1-1",
       subtopicId: "25-1",

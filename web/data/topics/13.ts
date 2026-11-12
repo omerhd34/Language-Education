@@ -39,8 +39,7 @@ export const topicContent13: TopicContent = {
       id: "13-ex-13-1-1",
       subtopicId: "13-1",
       type: "multiple_choice",
-      prompt:
-        '"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi" alt konusu hangi ana konuya aittir?',
+      prompt: "\"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi\" alt konusu hangi ana konuya aittir?",
       options: [
         "Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi",
         "Tamamen farklı bir konu",
@@ -48,15 +47,13 @@ export const topicContent13: TopicContent = {
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi" başlığı altındadır.',
+      explanation: "Bu alt konu \"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi\" başlığı altındadır.",
     },
     {
       id: "13-ex-13-1-2",
       subtopicId: "13-1",
       type: "multiple_choice",
-      prompt:
-        'A2 seviyesindeki "Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi" için doğru yaklaşım hangisidir?',
+      prompt: "A2 seviyesindeki \"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent13: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "13-tf-13-1-1",
+      subtopicId: "13-1",
+      type: "true_false",
+      prompt: "\"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi\" başlığı \"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi\" konusu altında işlenir.",
+    },
+    {
       id: "13-fb-13-1-1",
       subtopicId: "13-1",
       type: "fill_blank",
-      prompt:
-        '"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi" konusu _____ seviyesine uygundur.',
+      prompt: "\"Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi\" konusu _____ seviyesine uygundur.",
       answer: "A2",
       explanation: "Bu konu A2 seviyesindedir.",
+    },
+    {
+      id: "13-match-1",
+      subtopicId: "13-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Past Continuous",
+          right: "Geçmişte Süreklilik / Şimdiki Zamanın Hikayesi",
+        },
+        {
+          left: "A2 level",
+          right: "A2 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "13-cw-1",
@@ -109,7 +149,7 @@ export const topicContent13: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-13-13-1-1",
       subtopicId: "13-1",

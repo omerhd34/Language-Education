@@ -39,24 +39,21 @@ export const topicContent6: TopicContent = {
       id: "6-ex-6-1-1",
       subtopicId: "6-1",
       type: "multiple_choice",
-      prompt:
-        '"İşaret ve İyelik Zamirleri/Sıfatları" alt konusu hangi ana konuya aittir?',
+      prompt: "\"İşaret & İyelik Zamirleri/Sıfatları\" alt konusu hangi ana konuya aittir?",
       options: [
-        "İşaret ve İyelik Zamirleri/Sıfatları",
+        "İşaret & İyelik Zamirleri/Sıfatları",
         "Tamamen farklı bir konu",
         "Sadece kelime listesi",
         "Hiçbiri",
       ],
       correctIndex: 0,
-      explanation:
-        'Bu alt konu "İşaret ve İyelik Zamirleri/Sıfatları" başlığı altındadır.',
+      explanation: "Bu alt konu \"İşaret & İyelik Zamirleri/Sıfatları\" başlığı altındadır.",
     },
     {
       id: "6-ex-6-1-2",
       subtopicId: "6-1",
       type: "multiple_choice",
-      prompt:
-        'A1 seviyesindeki "İşaret ve İyelik Zamirleri/Sıfatları" için doğru yaklaşım hangisidir?',
+      prompt: "A1 seviyesindeki \"İşaret & İyelik Zamirleri/Sıfatları\" için doğru yaklaşım hangisidir?",
       options: [
         "Örnekleri okuyup kısa pratik yapmak",
         "Konuyu tamamen atlamak",
@@ -67,13 +64,56 @@ export const topicContent6: TopicContent = {
       explanation: "Örnek + kısa pratik, kalıcı öğrenmeye yardımcı olur.",
     },
     {
+      id: "6-tf-6-1-1",
+      subtopicId: "6-1",
+      type: "true_false",
+      prompt: "\"İşaret & İyelik Zamirleri/Sıfatları\" başlığı \"İşaret & İyelik Zamirleri/Sıfatları\" konusunun bir parçasıdır.",
+      options: [
+        "Doğru",
+        "Yanlış",
+      ],
+      correctIndex: 0,
+      explanation: "Bu alt başlık \"İşaret & İyelik Zamirleri/Sıfatları\" konusu altında işlenir.",
+    },
+    {
       id: "6-fb-6-1-1",
       subtopicId: "6-1",
       type: "fill_blank",
-      prompt:
-        '"İşaret ve İyelik Zamirleri/Sıfatları" konusu _____ seviyesine uygundur.',
+      prompt: "\"İşaret & İyelik Zamirleri/Sıfatları\" konusu _____ seviyesine uygundur.",
       answer: "A1",
       explanation: "Bu konu A1 seviyesindedir.",
+    },
+    {
+      id: "6-match-1",
+      subtopicId: "6-1",
+      type: "matching",
+      prompt: "İngilizce ifadeleri Türkçe karşılıklarıyla eşleştir.",
+      pairs: [
+        {
+          left: "Demonstratives & Possessives",
+          right: "İşaret & İyelik Zamirleri/Sıfatları",
+        },
+        {
+          left: "A1 level",
+          right: "A1 seviyesi",
+        },
+        {
+          left: "Practice",
+          right: "Alıştırma",
+        },
+        {
+          left: "Example",
+          right: "Örnek",
+        },
+        {
+          left: "Lesson",
+          right: "Konu anlatımı",
+        },
+        {
+          left: "Quiz",
+          right: "Quiz",
+        },
+      ],
     },
     {
       id: "6-cw-1",
@@ -109,7 +149,7 @@ export const topicContent6: TopicContent = {
       ],
     },
   ],
-  quizExercises: [
+  quiz: [
     {
       id: "quiz-6-6-1-1",
       subtopicId: "6-1",
