@@ -6,9 +6,13 @@ import { cn } from "@/lib/utils";
 
 type ExercisePercentBadgeProps = {
   percent: number;
+  ariaLabel?: string;
 };
 
-export function ExercisePercentBadge({ percent }: ExercisePercentBadgeProps) {
+export function ExercisePercentBadge({
+  percent,
+  ariaLabel,
+}: ExercisePercentBadgeProps) {
   const t = useTranslations("Topic");
   const value = Math.min(100, Math.max(0, Math.round(percent)));
   const done = value >= 100;
@@ -16,7 +20,7 @@ export function ExercisePercentBadge({ percent }: ExercisePercentBadgeProps) {
   return (
     <Badge
       variant="outline"
-      aria-label={t("typeProgressAria", { percent: value })}
+      aria-label={ariaLabel ?? t("typeProgressAria", { percent: value })}
       className={cn(
         "shrink-0 tabular-nums",
         done

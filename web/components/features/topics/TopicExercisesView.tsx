@@ -10,15 +10,21 @@ import { CrosswordExerciseView } from "@/components/features/topics/CrosswordExe
 import { ExerciseTypePicker } from "@/components/features/topics/ExerciseTypePicker";
 import { FillBlankExercises } from "@/components/features/topics/FillBlankExercises";
 import { ListeningExercises } from "@/components/features/topics/ListeningExercises";
+import { MatchingExercises } from "@/components/features/topics/MatchingExercises";
 import { MultipleChoiceExercises } from "@/components/features/topics/MultipleChoiceExercises";
+import { TopicMixedQuizExercises } from "@/components/features/topics/TopicMixedQuizExercises";
+import { getTopicContent } from "@/data/topics";
 import type { CefrLevel } from "@/data/dashboardTopics";
 import type {
   CrosswordExercise,
   ExerciseType,
   FillBlankExercise,
   ListeningExercise,
+  MatchingExercise,
   MultipleChoiceExercise,
+  TrueFalseExercise,
   TopicExercise,
+  TopicQuizExercise,
 } from "@/data/topics/types";
 import { didPassExamScore, markLevelExamPassed } from "@/lib/levelExamStorage";
 import {
@@ -52,11 +58,13 @@ import {
   type LinearSlot,
 } from "@/lib/exerciseDraftStorage";
 import {
+  PRACTICE_MIXED_SESSION_SUFFIX,
   computeExerciseTypeProgress,
   countCrosswordCluesInExercises,
   crosswordDraftKey,
   totalCrosswordClueCount,
 } from "@/lib/exerciseTypeProgress";
+import { toTopicQuizExercises } from "@/lib/topicExam";
 import { shuffleSeeded } from "@/lib/seededRandom";
 import { getNextLevel } from "@/lib/topicAccess";
 
@@ -85,8 +93,28 @@ type LinearSessionInput = {
       v3Selected: number | null;
     }>;
     checked: boolean;
+    correct?: boolean;
+    assignments?: Record<number, number>;
+    revealed?: boolean;
+    graded?: boolean;
   }>;
 };
+
+function parseMatchingAssignments(
+  value: Record<string, number> | undefined,
+): Record<number, number> {
+  if (!value) {
+    return {};
+  }
+  const result: Record<number, number> = {};
+  for (const [key, rightSlot] of Object.entries(value)) {
+    const leftIndex = Number(key);
+    if (Number.isInteger(leftIndex) && Number.isInteger(rightSlot)) {
+      result[leftIndex] = rightSlot;
+    }
+  }
+  return result;
+}
 
 type ExamPartScore = { correct: number; total: number };
 type LevelExamPartOutcome = "passed" | "failed";
@@ -101,9 +129,18 @@ function linearSessionProgressPercent(saved: LinearSessionDraft): number {
 
 const PRACTICE_TYPES_WITH_RANDOM_SET: ExerciseType[] = [
   "multiple_choice",
+  "true_false",
   "fill_blank",
   "listening",
+  "matching",
+  "mixed",
 ];
+
+function trueFalseAsMultipleChoice(
+  items: TrueFalseExercise[],
+): MultipleChoiceExercise[] {
+  return items.map((item) => ({ ...item, type: "multiple_choice" }));
+}
 
 function orderExercisesByIds<T extends TopicExercise>(
   items: T[],
@@ -140,6 +177,26 @@ function toLinearSlots(session: LinearSessionInput): LinearSlot[] {
     v2Selected: slot.v2Selected ?? null,
     verbRows: slot.verbRows,
     checked: slot.checked,
+    matchingAssignments: slot.assignments
+      ? Object.fromEntries(
+          Object.entries(slot.assignments).map(([left, right]) => [
+            String(left),
+            right,
+          ]),
+        )
+      : undefined,
+    matchingRevealed: slot.revealed,
+    matchingCorrect: slot.correct,
+  }));
+}
+
+function matchingSlotsFromSaved(saved: LinearSessionDraft) {
+  return saved.slots.map((slot) => ({
+    checked: slot.checked,
+    correct: slot.matchingCorrect ?? false,
+    assignments: parseMatchingAssignments(slot.matchingAssignments),
+    revealed: slot.matchingRevealed ?? false,
+    graded: Boolean(slot.matchingRevealed) && slot.checked,
   }));
 }
 
@@ -154,6 +211,24 @@ export function TopicExercisesView({
 }: TopicExercisesViewProps) {
   const t = useTranslations("Topic");
   const selectionKey = progressKey ?? topicId ?? null;
+  const practiceMixed = Boolean(
+    topicId && getTopicContent(topicId)?.practiceMixed,
+  );
+  const mixedPracticeExercises = useMemo(
+    () => toTopicQuizExercises(exercises),
+    [exercises],
+  );
+  const matchingPracticeExercises = useMemo(
+    () =>
+      exercises.filter(
+        (item): item is MatchingExercise => item.type === "matching",
+      ),
+    [exercises],
+  );
+  const mixedSessionKey =
+    selectionKey && practiceMixed
+      ? `${selectionKey}:${PRACTICE_MIXED_SESSION_SUFFIX}`
+      : null;
   const [selectedType, setSelectedType] = useState<ExerciseType | null>(null);
   const [sessionReady, setSessionReady] = useState(isExam);
   const [sessionNonce, setSessionNonce] = useState(0);
@@ -249,10 +324,17 @@ export function TopicExercisesView({
     restoredTopicRef.current = selectionKey;
 
     const saved = readSelectedExerciseType(selectionKey);
-    const available = new Set(exercises.map((item) => item.type));
+    if (practiceMixed) {
+      const allowed = new Set<ExerciseType>(["mixed", "matching"]);
+      setSelectedType(saved && allowed.has(saved) ? saved : null);
+      setSessionReady(true);
+      return;
+    }
+
+    const available = new Set<ExerciseType>(exercises.map((item) => item.type));
     setSelectedType(saved && available.has(saved) ? saved : null);
     setSessionReady(true);
-  }, [exercises, isExam, selectionKey]);
+  }, [exercises, isExam, practiceMixed, selectionKey]);
 
   useEffect(() => {
     if (!sessionReady || isExam || !selectionKey) {
@@ -260,6 +342,42 @@ export function TopicExercisesView({
     }
     writeSelectedExerciseType(selectionKey, selectedType);
   }, [isExam, selectedType, selectionKey, sessionReady]);
+
+  useEffect(() => {
+    if (
+      isExam ||
+      !practiceMixed ||
+      !mixedSessionKey ||
+      !sessionReady ||
+      mixedPracticeExercises.length === 0
+    ) {
+      return;
+    }
+
+    const storedOrder = readLinearSessionOrder(mixedSessionKey);
+    if (storedOrder && storedOrder.length === mixedPracticeExercises.length) {
+      return;
+    }
+
+    const saved = readLinearSession(mixedSessionKey);
+    const progress = saved ? linearSessionProgressPercent(saved) : 0;
+    if (progress > 0) {
+      return;
+    }
+
+    writeLinearSessionOrder(
+      mixedSessionKey,
+      createShuffledExerciseOrder(mixedPracticeExercises, crypto.randomUUID()),
+    );
+    setSessionNonce((value) => value + 1);
+    setDraftVersion((value) => value + 1);
+  }, [
+    isExam,
+    mixedPracticeExercises,
+    mixedSessionKey,
+    practiceMixed,
+    sessionReady,
+  ]);
 
   useEffect(() => {
     if (
@@ -354,17 +472,35 @@ export function TopicExercisesView({
     return saved;
   }
 
-  const counts = useMemo(
-    () => ({
+  const counts = useMemo(() => {
+    if (practiceMixed) {
+      return {
+        multiple_choice: 0,
+        true_false: 0,
+        fill_blank: 0,
+        crossword: 0,
+        listening: 0,
+        mixed: mixedPracticeExercises.length,
+        matching: matchingPracticeExercises.length,
+      } satisfies Record<ExerciseType, number>;
+    }
+    return {
       multiple_choice: exercises.filter(
         (item) => item.type === "multiple_choice",
       ).length,
+      true_false: exercises.filter((item) => item.type === "true_false").length,
       fill_blank: exercises.filter((item) => item.type === "fill_blank").length,
       crossword: countCrosswordCluesInExercises(exercises),
       listening: exercises.filter((item) => item.type === "listening").length,
-    }),
-    [exercises],
-  );
+      matching: exercises.filter((item) => item.type === "matching").length,
+      mixed: 0,
+    } satisfies Record<ExerciseType, number>;
+  }, [
+    exercises,
+    matchingPracticeExercises.length,
+    mixedPracticeExercises.length,
+    practiceMixed,
+  ]);
 
   const filteredExercises = useMemo(() => {
     if (!selectedType) {
@@ -482,11 +618,14 @@ export function TopicExercisesView({
     () =>
       ({
         multiple_choice: 0,
+        true_false: 0,
         fill_blank: levelExamFillBlanks?.length ?? 0,
         crossword: levelExamCrosswords
           ? totalCrosswordClueCount(levelExamCrosswords)
           : 0,
         listening: 0,
+        matching: 0,
+        mixed: 0,
       }) satisfies Record<ExerciseType, number>,
     [levelExamCrosswords, levelExamFillBlanks],
   );
@@ -562,9 +701,96 @@ export function TopicExercisesView({
     }
   }
 
+  const orderedMixedPractice = useMemo(() => {
+    if (!practiceMixed || mixedPracticeExercises.length === 0) {
+      return mixedPracticeExercises;
+    }
+    if (!mixedSessionKey) {
+      return mixedPracticeExercises;
+    }
+    const order = readLinearSessionOrder(mixedSessionKey);
+    if (order) {
+      return orderExercisesByIds(
+        mixedPracticeExercises,
+        order,
+      ) as TopicQuizExercise[];
+    }
+    return mixedPracticeExercises;
+  }, [
+    mixedPracticeExercises,
+    mixedSessionKey,
+    practiceMixed,
+    sessionNonce,
+    draftVersion,
+  ]);
+
+  const orderedMatchingPractice = useMemo(() => {
+    if (matchingPracticeExercises.length === 0 || !selectionKey) {
+      return matchingPracticeExercises;
+    }
+    const order = readLinearSessionOrder(`${selectionKey}:matching`);
+    if (order) {
+      return orderExercisesByIds(matchingPracticeExercises, order);
+    }
+    return matchingPracticeExercises;
+  }, [draftVersion, matchingPracticeExercises, selectionKey, sessionNonce]);
+
+  function handleMixedPracticeComplete() {
+    if (!topicId) {
+      return;
+    }
+    markTopicExerciseTypeCompleted(topicId, "mixed");
+  }
+
+  function handleMixedPracticeRestart() {
+    if (!topicId) {
+      return;
+    }
+    unmarkTopicExerciseTypeCompleted(topicId, "mixed");
+    if (mixedSessionKey) {
+      clearLinearSession(mixedSessionKey);
+      writeLinearSessionOrder(
+        mixedSessionKey,
+        createShuffledExerciseOrder(
+          mixedPracticeExercises,
+          crypto.randomUUID(),
+        ),
+      );
+    }
+    setSessionNonce((value) => value + 1);
+  }
+
+  const persistMixedPracticeSession = useCallback(
+    (session: LinearSessionInput) => {
+      if (!mixedSessionKey) {
+        return;
+      }
+      writeLinearSession(mixedSessionKey, {
+        index: session.index,
+        correct: session.correct,
+        total: session.total,
+        slots: toLinearSlots(session),
+      });
+    },
+    [mixedSessionKey],
+  );
+
   const assignFreshExerciseOrder = useCallback(
     (type: ExerciseType) => {
       if (!selectionKey || onExerciseSessionStart) {
+        return;
+      }
+      if (practiceMixed && type === "mixed" && mixedSessionKey) {
+        if (mixedPracticeExercises.length === 0) {
+          return;
+        }
+        writeLinearSessionOrder(
+          mixedSessionKey,
+          createShuffledExerciseOrder(
+            mixedPracticeExercises,
+            crypto.randomUUID(),
+          ),
+        );
         return;
       }
       const ofType = exercises.filter((item) => item.type === type);
@@ -576,24 +802,46 @@ export function TopicExercisesView({
         createShuffledExerciseOrder(ofType, crypto.randomUUID()),
       );
     },
-    [exercises, onExerciseSessionStart, selectionKey],
+    [
+      exercises,
+      mixedPracticeExercises,
+      mixedSessionKey,
+      onExerciseSessionStart,
+      practiceMixed,
+      selectionKey,
+    ],
   );
 
   function beginExerciseSession(type: ExerciseType) {
     if (PRACTICE_TYPES_WITH_RANDOM_SET.includes(type) && selectionKey) {
-      const total = exercises.filter((item) => item.type === type).length;
-      const saved = readLinearSession(`${selectionKey}:${type}`);
+      const isMixedPractice =
+        practiceMixed && type === "mixed" && mixedSessionKey;
+      const total = isMixedPractice
+        ? mixedPracticeExercises.length
+        : exercises.filter((item) => item.type === type).length;
+      const sessionKey = isMixedPractice
+        ? mixedSessionKey
+        : `${selectionKey}:${type}`;
+      const saved = readLinearSession(sessionKey);
       const compatibleSave = saved && saved.slots.length === total;
       const progress = compatibleSave ? linearSessionProgressPercent(saved) : 0;
       const shouldPickNewSet = !compatibleSave || progress === 0;
       if (shouldPickNewSet) {
         onExerciseSessionStart?.(type);
-        clearLinearSession(`${selectionKey}:${type}`);
+        clearLinearSession(sessionKey);
         assignFreshExerciseOrder(type);
         setSessionNonce((value) => value + 1);
       }
     }
     setSelectedType(type);
+  }
+
+  function isMixedPracticeSessionComplete(): boolean {
+    return (
+      completedTypes.includes("mixed") ||
+      (completedTypes.includes("multiple_choice") &&
+        completedTypes.includes("fill_blank"))
+    );
   }
 
   function backToExerciseTypePicker() {
@@ -605,6 +853,10 @@ export function TopicExercisesView({
       unmarkTopicExerciseTypeCompleted(topicId, selectedType);
     }
     onExerciseSessionStart?.(selectedType ?? undefined);
+    if (selectedType === "mixed" && practiceMixed) {
+      handleMixedPracticeRestart();
+      return;
+    }
     if (selectionKey && selectedType) {
       clearLinearSession(`${selectionKey}:${selectedType}`);
       assignFreshExerciseOrder(selectedType);
@@ -781,6 +1033,125 @@ export function TopicExercisesView({
     return null;
   }
 
+  if (
+    practiceMixed &&
+    (mixedPracticeExercises.length > 0 || matchingPracticeExercises.length > 0)
+  ) {
+    if (!selectedType) {
+      return (
+        <ExerciseTypePicker
+          counts={counts}
+          completedTypes={completedTypes}
+          progressPercents={typeProgress}
+          onSelect={beginExerciseSession}
+        />
+      );
+    }
+
+    const mixedSaved = mixedSessionKey
+      ? readLinearSession(mixedSessionKey)
+      : null;
+    const mixedCompatible =
+      mixedSaved && mixedSaved.slots.length === orderedMixedPractice.length;
+    const matchingSaved = savedPracticeSession(
+      "matching",
+      matchingPracticeExercises.length,
+    );
+
+    return (
+      <div className="space-y-4">
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={backToExerciseTypePicker}
+        >
+          <ArrowLeft className="size-4" aria-hidden />
+          {t("backToTypes")}
+        </Button>
+
+        {selectedType === "mixed" && mixedPracticeExercises.length > 0 ? (
+          <>
+            {isMixedPracticeSessionComplete() ? (
+              <Alert className="border-emerald-500/30 bg-emerald-500/10">
+                <CheckCircle2 aria-hidden />
+                <AlertTitle>{t("typeAlreadyCompletedTitle")}</AlertTitle>
+                <AlertDescription>
+                  {t("typeAlreadyCompletedBody")}
+                </AlertDescription>
+              </Alert>
+            ) : null}
+
+            <TopicMixedQuizExercises
+              key={`mixed-practice-${sessionNonce}-${orderedMixedPractice.map((item) => item.id).join("|")}`}
+              exercises={orderedMixedPractice}
+              showHint={showHints}
+              initialIndex={mixedCompatible ? mixedSaved!.index : 0}
+              initialSlots={
+                mixedCompatible
+                  ? mixedSaved!.slots.map((slot) => ({
+                      selected: slot.selected,
+                      answer: slot.answer,
+                      checked: slot.checked,
+                    }))
+                  : undefined
+              }
+              onSessionChange={persistMixedPracticeSession}
+              onComplete={handleMixedPracticeComplete}
+              onRestart={handleMixedPracticeRestart}
+            />
+          </>
+        ) : null}
+
+        {selectedType === "matching" && matchingPracticeExercises.length > 0 ? (
+          <>
+            {completedTypes.includes("matching") ? (
+              <Alert className="border-emerald-500/30 bg-emerald-500/10">
+                <CheckCircle2 aria-hidden />
+                <AlertTitle>{t("typeAlreadyCompletedTitle")}</AlertTitle>
+                <AlertDescription>
+                  {t("typeAlreadyCompletedBody")}
+                </AlertDescription>
+              </Alert>
+            ) : null}
+
+            <MatchingExercises
+              key={`match-practice-${sessionNonce}`}
+              exercises={orderedMatchingPractice}
+              showHint={showHints}
+              initialIndex={matchingSaved?.index ?? 0}
+              initialSlots={
+                matchingSaved &&
+                matchingSaved.slots.length === matchingPracticeExercises.length
+                  ? matchingSlotsFromSaved(matchingSaved)
+                  : undefined
+              }
+              onSessionChange={(session) =>
+                persistPracticeSession("matching", session)
+              }
+              onComplete={() => {
+                if (topicId) {
+                  markTopicExerciseTypeCompleted(topicId, "matching");
+                }
+              }}
+              onRestart={() => {
+                if (topicId) {
+                  unmarkTopicExerciseTypeCompleted(topicId, "matching");
+                }
+                if (selectionKey) {
+                  clearLinearSession(`${selectionKey}:matching`);
+                  assignFreshExerciseOrder("matching");
+                }
+                setSessionNonce((value) => value + 1);
+              }}
+              onBackToTypes={backToExerciseTypePicker}
+            />
+          </>
+        ) : null}
+      </div>
+    );
+  }
+
   if (!selectedType) {
     return (
       <ExerciseTypePicker
@@ -798,6 +1169,7 @@ export function TopicExercisesView({
     "multiple_choice",
     filtered.length,
   );
+  const savedTrueFalse = savedPracticeSession("true_false", filtered.length);
   const savedFillBlank = savedPracticeSession("fill_blank", filtered.length);
   const savedListening = savedPracticeSession("listening", filtered.length);
 
@@ -840,6 +1212,25 @@ export function TopicExercisesView({
         />
       ) : null}
 
+      {selectedType === "true_false" ? (
+        <MultipleChoiceExercises
+          key={`tf-${sessionNonce}`}
+          exercises={trueFalseAsMultipleChoice(filtered as TrueFalseExercise[])}
+          initialIndex={savedTrueFalse?.index ?? 0}
+          initialSlots={savedTrueFalse?.slots.map((slot) => ({
+            selected: slot.selected,
+            checked: slot.checked,
+          }))}
+          showHint={showHints}
+          onSessionChange={(session) =>
+            persistPracticeSession("true_false", session)
+          }
+          onComplete={handleSessionComplete}
+          onRestart={handleSessionRestart}
+          onBackToTypes={backToExerciseTypePicker}
+        />
+      ) : null}
+
       {selectedType === "fill_blank" ? (
         <FillBlankExercises
           key={`fb-${sessionNonce}`}
@@ -864,6 +1255,30 @@ export function TopicExercisesView({
           key={`cw-${sessionNonce}`}
           exercises={filtered as CrosswordExercise[]}
           draftKey={crosswordDraftKey(topicId, filtered as CrosswordExercise[])}
+          onComplete={handleSessionComplete}
+          onRestart={handleSessionRestart}
+          onBackToTypes={backToExerciseTypePicker}
+        />
+      ) : null}
+
+      {selectedType === "matching" ? (
+        <MatchingExercises
+          key={`match-${sessionNonce}`}
+          exercises={filtered as MatchingExercise[]}
+          initialIndex={
+            savedPracticeSession("matching", filtered.length)?.index ?? 0
+          }
+          initialSlots={
+            savedPracticeSession("matching", filtered.length)
+              ? matchingSlotsFromSaved(
+                  savedPracticeSession("matching", filtered.length)!,
+                )
+              : undefined
+          }
+          showHint={showHints}
+          onSessionChange={(session) =>
+            persistPracticeSession("matching", session)
+          }
           onComplete={handleSessionComplete}
           onRestart={handleSessionRestart}
           onBackToTypes={backToExerciseTypePicker}

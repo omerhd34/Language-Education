@@ -1,8 +1,9 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Check, RotateCcw, Volume2 } from "lucide-react";
+import { Check, ChevronRight, RotateCcw, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { ExerciseCheckButton } from "@/components/features/exercises/ExerciseCheckButton";
 import { Button } from "@/components/ui/Button";
 import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
@@ -320,7 +321,7 @@ export function CrosswordExerciseView({
   const clueColumnCount = 3;
   const clueRowCount = Math.ceil(clues.length / clueColumnCount);
   const isLastPuzzle = puzzleIndex >= exercises.length - 1;
-  const continueLabel = isLastPuzzle ? t("seeResult") : t("next");
+  const continueLabel = t("next");
 
   function setDirection(next: CrosswordDirection) {
     directionRef.current = next;
@@ -637,27 +638,33 @@ export function CrosswordExerciseView({
         </ul>
 
         <div className="flex flex-wrap gap-2">
-          {!checked || !isCorrect ? (
-            <Button type="button" disabled={resultOpen} onClick={handleCheck}>
-              <Check aria-hidden />
-              {t("check")}
-            </Button>
-          ) : !resultOpen ? (
-            <Button type="button" onClick={handleContinue}>
-              {continueLabel}
-            </Button>
-          ) : null}
           <Button
             type="button"
             variant="outline"
+            className="gap-2"
             onClick={() => {
               onRestart?.();
               resetAll();
             }}
           >
-            <RotateCcw aria-hidden />
+            <RotateCcw className="size-4" aria-hidden />
             {t("restart")}
           </Button>
+          {!checked || !isCorrect ? (
+            <ExerciseCheckButton
+              type="button"
+              disabled={resultOpen}
+              onClick={handleCheck}
+            >
+              <Check className="size-4" aria-hidden />
+              {t("check")}
+            </ExerciseCheckButton>
+          ) : !resultOpen ? (
+            <Button type="button" className="gap-2" onClick={handleContinue}>
+              {continueLabel}
+              <ChevronRight className="size-4" aria-hidden />
+            </Button>
+          ) : null}
         </div>
       </article>
 

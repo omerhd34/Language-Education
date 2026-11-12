@@ -1,5 +1,7 @@
+export const instant = false;
+
 import { cookies } from "next/headers";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { CombinedExerciseHeader } from "@/components/features/topics/CombinedExerciseHeader";
 import { TopicContentMissing } from "@/components/features/topics/TopicContentMissing";
@@ -16,6 +18,7 @@ import {
   PASSED_LEVEL_EXAMS_COOKIE,
   parsePassedLevelExams,
 } from "@/lib/levelExamStorage";
+import { buildCombinedPageMetadata } from "@/lib/server/topicPageMetadata";
 import { canAccessLevel, getRequiredLevelToUnlock } from "@/lib/topicAccess";
 
 type PageProps = {
@@ -29,15 +32,9 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { locale, combinedId } = await params;
-  const t = await getTranslations({ locale, namespace: "Topic" });
-  const combined = getCombinedExerciseById(combinedId);
-
-  return {
-    title: combined
-      ? t("documentTitle", { title: t("combinedExerciseTitle") })
-      : t("combinedExerciseTitle"),
-  };
+  "use cache";
+  const { locale } = await params;
+  return buildCombinedPageMetadata(locale);
 }
 
 export default async function CombinedExercisePage({ params }: PageProps) {

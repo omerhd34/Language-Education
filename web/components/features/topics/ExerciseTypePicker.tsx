@@ -6,7 +6,10 @@ import {
   CircleHelp,
   Grid3x3,
   Headphones,
+  Layers,
+  Link2,
   TextCursorInput,
+  ToggleRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import type { ExerciseType } from "@/data/topics/types";
@@ -26,21 +29,39 @@ const TYPE_ITEMS: {
   type: ExerciseType;
   titleKey:
     | "typeMultipleChoice"
+    | "typeTrueFalse"
     | "typeFillBlank"
     | "typeCrossword"
-    | "typeListening";
+    | "typeListening"
+    | "typeMatching"
+    | "typeMixedPractice";
   descKey:
     | "typeMultipleChoiceDesc"
+    | "typeTrueFalseDesc"
     | "typeFillBlankDesc"
     | "typeCrosswordDesc"
-    | "typeListeningDesc";
+    | "typeListeningDesc"
+    | "typeMatchingDesc"
+    | "typeMixedPracticeDesc";
   Icon: typeof CircleHelp;
 }[] = [
+  {
+    type: "mixed",
+    titleKey: "typeMixedPractice",
+    descKey: "typeMixedPracticeDesc",
+    Icon: Layers,
+  },
   {
     type: "multiple_choice",
     titleKey: "typeMultipleChoice",
     descKey: "typeMultipleChoiceDesc",
     Icon: CircleHelp,
+  },
+  {
+    type: "true_false",
+    titleKey: "typeTrueFalse",
+    descKey: "typeTrueFalseDesc",
+    Icon: ToggleRight,
   },
   {
     type: "fill_blank",
@@ -59,6 +80,12 @@ const TYPE_ITEMS: {
     titleKey: "typeListening",
     descKey: "typeListeningDesc",
     Icon: Headphones,
+  },
+  {
+    type: "matching",
+    titleKey: "typeMatching",
+    descKey: "typeMatchingDesc",
+    Icon: Link2,
   },
 ];
 

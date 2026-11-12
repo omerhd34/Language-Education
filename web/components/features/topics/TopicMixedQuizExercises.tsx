@@ -1,8 +1,10 @@
 "use client";
 
+import { ListChecks, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef, type FormEvent } from "react";
-import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
+import { useEffect, useRef, type FormEvent } from "react";
+import { ExerciseCheckButton } from "@/components/features/exercises/ExerciseCheckButton";
+import { ExerciseFinishedPanel } from "@/components/features/exercises/ExerciseFinishedPanel";
 import { ExerciseListenWordButton } from "@/components/features/exercises/ExerciseListenWordButton";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { InstantMultipleChoiceOptions } from "@/components/features/exercises/InstantMultipleChoiceOptions";
@@ -45,8 +47,6 @@ type TopicMixedQuizExercisesProps = {
   /** Quiz sırasında yüzde rozeti güncellenmesin (tamamlanınca özet ekranında skor gösterilir). */
   liveProgressPercent?: boolean;
 };
-
-const CORRECT_ANSWER_AUTO_ADVANCE_MS = 480;
 
 function createMixedSlot(): MixedSlot {
   return { selected: null, answer: "", checked: false };
@@ -99,7 +99,6 @@ export function TopicMixedQuizExercises({
 }: TopicMixedQuizExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
-  const shouldAutoAdvanceRef = useRef(false);
   const {
     index,
     slots,
@@ -138,42 +137,11 @@ export function TopicMixedQuizExercises({
     });
   }, [exercises, index, onSessionChange, slots]);
 
-  const exercise = exercises[index];
-
-  const finishOrAdvance = useCallback(() => {
-    handleAdvance((answered) => {
-      onComplete?.({
-        correct: countCorrect(exercises, answered),
-        total: exercises.length,
-      });
-    });
-  }, [exercises, handleAdvance, onComplete]);
-
-  useEffect(() => {
-    if (
-      !exercise ||
-      exercise.type !== "multiple_choice" ||
-      !shouldAutoAdvanceRef.current
-    ) {
-      return;
-    }
-    if (!current?.checked || current.selected !== exercise.correctIndex) {
-      shouldAutoAdvanceRef.current = false;
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      shouldAutoAdvanceRef.current = false;
-      finishOrAdvance();
-    }, CORRECT_ANSWER_AUTO_ADVANCE_MS);
-
-    return () => clearTimeout(timer);
-  }, [current?.checked, current?.selected, exercise, finishOrAdvance]);
-
   if (exercises.length === 0 || !current) {
     return <p className="page-subtitle mt-0">{t("noExamQuestions")}</p>;
   }
 
+  const exercise = exercises[index];
   if (!exercise) {
     return null;
   }
@@ -190,16 +158,11 @@ export function TopicMixedQuizExercises({
   if (finished) {
     const correctCount = countCorrect(exercises, slots);
     return (
-      <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">{t("finishedTitle")}</h2>
-        <p className="page-subtitle mt-0">
-          {t("finishedScore", {
-            correct: correctCount,
-            total: exercises.length,
-          })}
-        </p>
-        <ExerciseFinishedActions onRetry={resetSession} />
-      </div>
+      <ExerciseFinishedPanel
+        correct={correctCount}
+        total={exercises.length}
+        onRetry={resetSession}
+      />
     );
   }
 
@@ -213,22 +176,19 @@ export function TopicMixedQuizExercises({
     if (current.checked || exercise.type !== "multiple_choice") {
       return;
     }
-    const mc = exercise;
-    const answerCorrect = optionIndex === mc.correctIndex;
-    updateCurrent({ selected: optionIndex, checked: true });
-    shouldAutoAdvanceRef.current = answerCorrect;
-    if (!answerCorrect) {
-      setResultOpen(true);
-    }
+    updateCurrent({ selected: optionIndex });
   }
 
   function handleCheck(event?: FormEvent) {
     event?.preventDefault();
-    if (
-      exercise.type !== "fill_blank" ||
-      !current.answer.trim() ||
-      current.checked
-    ) {
+    if (current.checked) {
+      return;
+    }
+    if (exercise.type === "fill_blank") {
+      if (!current.answer.trim()) {
+        return;
+      }
+    } else if (current.selected === null) {
       return;
     }
     updateCurrent({ checked: true });
@@ -236,13 +196,22 @@ export function TopicMixedQuizExercises({
   }
 
   function handleNext() {
-    shouldAutoAdvanceRef.current = false;
-    finishOrAdvance();
+    handleAdvance((answered) => {
+      onComplete?.({
+        correct: countCorrect(exercises, answered),
+        total: exercises.length,
+      });
+    });
   }
 
-  function handlePreviousWithCancelAutoAdvance() {
-    shouldAutoAdvanceRef.current = false;
-    handlePrevious();
+  function canSubmitCheck(): boolean {
+    if (current.checked) {
+      return false;
+    }
+    if (exercise.type === "fill_blank") {
+      return current.answer.trim() !== "";
+    }
+    return current.selected !== null;
   }
 
   const listenWord =
@@ -293,77 +262,71 @@ export function TopicMixedQuizExercises({
             />
           </>
         ) : (
-          <form className="space-y-4" onSubmit={handleCheck}>
-            <label className="flex w-full flex-col gap-1.5 text-sm">
-              <input
-                type="text"
-                value={current.answer}
-                disabled={current.checked}
-                onChange={(event) =>
-                  updateCurrent({ answer: event.target.value })
-                }
-                placeholder={t("answerPlaceholder")}
-                autoComplete="off"
-                spellCheck={false}
-                className={cn(
-                  "h-11 rounded-lg border bg-surface px-3 text-brand-950 outline-none transition-colors",
-                  "placeholder:text-brand-600/60 focus:ring-2",
-                  "dark:bg-brand-900 dark:text-brand-100 dark:placeholder:text-brand-400/70",
-                  current.checked &&
-                    isCorrect &&
-                    "border-emerald-500/60 focus:border-emerald-500 focus:ring-emerald-500/20",
-                  current.checked &&
-                    !isCorrect &&
-                    "border-red-500/60 focus:border-red-500 focus:ring-red-500/20",
-                  !current.checked &&
-                    "border-brand-400/70 focus:border-brand-800 focus:ring-brand-800/20 dark:border-brand-600 dark:focus:border-brand-400 dark:focus:ring-brand-400/20",
-                )}
-              />
-            </label>
-          </form>
+          <label className="flex w-full flex-col gap-1.5 text-sm">
+            <input
+              type="text"
+              value={current.answer}
+              disabled={current.checked}
+              onChange={(event) =>
+                updateCurrent({ answer: event.target.value })
+              }
+              placeholder={t("answerPlaceholder")}
+              autoComplete="off"
+              spellCheck={false}
+              className={cn(
+                "h-11 rounded-lg border bg-surface px-3 text-brand-950 outline-none transition-colors",
+                "placeholder:text-brand-600/60 focus:ring-2",
+                "dark:bg-brand-900 dark:text-brand-100 dark:placeholder:text-brand-400/70",
+                current.checked &&
+                  isCorrect &&
+                  "border-emerald-500/60 focus:border-emerald-500 focus:ring-emerald-500/20",
+                current.checked &&
+                  !isCorrect &&
+                  "border-red-500/60 focus:border-red-500 focus:ring-red-500/20",
+                !current.checked &&
+                  "border-brand-400/70 focus:border-brand-800 focus:ring-brand-800/20 dark:border-brand-600 dark:focus:border-brand-400 dark:focus:ring-brand-400/20",
+              )}
+            />
+          </label>
         )}
 
-        <ExerciseStepNav
-          canGoPrevious={canGoPrevious}
-          canGoNext={canGoNext && current.checked}
-          nextLabel={continueLabel}
-          nextVariant={current.checked ? "default" : "outline"}
-          onPrevious={handlePreviousWithCancelAutoAdvance}
-          onNext={handleNext}
-          trailing={
-            canRestart ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  onRestart?.();
-                  resetSession();
-                }}
-              >
-                {t("restart")}
-              </Button>
-            ) : null
-          }
-        >
-          {exercise.type === "fill_blank" && !current.checked ? (
-            <Button
-              type="button"
-              disabled={!current.answer.trim()}
-              onClick={() => handleCheck()}
-            >
-              {t("check")}
-            </Button>
-          ) : null}
-        </ExerciseStepNav>
+        <form className="space-y-4" onSubmit={handleCheck}>
+          <ExerciseStepNav
+            canGoPrevious={canGoPrevious}
+            canGoNext={canGoNext && current.checked}
+            nextLabel={continueLabel}
+            nextVariant={current.checked ? "default" : "outline"}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            trailing={
+              canRestart ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="gap-2"
+                  onClick={() => {
+                    onRestart?.();
+                    resetSession();
+                  }}
+                >
+                  <RotateCcw className="size-4" aria-hidden />
+                  {t("restart")}
+                </Button>
+              ) : null
+            }
+          >
+            {!current.checked ? (
+              <ExerciseCheckButton type="submit" disabled={!canSubmitCheck()}>
+                <ListChecks className="size-4" aria-hidden />
+                {t("check")}
+              </ExerciseCheckButton>
+            ) : null}
+          </ExerciseStepNav>
+        </form>
       </article>
 
       <ExerciseResultDialog
-        open={
-          resultOpen &&
-          current.checked &&
-          (exercise.type === "fill_blank" ||
-            (exercise.type === "multiple_choice" && !isCorrect))
-        }
+        open={resultOpen && current.checked}
         variant={isCorrect ? "correct" : "incorrect"}
         explanation={exercise.explanation}
         onOpenChange={setResultOpen}

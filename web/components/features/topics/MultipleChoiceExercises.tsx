@@ -1,8 +1,10 @@
 "use client";
 
+import { ListChecks, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useCallback, useEffect, useRef } from "react";
-import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
+import { useEffect, useRef, type FormEvent } from "react";
+import { ExerciseCheckButton } from "@/components/features/exercises/ExerciseCheckButton";
+import { ExerciseFinishedPanel } from "@/components/features/exercises/ExerciseFinishedPanel";
 import { ExerciseListenWordButton } from "@/components/features/exercises/ExerciseListenWordButton";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { InstantMultipleChoiceOptions } from "@/components/features/exercises/InstantMultipleChoiceOptions";
@@ -60,8 +62,6 @@ function countCorrect(
   }, 0);
 }
 
-const CORRECT_ANSWER_AUTO_ADVANCE_MS = 480;
-
 export function MultipleChoiceExercises({
   exercises,
   onComplete,
@@ -76,7 +76,6 @@ export function MultipleChoiceExercises({
 }: MultipleChoiceExercisesProps) {
   const t = useTranslations("Topic");
   const skipSessionSave = useRef(true);
-  const shouldAutoAdvanceRef = useRef(false);
   const {
     index,
     slots,
@@ -118,38 +117,11 @@ export function MultipleChoiceExercises({
     });
   }, [exercises, index, onSessionChange, slots]);
 
-  const exercise = exercises[index];
-
-  const finishOrAdvance = useCallback(() => {
-    handleAdvance((answered) => {
-      onComplete?.({
-        correct: countCorrect(exercises, answered),
-        total: exercises.length,
-      });
-    });
-  }, [exercises, handleAdvance, onComplete]);
-
-  useEffect(() => {
-    if (!exercise || !shouldAutoAdvanceRef.current) {
-      return;
-    }
-    if (!current?.checked || current.selected !== exercise.correctIndex) {
-      shouldAutoAdvanceRef.current = false;
-      return;
-    }
-
-    const timer = window.setTimeout(() => {
-      shouldAutoAdvanceRef.current = false;
-      finishOrAdvance();
-    }, CORRECT_ANSWER_AUTO_ADVANCE_MS);
-
-    return () => clearTimeout(timer);
-  }, [current?.checked, current?.selected, exercise, index, finishOrAdvance]);
-
   if (exercises.length === 0 || !current) {
     return <p className="page-subtitle mt-0">{t("noExercisesForType")}</p>;
   }
 
+  const exercise = exercises[index];
   if (!exercise) {
     return null;
   }
@@ -170,19 +142,12 @@ export function MultipleChoiceExercises({
   if (finished) {
     const correctCount = countCorrect(exercises, slots);
     return (
-      <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">{t("finishedTitle")}</h2>
-        <p className="page-subtitle mt-0">
-          {t("finishedScore", {
-            correct: correctCount,
-            total: exercises.length,
-          })}
-        </p>
-        <ExerciseFinishedActions
-          onRetry={resetSession}
-          onBackToTypes={onBackToTypes}
-        />
-      </div>
+      <ExerciseFinishedPanel
+        correct={correctCount}
+        total={exercises.length}
+        onRetry={resetSession}
+        onBackToTypes={onBackToTypes}
+      />
     );
   }
 
@@ -190,22 +155,25 @@ export function MultipleChoiceExercises({
     if (current.checked) {
       return;
     }
-    const isAnswerCorrect = optionIndex === exercise.correctIndex;
-    updateCurrent({ selected: optionIndex, checked: true });
-    shouldAutoAdvanceRef.current = isAnswerCorrect;
-    if (!isAnswerCorrect) {
-      setResultOpen(true);
+    updateCurrent({ selected: optionIndex });
+  }
+
+  function handleCheck(event?: FormEvent) {
+    event?.preventDefault();
+    if (current.selected === null || current.checked) {
+      return;
     }
+    updateCurrent({ checked: true });
+    setResultOpen(true);
   }
 
   function handleNext() {
-    shouldAutoAdvanceRef.current = false;
-    finishOrAdvance();
-  }
-
-  function handlePreviousWithCancelAutoAdvance() {
-    shouldAutoAdvanceRef.current = false;
-    handlePrevious();
+    handleAdvance((answered) => {
+      onComplete?.({
+        correct: countCorrect(exercises, answered),
+        total: exercises.length,
+      });
+    });
   }
 
   return (
@@ -248,33 +216,47 @@ export function MultipleChoiceExercises({
           optionsAriaLabel={t("optionsAria")}
         />
 
-        <ExerciseStepNav
-          canGoPrevious={canGoPrevious}
-          canGoNext={canGoNext && current.checked}
-          nextLabel={continueLabel}
-          nextVariant={current.checked ? "default" : "outline"}
-          onPrevious={handlePreviousWithCancelAutoAdvance}
-          onNext={handleNext}
-          trailing={
-            canRestart ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  onRestart?.();
-                  resetSession();
-                }}
+        <form className="space-y-4" onSubmit={handleCheck}>
+          <ExerciseStepNav
+            canGoPrevious={canGoPrevious}
+            canGoNext={canGoNext && current.checked}
+            nextLabel={continueLabel}
+            nextVariant={current.checked ? "default" : "outline"}
+            onPrevious={handlePrevious}
+            onNext={handleNext}
+            trailing={
+              canRestart ? (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="gap-2"
+                  onClick={() => {
+                    onRestart?.();
+                    resetSession();
+                  }}
+                >
+                  <RotateCcw className="size-4" aria-hidden />
+                  {t("restart")}
+                </Button>
+              ) : null
+            }
+          >
+            {!current.checked ? (
+              <ExerciseCheckButton
+                type="submit"
+                disabled={current.selected === null}
               >
-                {t("restart")}
-              </Button>
-            ) : null
-          }
-        />
+                <ListChecks className="size-4" aria-hidden />
+                {t("check")}
+              </ExerciseCheckButton>
+            ) : null}
+          </ExerciseStepNav>
+        </form>
       </article>
 
       <ExerciseResultDialog
-        open={resultOpen && current.checked && !isCorrect}
-        variant="incorrect"
+        open={resultOpen && current.checked}
+        variant={isCorrect ? "correct" : "incorrect"}
         explanation={exercise.explanation}
         onOpenChange={setResultOpen}
         onContinue={handleNext}

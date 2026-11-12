@@ -10,6 +10,7 @@ import { TopicLevelLocked } from "@/components/features/topics/TopicLevelLocked"
 import { TopicPageHeader } from "@/components/features/topics/TopicPageHeader";
 import { dashboardTopics, getDashboardTopicById } from "@/data/dashboardTopics";
 import { getTopicContent } from "@/data/topics";
+import { getTopicPracticeExercises } from "@/data/topics/topicExercises";
 import {
   PASSED_LEVEL_EXAMS_COOKIE,
   parsePassedLevelExams,
@@ -80,7 +81,7 @@ export default async function TopicExercisesPage({ params }: PageProps) {
         >
           <TopicExercisesView
             topicId={topic.id}
-            exercises={content.exercises}
+            exercises={getTopicPracticeExercises(content)}
             isExam={Boolean(topic.isExam)}
             level={topic.level}
           />

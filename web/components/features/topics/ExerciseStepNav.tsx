@@ -33,23 +33,25 @@ export function ExerciseStepNav({
       <Button
         type="button"
         variant="outline"
+        className="gap-2"
         onClick={onPrevious}
         disabled={!canGoPrevious}
       >
-        <ChevronLeft aria-hidden />
+        <ChevronLeft className="size-4" aria-hidden />
         {t("previous")}
       </Button>
-      {children}
       <Button
         type="button"
         variant={nextVariant}
+        className="gap-2"
         onClick={onNext}
         disabled={!canGoNext}
       >
         {nextLabel}
-        <ChevronRight aria-hidden />
+        <ChevronRight className="size-4" aria-hidden />
       </Button>
       {trailing}
+      {children}
     </div>
   );
 }

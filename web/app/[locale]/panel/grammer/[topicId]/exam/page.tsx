@@ -15,9 +15,13 @@ import {
 } from "@/lib/levelExamStorage";
 import {
   resolveMixedTopicQuiz,
+  resolveTopicErrorCorrectionQuiz,
+  resolveTopicListeningQuiz,
   resolveTopicExamCrosswords,
   resolveTopicExamExercises,
   resolveTopicExamFillBlanks,
+  topicQuizUsesErrorCorrectionFormat,
+  topicQuizUsesListeningFormat,
   topicQuizUsesMixedFormat,
 } from "@/lib/topicExam";
 import { canAccessLevel, getRequiredLevelToUnlock } from "@/lib/topicAccess";
@@ -65,14 +69,35 @@ export default async function TopicExamPage({ params }: PageProps) {
   );
   const unlocked = canAccessLevel(topic.level, passedExams);
   const requiredLevel = getRequiredLevelToUnlock(topic.level);
+  const listeningQuiz =
+    content && topicQuizUsesListeningFormat(content)
+      ? resolveTopicListeningQuiz(content)
+      : [];
+  const errorCorrectionQuiz =
+    content &&
+    listeningQuiz.length === 0 &&
+    topicQuizUsesErrorCorrectionFormat(content)
+      ? resolveTopicErrorCorrectionQuiz(content)
+      : [];
   const mixedQuiz =
-    content && topicQuizUsesMixedFormat(content)
+    content &&
+    listeningQuiz.length === 0 &&
+    errorCorrectionQuiz.length === 0 &&
+    topicQuizUsesMixedFormat(content)
       ? resolveMixedTopicQuiz(content)
       : [];
   const quizExercises =
-    content && mixedQuiz.length === 0 ? resolveTopicExamExercises(content) : [];
+    content &&
+    listeningQuiz.length === 0 &&
+    mixedQuiz.length === 0 &&
+    errorCorrectionQuiz.length === 0
+      ? resolveTopicExamExercises(content)
+      : [];
   const examFillBlanks =
-    content && mixedQuiz.length === 0
+    content &&
+    listeningQuiz.length === 0 &&
+    mixedQuiz.length === 0 &&
+    errorCorrectionQuiz.length === 0
       ? resolveTopicExamFillBlanks(content)
       : [];
   const examCrosswords = content ? resolveTopicExamCrosswords(content) : [];
@@ -91,7 +116,9 @@ export default async function TopicExamPage({ params }: PageProps) {
       {!unlocked && requiredLevel ? (
         <TopicLevelLocked level={topic.level} requiredLevel={requiredLevel} />
       ) : content &&
-        (mixedQuiz.length > 0 ||
+        (listeningQuiz.length > 0 ||
+          errorCorrectionQuiz.length > 0 ||
+          mixedQuiz.length > 0 ||
           quizExercises.length > 0 ||
           examFillBlanks.length > 0 ||
           examCrosswords.length > 0) ? (
@@ -106,6 +133,9 @@ export default async function TopicExamPage({ params }: PageProps) {
             fillBlanks={examFillBlanks}
             crosswords={examCrosswords}
             mixedQuiz={mixedQuiz}
+            listeningQuiz={listeningQuiz}
+            errorCorrectionQuiz={errorCorrectionQuiz}
+            quizIntro={content.quizIntro}
           />
         </TopicGrammarAccessGate>
       ) : (

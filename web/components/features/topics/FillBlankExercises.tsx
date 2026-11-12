@@ -1,8 +1,10 @@
 "use client";
 
+import { ListChecks, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, type FormEvent } from "react";
-import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
+import { ExerciseCheckButton } from "@/components/features/exercises/ExerciseCheckButton";
+import { ExerciseFinishedPanel } from "@/components/features/exercises/ExerciseFinishedPanel";
 import { ExerciseListenWordButton } from "@/components/features/exercises/ExerciseListenWordButton";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
@@ -146,19 +148,12 @@ export function FillBlankExercises({
   if (finished) {
     const correctCount = countCorrect(exercises, slots);
     return (
-      <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">{t("finishedTitle")}</h2>
-        <p className="page-subtitle mt-0">
-          {t("finishedScore", {
-            correct: correctCount,
-            total: exercises.length,
-          })}
-        </p>
-        <ExerciseFinishedActions
-          onRetry={resetSession}
-          onBackToTypes={onBackToTypes}
-        />
-      </div>
+      <ExerciseFinishedPanel
+        correct={correctCount}
+        total={exercises.length}
+        onRetry={resetSession}
+        onBackToTypes={onBackToTypes}
+      />
     );
   }
 
@@ -244,20 +239,26 @@ export function FillBlankExercises({
                 <Button
                   type="button"
                   variant="outline"
+                  className="gap-2"
                   onClick={() => {
                     onRestart?.();
                     resetSession();
                   }}
                 >
+                  <RotateCcw className="size-4" aria-hidden />
                   {t("restart")}
                 </Button>
               ) : null
             }
           >
             {!current.checked ? (
-              <Button type="submit" disabled={!current.answer.trim()}>
+              <ExerciseCheckButton
+                type="submit"
+                disabled={!current.answer.trim()}
+              >
+                <ListChecks className="size-4" aria-hidden />
                 {t("check")}
-              </Button>
+              </ExerciseCheckButton>
             ) : null}
           </ExerciseStepNav>
         </form>

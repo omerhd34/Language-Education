@@ -1,9 +1,10 @@
 "use client";
 
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Volume2 } from "lucide-react";
-import { ExerciseFinishedActions } from "@/components/features/exercises/ExerciseFinishedActions";
+import { ExerciseFinishedPanel } from "@/components/features/exercises/ExerciseFinishedPanel";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { ExercisePercentBadge } from "@/components/features/topics/ExercisePercentBadge";
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
@@ -650,19 +651,12 @@ export function ListeningExercises({
   if (finished) {
     const correctCount = countCorrect(exercises, slots);
     return (
-      <div className="dashboard-panel mx-auto max-w-lg space-y-4 text-center">
-        <h2 className="page-title">{t("finishedTitle")}</h2>
-        <p className="page-subtitle mt-0">
-          {t("finishedScore", {
-            correct: correctCount,
-            total: exercises.length,
-          })}
-        </p>
-        <ExerciseFinishedActions
-          onRetry={resetAll}
-          onBackToTypes={onBackToTypes}
-        />
-      </div>
+      <ExerciseFinishedPanel
+        correct={correctCount}
+        total={exercises.length}
+        onRetry={resetAll}
+        onBackToTypes={onBackToTypes}
+      />
     );
   }
 
@@ -915,11 +909,13 @@ export function ListeningExercises({
                 <Button
                   type="button"
                   variant="outline"
+                  className="gap-2"
                   onClick={() => {
                     onRestart?.();
                     resetAll();
                   }}
                 >
+                  <RotateCcw className="size-4" aria-hidden />
                   {t("restart")}
                 </Button>
               ) : null}
