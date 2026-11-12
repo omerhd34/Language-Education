@@ -6,6 +6,7 @@ import { ArrowLeft, Volume2 } from "lucide-react";
 import { useVocabularyQuizQuery } from "@/store/api";
 import { useVocabularyStore } from "@/store/vocabularyStore";
 import type { VocabularyQuizWord } from "@/types/api";
+import { ExerciseCheckButton } from "@/components/features/exercises/ExerciseCheckButton";
 import { Button } from "@/components/ui/Button";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { vocabularyQuizHintKey } from "@/components/features/exercises/exerciseHintFallbacks";
@@ -324,7 +325,7 @@ export function VocabularyQuizView() {
 
         <div className="flex flex-wrap gap-2">
           {!checked ? (
-            <Button
+            <ExerciseCheckButton
               type="button"
               disabled={!canCheck || isSubmitting}
               onClick={() => {
@@ -332,7 +333,7 @@ export function VocabularyQuizView() {
               }}
             >
               {t("quizCheck")}
-            </Button>
+            </ExerciseCheckButton>
           ) : !resultOpen ? (
             <Button
               type="button"

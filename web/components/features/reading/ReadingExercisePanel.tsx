@@ -1,7 +1,9 @@
 "use client";
 
+import { ListChecks, RotateCcw } from "lucide-react";
 import { useMemo, type FormEvent } from "react";
 import { useTranslations } from "next-intl";
+import { ExerciseCheckButton } from "@/components/features/exercises/ExerciseCheckButton";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
 import { readingExerciseHintKey } from "@/components/features/exercises/exerciseHintFallbacks";
 import { TrueFalseChoiceButtons } from "@/components/features/exercises/TrueFalseChoiceButtons";
@@ -201,16 +203,26 @@ export function ReadingExercisePanel({
             onNext={handleNext}
             trailing={
               canRestart ? (
-                <Button type="button" variant="outline" onClick={resetSession}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="gap-2"
+                  onClick={resetSession}
+                >
+                  <RotateCcw className="size-4" aria-hidden />
                   {tTopic("restart")}
                 </Button>
               ) : null
             }
           >
             {!current.checked ? (
-              <Button type="submit" disabled={!canCheckItem(item, current)}>
+              <ExerciseCheckButton
+                type="submit"
+                disabled={!canCheckItem(item, current)}
+              >
+                <ListChecks className="size-4" aria-hidden />
                 {tTopic("check")}
-              </Button>
+              </ExerciseCheckButton>
             ) : null}
           </ExerciseStepNav>
         </form>

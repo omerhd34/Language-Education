@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Check, RotateCcw } from "lucide-react";
 import { ExerciseQuestionHeader } from "@/components/features/exercises/ExerciseQuestionHeader";
+import { ExerciseCheckButton } from "@/components/features/exercises/ExerciseCheckButton";
 import { Button } from "@/components/ui/Button";
 import type { WritingWordOrderQuestion } from "@/data/writings/types";
 import { cn } from "@/lib/utils";
@@ -154,14 +155,14 @@ export function WritingWordOrderBlock({
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <Button
+        <ExerciseCheckButton
           type="button"
           disabled={!filled || revealed}
           onClick={handleCheck}
         >
-          <Check aria-hidden />
+          <Check className="size-4" aria-hidden />
           {t("checkAnswers")}
-        </Button>
+        </ExerciseCheckButton>
         {revealed ? (
           <Button type="button" variant="outline" onClick={handleReset}>
             <RotateCcw aria-hidden />
