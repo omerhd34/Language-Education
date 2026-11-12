@@ -2,9 +2,9 @@ import {
   dashboardTopics,
   type CefrLevel,
   type DashboardTopic,
-} from "@/data/dashboardTopics";
-import { getTopicContent } from "@/data/topics";
-import type { TopicExercise } from "@/data/topics/types";
+} from "@/data/grammar/dashboardTopics";
+import { getTopicContent } from "@/data/grammar";
+import type { TopicExercise } from "@/data/grammar/types";
 import { CEFR_LEVEL_ORDER } from "@/lib/topicAccess";
 
 export type CombinedExercise = {
