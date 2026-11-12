@@ -22,6 +22,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { LuPanelLeftOpen, LuPanelRightOpen } from "react-icons/lu";
 import {
   SIDEBAR_COOKIE_MAX_AGE,
   SIDEBAR_COOKIE_NAME,
@@ -30,25 +31,6 @@ const SIDEBAR_WIDTH = "17rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "5.25rem";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
-
-function SidebarCollapseIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden
-    >
-      <rect x="3.25" y="3.25" width="17.5" height="17.5" rx="3.25" />
-      <path d="M9 3.25v17.5" />
-      <path d="M15.25 9.25 12.75 12l2.5 2.75" />
-    </svg>
-  );
-}
 
 type SidebarContextProps = {
   state: "expanded" | "collapsed";
@@ -288,12 +270,11 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <SidebarCollapseIcon
-        className={cn(
-          "size-4.5 transition-transform duration-200",
-          collapsed ? "scale-x-[-1] rtl:scale-x-100" : "rtl:scale-x-[-1]",
-        )}
-      />
+      {collapsed ? (
+        <LuPanelLeftOpen className="size-4.5" strokeWidth={1.75} aria-hidden />
+      ) : (
+        <LuPanelRightOpen className="size-4.5" strokeWidth={1.75} aria-hidden />
+      )}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

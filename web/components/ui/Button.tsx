@@ -16,6 +16,8 @@ const buttonVariants = cva(buttonBase, {
       destructive:
         "bg-destructive/10 text-[15px] text-destructive shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--destructive)_25%,transparent)] hover:bg-destructive/20 focus-visible:ring-destructive/20 dark:hover:bg-destructive/30",
       link: "bg-transparent text-[15px] text-primary shadow-none underline-offset-4 hover:bg-transparent hover:underline",
+      check:
+        "border border-sky-600/35 bg-sky-600 text-[15px] text-white shadow-md hover:bg-sky-700 active:bg-sky-800 disabled:border-sky-600/20 disabled:bg-sky-600/45 disabled:text-white/90 dark:border-sky-400/30 dark:bg-sky-500 dark:hover:bg-sky-400 dark:active:bg-sky-300",
     },
     size: {
       default:
