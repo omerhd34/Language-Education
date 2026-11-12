@@ -1,6 +1,6 @@
 import { LessonBoldText } from "@/components/features/topics/LessonBoldText";
 import { LessonExampleCarousel } from "@/components/features/topics/LessonExampleCarousel";
-import type { TopicLessonPart, TopicLessonSection } from "@/data/topics/types";
+import type { TopicLessonPart, TopicLessonSection } from "@/data/grammar/types";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 
 function SectionExamples({

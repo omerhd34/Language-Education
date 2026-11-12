@@ -12,7 +12,7 @@ import {
   ToggleRight,
 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
-import type { ExerciseType } from "@/data/topics/types";
+import type { ExerciseType } from "@/data/grammar/types";
 import { cn } from "@/lib/utils";
 
 type ExerciseTypePickerProps = {

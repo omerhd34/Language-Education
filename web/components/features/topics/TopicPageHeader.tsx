@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { ArrowLeft, ChevronDown } from "lucide-react";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Link } from "@/i18n/navigation";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";

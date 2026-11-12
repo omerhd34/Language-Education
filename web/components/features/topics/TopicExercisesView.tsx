@@ -13,8 +13,8 @@ import { ListeningExercises } from "@/components/features/topics/ListeningExerci
 import { MatchingExercises } from "@/components/features/topics/MatchingExercises";
 import { MultipleChoiceExercises } from "@/components/features/topics/MultipleChoiceExercises";
 import { TopicMixedQuizExercises } from "@/components/features/topics/TopicMixedQuizExercises";
-import { getTopicContent } from "@/data/topics";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import { getTopicContent } from "@/data/grammar";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import type {
   CrosswordExercise,
   ExerciseType,
@@ -25,7 +25,7 @@ import type {
   TrueFalseExercise,
   TopicExercise,
   TopicQuizExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 import { didPassExamScore, markLevelExamPassed } from "@/lib/levelExamStorage";
 import {
   LEVEL_EXAM_PROGRESS_EVENT,

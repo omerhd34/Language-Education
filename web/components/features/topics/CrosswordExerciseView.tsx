@@ -13,7 +13,7 @@ import { LessonBoldText } from "@/components/features/topics/LessonBoldText";
 import type {
   CrosswordDirection,
   CrosswordExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 import {
   clearCrosswordDraft,
   readCrosswordDraft,

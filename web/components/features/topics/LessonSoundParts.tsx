@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { LessonPartBlock } from "@/components/features/topics/LessonPartBlock";
 import { Button } from "@/components/ui/Button";
-import type { TopicLessonPart } from "@/data/topics/types";
+import type { TopicLessonPart } from "@/data/grammar/types";
 import { cn } from "@/lib/utils";
 
 type LessonSoundPartsProps = {

@@ -12,7 +12,7 @@ import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { VerbFormSpeakButton } from "@/components/features/vocabulary/VerbFormSpeakButton";
-import type { ListeningExercise, VerbListeningRow } from "@/data/topics/types";
+import type { ListeningExercise, VerbListeningRow } from "@/data/grammar/types";
 import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
 import { speakText, stopSpeaking } from "@/lib/speakText";
 import { cn } from "@/lib/utils";

@@ -12,7 +12,7 @@ import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import type { ListeningMatchingQuestion } from "@/data/listenings/types";
-import type { MatchingExercise } from "@/data/topics/types";
+import type { MatchingExercise } from "@/data/grammar/types";
 import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
 
 type ExerciseSessionResult = {

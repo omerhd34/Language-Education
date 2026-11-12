@@ -11,7 +11,7 @@ import { ExercisePercentBadge } from "@/components/features/topics/ExercisePerce
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
-import type { FillBlankExercise } from "@/data/topics/types";
+import type { FillBlankExercise } from "@/data/grammar/types";
 import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
 import { fillBlankSpeakText } from "@/lib/exerciseSpeakText";
 import { cn } from "@/lib/utils";

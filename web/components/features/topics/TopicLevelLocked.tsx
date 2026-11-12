@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Lock } from "lucide-react";
 import { ButtonLink } from "@/components/ui/ButtonLink";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 
 type TopicLevelLockedProps = {
   level: CefrLevel;

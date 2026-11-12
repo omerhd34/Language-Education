@@ -11,7 +11,7 @@ import {
   CarouselItem,
   useCarousel,
 } from "@/components/ui/carousel";
-import type { TopicLessonExample } from "@/data/topics/types";
+import type { TopicLessonExample } from "@/data/grammar/types";
 import { cn } from "@/lib/utils";
 
 type LessonExampleCarouselProps = {

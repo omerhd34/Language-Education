@@ -10,7 +10,7 @@ import { ExercisePercentBadge } from "@/components/features/topics/ExercisePerce
 import { ExerciseResultDialog } from "@/components/features/topics/ExerciseResultDialog";
 import { ExerciseStepNav } from "@/components/features/topics/ExerciseStepNav";
 import { Button } from "@/components/ui/Button";
-import type { ErrorCorrectionExercise } from "@/data/topics/types";
+import type { ErrorCorrectionExercise } from "@/data/grammar/types";
 import { useExerciseNavigation } from "@/hooks/useExerciseNavigation";
 import {
   correctedSentence,

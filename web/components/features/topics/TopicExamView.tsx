@@ -21,7 +21,7 @@ import type {
   ListeningExercise,
   MultipleChoiceExercise,
   TopicQuizExercise,
-} from "@/data/topics/types";
+} from "@/data/grammar/types";
 import { clearCrosswordDraft } from "@/lib/exerciseDraftStorage";
 import { totalCrosswordClueCount } from "@/lib/exerciseTypeProgress";
 import { didPassTopicExamScore } from "@/lib/topicExam";

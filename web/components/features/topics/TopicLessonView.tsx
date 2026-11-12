@@ -5,7 +5,7 @@ import {
   SectionExamples,
 } from "@/components/features/topics/LessonPartBlock";
 import { LessonSoundParts } from "@/components/features/topics/LessonSoundParts";
-import type { TopicLesson } from "@/data/topics/types";
+import type { TopicLesson } from "@/data/grammar/types";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 
 type TopicLessonViewProps = {
