@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Card";
-import type { DashboardTopic } from "@/data/dashboardTopics";
+import type { DashboardTopic } from "@/data/grammar/dashboardTopics";
 import { useLevelExamPercent } from "@/hooks/useLevelExamPercent";
 import { getNextLevel } from "@/lib/topicAccess";
 import { cn } from "@/lib/utils";

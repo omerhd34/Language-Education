@@ -10,7 +10,7 @@ import {
   READING_LEVEL_ORDER,
   getReadingSectionsByLevel,
 } from "@/lib/readingContent";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import type { ReadingLevel } from "@/data/readings/types";
 import {
   canAccessReadingLevel,

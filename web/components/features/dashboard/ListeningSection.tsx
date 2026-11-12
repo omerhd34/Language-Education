@@ -10,7 +10,7 @@ import {
   LISTENING_LEVEL_ORDER,
   getListeningSectionsByLevel,
 } from "@/lib/listeningContent";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import type { ListeningLevel } from "@/data/listenings/types";
 import {
   canAccessListeningLevel,

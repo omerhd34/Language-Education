@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/Card";
-import type { DashboardTopic } from "@/data/dashboardTopics";
+import type { DashboardTopic } from "@/data/grammar/dashboardTopics";
 import { useTopicProgress } from "@/hooks/useTopicProgress";
 import { getDistinctSecondaryTitle } from "@/lib/bilingualTitle";
 import { cn } from "@/lib/utils";

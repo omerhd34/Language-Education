@@ -10,7 +10,7 @@ import {
   WRITING_LEVEL_ORDER,
   getWritingSectionsByLevel,
 } from "@/lib/writingContent";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import type { WritingLevel } from "@/data/writings/types";
 import {
   canAccessWritingLevel,

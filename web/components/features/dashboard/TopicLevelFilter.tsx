@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Lock } from "lucide-react";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import {
   CEFR_LEVEL_FILTER_ACTIVE_CLASS,
   CEFR_LEVEL_FILTER_IDLE_CLASS,

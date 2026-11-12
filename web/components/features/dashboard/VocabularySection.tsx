@@ -12,7 +12,7 @@ import {
   getVocabularyCategoriesByLevel,
   type VocabularyLevel,
 } from "@/data/vocabulary";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import {
   canAccessVocabularyCategory,
   canAccessVocabularyLevel,

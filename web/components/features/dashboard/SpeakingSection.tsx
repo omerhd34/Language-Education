@@ -10,7 +10,7 @@ import {
   SPEAKING_LEVEL_ORDER,
   getSpeakingSectionsByLevel,
 } from "@/lib/speakingContent";
-import type { CefrLevel } from "@/data/dashboardTopics";
+import type { CefrLevel } from "@/data/grammar/dashboardTopics";
 import type { SpeakingLevel } from "@/data/speakings/types";
 import {
   canAccessSpeakingLevel,

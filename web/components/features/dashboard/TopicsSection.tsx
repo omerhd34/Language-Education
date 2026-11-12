@@ -8,7 +8,7 @@ import { LevelLockedDialog } from "@/components/features/dashboard/LevelLockedDi
 import { TopicCard } from "@/components/features/dashboard/TopicCard";
 import { TopicLevelFilter } from "@/components/features/dashboard/TopicLevelFilter";
 import { buildTopicGridItems } from "@/data/combinedExercises";
-import { dashboardTopics, type CefrLevel } from "@/data/dashboardTopics";
+import { dashboardTopics, type CefrLevel } from "@/data/grammar/dashboardTopics";
 import { usePassedLevelExams } from "@/hooks/usePassedLevelExams";
 import {
   canAccessLevel,
