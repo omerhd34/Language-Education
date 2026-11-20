@@ -1,7 +1,5 @@
 # Dil Atölyesi
 
-**Site:** [dilatolyesi.com](https://dilatolyesi.com)
-
 Yapay zeka destekli alıştırmalarla adım adım İngilizce öğrenmeyi hedefleyen web tabanlı dil öğrenme platformu.
 
 - **Öğrenilen dil:** İngilizce (CEFR: A1–C2)
